@@ -1,0 +1,7 @@
+*.suo
+**/[Bb]in/
+**/[Oo]bj/
+
+**/StyleCop.Cache
+
+packages/
