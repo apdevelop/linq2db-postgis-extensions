@@ -43,7 +43,11 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="GeometryAccessors.cs" />
+    <Compile Include="GeometryConstructors.cs" />
+    <Compile Include="GeometryEditors.cs" />
     <Compile Include="GeometryOutputs.cs" />
+    <Compile Include="GeometryProcessingFunctions.cs" />
+    <Compile Include="ManagementFunctions.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SpatialRelationshipsAndMeasurements.cs" />
   </ItemGroup>

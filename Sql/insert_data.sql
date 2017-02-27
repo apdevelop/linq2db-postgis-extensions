@@ -7,5 +7,6 @@ INSERT INTO postgis_geom (name, geom) VALUES ('Berlin', 'SRID=4326;POINT(13.4 52
 
 INSERT INTO postgis_geom (name, geom) VALUES ('Rectangle A', 'SRID=3857;POLYGON((0 0, 50 0, 50 20, 0 20, 0 0))');
 INSERT INTO postgis_geom (name, geom) VALUES ('Point A', 'SRID=3857;POINT(10 10)');
+INSERT INTO postgis_geom (name, geom) VALUES ('Point B', 'SRID=3857;POINT(25 15)');
 
 
