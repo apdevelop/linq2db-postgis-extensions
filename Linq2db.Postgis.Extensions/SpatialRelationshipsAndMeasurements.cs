@@ -73,14 +73,41 @@ namespace Linq2db.Postgis.Extensions
         }
 
         /// <summary>
+        /// Returns true if the geometries are within the specified distance of one another.
+        /// http://postgis.refractions.net/documentation/manual-1.5/ST_DWithin.html
+        /// </summary>
+        /// <param name="geom1">Input geometry 1</param>
+        /// <param name="geom2">Input geometry 2</param>
+        /// <param name="distance">Distance in SRID units</param>
+        /// <returns></returns>
+        [Sql.Function("ST_DWithin", ServerSideOnly = true)]
+        public static bool ST_DWithin(this PostgisGeometry geom1, PostgisGeometry geom2, double distance)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
         /// Return true if the given geometries represent the same geometry. Directionality is ignored.
         /// http://postgis.refractions.net/documentation/manual-1.5/ST_Equals.html
         /// </summary>
         /// <param name="geomA">Input geometry A</param>
         /// <param name="geomB">Input geometry B</param>
-        /// <returns></returns>
+        /// <returns>True if the given geometries represent the same geometry.</returns>
         [Sql.Function("ST_Equals", ServerSideOnly = true)]
         public static bool StEquals(this PostgisGeometry geomA, PostgisGeometry geomB)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns TRUE if the Geometries "spatially intersect" - (share any portion of space) and false if they don't (they are Disjoint).
+        /// http://postgis.refractions.net/documentation/manual-1.5/ST_Intersects.html
+        /// </summary>
+        /// <param name="geomA">Input geometry A</param>
+        /// <param name="geomB">Input geometry B</param>
+        /// <returns></returns>
+        [Sql.Function("ST_Intersects", ServerSideOnly = true)]
+        public static bool StIntersects(this PostgisGeometry geomA, PostgisGeometry geomB)
         {
             throw new InvalidOperationException();
         }
@@ -98,7 +125,7 @@ namespace Linq2db.Postgis.Extensions
         }
 
         /// <summary>
-        /// Returns TRUE if the Geometries share space, are of the same dimension, but are not completely contained by each other.
+        /// Returns true if the Geometries share space, are of the same dimension, but are not completely contained by each other.
         /// http://postgis.refractions.net/documentation/manual-1.5/ST_Overlaps.html
         /// </summary>
         /// <param name="geomA">Input geometry A</param>

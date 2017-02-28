@@ -12,5 +12,7 @@ namespace Linq2db.Postgis.Extensions.DemoApp
         }
 
         public ITable<PostgisGeometryEntity> PostgisGeometries { get { return GetTable<PostgisGeometryEntity>(); } }
+
+        public ITable<OwmCityEntity> OwmCities { get { return GetTable<OwmCityEntity>(); } }
      }
 }

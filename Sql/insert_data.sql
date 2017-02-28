@@ -2,11 +2,29 @@ INSERT INTO postgis_geom (name, geom) VALUES ('Point 1', 'POINT(0 0)');
 INSERT INTO postgis_geom (name, geom) VALUES ('Point 2', 'POINT(10 20)');
 INSERT INTO postgis_geom (name, geom) VALUES ('Point 3', 'POINT(100 200)');
 
-INSERT INTO postgis_geom (name, geom) VALUES ('Paris', 'SRID=4326;POINT(2.33 48.87)');
-INSERT INTO postgis_geom (name, geom) VALUES ('Berlin', 'SRID=4326;POINT(13.4 52.52)');
-
 INSERT INTO postgis_geom (name, geom) VALUES ('Rectangle A', 'SRID=3857;POLYGON((0 0, 50 0, 50 20, 0 20, 0 0))');
 INSERT INTO postgis_geom (name, geom) VALUES ('Point A', 'SRID=3857;POINT(10 10)');
 INSERT INTO postgis_geom (name, geom) VALUES ('Point B', 'SRID=3857;POINT(25 15)');
+COMMIT;
 
 
+
+INSERT INTO owm_cities (city_name, geom) VALUES ('Paris',  'SRID=4326;POINT(2.348800 48.853409)');
+INSERT INTO owm_cities (city_name, geom) VALUES ('Berlin', 'SRID=4326;POINT(13.410530 52.524368)');
+INSERT INTO owm_cities (city_name, geom) VALUES ('London', 'SRID=4326;POINT(-0.091840 51.512791)');
+INSERT INTO owm_cities (city_name, geom) VALUES ('Prague', 'SRID=4326;POINT(14.420760 50.088039)');
+INSERT INTO owm_cities (city_name, geom) VALUES ('Moscow', 'SRID=4326;POINT(37.615555 55.752220)');
+INSERT INTO owm_cities (city_name, geom) VALUES ('Minsk',  'SRID=4326;POINT(27.566668 53.900002)');
+INSERT INTO owm_cities (city_name, geom) VALUES ('Madrid', 'SRID=4326;POINT(-3.702560 40.416500)');
+INSERT INTO owm_cities (city_name, geom) VALUES ('Warsaw', 'SRID=4326;POINT(21.011780 52.229771)');
+INSERT INTO owm_cities (city_name, geom) VALUES ('Vienna', 'SRID=4326;POINT(16.372080 48.208488)');
+
+COMMIT;
+
+ALTER TABLE owm_cities
+  ALTER COLUMN geom TYPE geometry(POINT, 3857) 
+    USING ST_Transform(ST_SetSRID(geom, 4326), 3857);
+
+COMMIT;
+
+CREATE INDEX owm_cities_index ON owm_cities USING GIST(geom);

@@ -22,6 +22,30 @@ namespace Linq2db.Postgis.Extensions
         }
 
         /// <summary>
+        /// Return the coordinate dimension of the geometry value.
+        /// http://postgis.refractions.net/documentation/manual-1.5/ST_CoordDim.html
+        /// </summary>
+        /// <param name="geom">Input geometry</param>
+        /// <returns>Coordinate dimension of the ST_Geometry value.</returns>
+        [Sql.Function("ST_CoordDim", ServerSideOnly = true)]
+        public static int StCoordDim(this PostgisGeometry geom)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// The inherent dimension of this Geometry object, which must be less than or equal to the coordinate dimension.
+        /// http://postgis.refractions.net/documentation/manual-1.5/ST_Dimension.html
+        /// </summary>
+        /// <param name="geom">Input geometry</param>
+        /// <returns>The inherent dimension of this Geometry object, which must be less than or equal to the coordinate dimension. OGC SPEC s2.1.1.1 - returns 0 for POINT, 1 for LINESTRING, 2 for POLYGON, and the largest dimension of the components of a GEOMETRYCOLLECTION.</returns>
+        [Sql.Function("ST_Dimension", ServerSideOnly = true)]
+        public static int StDimension(this PostgisGeometry geom)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
         /// Return geometry representing the double precision (float8) bounding box of the supplied geometry.
         /// http://postgis.refractions.net/documentation/manual-1.5/ST_Envelope.html
         /// </summary>
