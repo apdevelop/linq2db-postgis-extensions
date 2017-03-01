@@ -11,6 +11,12 @@ namespace Linq2db.Postgis.Extensions
 
     public static class GeometryConstructors
     {
+        /// <summary>
+        /// Return a specified geometry value from Extended Well-Known Text representation (EWKT).
+        /// http://postgis.refractions.net/documentation/manual-1.5/ST_GeomFromEWKT.html
+        /// </summary>
+        /// <param name="ewkt">Extended Well-Known Text representation (EWKT)</param>
+        /// <returns>Geometry object</returns>
         [Sql.Function("ST_GeomFromEWKT", ServerSideOnly = true)]
         public static PostgisGeometry StGeomFromEWKT(string ewkt)
         {
@@ -27,7 +33,11 @@ namespace Linq2db.Postgis.Extensions
         {
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = String.Format(CultureInfo.InvariantCulture, "SELECT ST_GeomFromEWKT('{0}')", ewkt);
+                command.CommandText = "SELECT ST_GeomFromEWKT(@ewkt)";
+                var paramEwkt = command.CreateParameter();
+                paramEwkt.ParameterName = "ewkt";
+                paramEwkt.Value = ewkt;
+                command.Parameters.Add(paramEwkt);
                 using (var reader = command.ExecuteReader())
                 {
                     reader.Read();
@@ -37,6 +47,12 @@ namespace Linq2db.Postgis.Extensions
             }
         }
 
+        /// <summary>
+        /// Return a specified geometry value from Well-Known Text representation (WKT).
+        /// http://postgis.refractions.net/documentation/manual-1.5/ST_GeomFromText.html
+        /// </summary>
+        /// <param name="wkt">Well-Known Text representation (WKT)</param>
+        /// <returns>Geometry object</returns>
         [Sql.Function("ST_GeomFromText", ServerSideOnly = true)]
         public static PostgisGeometry StGeomFromText(string wkt)
         {
@@ -53,7 +69,11 @@ namespace Linq2db.Postgis.Extensions
         {
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = String.Format(CultureInfo.InvariantCulture, "SELECT ST_GeomFromText('{0}')", wkt);
+                command.CommandText = "SELECT ST_GeomFromText(@wkt)";
+                var paramWkt = command.CreateParameter();
+                paramWkt.ParameterName = "wkt";
+                paramWkt.Value = wkt;
+                command.Parameters.Add(paramWkt);
                 using (var reader = command.ExecuteReader())
                 {
                     reader.Read();
@@ -63,6 +83,12 @@ namespace Linq2db.Postgis.Extensions
             }
         }
 
+        /// <summary>
+        /// Return a specified geometry value from Well-Known Text representation (WKT).
+        /// http://postgis.refractions.net/documentation/manual-1.5/ST_GeomFromText.html
+        /// </summary>
+        /// <param name="wkt">Well-Known Text representation (WKT)</param>
+        /// <returns>Geometry object</returns>
         [Sql.Function("ST_GeomFromText", ServerSideOnly = true)]
         public static PostgisGeometry StGeomFromText(string wkt, int srid)
         {
@@ -79,7 +105,15 @@ namespace Linq2db.Postgis.Extensions
         {
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = String.Format(CultureInfo.InvariantCulture, "SELECT ST_GeomFromText('{0}', {1})", wkt, srid);
+                command.CommandText = "SELECT ST_GeomFromText(@wkt, @srid)";
+                var paramWkt = command.CreateParameter();
+                paramWkt.ParameterName = "wkt";
+                paramWkt.Value = wkt;
+                command.Parameters.Add(paramWkt);
+                var paramSrId = command.CreateParameter();
+                paramSrId.ParameterName = "srid";
+                paramSrId.Value = srid;
+                command.Parameters.Add(paramSrId);
                 using (var reader = command.ExecuteReader())
                 {
                     reader.Read();

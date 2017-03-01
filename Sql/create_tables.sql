@@ -5,6 +5,13 @@ CREATE TABLE postgis_geom
   geom  geometry not null
 );
 
+CREATE TABLE test_polygons
+(
+  gid   serial primary key,
+  name  varchar not null,
+  geom  geometry not null
+);
+
 CREATE TABLE owm_cities
 (
   gid        serial primary key,

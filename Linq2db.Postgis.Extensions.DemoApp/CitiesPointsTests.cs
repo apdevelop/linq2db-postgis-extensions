@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Configuration;
 using System.Diagnostics;
 using System.Linq;
 
@@ -9,20 +8,8 @@ using NUnit.Framework;
 namespace Linq2db.Postgis.Extensions.DemoApp
 {
     [TestFixture]
-    class CitiesPointsTest
+    class CitiesPointsTests : TestsBase
     {
-        // TODO: Move to base tests class
-
-        private const int SRID_WGS_84 = 4326;
-
-        private const int SRID_WGS84_Web_Mercator = 3857;
-
-        private PostGisTestDataConnection GetDbConnection()
-        {
-            var connectionString = ConfigurationManager.ConnectionStrings["postgistest"];
-            return new PostGisTestDataConnection(connectionString.ProviderName, connectionString.ConnectionString);
-        }
-
         [Test]
         public void ReadCities()
         {
@@ -43,6 +30,7 @@ namespace Linq2db.Postgis.Extensions.DemoApp
                         IsSimple = gt.Geometry.StIsSimple(),
                         IsValid = gt.Geometry.StIsValid(),
                         GeometryType = gt.Geometry.GeometryType(),
+                        StGeometryType = gt.Geometry.StGeometryType(),
                         NDims = gt.Geometry.StNDims(),
                         CoordDim = gt.Geometry.StCoordDim(),
                         Dimension = gt.Geometry.StDimension(),
@@ -61,6 +49,7 @@ namespace Linq2db.Postgis.Extensions.DemoApp
                     Assert.IsFalse(String.IsNullOrEmpty(c.Name));
                     Assert.AreEqual(SRID_WGS84_Web_Mercator, c.SrId);
                     Assert.AreEqual("POINT", c.GeometryType);
+                    Assert.AreEqual("ST_Point", c.StGeometryType);
                     Assert.AreEqual(2, c.NDims);
                     Assert.AreEqual(2, c.CoordDim);
                     Assert.AreEqual(0, c.Dimension);
@@ -69,6 +58,11 @@ namespace Linq2db.Postgis.Extensions.DemoApp
                     Assert.AreEqual(1, c.NumPoints);
                     Assert.IsTrue(c.IsValid);
                     Assert.IsTrue(c.IsSimple);
+
+                    var point = c.RawGeometry as PostgisPoint;
+                    Assert.IsNotNull(point);
+                    Assert.AreEqual(point.X, c.X);
+                    Assert.AreEqual(point.Y, c.Y);
                 }
             }
         }
@@ -98,7 +92,7 @@ namespace Linq2db.Postgis.Extensions.DemoApp
         {
             using (var db = GetDbConnection())
             {
-                var point = new PostgisPoint(13.72, 51.07) { SRID = SRID_WGS_84 }; // Or point = db.StGeomFromText("POINT(13.72 51.07)", SRID_WGS_84);
+                var point = new PostgisPoint(13.72, 51.07) { SRID = (uint)SRID_WGS_84 }; // Or point = db.StGeomFromText("POINT(13.72 51.07)", SRID_WGS_84);
                 var pointProjected = db.OwmCities.Select(gt => point.StTransform(SRID_WGS84_Web_Mercator)).First();
 
                 var nearest = db.OwmCities
@@ -126,7 +120,7 @@ namespace Linq2db.Postgis.Extensions.DemoApp
                             new Coordinate2D(12, 54),
                             new Coordinate2D(12, 49),
                         }
-                    }) { SRID = SRID_WGS_84 };
+                    }) { SRID = (uint)SRID_WGS_84 };
 
                 // TODO: Optimize and speed-up query, takes now ~400ms
                 var areaProjected = db.OwmCities
@@ -170,14 +164,15 @@ namespace Linq2db.Postgis.Extensions.DemoApp
         {
             using (var db = GetDbConnection())
             {
+                const double delta = 1000.0;
                 var point = db.OwmCities
                     .Where(gt => gt.Name == "Moscow")
-                    .Select(gt => gt.Geometry.StTranslate(+1000.0, -1000.0))
+                    .Select(gt => gt.Geometry.StTranslate(+delta, -delta))
                     .Select(gt => new { X = gt.StX(), Y = gt.StY(), })
                     .First();
 
-                Assert.AreEqual(4187344.0 + 1000.0, point.X, 1.0);
-                Assert.AreEqual(7509247.0 - 1000.0, point.Y, 1.0);
+                Assert.AreEqual(4187344.0 + delta, point.X, 1.0);
+                Assert.AreEqual(7509247.0 - delta, point.Y, 1.0);
             }
         }
     }

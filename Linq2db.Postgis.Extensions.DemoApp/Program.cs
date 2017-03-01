@@ -52,25 +52,7 @@ namespace Linq2db.Postgis.Extensions.DemoApp
                 Console.WriteLine("{0} '{1}' '{2}' WKB[{3}] SRID={4} NPoints={5}", e.Id, e.Name, e.GeomEWKT, e.Wkb.Length, e.SrId, e.NumPoints);
             }
 
-            // TODO: Add asserts for results checking (using NUnit)
-
-            TestGeometryConstructors();
-
             Console.ReadKey();
-        }
-
-        static void TestGeometryConstructors()
-        {
-            // TODO: ? Execute on DB context, not specific table (exclude FROM <table> from generated SQL statement)
-            var point1 = dbPostGis.PostgisGeometries.Select(g => GeometryEditors.StSetSrId(GeometryConstructors.StPoint(-71.064544, 42.28787), SRID_WGS_84));
-            var point2 = dbPostGis.StGeomFromText("POINT(-71.064544 42.28787)", SRID_WGS_84);
-            var point3 = dbPostGis.StGeomFromEWKT("SRID=" + SRID_WGS_84.ToString() + ";POINT(-71.064544 42.28787)");
-
-            Assert.IsTrue(point1.Select(g => g.StEquals(point2)).First());
-            Assert.IsTrue(point1.Select(g => g.StEquals(point3)).First());
-
-            var pointNoSrId = dbPostGis.StGeomFromText("POINT(-71.064544 42.28787)");
-            Assert.AreEqual(0, pointNoSrId.SRID);
         }
     }
 }

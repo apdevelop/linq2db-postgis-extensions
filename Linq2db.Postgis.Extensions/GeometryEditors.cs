@@ -11,6 +11,7 @@ namespace Linq2db.Postgis.Extensions
     {
         /// <summary>
         /// Return the geometry with vertex order reversed.
+        /// http://postgis.refractions.net/documentation/manual-1.5/ST_Reverse.html
         /// </summary>
         /// <param name="geom">Input geometry</param>
         /// <returns></returns>
