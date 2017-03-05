@@ -46,6 +46,18 @@ namespace Linq2db.Postgis.Extensions
         }
 
         /// <summary>
+        /// Returns the last point of a LINESTRING geometry as a POINT.
+        /// http://postgis.refractions.net/documentation/manual-1.5/ST_EndPoint.html
+        /// </summary>
+        /// <param name="geom">Input geometry</param>
+        /// <returns>Last point of a LINESTRING geometry as a POINT or NULL if the input parameter is not a LINESTRING.</returns>   
+        [Sql.Function("ST_EndPoint", ServerSideOnly = true)]
+        public static PostgisGeometry StEndPoint(this PostgisGeometry geom)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
         /// Return geometry representing the double precision (float8) bounding box of the supplied geometry.
         /// http://postgis.refractions.net/documentation/manual-1.5/ST_Envelope.html
         /// </summary>
@@ -65,6 +77,18 @@ namespace Linq2db.Postgis.Extensions
         /// <returns>Type of the geometry as a string</returns>
         [Sql.Function("ST_GeometryType", ServerSideOnly = true)]
         public static string StGeometryType(this PostgisGeometry geom)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns true if this Geometry is an empty geometry.
+        /// http://postgis.refractions.net/documentation/manual-1.5/ST_IsEmpty.html
+        /// </summary>
+        /// <param name="geom">Input geometry</param>
+        /// <returns>True if this Geometry is an empty geometry</returns>
+        [Sql.Function("ST_IsEmpty", ServerSideOnly = true)]
+        public static bool StIsEmpty(this PostgisGeometry geom)
         {
             throw new InvalidOperationException();
         }
@@ -129,6 +153,18 @@ namespace Linq2db.Postgis.Extensions
         }
 
         /// <summary>
+        /// Return the Nth point in the first linestring or circular linestring in the geometry. Return NULL if there is no linestring in the geometry.
+        /// http://postgis.refractions.net/documentation/manual-1.5/ST_PointN.html
+        /// </summary>
+        /// <param name="geom">Input geometry</param>
+        /// <returns>The Nth point in the first linestring or circular linestring in the geometry.</returns>
+        [Sql.Function("ST_PointN", ServerSideOnly = true)]
+        public static PostgisGeometry StPointN(this PostgisGeometry geom, int n)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
         /// Returns the spatial reference identifier for the ST_Geometry as defined in spatial_ref_sys table.
         /// http://postgis.refractions.net/documentation/manual-1.5/ST_SRID.html
         /// </summary>
@@ -136,6 +172,18 @@ namespace Linq2db.Postgis.Extensions
         /// <returns>Spatial reference identifier</returns>
         [Sql.Function("ST_SRID", ServerSideOnly = true)]
         public static int StSrId(this PostgisGeometry geom)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns the first  point of a LINESTRING geometry as a POINT.
+        /// http://postgis.refractions.net/documentation/manual-1.5/ST_EndPoint.html
+        /// </summary>
+        /// <param name="geom">Input geometry</param>
+        /// <returns>First point of a LINESTRING geometry as a POINT or NULL if the input parameter is not a LINESTRING.</returns>   
+        [Sql.Function("ST_StartPoint", ServerSideOnly = true)]
+        public static PostgisGeometry StStartPoint(this PostgisGeometry geom)
         {
             throw new InvalidOperationException();
         }

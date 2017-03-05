@@ -52,6 +52,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="CitiesPointsTests.cs" />
+    <Compile Include="GeometryAccessorsTests.cs" />
     <Compile Include="GeometryConstructorsTests.cs" />
     <Compile Include="OwmCityEntity.cs" />
     <Compile Include="PolygonEntity.cs" />

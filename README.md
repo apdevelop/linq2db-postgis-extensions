@@ -1,14 +1,10 @@
 # Linq2db PostGIS Extensions
-C# .NET 4.5 library with extensions methods for spatial (NpgsqlTypes.PostgisGeometry) data type providing access to [PostGIS](http://postgis.net/) functions while using [linq2db](https://github.com/linq2db/linq2db) LINQ to database provider.
+C# .NET 4.5 library with extensions methods for spatial (`NpgsqlTypes.PostgisGeometry`) data type providing access to [PostGIS](http://postgis.net/) functions while using [linq2db](https://github.com/linq2db/linq2db) LINQ to database provider.
 Demo application with tests is also included.
 
 ### Technologies
 Developed using MS Visual Studio 2013, C# .NET 4.5.
 Based on current versions of PostgreSQL (9.6), PostGIS (2.3.1), linq2db (1.0.7.4), linq2db.PostgreSQL (1.0.7.3), Npgsql (3.1.9).
-
-### References
-* [PostGIS Reference](http://postgis.refractions.net/documentation/manual-1.5/reference.html)
-* [How to teach LINQ to DB convert custom .NET methods and objects to SQL - Sql.Function attribute](http://blog.linq2db.com/2016/06/how-to-teach-linq-to-db-convert-custom.html)
 
 ### Sample usage
 Using extensions methods inside LINQ expression:
@@ -59,3 +55,7 @@ class PostGisTestDataConnection : LinqToDB.Data.DataConnection
 * Not all of the PostGIS functions wrappers are currently implemented.
 * Using of spatial index is not checked.
 * Some functions need to be implemented in DataConnection context, not inside the LINQ expressions.
+
+### References
+* [PostGIS Reference](http://postgis.refractions.net/documentation/manual-1.5/reference.html)
+* [How to teach LINQ to DB convert custom .NET methods and objects to SQL - Sql.Function attribute](http://blog.linq2db.com/2016/06/how-to-teach-linq-to-db-convert-custom.html)
