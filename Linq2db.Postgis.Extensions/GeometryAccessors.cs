@@ -153,6 +153,18 @@ namespace Linq2db.Postgis.Extensions
         }
 
         /// <summary>
+        /// If geometry is a GEOMETRYCOLLECTION (or MULTI*) return the number of geometries, otherwise return NULL.
+        /// http://postgis.refractions.net/documentation/manual-1.5/ST_NumGeometries.html
+        /// </summary>
+        /// <param name="geom">Input geometry</param>
+        /// <returns>The number of geometries.</returns>
+        [Sql.Function("ST_NumGeometries", ServerSideOnly = true)]
+        public static int StNumGeometries(this PostgisGeometry geom)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
         /// Return the Nth point in the first linestring or circular linestring in the geometry. Return NULL if there is no linestring in the geometry.
         /// http://postgis.refractions.net/documentation/manual-1.5/ST_PointN.html
         /// </summary>

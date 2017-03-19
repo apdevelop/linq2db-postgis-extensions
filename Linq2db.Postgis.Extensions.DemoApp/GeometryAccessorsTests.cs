@@ -14,7 +14,7 @@ namespace Linq2db.Postgis.Extensions.DemoApp
             {
                 var linestring = db.StGeomFromText("LINESTRING (1 2, 3 4, 5 6, 7 8, 9 10)");
                 var result = db.PostgisGeometries // TODO: use DB context, not specific table
-                    .Select(p => new
+                    .Select(_ => new
                     {
                         GeometryType = linestring.GeometryType(),
                         X1 = linestring.StStartPoint().StX(),

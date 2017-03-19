@@ -81,7 +81,7 @@ namespace Linq2db.Postgis.Extensions
         /// <param name="distance">Distance in SRID units</param>
         /// <returns></returns>
         [Sql.Function("ST_DWithin", ServerSideOnly = true)]
-        public static bool ST_DWithin(this PostgisGeometry geom1, PostgisGeometry geom2, double distance)
+        public static bool StDWithin(this PostgisGeometry geom1, PostgisGeometry geom2, double distance)
         {
             throw new InvalidOperationException();
         }

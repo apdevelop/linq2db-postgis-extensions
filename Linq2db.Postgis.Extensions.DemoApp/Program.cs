@@ -44,6 +44,7 @@ namespace Linq2db.Postgis.Extensions.DemoApp
                     NumPoints = gt.Geometry.StNPoints(),
                     Envelope = gt.Geometry.StEnvelope(),
                     RawGeometry = gt.Geometry,
+                    Buffer = gt.Geometry.StBuffer(10.0),
                 })
                 .ToArray();
 
