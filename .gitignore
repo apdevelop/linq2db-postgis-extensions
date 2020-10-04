@@ -1,7 +1,9 @@
-*.suo
+
 **/[Bb]in/
 **/[Oo]bj/
-
+.vs/
+*.suo
+**/*.user
 **/StyleCop.Cache
 
 packages/
