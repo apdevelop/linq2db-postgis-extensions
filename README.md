@@ -1,10 +1,11 @@
 # Linq2db PostGIS Extensions
-C# .NET 4.5 library with extensions methods for spatial (`NpgsqlTypes.PostgisGeometry`) data type providing access to [PostGIS](http://postgis.net/) functions while using [linq2db](https://github.com/linq2db/linq2db) LINQ to database provider.
+C# .NET Standard 2.0 library with extensions methods for spatial (`NpgsqlTypes.PostgisGeometry`) data type providing access to [PostGIS](http://postgis.net/) functions while using [linq2db](https://github.com/linq2db/linq2db) LINQ to database provider.
 Demo application with tests is also included.
 
 ### Technologies
-Developed using MS Visual Studio 2013, C# .NET 4.5.
-Based on current versions of PostgreSQL (9.6), PostGIS (2.3.1), linq2db (1.0.7.4), linq2db.PostgreSQL (1.0.7.3), Npgsql (3.1.9).
+Developed using MS Visual Studio 2017, C#.NET 4.7.2.
+Tested on PostgreSQL version 9.6, PostGIS version 2.3.1.
+Depends on [linq2db](https://github.com/linq2db/linq2db), [Npgsql](https://github.com/npgsql/npgsql).
 
 ### Sample usage
 Using extensions methods inside LINQ expression:
@@ -22,7 +23,7 @@ using (var db = new PostGisTestDataConnection())
 }
 ```
 
-Where `PolygonEntity` and `PostGisTestDataConnection` classes:
+Where `PolygonEntity` and `PostGisTestDataConnection` entity classes are:
 
 ```c#
 [Table(Schema = "public", Name = "test_polygons")]
@@ -52,6 +53,7 @@ class PostGisTestDataConnection : LinqToDB.Data.DataConnection
 * Add wrappers for more PostGIS functions in `Linq2db.Postgis.Extensions` classes as needed.
 
 ### Known issues and limitations
+* This project will be stalled soon, further development (targeting Npgsql 4.0) will be based on using [Npgsql.NetTopologySuite](https://www.npgsql.org/doc/types/nts.html), which is recommended way now.
 * Not all of the PostGIS functions wrappers are currently implemented.
 * Using of spatial index is not checked.
 * Some functions need to be implemented in DataConnection context, not inside the LINQ expressions.
