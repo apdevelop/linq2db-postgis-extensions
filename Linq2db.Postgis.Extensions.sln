@@ -3,9 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.1209
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Linq2db.Postgis.Extensions.DemoApp", "Linq2db.Postgis.Extensions.DemoApp\Linq2db.Postgis.Extensions.DemoApp.csproj", "{E103D6BF-A513-467C-983C-4A830D2C2F9B}"
-EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "Linq2db.Postgis.Extensions", "Linq2db.Postgis.Extensions\Linq2db.Postgis.Extensions.csproj", "{C4C99390-2006-4DAA-9743-71A5403782DC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Linq2db.Postgis.Extensions.Tests", "Linq2db.Postgis.Extensions.Tests\Linq2db.Postgis.Extensions.Tests.csproj", "{1BDBF8B3-69A7-47B9-BEEB-6A0D202C3CDC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Linq2db.Postgis.Extensions.DemoApp", "Linq2db.Postgis.Extensions.DemoApp\Linq2db.Postgis.Extensions.DemoApp.csproj", "{A72A4B30-1569-40A8-9D35-E73FA4C4964B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -13,14 +15,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{E103D6BF-A513-467C-983C-4A830D2C2F9B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{E103D6BF-A513-467C-983C-4A830D2C2F9B}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{E103D6BF-A513-467C-983C-4A830D2C2F9B}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{E103D6BF-A513-467C-983C-4A830D2C2F9B}.Release|Any CPU.Build.0 = Release|Any CPU
 		{C4C99390-2006-4DAA-9743-71A5403782DC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{C4C99390-2006-4DAA-9743-71A5403782DC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C4C99390-2006-4DAA-9743-71A5403782DC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C4C99390-2006-4DAA-9743-71A5403782DC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{1BDBF8B3-69A7-47B9-BEEB-6A0D202C3CDC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{1BDBF8B3-69A7-47B9-BEEB-6A0D202C3CDC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{1BDBF8B3-69A7-47B9-BEEB-6A0D202C3CDC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{1BDBF8B3-69A7-47B9-BEEB-6A0D202C3CDC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A72A4B30-1569-40A8-9D35-E73FA4C4964B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A72A4B30-1569-40A8-9D35-E73FA4C4964B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A72A4B30-1569-40A8-9D35-E73FA4C4964B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A72A4B30-1569-40A8-9D35-E73FA4C4964B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

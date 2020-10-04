@@ -2,13 +2,11 @@
 using System.Configuration;
 using System.Linq;
 
-using NUnit.Framework;
-
 namespace Linq2db.Postgis.Extensions.DemoApp
 {
     class Program
     {
-        private static PostGisTestDataConnection dbPostGis;
+        private static Tests.PostGisTestDataConnection dbPostGis;
 
         private const int SRID_WGS_84 = 4326;
 
@@ -17,7 +15,7 @@ namespace Linq2db.Postgis.Extensions.DemoApp
         static void Main(string[] args)
         {
             var connectionString = ConfigurationManager.ConnectionStrings["postgistest"];
-            dbPostGis = new PostGisTestDataConnection(connectionString.ProviderName, connectionString.ConnectionString);
+            dbPostGis = new Tests.PostGisTestDataConnection(connectionString.ProviderName, connectionString.ConnectionString);
 
             Console.WriteLine("Version: {0}", dbPostGis.GetPostGisVersion());
             Console.WriteLine("Full version: {0}", dbPostGis.GetPostGisFullVersion());
