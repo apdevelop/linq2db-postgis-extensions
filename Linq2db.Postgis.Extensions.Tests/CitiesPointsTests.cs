@@ -22,26 +22,26 @@ namespace Linq2db.Postgis.Extensions.Tests
                     {
                         Id = gt.Id,
                         Name = gt.Name,
-                        SrId = gt.Geometry.StSrId(),
-                        GeomEWKT = gt.Geometry.StAsEWKT(),
-                        Wkb = gt.Geometry.StAsBinary(),
-                        Wkt = gt.Geometry.StAsText(),
-                        GeoJSON = gt.Geometry.StAsGeoJSON(),
-                        X = gt.Geometry.StX(),
-                        Y = gt.Geometry.StY(),
-                        IsSimple = gt.Geometry.StIsSimple(),
-                        IsValid = gt.Geometry.StIsValid(),
+                        SrId = gt.Geometry.STSrId(),
+                        GeomEWKT = gt.Geometry.STAsEWKT(),
+                        Wkb = gt.Geometry.STAsBinary(),
+                        Wkt = gt.Geometry.STAsText(),
+                        GeoJSON = gt.Geometry.STAsGeoJSON(),
+                        X = gt.Geometry.STX(),
+                        Y = gt.Geometry.STY(),
+                        IsSimple = gt.Geometry.STIsSimple(),
+                        IsValid = gt.Geometry.STIsValid(),
                         GeometryType = gt.Geometry.GeometryType(),
-                        StGeometryType = gt.Geometry.StGeometryType(),
-                        NDims = gt.Geometry.StNDims(),
-                        CoordDim = gt.Geometry.StCoordDim(),
-                        Dimension = gt.Geometry.StDimension(),
-                        Area = gt.Geometry.StArea(),
-                        Perimeter = gt.Geometry.StPerimeter(),
-                        Centroid = gt.Geometry.StCentroid(),
-                        Distance = gt.Geometry.StDistance(gt.Geometry),
-                        NumPoints = gt.Geometry.StNPoints(),
-                        Envelope = gt.Geometry.StEnvelope(),
+                        STGeometryType = gt.Geometry.STGeometryType(),
+                        NDims = gt.Geometry.STNDims(),
+                        CoordDim = gt.Geometry.STCoordDim(),
+                        Dimension = gt.Geometry.STDimension(),
+                        Area = gt.Geometry.STArea(),
+                        Perimeter = gt.Geometry.STPerimeter(),
+                        Centroid = gt.Geometry.STCentroid(),
+                        Distance = gt.Geometry.STDistance(gt.Geometry),
+                        NumPoints = gt.Geometry.STNPoints(),
+                        Envelope = gt.Geometry.STEnvelope(),
                         RawGeometry = gt.Geometry,
                     })
                     .ToList();
@@ -51,7 +51,7 @@ namespace Linq2db.Postgis.Extensions.Tests
                     Assert.IsFalse(String.IsNullOrEmpty(c.Name));
                     Assert.AreEqual(SRID_WGS84_Web_Mercator, c.SrId);
                     Assert.AreEqual("POINT", c.GeometryType);
-                    Assert.AreEqual("ST_Point", c.StGeometryType);
+                    Assert.AreEqual("ST_Point", c.STGeometryType);
                     Assert.AreEqual(2, c.NDims);
                     Assert.AreEqual(2, c.CoordDim);
                     Assert.AreEqual(0, c.Dimension);
@@ -77,14 +77,14 @@ namespace Linq2db.Postgis.Extensions.Tests
                 // Prepare select expressions as IQueryable, do not materialize
                 var paris = db.OwmCities.Where(gt => gt.Name == "Paris");
                 var berlin = db.OwmCities.Where(gt => gt.Name == "Berlin");
-                var distanceInMeters = paris.Select(gt => gt.Geometry.StDistance(berlin.Select(gt1 => gt1.Geometry).First())).First();
+                var distanceInMeters = paris.Select(gt => gt.Geometry.STDistance(berlin.Select(gt1 => gt1.Geometry).First())).First();
                 Assert.AreEqual(1390305.0, distanceInMeters, 1.0);
 
-                var parisUnProjected = paris.Select(gt => new PostgisGeometryEntity { Geometry = gt.Geometry.StTransform(SRID_WGS_84), Id = gt.Id, Name = gt.Name, });
-                var berlinUnProjected = berlin.Select(gt => new PostgisGeometryEntity { Geometry = gt.Geometry.StTransform(SRID_WGS_84), Id = gt.Id, Name = gt.Name, });
-                var straightLine = parisUnProjected.Select(gt => gt.Geometry.StShortestLine(berlinUnProjected.Select(gt1 => gt1.Geometry).First()));
-                var straightLineEwkt = straightLine.Select(gt => gt.StAsEWKT()).First();
-                var distanceInDegrees = straightLine.Select(gt => gt.StLength()).First();
+                var parisUnProjected = paris.Select(gt => new PostgisGeometryEntity { Geometry = gt.Geometry.STTransform(SRID_WGS_84), Id = gt.Id, Name = gt.Name, });
+                var berlinUnProjected = berlin.Select(gt => new PostgisGeometryEntity { Geometry = gt.Geometry.STTransform(SRID_WGS_84), Id = gt.Id, Name = gt.Name, });
+                var straightLine = parisUnProjected.Select(gt => gt.Geometry.STShortestLine(berlinUnProjected.Select(gt1 => gt1.Geometry).First()));
+                var straightLineEwkt = straightLine.Select(gt => gt.STAsEWKT()).First();
+                var distanceInDegrees = straightLine.Select(gt => gt.STLength()).First();
                 Assert.AreEqual(11.655, distanceInDegrees, 0.001);
             }
         }
@@ -95,10 +95,10 @@ namespace Linq2db.Postgis.Extensions.Tests
             using (var db = GetDbConnection())
             {
                 var point = new PostgisPoint(13.72, 51.07) { SRID = (uint)SRID_WGS_84 }; // Or point = db.StGeomFromText("POINT(13.72 51.07)", SRID_WGS_84);
-                var pointProjected = db.OwmCities.Select(gt => point.StTransform(SRID_WGS84_Web_Mercator)).First();
+                var pointProjected = db.OwmCities.Select(gt => point.STTransform(SRID_WGS84_Web_Mercator)).First();
 
                 var nearest = db.OwmCities
-                    .OrderBy(gt => gt.Geometry.StDistance(pointProjected))  // Or GeometryConstructors.StGeomFromText("POINT(1527303 6633685)", 3857)
+                    .OrderBy(gt => gt.Geometry.STDistance(pointProjected))  // Or GeometryConstructors.StGeomFromText("POINT(1527303 6633685)", 3857)
                     .First();
 
                 Assert.AreEqual("Prague", nearest.Name);
@@ -122,12 +122,14 @@ namespace Linq2db.Postgis.Extensions.Tests
                             new Coordinate2D(12, 54),
                             new Coordinate2D(12, 49),
                         }
-                    }) { SRID = (uint)SRID_WGS_84 };
+                    })
+                {
+                    SRID = (uint)SRID_WGS_84,
+                };
 
                 // TODO: Optimize and speed-up query, takes now ~400ms
                 var areaProjected = db.OwmCities
-                    .Select(gt =>
-                        area.StTransform(SRID_WGS84_Web_Mercator))
+                    .Select(gt => area.STTransform(SRID_WGS84_Web_Mercator))
                     .First();
 
                 ////var areaProjected = new PostgisPolygon(
@@ -145,7 +147,7 @@ namespace Linq2db.Postgis.Extensions.Tests
 
                 var sw = Stopwatch.StartNew();
                 var list = db.OwmCities
-                    .Where(gt => areaProjected.StContains(gt.Geometry))
+                    .Where(gt => areaProjected.STContains(gt.Geometry))
                     .OrderBy(gt => gt.Name)
                     .ToList();
                 sw.Stop();
@@ -169,8 +171,8 @@ namespace Linq2db.Postgis.Extensions.Tests
                 const double delta = 1000.0;
                 var point = db.OwmCities
                     .Where(gt => gt.Name == "Moscow")
-                    .Select(gt => gt.Geometry.StTranslate(+delta, -delta))
-                    .Select(gt => new { X = gt.StX(), Y = gt.StY(), })
+                    .Select(gt => gt.Geometry.STTranslate(+delta, -delta))
+                    .Select(gt => new { X = gt.STX(), Y = gt.STY(), })
                     .First();
 
                 Assert.AreEqual(4187344.0 + delta, point.X, 1.0);

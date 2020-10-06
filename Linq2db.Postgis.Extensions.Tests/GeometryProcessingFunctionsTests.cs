@@ -8,64 +8,68 @@ namespace Linq2db.Postgis.Extensions.Tests
     class GeometryProcessingFunctionsTests : TestsBase
     {
         [Test]
-        public void StBufferForPoint()
+        public void STBufferForPoint()
         {
             using (var db = GetDbConnection())
             {
-                var point = db.StGeomFromText("POINT(100 90)");
+                var point = db.STGeomFromText("POINT(100 90)");
 
                 var result = db.PostgisGeometries // TODO: use DB context, not specific table
-                    .Select(_ => point.StBuffer(50.0))
+                    .Select(_ => point.STBuffer(50.0))
                     .Select(buffer =>
                             new
                             {
                                 GeometryType = buffer.GeometryType(),
-                                NPoints = buffer.StNPoints(),
+                                NDims = buffer.STNDims(),
+                                NPoints = buffer.STNPoints(),
                             })
                     .First();
 
+                Assert.AreEqual(2, result.NDims);
                 Assert.AreEqual(8 * 4 + 1, result.NPoints); // Default is 8 segments for quarter circle
                 Assert.AreEqual("POLYGON", result.GeometryType);
             }
         }
 
         [Test]
-        public void StMinimumBoundingCircleForQuad()
+        public void STMinimumBoundingCircleForQuad()
         {
             using (var db = GetDbConnection())
             {
-                var poly = db.StGeomFromText("POLYGON((0 0, 10 0, 10 10, 0 10, 0 0))");
+                var poly = db.STGeomFromText("POLYGON((0 0, 10 0, 10 10, 0 10, 0 0))");
 
                 var result = db.PostgisGeometries // TODO: use DB context, not specific table
-                    .Select(_ => poly.StMinimumBoundingCircle())
+                    .Select(_ => poly.STMinimumBoundingCircle())
                     .Select(bcircle =>
                             new
                             {
                                 GeometryType = bcircle.GeometryType(),
-                                NPoints = bcircle.StNPoints(),
+                                NPoints = bcircle.STNPoints(),
+                                NumRings = bcircle.STNRings(),
                             })
                     .First();
 
                 Assert.AreEqual(4 * 48 + 1, result.NPoints); // Default is 48 segments per quarter circle.
+                Assert.AreEqual(1, result.NumRings);
                 Assert.AreEqual("POLYGON", result.GeometryType);
             }
         }
 
         [Test]
-        public void StUnionPointsToMultipoint()
+        public void STUnionPointsToMultipoint()
         {
             using (var db = GetDbConnection())
             {
-                var point1 = db.StGeomFromText("POINT(1 2)");
-                var point2 = db.StGeomFromText("POINT(-2 3)");
+                var point1 = db.STGeomFromText("POINT(1 2)");
+                var point2 = db.STGeomFromText("POINT(-2 3)");
 
                 var result = db.PostgisGeometries // TODO: use DB context, not specific table
-                    .Select(_ => point1.StUnion(point2))
+                    .Select(_ => point1.STUnion(point2))
                     .Select(union =>
                             new
                             {
                                 GeometryType = union.GeometryType(),
-                                NumGeometries = union.StNumGeometries(),
+                                NumGeometries = union.STNumGeometries(),
                             })
                     .First();
 
@@ -75,21 +79,21 @@ namespace Linq2db.Postgis.Extensions.Tests
         }
 
         [Test]
-        public void StUnionPolygonsToPolygon()
+        public void STUnionPolygonsToPolygon()
         {
             using (var db = GetDbConnection())
             {
-                var point1 = db.StGeomFromText("POLYGON((0 0, 10 0, 10 10, 0 10, 0 0))");
-                var point2 = db.StGeomFromText("POLYGON((10 0, 20 0, 20 10, 10 10, 10 0))");
+                var point1 = db.STGeomFromText("POLYGON((0 0, 10 0, 10 10, 0 10, 0 0))");
+                var point2 = db.STGeomFromText("POLYGON((10 0, 20 0, 20 10, 10 10, 10 0))");
 
                 var result = db.PostgisGeometries // TODO: use DB context, not specific table
-                    .Select(_ => point1.StUnion(point2))
+                    .Select(_ => point1.STUnion(point2))
                     .Select(union =>
                             new
                             {
                                 GeometryType = union.GeometryType(),
-                                NumGeometries = union.StNumGeometries(),
-                                NumPoints = union.StNPoints(),
+                                NumGeometries = union.STNumGeometries(),
+                                NumPoints = union.STNPoints(),
                             })
                     .First();
 

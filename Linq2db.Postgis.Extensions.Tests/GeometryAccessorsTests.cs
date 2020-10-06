@@ -12,17 +12,17 @@ namespace Linq2db.Postgis.Extensions.Tests
         {
             using (var db = GetDbConnection())
             {
-                var linestring = db.StGeomFromText("LINESTRING (1 2, 3 4, 5 6, 7 8, 9 10)");
+                var linestring = db.STGeomFromText("LINESTRING (1 2, 3 4, 5 6, 7 8, 9 10)");
                 var result = db.PostgisGeometries // TODO: use DB context, not specific table
                     .Select(_ => new
                     {
                         GeometryType = linestring.GeometryType(),
-                        X1 = linestring.StStartPoint().StX(),
-                        Y1 = linestring.StStartPoint().StY(),
-                        X2 = linestring.StEndPoint().StX(),
-                        Y2 = linestring.StEndPoint().StY(),
-                        Xc = linestring.StPointN(3).StX(),
-                        Yc = linestring.StPointN(3).StY(),
+                        X1 = linestring.STStartPoint().STX(),
+                        Y1 = linestring.STStartPoint().STY(),
+                        X2 = linestring.STEndPoint().STX(),
+                        Y2 = linestring.STEndPoint().STY(),
+                        Xc = linestring.STPointN(3).STX(),
+                        Yc = linestring.STPointN(3).STY(),
                     })
                     .First();
 
@@ -41,13 +41,13 @@ namespace Linq2db.Postgis.Extensions.Tests
         {
             using (var db = GetDbConnection())
             {
-                var emptyPoint = db.StGeomFromText("POINT EMPTY");
-                var emptyPolygon = db.StGeomFromText("POLYGON EMPTY");
+                var emptyPoint = db.STGeomFromText("POINT EMPTY");
+                var emptyPolygon = db.STGeomFromText("POLYGON EMPTY");
                 var result = db.PostgisGeometries // TODO: use DB context, not specific table
                     .Select(p => new[]
                     {
-                        emptyPoint.StIsEmpty(),
-                        emptyPolygon.StIsEmpty(),
+                        emptyPoint.STIsEmpty(),
+                        emptyPolygon.STIsEmpty(),
                     })
                     .First();
 

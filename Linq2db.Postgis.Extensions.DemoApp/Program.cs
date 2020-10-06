@@ -15,40 +15,41 @@ namespace Linq2db.Postgis.Extensions.DemoApp
         static void Main(string[] args)
         {
             var connectionString = ConfigurationManager.ConnectionStrings["postgistest"];
-            dbPostGis = new Tests.PostGisTestDataConnection(connectionString.ProviderName, connectionString.ConnectionString);
-
-            Console.WriteLine("Version: {0}", dbPostGis.GetPostGisVersion());
-            Console.WriteLine("Full version: {0}", dbPostGis.GetPostGisFullVersion());
-
-            var result = dbPostGis.PostgisGeometries
-                .Select(gt => new
-                {
-                    Id = gt.Id,
-                    Name = gt.Name,
-                    SrId = gt.Geometry.StSrId(),
-                    GeomEWKT = gt.Geometry.StAsEWKT(),
-                    Wkb = gt.Geometry.StAsBinary(),
-                    Wkt = gt.Geometry.StAsText(),
-                    GeoJSON = gt.Geometry.StAsGeoJSON(),
-                    IsSimple = gt.Geometry.StIsSimple(),
-                    IsValid = gt.Geometry.StIsValid(),
-                    // TODO: ST_IsRing() should only be called on a linear feature IsRing = gt.Geometry.StIsRing(),
-                    GeometryType = gt.Geometry.GeometryType(),
-                    NDims = gt.Geometry.StNDims(),
-                    Area = gt.Geometry.StArea(),
-                    Perimeter = gt.Geometry.StPerimeter(),
-                    Centroid = gt.Geometry.StCentroid(),
-                    Distance = gt.Geometry.StDistance(gt.Geometry),
-                    NumPoints = gt.Geometry.StNPoints(),
-                    Envelope = gt.Geometry.StEnvelope(),
-                    RawGeometry = gt.Geometry,
-                    Buffer = gt.Geometry.StBuffer(10.0),
-                })
-                .ToArray();
-
-            foreach (var e in result)
+            using (dbPostGis = new Tests.PostGisTestDataConnection(connectionString.ProviderName, connectionString.ConnectionString))
             {
-                Console.WriteLine("{0} '{1}' '{2}' WKB[{3}] SRID={4} NPoints={5}", e.Id, e.Name, e.GeomEWKT, e.Wkb.Length, e.SrId, e.NumPoints);
+                Console.WriteLine($"PostGIS Version: {dbPostGis.GetPostGisVersion()}");
+                Console.WriteLine($"PostGIS full version: {dbPostGis.GetPostGisFullVersion()}");
+
+                var result = dbPostGis.PostgisGeometries
+                    .Select(gt => new
+                    {
+                        Id = gt.Id,
+                        Name = gt.Name,
+                        SrId = gt.Geometry.STSrId(),
+                        GeomEWKT = gt.Geometry.STAsEWKT(),
+                        Wkb = gt.Geometry.STAsBinary(),
+                        Wkt = gt.Geometry.STAsText(),
+                        GeoJSON = gt.Geometry.STAsGeoJSON(),
+                        IsSimple = gt.Geometry.STIsSimple(),
+                        IsValid = gt.Geometry.STIsValid(),
+                        // TODO: ST_IsRing() should only be called on a linear feature IsRing = gt.Geometry.StIsRing(),
+                        GeometryType = gt.Geometry.GeometryType(),
+                        NDims = gt.Geometry.STNDims(),
+                        Area = gt.Geometry.STArea(),
+                        Perimeter = gt.Geometry.STPerimeter(),
+                        Centroid = gt.Geometry.STCentroid(),
+                        Distance = gt.Geometry.STDistance(gt.Geometry),
+                        NumPoints = gt.Geometry.STNPoints(),
+                        Envelope = gt.Geometry.STEnvelope(),
+                        RawGeometry = gt.Geometry,
+                        Buffer = gt.Geometry.STBuffer(10.0),
+                    })
+                    .ToArray();
+
+                foreach (var e in result)
+                {
+                    Console.WriteLine("{0} '{1}' '{2}' WKB[{3}] SRID={4} NPoints={5}", e.Id, e.Name, e.GeomEWKT, e.Wkb.Length, e.SrId, e.NumPoints);
+                }
             }
 
             Console.ReadKey();

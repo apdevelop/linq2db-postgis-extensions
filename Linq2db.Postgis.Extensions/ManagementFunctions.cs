@@ -1,6 +1,4 @@
-﻿using System;
-using System.Globalization;
-using LinqToDB.Data;
+﻿using LinqToDB.Data;
 
 namespace Linq2db.Postgis.Extensions
 {
@@ -23,7 +21,7 @@ namespace Linq2db.Postgis.Extensions
         {
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = String.Format(CultureInfo.InvariantCulture, "{0} {1}()", SqlSelectStatement, PostGISFullVersion);
+                command.CommandText = $"{SqlSelectStatement} {PostGISFullVersion}()";
                 using (var reader = command.ExecuteReader())
                 {
                     reader.Read();
@@ -42,7 +40,7 @@ namespace Linq2db.Postgis.Extensions
         {
             using (var command = connection.CreateCommand())
             {
-                command.CommandText = String.Format(CultureInfo.InvariantCulture, "{0} {1}()", SqlSelectStatement, PostGISVersion);
+                command.CommandText = $"{SqlSelectStatement} {PostGISVersion}()";
                 using (var reader = command.ExecuteReader())
                 {
                     reader.Read();

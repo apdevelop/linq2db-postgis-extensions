@@ -16,7 +16,7 @@ namespace Linq2db.Postgis.Extensions
         /// <param name="geom">Input geometry</param>
         /// <returns></returns>
         [Sql.Function("ST_Reverse", ServerSideOnly = true)]
-        public static PostgisGeometry StReverse(this PostgisGeometry geom)
+        public static PostgisGeometry STReverse(this PostgisGeometry geom)
         {
             throw new InvalidOperationException();
         }
@@ -29,7 +29,7 @@ namespace Linq2db.Postgis.Extensions
         /// <param name="srid">Spatial reference system ID</param>
         /// <returns></returns>
         [Sql.Function("ST_SetSRID", ServerSideOnly = true)]
-        public static PostgisGeometry StSetSrId(this PostgisGeometry geom, int srid)
+        public static PostgisGeometry STSetSrid(this PostgisGeometry geom, int srid)
         {
             throw new InvalidOperationException();
         }
@@ -42,7 +42,7 @@ namespace Linq2db.Postgis.Extensions
         /// <param name="srid">Spatial reference system ID</param>
         /// <returns>Transformed geometry</returns>
         [Sql.Function("ST_Transform", ServerSideOnly = true)]
-        public static PostgisGeometry StTransform(this PostgisGeometry geom, int srid)
+        public static PostgisGeometry STTransform(this PostgisGeometry geom, int srid)
         {
             throw new InvalidOperationException();
         }
@@ -56,7 +56,7 @@ namespace Linq2db.Postgis.Extensions
         /// <param name="deltay"></param>
         /// <returns>New geometry whose coordinates are translated deltax and deltay units.</returns>
         [Sql.Function("ST_Translate", ServerSideOnly = true)]
-        public static PostgisGeometry StTranslate(this PostgisGeometry geom, double deltax, double deltay)
+        public static PostgisGeometry STTranslate(this PostgisGeometry geom, double deltax, double deltay)
         {
             throw new InvalidOperationException();
         }

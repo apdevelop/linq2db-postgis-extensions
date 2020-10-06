@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Globalization;
 
 using LinqToDB;
 using LinqToDB.Data;
@@ -18,7 +17,7 @@ namespace Linq2db.Postgis.Extensions
         /// <param name="ewkt">Extended Well-Known Text representation (EWKT)</param>
         /// <returns>Geometry object</returns>
         [Sql.Function("ST_GeomFromEWKT", ServerSideOnly = true)]
-        public static PostgisGeometry StGeomFromEWKT(string ewkt)
+        public static PostgisGeometry STGeomFromEWKT(string ewkt)
         {
             throw new InvalidOperationException();
         }
@@ -29,7 +28,7 @@ namespace Linq2db.Postgis.Extensions
         /// </summary>
         /// <param name="ewkt">Extended Well-Known Text representation (EWKT)</param>
         /// <returns>Geometry object</returns>
-        public static PostgisGeometry StGeomFromEWKT(this DataConnection connection, string ewkt)
+        public static PostgisGeometry STGeomFromEWKT(this DataConnection connection, string ewkt)
         {
             using (var command = connection.CreateCommand())
             {
@@ -54,7 +53,7 @@ namespace Linq2db.Postgis.Extensions
         /// <param name="wkt">Well-Known Text representation (WKT)</param>
         /// <returns>Geometry object</returns>
         [Sql.Function("ST_GeomFromText", ServerSideOnly = true)]
-        public static PostgisGeometry StGeomFromText(string wkt)
+        public static PostgisGeometry STGeomFromText(string wkt)
         {
             throw new InvalidOperationException();
         }
@@ -65,7 +64,7 @@ namespace Linq2db.Postgis.Extensions
         /// </summary>
         /// <param name="wkt">Well-Known Text representation (WKT)</param>
         /// <returns>Geometry object</returns>
-        public static PostgisGeometry StGeomFromText(this DataConnection connection, string wkt)
+        public static PostgisGeometry STGeomFromText(this DataConnection connection, string wkt)
         {
             using (var command = connection.CreateCommand())
             {
@@ -90,7 +89,7 @@ namespace Linq2db.Postgis.Extensions
         /// <param name="wkt">Well-Known Text representation (WKT)</param>
         /// <returns>Geometry object</returns>
         [Sql.Function("ST_GeomFromText", ServerSideOnly = true)]
-        public static PostgisGeometry StGeomFromText(string wkt, int srid)
+        public static PostgisGeometry STGeomFromText(string wkt, int srid)
         {
             throw new InvalidOperationException();
         }
@@ -101,7 +100,7 @@ namespace Linq2db.Postgis.Extensions
         /// </summary>
         /// <param name="wkt">Well-Known Text representation (WKT)</param>
         /// <returns>Geometry object</returns>
-        public static PostgisGeometry StGeomFromText(this DataConnection connection, string wkt, int srid)
+        public static PostgisGeometry STGeomFromText(this DataConnection connection, string wkt, int srid)
         {
             using (var command = connection.CreateCommand())
             {
@@ -133,7 +132,7 @@ namespace Linq2db.Postgis.Extensions
         /// <param name="srid"></param>
         /// <returns></returns>
         [Sql.Function("ST_MakeEnvelope", ServerSideOnly = true)]
-        public static PostgisGeometry StMakeEnvelope(double xmin, double ymin, double xmax, double ymax, int srid)
+        public static PostgisGeometry STMakeEnvelope(double xmin, double ymin, double xmax, double ymax, int srid)
         {
             throw new InvalidOperationException();
         }
@@ -145,7 +144,7 @@ namespace Linq2db.Postgis.Extensions
         /// <param name="y"></param>
         /// <returns></returns>
         [Sql.Function("ST_Point", ServerSideOnly = true)]
-        public static PostgisGeometry StPoint(double x, double y)
+        public static PostgisGeometry STPoint(double x, double y)
         {
             throw new InvalidOperationException();
         }

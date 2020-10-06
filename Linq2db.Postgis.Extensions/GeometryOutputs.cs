@@ -16,7 +16,7 @@ namespace Linq2db.Postgis.Extensions
         /// <param name="geom">Input geometry</param>
         /// <returns>Well-Known Binary (WKB) representation of the geometry</returns>
         [Sql.Function("ST_AsBinary", ServerSideOnly = true)]
-        public static byte[] StAsBinary(this PostgisGeometry geom)
+        public static byte[] STAsBinary(this PostgisGeometry geom)
         {
             throw new InvalidOperationException();
         }
@@ -28,7 +28,7 @@ namespace Linq2db.Postgis.Extensions
         /// <param name="geom">Input geometry</param>
         /// <returns>Extended Well-Known Text (EWKT) representation of the geometry</returns>
         [Sql.Function("ST_AsEWKT", ServerSideOnly = true)]
-        public static string StAsEWKT(this PostgisGeometry geom)
+        public static string STAsEWKT(this PostgisGeometry geom)
         {
             throw new InvalidOperationException();
         }
@@ -40,7 +40,7 @@ namespace Linq2db.Postgis.Extensions
         /// <param name="geom">Input geometry</param>
         /// <returns>GeoJSON representation of the geometry</returns>
         [Sql.Function("ST_AsGeoJSON", ServerSideOnly = true)]
-        public static string StAsGeoJSON(this PostgisGeometry geom)
+        public static string STAsGeoJSON(this PostgisGeometry geom)
         {
             throw new InvalidOperationException();
         }
@@ -52,7 +52,7 @@ namespace Linq2db.Postgis.Extensions
         /// <param name="geom">Input geometry</param>
         /// <returns>Well-Known Text (WKT) representation of the geometry</returns>
         [Sql.Function("ST_AsText", ServerSideOnly = true)]
-        public static string StAsText(this PostgisGeometry geom)
+        public static string STAsText(this PostgisGeometry geom)
         {
             throw new InvalidOperationException();
         }

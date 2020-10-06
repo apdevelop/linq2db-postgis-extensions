@@ -17,7 +17,7 @@ namespace Linq2db.Postgis.Extensions
         /// <param name="radius">Radius of buffer</param>
         /// <returns>Buffer geometry</returns>
         [Sql.Function("ST_Buffer", ServerSideOnly = true)]
-        public static PostgisGeometry StBuffer(this PostgisGeometry geom, double radius)
+        public static PostgisGeometry STBuffer(this PostgisGeometry geom, double radius)
         {
             throw new InvalidOperationException();
         }
@@ -29,7 +29,7 @@ namespace Linq2db.Postgis.Extensions
         /// <param name="geom">Input geometry</param>
         /// <returns>The convex hull of a geometry</returns>
         [Sql.Function("ST_ConvexHull", ServerSideOnly = true)]
-        public static PostgisGeometry StConvexHull(this PostgisGeometry geom)
+        public static PostgisGeometry STConvexHull(this PostgisGeometry geom)
         {
             throw new InvalidOperationException();
         }
@@ -41,7 +41,7 @@ namespace Linq2db.Postgis.Extensions
         /// <param name="geom">Input geometry</param>
         /// <returns>Smallest circle polygon that can fully contain a geometry.</returns>
         [Sql.Function("ST_MinimumBoundingCircle", ServerSideOnly = true)]
-        public static PostgisGeometry StMinimumBoundingCircle(this PostgisGeometry geom)
+        public static PostgisGeometry STMinimumBoundingCircle(this PostgisGeometry geom)
         {
             throw new InvalidOperationException();
         }
@@ -54,7 +54,7 @@ namespace Linq2db.Postgis.Extensions
         /// <param name="geomB">Input geometry B</param>
         /// <returns>Union of the input geometries</returns>
         [Sql.Function("ST_Union", ServerSideOnly = true)]
-        public static PostgisGeometry StUnion(this PostgisGeometry geomA, PostgisGeometry geomB)
+        public static PostgisGeometry STUnion(this PostgisGeometry geomA, PostgisGeometry geomB)
         {
             throw new InvalidOperationException();
         }

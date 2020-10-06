@@ -18,25 +18,25 @@ namespace Linq2db.Postgis.Extensions.Tests
                     {
                         Id = gt.Id,
                         Name = gt.Name,
-                        SrId = gt.Geometry.StSrId(),
-                        GeomEWKT = gt.Geometry.StAsEWKT(),
-                        Wkb = gt.Geometry.StAsBinary(),
-                        Wkt = gt.Geometry.StAsText(),
-                        GeoJSON = gt.Geometry.StAsGeoJSON(),
-                        IsSimple = gt.Geometry.StIsSimple(),
-                        IsValid = gt.Geometry.StIsValid(),
+                        SrId = gt.Geometry.STSrId(),
+                        GeomEWKT = gt.Geometry.STAsEWKT(),
+                        Wkb = gt.Geometry.STAsBinary(),
+                        Wkt = gt.Geometry.STAsText(),
+                        GeoJSON = gt.Geometry.STAsGeoJSON(),
+                        IsSimple = gt.Geometry.STIsSimple(),
+                        IsValid = gt.Geometry.STIsValid(),
                         GeometryType = gt.Geometry.GeometryType(),
-                        StGeometryType = gt.Geometry.StGeometryType(),
-                        NDims = gt.Geometry.StNDims(),
-                        CoordDim = gt.Geometry.StCoordDim(),
-                        Dimension = gt.Geometry.StDimension(),
-                        Area = gt.Geometry.StArea(),
-                        Perimeter = gt.Geometry.StPerimeter(),
-                        Centroid = gt.Geometry.StCentroid(),
-                        Distance = gt.Geometry.StDistance(gt.Geometry),
-                        NumPoints = gt.Geometry.StNPoints(),
-                        EnvelopeArea = gt.Geometry.StEnvelope().StArea(),
-                        ConvexHullArea = gt.Geometry.StConvexHull().StArea(),
+                        STGeometryType = gt.Geometry.STGeometryType(),
+                        NDims = gt.Geometry.STNDims(),
+                        CoordDim = gt.Geometry.STCoordDim(),
+                        Dimension = gt.Geometry.STDimension(),
+                        Area = gt.Geometry.STArea(),
+                        Perimeter = gt.Geometry.STPerimeter(),
+                        Centroid = gt.Geometry.STCentroid(),
+                        Distance = gt.Geometry.STDistance(gt.Geometry),
+                        NumPoints = gt.Geometry.STNPoints(),
+                        EnvelopeArea = gt.Geometry.STEnvelope().STArea(),
+                        ConvexHullArea = gt.Geometry.STConvexHull().STArea(),
                         RawGeometry = gt.Geometry,
                     })
                     .ToList();
@@ -46,7 +46,7 @@ namespace Linq2db.Postgis.Extensions.Tests
                     Assert.IsFalse(String.IsNullOrEmpty(p.Name));
                     Assert.AreEqual(SRID_WGS84_Web_Mercator, p.SrId);
                     Assert.AreEqual("POLYGON", p.GeometryType);
-                    Assert.AreEqual("ST_Polygon", p.StGeometryType);
+                    Assert.AreEqual("ST_Polygon", p.STGeometryType);
                     Assert.AreEqual(2, p.NDims);
                     Assert.AreEqual(2, p.CoordDim);
                     Assert.AreEqual(2, p.Dimension);
@@ -65,16 +65,16 @@ namespace Linq2db.Postgis.Extensions.Tests
         {
             using (var db = GetDbConnection())
             {
-                var point = db.StGeomFromEWKT("SRID=3857;POINT(0 5)");
+                var point = db.STGeomFromEWKT("SRID=3857;POINT(0 5)");
                 var selected = db.Polygons
-                    .Where(p => p.Geometry.StArea() > 150.0)
-                    .OrderBy(p => p.Geometry.StDistance(point))
+                    .Where(p => p.Geometry.STArea() > 150.0)
+                    .OrderBy(p => p.Geometry.STDistance(point))
                     .Select(p => new
                         {
                             Name = p.Name,
-                            Area = p.Geometry.StArea(),
-                            CenterX = p.Geometry.StCentroid().StX(),
-                            CenterY = p.Geometry.StCentroid().StY(),
+                            Area = p.Geometry.STArea(),
+                            CenterX = p.Geometry.STCentroid().STX(),
+                            CenterY = p.Geometry.STCentroid().STY(),
                         })
                     .ToList();
 
