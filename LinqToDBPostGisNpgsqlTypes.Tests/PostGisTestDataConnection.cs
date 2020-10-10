@@ -1,9 +1,9 @@
 ﻿using LinqToDB;
 using LinqToDB.Data;
 
-using Linq2db.Postgis.Extensions.Tests.Entities;
+using LinqToDBPostGisNpgsqlTypes.Tests.Entities;
 
-namespace Linq2db.Postgis.Extensions.Tests
+namespace LinqToDBPostGisNpgsqlTypes.Tests
 {
     public class PostGisTestDataConnection : DataConnection
     {
@@ -18,5 +18,5 @@ namespace Linq2db.Postgis.Extensions.Tests
         public ITable<PolygonEntity> Polygons { get { return GetTable<PolygonEntity>(); } }
 
         public ITable<OwmCityEntity> OwmCities { get { return GetTable<OwmCityEntity>(); } }
-     }
+    }
 }

@@ -3,7 +3,7 @@ using System.Linq;
 
 using NUnit.Framework;
 
-namespace Linq2db.Postgis.Extensions.Tests
+namespace LinqToDBPostGisNpgsqlTypes.Tests
 {
     [TestFixture]
     class PolygonsTests : TestsBase

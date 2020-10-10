@@ -3,7 +3,7 @@ using System.Configuration;
 using System.IO;
 using System.Reflection;
 
-namespace Linq2db.Postgis.Extensions.Tests
+namespace LinqToDBPostGisNpgsqlTypes.Tests
 {
     abstract class TestsBase
     {

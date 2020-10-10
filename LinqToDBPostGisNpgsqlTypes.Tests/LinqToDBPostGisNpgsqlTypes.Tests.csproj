@@ -12,7 +12,11 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\Linq2db.Postgis.Extensions\Linq2db.Postgis.Extensions.csproj" />
+    <ProjectReference Include="..\LinqToDBPostGisNpgsqlTypes\LinqToDBPostGisNpgsqlTypes.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Properties\" />
   </ItemGroup>
 
 </Project>

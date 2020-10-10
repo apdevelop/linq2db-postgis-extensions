@@ -5,9 +5,9 @@ using System.Linq;
 using NpgsqlTypes;
 using NUnit.Framework;
 
-using Linq2db.Postgis.Extensions.Tests.Entities;
+using LinqToDBPostGisNpgsqlTypes.Tests.Entities;
 
-namespace Linq2db.Postgis.Extensions.Tests
+namespace LinqToDBPostGisNpgsqlTypes.Tests
 {
     [TestFixture]
     class CitiesPointsTests : TestsBase

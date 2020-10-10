@@ -1,15 +1,15 @@
 ﻿using LinqToDB.Mapping;
 using NpgsqlTypes;
 
-namespace Linq2db.Postgis.Extensions.Tests.Entities
+namespace LinqToDBPostGisNpgsqlTypes.Tests.Entities
 {
-    [Table(Schema = "public", Name = "owm_cities")]
-    public class OwmCityEntity
+    [Table(Schema = "public", Name = "test_polygons")]
+    public class PolygonEntity
     {
         [Column("gid"), PrimaryKey]
         public int Id { get; set; }
 
-        [Column("city_name"), NotNull]
+        [Column("name"), NotNull]
         public string Name { get; set; }
 
         [Column("geom"), NotNull]

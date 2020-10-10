@@ -2,7 +2,7 @@
 
 using NUnit.Framework;
 
-namespace Linq2db.Postgis.Extensions.Tests
+namespace LinqToDBPostGisNpgsqlTypes.Tests
 {
     [TestFixture]
     class GeometryConstructorsTests : TestsBase

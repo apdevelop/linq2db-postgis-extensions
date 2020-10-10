@@ -3,7 +3,7 @@
 using LinqToDB;
 using NpgsqlTypes;
 
-namespace Linq2db.Postgis.Extensions
+namespace LinqToDBPostGisNpgsqlTypes
 {
     // http://postgis.refractions.net/documentation/manual-1.5/reference.html#Spatial_Relationships_Measurements
 
