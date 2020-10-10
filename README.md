@@ -1,22 +1,38 @@
 # Linq2db PostGIS Extensions
-C# .NET Standard 2.0 library with OGC extensions methods on geometry (`NpgsqlTypes.PostgisGeometry`) instances, providing access to [PostGIS](http://postgis.net/) functions while using [linq2db](https://github.com/linq2db/linq2db) LINQ to database provider.
+C# .NET Standard 2.0 library with OGC extensions methods on geometry (`NpgsqlTypes.PostgisGeometry` or `NetTopologySuite.Geometries.Geometry`) instances, providing access to [PostGIS](http://postgis.net/) functions on server side while using [linq2db](https://github.com/linq2db/linq2db) LINQ to database provider (lightweight ORM).
+
+### Two implementations
+
+| Property       | LinqToDBPostGisNpgsqlTypes  | LinqToDBPostGisNetTopologySuite      |
+| -------------- |:---------------------------:|:------------------------------------:|
+| Extending type | `NpgsqlTypes.PostgisGeometry` | `NetTopologySuite.Geometries.Geometry` |
+| Npgsql version | 3.x                         | 4.x                                  |
+| Status         | Legacy                      | Recommended way                      |
+| Dependencies   | linq2db, Npgsql           | linq2db, Npgsql, NetTopologySuite, Npgsql.NetTopologySuite, NetTopologySuite.IO.PostGis |
 
 ### Sample usage
-`NpgsqlTypes.PostgisGeometry` gets additional methods, similar to `Microsoft.SqlServer.Types.SqlGeometry` [OGC Methods on Geometry Instances](https://docs.microsoft.com/sql/t-sql/spatial-geometry/ogc-methods-on-geometry-instances?view=sql-server-2016).
+`NpgsqlTypes.PostgisGeometry` or `NetTopologySuite.Geometries.Geometry` gets additional methods, similar to `Microsoft.SqlServer.Types.SqlGeometry` 
+[OGC Methods on Geometry Instances](https://docs.microsoft.com/sql/t-sql/spatial-geometry/ogc-methods-on-geometry-instances?view=sql-server-2016) or 
+[NetTopologySuite plugin for Entity Framework Core for PostgreSQL](https://www.npgsql.org/efcore/mapping/nts.html).
+These methods will be translated into PostGIS SQL operations, so evaluation will happen on the server side. Siple calling these methods on client side generates `InvalidOperationException`.
+Naming convention follows OGC methods names, starting with `ST*` prefix.
+
 Using extensions methods inside LINQ expression:
 
 ```c#
-using LinqToDBPostGisNpgsqlTypes;
+using LinqToDBPostGisNpgsqlTypes; // or LinqToDBPostGisNetTopologySuite
 
 using (var db = new PostGisTestDataConnection())
 {
-    NpgsqlTypes.PostgisGeometry point = db.STGeomFromEWKT("SRID=3857;POINT(0 5)");
-    List<NpgsqlTypes.PostgisGeometry> selected = db.Polygons
+    NpgsqlTypes.PostgisGeometry point = db.STGeomFromEWKT("SRID=3857;POINT(0 5)"); // For Npgsql 3.x
+	NetTopologySuite.Geometries.Point point = new Point(new Coordinate(0, 5)) { SRID = 3857 }; // For Npgsql 4.x
+
+    var selected = db.Polygons
         .Where(p => p.Geometry.STArea() > 150.0)
         .OrderBy(p => p.Geometry.STDistance(point))
         .ToList();
 
-	NpgsqlTypes.PostgisGeometry nearestCity = db.Cities
+	var nearestCity = db.Cities
 		.OrderBy(c => c.Geometry.STDistance(point))
 		.FirstOrDefault();
 }
@@ -27,14 +43,16 @@ using (var db = new PostGisTestDataConnection())
 public class PolygonEntity
 {
     [Column("geom"), NotNull]
-    public NpgsqlTypes.PostgisGeometry Geometry { get; set; }
+    public NpgsqlTypes.PostgisGeometry Geometry { get; set; } // For Npgsql 3.x
+    public NetTopologySuite.Geometries.Geometry Geometry { get; set; } // For Npgsql 4.x
 }
 
 [Table(Schema = "public", Name = "owm_cities")]
 public class CityEntity
 {
     [Column("geom"), NotNull]
-    public NpgsqlTypes.PostgisGeometry Geometry { get; set; }
+    public NpgsqlTypes.PostgisGeometry Geometry { get; set; } // For Npgsql 3.x
+    public NetTopologySuite.Geometries.Geometry Geometry { get; set; } // For Npgsql 4.x
 }
 
 class PostGisTestDataConnection : LinqToDB.Data.DataConnection
@@ -59,11 +77,16 @@ Depends on [linq2db](https://github.com/linq2db/linq2db), [Npgsql](https://githu
 * Add wrappers for more PostGIS functions in `LinqToDBPostGisNpgsqlTypes` classes as needed.
 
 ### Known issues and limitations
-* This project will be stalled soon, further development (targeting Npgsql 4.0) will be based on using [Npgsql.NetTopologySuite](https://www.npgsql.org/doc/types/nts.html), which is recommended way now.
 * Not all of the PostGIS functions wrappers are currently implemented.
 * Using of spatial index is not checked.
 * Some functions need to be implemented in DataConnection context, not inside the LINQ expressions.
 
+### TODOs
+ * More automated tests.
+ * Support of PostGIS `geography` data type.
+ * Nuget package.
+ 
 ### References
-* [PostGIS Reference](http://postgis.refractions.net/documentation/manual-1.5/reference.html)
+* [PostGIS Reference](https://postgis.net/docs/manual-3.0/reference.html)
+* [PostGIS/NetTopologySuite Type Plugin](https://www.npgsql.org/doc/types/nts.html)
 * [How to teach LINQ to DB convert custom .NET methods and objects to SQL - Sql.Function attribute](http://blog.linq2db.com/2016/06/how-to-teach-linq-to-db-convert-custom.html)
