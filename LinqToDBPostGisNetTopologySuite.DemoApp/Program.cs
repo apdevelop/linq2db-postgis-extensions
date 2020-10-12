@@ -4,6 +4,7 @@ using System.Linq;
 
 using NTSG = NetTopologySuite.Geometries;
 using Npgsql;
+using LinqToDB;
 
 namespace LinqToDBPostGisNetTopologySuite.DemoApp
 {
@@ -14,13 +15,19 @@ namespace LinqToDBPostGisNetTopologySuite.DemoApp
             NpgsqlConnection.GlobalTypeMapper.UseNetTopologySuite();
 
             ReadCities();
+        }
 
-            Console.ReadLine();
+        private static string ConnectionString
+        {
+            get
+            {
+                return ConfigurationManager.ConnectionStrings["postgistest"].ConnectionString;
+            }
         }
 
         static void ReadCities()
         {
-            using (var db = new PostGisTestDataConnection(ConfigurationManager.ConnectionStrings["postgistest"].ConnectionString))
+            using (var db = new Tests.PostGisTestDataConnection(ConnectionString))
             {
                 var point = new NTSG.Point(new NTSG.Coordinate(0, 7200000)) { SRID = 3857 };
 
@@ -39,12 +46,13 @@ namespace LinqToDBPostGisNetTopologySuite.DemoApp
                             Srid = c.Geometry.STSrId(),
                             Area = c.Geometry.STArea(),
                             Distance = c.Geometry.STDistance(point),
+                            Wkt = c.Geometry.STAsText(),
                         });
 
                 var list = query.ToList();
                 foreach (var c in list)
                 {
-                    Console.WriteLine($"[{c.Id}] '{c.Name}'\tDistance: {c.Distance:0}\tSRID={c.Srid}");
+                    Console.WriteLine($"[{c.Id}] '{c.Name}'\tDistance: {c.Distance:0}\tSRID={c.Srid}\t{c.Wkt}");
                 }
             }
         }

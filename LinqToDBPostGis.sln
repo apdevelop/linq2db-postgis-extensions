@@ -20,9 +20,11 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{E6083F9C-5
 		README.md = README.md
 	EndProjectSection
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqToDBPostGisNetTopologySuite", "LinqToDBPostGisNetTopologySuite\LinqToDBPostGisNetTopologySuite.csproj", "{6C9811E4-624B-47A3-AACA-6A1836ED5ECC}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinqToDBPostGisNetTopologySuite", "LinqToDBPostGisNetTopologySuite\LinqToDBPostGisNetTopologySuite.csproj", "{6C9811E4-624B-47A3-AACA-6A1836ED5ECC}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqToDBPostGisNetTopologySuite.DemoApp", "LinqToDBPostGisNetTopologySuite.DemoApp\LinqToDBPostGisNetTopologySuite.DemoApp.csproj", "{3A167BE2-9D48-4942-9953-D07E8516AA67}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinqToDBPostGisNetTopologySuite.DemoApp", "LinqToDBPostGisNetTopologySuite.DemoApp\LinqToDBPostGisNetTopologySuite.DemoApp.csproj", "{3A167BE2-9D48-4942-9953-D07E8516AA67}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqToDBPostGisNetTopologySuite.Tests", "LinqToDBPostGisNetTopologySuite.Tests\LinqToDBPostGisNetTopologySuite.Tests.csproj", "{C95A4FD1-9722-4CB3-8B9C-C2A6497C2037}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -50,6 +52,10 @@ Global
 		{3A167BE2-9D48-4942-9953-D07E8516AA67}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{3A167BE2-9D48-4942-9953-D07E8516AA67}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{3A167BE2-9D48-4942-9953-D07E8516AA67}.Release|Any CPU.Build.0 = Release|Any CPU
+		{C95A4FD1-9722-4CB3-8B9C-C2A6497C2037}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{C95A4FD1-9722-4CB3-8B9C-C2A6497C2037}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{C95A4FD1-9722-4CB3-8B9C-C2A6497C2037}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{C95A4FD1-9722-4CB3-8B9C-C2A6497C2037}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

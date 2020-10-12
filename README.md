@@ -10,7 +10,7 @@ C# .NET Standard 2.0 library with OGC extensions methods on geometry (`NpgsqlTyp
 | Status         | Legacy                      | Recommended way                      |
 | Dependencies   | linq2db, Npgsql           | linq2db, Npgsql, NetTopologySuite, Npgsql.NetTopologySuite, NetTopologySuite.IO.PostGis |
 
-### Sample usage
+### Usage
 `NpgsqlTypes.PostgisGeometry` or `NetTopologySuite.Geometries.Geometry` gets additional methods, similar to `Microsoft.SqlServer.Types.SqlGeometry` 
 [OGC Methods on Geometry Instances](https://docs.microsoft.com/sql/t-sql/spatial-geometry/ogc-methods-on-geometry-instances?view=sql-server-2016) or 
 [NetTopologySuite plugin for Entity Framework Core for PostgreSQL](https://www.npgsql.org/efcore/mapping/nts.html).
@@ -25,16 +25,30 @@ using LinqToDBPostGisNpgsqlTypes; // or LinqToDBPostGisNetTopologySuite
 using (var db = new PostGisTestDataConnection())
 {
     NpgsqlTypes.PostgisGeometry point = db.STGeomFromEWKT("SRID=3857;POINT(0 5)"); // For Npgsql 3.x
-	NetTopologySuite.Geometries.Point point = new Point(new Coordinate(0, 5)) { SRID = 3857 }; // For Npgsql 4.x
+    NetTopologySuite.Geometries.Point point = new Point(new Coordinate(0, 5)) { SRID = 3857 }; // For Npgsql 4.x
 
     var selected = db.Polygons
         .Where(p => p.Geometry.STArea() > 150.0)
         .OrderBy(p => p.Geometry.STDistance(point))
         .ToList();
 
-	var nearestCity = db.Cities
-		.OrderBy(c => c.Geometry.STDistance(point))
-		.FirstOrDefault();
+    var nearestCity = db.Cities
+        .OrderBy(c => c.Geometry.STDistance(point))
+        .FirstOrDefault();
+
+    var stats = db.Cities
+        .Select(c =>
+             new
+             {
+                 Id = c.Id,
+                 Name = c.Name,
+                 Area = c.Geometry.STArea(),
+                 Distance = c.Geometry.STDistance(point),
+                 NumPoints = c.Geometry.STNPoints(),
+                 Srid = c.Geometry.STSrId(),
+                 Wkt = c.Geometry.STAsText(),
+             })
+        .ToList();;
 }
 ```
 
@@ -57,8 +71,8 @@ public class CityEntity
 
 class PostGisTestDataConnection : LinqToDB.Data.DataConnection
 {
-	public ITable<PolygonEntity> Polygons { get { return GetTable<PolygonEntity>(); } }
-	public ITable<CityEntity> Cities { get { return GetTable<CityEntity>(); } }
+    public ITable<PolygonEntity> Polygons { get { return GetTable<PolygonEntity>(); } }
+    public ITable<CityEntity> Cities { get { return GetTable<CityEntity>(); } }
 }
 ```
 
@@ -76,13 +90,8 @@ Depends on [linq2db](https://github.com/linq2db/linq2db), [Npgsql](https://githu
 * Run application, view table data along with PostGIS functions results in console output.
 * Add wrappers for more PostGIS functions in `LinqToDBPostGisNpgsqlTypes` classes as needed.
 
-### Known issues and limitations
-* Not all of the PostGIS functions wrappers are currently implemented.
-* Using of spatial index is not checked.
-* Some functions need to be implemented in DataConnection context, not inside the LINQ expressions.
-
 ### TODOs
- * More automated tests.
+ * Implement more of PostGIS spatial methods.
  * Support of PostGIS `geography` data type.
  * Nuget package.
  

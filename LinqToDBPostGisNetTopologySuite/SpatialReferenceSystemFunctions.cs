@@ -26,5 +26,18 @@ namespace LinqToDBPostGisNetTopologySuite
         {
             throw new InvalidOperationException();
         }
+
+        /// <summary>
+        /// Returns a new geometry with its coordinates transformed to a different spatial reference system.
+        /// https://postgis.net/docs/manual-3.0/ST_Transform.html
+        /// </summary>
+        /// <param name="geometry ">Input geometry</param>
+        /// <param name="srid">Spatial reference system ID</param>
+        /// <returns>Transformed geometry</returns>
+        [Sql.Function("ST_Transform", ServerSideOnly = true)]
+        public static NTSG STTransform(this NTSG geometry, int srid)
+        {
+            throw new InvalidOperationException();
+        }
     }
 }
