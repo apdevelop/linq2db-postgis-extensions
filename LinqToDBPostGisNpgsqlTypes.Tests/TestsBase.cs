@@ -3,9 +3,11 @@ using System.Configuration;
 using System.IO;
 using System.Reflection;
 
+using LinqToDB;
+
 namespace LinqToDBPostGisNpgsqlTypes.Tests
 {
-    abstract class TestsBase
+    public class TestsBase
     {
         public static readonly int SRID_WGS_84 = 4326;
 
@@ -30,6 +32,36 @@ namespace LinqToDBPostGisNpgsqlTypes.Tests
                 var uri = new UriBuilder(codeBase);
                 var path = Uri.UnescapeDataString(uri.Path);
                 return Path.GetFullPath(path);
+            }
+        }
+
+        public void InsertTestData()
+        {
+            using (var db = GetDbConnection())
+            {
+                db.PostgisGeometries.Delete();
+
+                var list = new[]
+                {
+                    "POINT(0 0)",
+                    "POINT(10 20)",
+                    "POINT(100 200)",
+                    "SRID=3857;POINT(10 10)",
+                    "SRID=3857;POINT(25 15)",
+                };
+
+                var id = 1;
+                foreach (var ewkt in list)
+                {
+                    var geom = db.STGeomFromEWKT(ewkt);
+                    db.Insert(new Entities.PostgisGeometryEntity
+                    {
+                        Id = id,
+                        Geometry = geom,
+                    });
+
+                    id++;
+                }
             }
         }
     }

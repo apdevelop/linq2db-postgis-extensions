@@ -12,7 +12,6 @@ EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Sql", "Sql", "{9CF9D085-75C8-46DC-9D4D-8BD7D6B216DC}"
 	ProjectSection(SolutionItems) = preProject
 		Sql\create_tables.sql = Sql\create_tables.sql
-		Sql\insert_data.sql = Sql\insert_data.sql
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Docs", "Docs", "{E6083F9C-5E90-4B85-A733-27DCCB5E2EB9}"
@@ -24,7 +23,7 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinqToDBPostGisNetTopologyS
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinqToDBPostGisNetTopologySuite.DemoApp", "LinqToDBPostGisNetTopologySuite.DemoApp\LinqToDBPostGisNetTopologySuite.DemoApp.csproj", "{3A167BE2-9D48-4942-9953-D07E8516AA67}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "LinqToDBPostGisNetTopologySuite.Tests", "LinqToDBPostGisNetTopologySuite.Tests\LinqToDBPostGisNetTopologySuite.Tests.csproj", "{C95A4FD1-9722-4CB3-8B9C-C2A6497C2037}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "LinqToDBPostGisNetTopologySuite.Tests", "LinqToDBPostGisNetTopologySuite.Tests\LinqToDBPostGisNetTopologySuite.Tests.csproj", "{C95A4FD1-9722-4CB3-8B9C-C2A6497C2037}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

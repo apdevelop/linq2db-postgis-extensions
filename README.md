@@ -1,4 +1,4 @@
-# Linq2db PostGIS Extensions
+123# Linq2db PostGIS Extensions
 C# .NET Standard 2.0 library with OGC extensions methods on geometry (`NpgsqlTypes.PostgisGeometry` or `NetTopologySuite.Geometries.Geometry`) instances, providing access to [PostGIS](http://postgis.net/) functions on server side while using [linq2db](https://github.com/linq2db/linq2db) LINQ to database provider (lightweight ORM).
 
 ### Two implementations
@@ -48,23 +48,23 @@ using (var db = new PostGisTestDataConnection())
                  Srid = c.Geometry.STSrId(),
                  Wkt = c.Geometry.STAsText(),
              })
-        .ToList();;
+        .ToList();
 }
 ```
 
 ```c#
-[Table(Schema = "public", Name = "test_polygons")]
+[Table("test_geometry", Schema = "public")]
 public class PolygonEntity
 {
-    [Column("geom"), NotNull]
+    [Column("geom")]
     public NpgsqlTypes.PostgisGeometry Geometry { get; set; } // For Npgsql 3.x
     public NetTopologySuite.Geometries.Geometry Geometry { get; set; } // For Npgsql 4.x
 }
 
-[Table(Schema = "public", Name = "owm_cities")]
+[Table("owm_cities", Schema = "public")]
 public class CityEntity
 {
-    [Column("geom"), NotNull]
+    [Column("geom")]
     public NpgsqlTypes.PostgisGeometry Geometry { get; set; } // For Npgsql 3.x
     public NetTopologySuite.Geometries.Geometry Geometry { get; set; } // For Npgsql 4.x
 }
@@ -77,23 +77,23 @@ class PostGisTestDataConnection : LinqToDB.Data.DataConnection
 ```
 
 ### Technologies
-Developed using MS Visual Studio 2017, .NET Core 2.1.
-Tested on PostgreSQL version 9.6, PostGIS version 2.3.1.
+Developed using MS Visual Studio 2017.
+Tested on PostgreSQL version 9.6.1, PostGIS version 3.0.2.
 Depends on [linq2db](https://github.com/linq2db/linq2db), [Npgsql](https://github.com/npgsql/npgsql).
 
 ### Getting started with demo application
-* Make sure you have PostgreSQL DBMS with PostGIS geospatial extension installed.
+* Make sure you have PostgreSQL DBMS with PostGIS extension installed. Execute `SELECT PostGIS_Full_Version()` query to check PostGIS version.
 * Create new database named "postgistest" (or any other name), add support of spatial features for this database.
-* Execute SQL scripts `Sql\create_tables.sql` and `Sql\insert_data.sql` in this database.
+* Execute SQL script `Sql\create_tables.sql` in this database.
 * Open solution `LinqToDBPostGis.sln` in Visual Studio.
-* Check database connection string in `App.config` of `LinqToDBPostGisNpgsqlTypes.DemoApp` project.
+* Check database connection string in `App.config` of all projects.
 * Run application, view table data along with PostGIS functions results in console output.
-* Add wrappers for more PostGIS functions in `LinqToDBPostGisNpgsqlTypes` classes as needed.
 
 ### TODOs
  * Implement more of PostGIS spatial methods.
  * Support of PostGIS `geography` data type.
  * Nuget package.
+ * More automated tests (without external sql scripts)
  
 ### References
 * [PostGIS Reference](https://postgis.net/docs/manual-3.0/reference.html)

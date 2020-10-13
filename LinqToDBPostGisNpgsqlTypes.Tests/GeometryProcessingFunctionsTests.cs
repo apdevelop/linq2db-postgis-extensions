@@ -7,6 +7,12 @@ namespace LinqToDBPostGisNpgsqlTypes.Tests
     [TestFixture]
     class GeometryProcessingFunctionsTests : TestsBase
     {
+        [SetUp]
+        public void Setup()
+        {
+            InsertTestData();
+        }
+
         [Test]
         public void STBufferForPoint()
         {

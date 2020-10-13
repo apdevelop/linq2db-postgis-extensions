@@ -15,6 +15,8 @@ namespace LinqToDBPostGisNetTopologySuite.DemoApp
             NpgsqlConnection.GlobalTypeMapper.UseNetTopologySuite();
 
             ReadCities();
+
+            Console.ReadKey();
         }
 
         private static string ConnectionString

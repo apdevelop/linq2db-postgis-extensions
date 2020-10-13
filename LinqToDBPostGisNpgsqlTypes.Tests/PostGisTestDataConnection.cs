@@ -17,6 +17,6 @@ namespace LinqToDBPostGisNpgsqlTypes.Tests
 
         public ITable<PolygonEntity> Polygons { get { return GetTable<PolygonEntity>(); } }
 
-        public ITable<OwmCityEntity> OwmCities { get { return GetTable<OwmCityEntity>(); } }
+        public ITable<CityEntity> Cities { get { return GetTable<CityEntity>(); } }
     }
 }

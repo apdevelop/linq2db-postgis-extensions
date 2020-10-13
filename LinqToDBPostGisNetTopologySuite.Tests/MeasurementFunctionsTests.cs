@@ -1,9 +1,10 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 using LinqToDB;
 using NUnit.Framework;
 using NTSG = NetTopologySuite.Geometries;
+
+using LinqToDBPostGisNetTopologySuite.Tests.Entities;
 
 namespace LinqToDBPostGisNetTopologySuite.Tests
 {

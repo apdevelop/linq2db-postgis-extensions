@@ -7,6 +7,12 @@ namespace LinqToDBPostGisNpgsqlTypes.Tests
     [TestFixture]
     class GeometryAccessorsTests : TestsBase
     {
+        [SetUp]
+        public void Setup()
+        {
+            InsertTestData();
+        }
+
         [Test]
         public void LinestringProperties()
         {

@@ -3,16 +3,13 @@ using NpgsqlTypes;
 
 namespace LinqToDBPostGisNpgsqlTypes.Tests.Entities
 {
-    [Table(Schema = "public", Name = "postgis_geom")]
+    [Table("test_geometry", Schema = "public")]
     public class PostgisGeometryEntity
     {
-        [Column("gid"), PrimaryKey]
+        [Column("id"), PrimaryKey, NotNull]
         public int Id { get; set; }
 
-        [Column("name"), NotNull]
-        public string Name { get; set; }
-
-        [Column("geom"), NotNull]
+        [Column("geom"), Nullable]
         public PostgisGeometry Geometry { get; set; }
     }
 }

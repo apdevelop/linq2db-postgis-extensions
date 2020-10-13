@@ -14,6 +14,8 @@ namespace LinqToDBPostGisNpgsqlTypes.DemoApp
 
         static void Main(string[] args)
         {
+            (new Tests.TestsBase()).InsertTestData();
+
             var connectionString = ConfigurationManager.ConnectionStrings["postgistest"];
             using (dbPostGis = new Tests.PostGisTestDataConnection(connectionString.ProviderName, connectionString.ConnectionString))
             {
@@ -24,7 +26,6 @@ namespace LinqToDBPostGisNpgsqlTypes.DemoApp
                     .Select(gt => new
                     {
                         Id = gt.Id,
-                        Name = gt.Name,
                         SrId = gt.Geometry.STSrId(),
                         GeomEWKT = gt.Geometry.STAsEWKT(),
                         Wkb = gt.Geometry.STAsBinary(),
@@ -48,7 +49,7 @@ namespace LinqToDBPostGisNpgsqlTypes.DemoApp
 
                 foreach (var e in result)
                 {
-                    Console.WriteLine("{0} '{1}' '{2}' WKB[{3}] SRID={4} NPoints={5}", e.Id, e.Name, e.GeomEWKT, e.Wkb.Length, e.SrId, e.NumPoints);
+                    Console.WriteLine($"{e.Id} '{e.GeomEWKT}' WKB[{e.Wkb.Length}] SRID={e.SrId} NPoints={e.NumPoints}");
                 }
             }
 

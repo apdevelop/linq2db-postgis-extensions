@@ -3,10 +3,10 @@ using NpgsqlTypes;
 
 namespace LinqToDBPostGisNpgsqlTypes.Tests.Entities
 {
-    [Table(Schema = "public", Name = "owm_cities")]
-    public class OwmCityEntity
+    [Table("owm_cities", Schema = "public")]
+    public class CityEntity
     {
-        [Column("gid"), PrimaryKey]
+        [Column("id"), PrimaryKey, NotNull]
         public int Id { get; set; }
 
         [Column("city_name"), NotNull]

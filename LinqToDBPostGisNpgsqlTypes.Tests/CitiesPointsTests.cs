@@ -2,6 +2,7 @@
 using System.Diagnostics;
 using System.Linq;
 
+using LinqToDB;
 using NpgsqlTypes;
 using NUnit.Framework;
 
@@ -12,12 +13,60 @@ namespace LinqToDBPostGisNpgsqlTypes.Tests
     [TestFixture]
     class CitiesPointsTests : TestsBase
     {
+        [OneTimeSetUp]
+        public void Setup()
+        {
+            using (var db = GetDbConnection())
+            {
+                db.Cities.Delete();
+
+                var list = new string[][]
+                {
+                    new[] { "Paris", "SRID=4326;POINT(2.348800 48.853409)" },
+                    new[] { "Berlin", "SRID=4326;POINT(13.410530 52.524368)" },
+                    new[] { "London", "SRID=4326;POINT(-0.091840 51.512791)" },
+                    new[] { "Prague", "SRID=4326;POINT(14.420760 50.088039)" },
+                    new[] { "Moscow", "SRID=4326;POINT(37.615555 55.752220)" },
+                    new[] { "Minsk", "SRID=4326;POINT(27.566668 53.900002)" },
+                    new[] { "Madrid", "SRID=4326;POINT(-3.702560 40.416500)" },
+                    new[] { "Warsaw", "SRID=4326;POINT(21.011780 52.229771)" },
+                    new[] { "Vienna", "SRID=4326;POINT(16.372080 48.208488)" },
+            };
+
+                var id = 1;
+                foreach (var item in list)
+                {
+                    // TODO: ? simplify, less queries
+                    // TODO: spatial index
+                    var geom = db.STGeomFromEWKT(item[1]);
+                    db.Insert(new CityEntity
+                    {
+                        Id = id,
+                        Name = item[0],
+                        Geometry = geom,
+                    });
+
+                    var projected = db.Cities
+                        .Where(c => c.Id == id)
+                        .Select(c => c.Geometry.STTransform(3857))
+                        .Single();
+
+                    db.Cities
+                        .Where(c => c.Id == id)
+                        .Set(c => c.Geometry, projected)
+                        .Update();
+
+                    id++;
+                }
+            }
+        }
+
         [Test]
         public void ReadCities()
         {
             using (var db = GetDbConnection())
             {
-                var cities = db.OwmCities
+                var cities = db.Cities
                     .Select(gt => new
                     {
                         Id = gt.Id,
@@ -75,13 +124,13 @@ namespace LinqToDBPostGisNpgsqlTypes.Tests
             using (var db = GetDbConnection())
             {
                 // Prepare select expressions as IQueryable, do not materialize
-                var paris = db.OwmCities.Where(gt => gt.Name == "Paris");
-                var berlin = db.OwmCities.Where(gt => gt.Name == "Berlin");
+                var paris = db.Cities.Where(gt => gt.Name == "Paris");
+                var berlin = db.Cities.Where(gt => gt.Name == "Berlin");
                 var distanceInMeters = paris.Select(gt => gt.Geometry.STDistance(berlin.Select(gt1 => gt1.Geometry).First())).First();
                 Assert.AreEqual(1390305.0, distanceInMeters, 1.0);
 
-                var parisUnProjected = paris.Select(gt => new PostgisGeometryEntity { Geometry = gt.Geometry.STTransform(SRID_WGS_84), Id = gt.Id, Name = gt.Name, });
-                var berlinUnProjected = berlin.Select(gt => new PostgisGeometryEntity { Geometry = gt.Geometry.STTransform(SRID_WGS_84), Id = gt.Id, Name = gt.Name, });
+                var parisUnProjected = paris.Select(gt => new PostgisGeometryEntity { Geometry = gt.Geometry.STTransform(SRID_WGS_84), Id = gt.Id, });
+                var berlinUnProjected = berlin.Select(gt => new PostgisGeometryEntity { Geometry = gt.Geometry.STTransform(SRID_WGS_84), Id = gt.Id, });
                 var straightLine = parisUnProjected.Select(gt => gt.Geometry.STShortestLine(berlinUnProjected.Select(gt1 => gt1.Geometry).First()));
                 var straightLineEwkt = straightLine.Select(gt => gt.STAsEWKT()).First();
                 var distanceInDegrees = straightLine.Select(gt => gt.STLength()).First();
@@ -95,9 +144,9 @@ namespace LinqToDBPostGisNpgsqlTypes.Tests
             using (var db = GetDbConnection())
             {
                 var point = new PostgisPoint(13.72, 51.07) { SRID = (uint)SRID_WGS_84 }; // Or point = db.StGeomFromText("POINT(13.72 51.07)", SRID_WGS_84);
-                var pointProjected = db.OwmCities.Select(gt => point.STTransform(SRID_WGS84_Web_Mercator)).First();
+                var pointProjected = db.Cities.Select(gt => point.STTransform(SRID_WGS84_Web_Mercator)).First();
 
-                var nearest = db.OwmCities
+                var nearest = db.Cities
                     .OrderBy(gt => gt.Geometry.STDistance(pointProjected))  // Or GeometryConstructors.StGeomFromText("POINT(1527303 6633685)", 3857)
                     .First();
 
@@ -128,7 +177,7 @@ namespace LinqToDBPostGisNpgsqlTypes.Tests
                 };
 
                 // TODO: Optimize and speed-up query, takes now ~400ms
-                var areaProjected = db.OwmCities
+                var areaProjected = db.Cities
                     .Select(gt => area.STTransform(SRID_WGS84_Web_Mercator))
                     .First();
 
@@ -146,7 +195,7 @@ namespace LinqToDBPostGisNpgsqlTypes.Tests
                 ////    }) { SRID = SRID_WGS84_Web_Mercator };
 
                 var sw = Stopwatch.StartNew();
-                var list = db.OwmCities
+                var list = db.Cities
                     .Where(gt => areaProjected.STContains(gt.Geometry))
                     .OrderBy(gt => gt.Name)
                     .ToList();
@@ -169,7 +218,7 @@ namespace LinqToDBPostGisNpgsqlTypes.Tests
             using (var db = GetDbConnection())
             {
                 const double delta = 1000.0;
-                var point = db.OwmCities
+                var point = db.Cities
                     .Where(gt => gt.Name == "Moscow")
                     .Select(gt => gt.Geometry.STTranslate(+delta, -delta))
                     .Select(gt => new { X = gt.STX(), Y = gt.STY(), })
