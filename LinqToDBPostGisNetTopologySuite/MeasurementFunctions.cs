@@ -39,5 +39,29 @@ namespace LinqToDBPostGisNetTopologySuite
         {
             throw new InvalidOperationException();
         }
+
+        /// <summary>
+        /// Returns the 2D Cartesian length of the geometry if it is a LineString, MultiLineString, ST_Curve, ST_MultiCurve. For areal geometries 0 is returned; use ST_Perimeter instead.
+        /// https://postgis.net/docs/manual-3.0/ST_Length.html
+        /// </summary>
+        /// <param name="geometry">Input geometry</param>
+        /// <returns>Length</returns>
+        [Sql.Function("ST_Length", ServerSideOnly = true)]
+        public static double STLength(this NTSG geometry)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns the 2D perimeter of the geometry if it is a ST_Surface, ST_MultiSurface (Polygon, MultiPolygon). Zero is returned for non-areal geometries. For linear geometries use ST_Length.
+        /// https://postgis.net/docs/manual-3.0/ST_Perimeter.html
+        /// </summary>
+        /// <param name="geometry">Input geometry</param>
+        /// <returns>Perimeter</returns>
+        [Sql.Function("ST_Perimeter", ServerSideOnly = true)]
+        public static double STPerimeter(this NTSG geometry)
+        {
+            throw new InvalidOperationException();
+        }
     }
 }

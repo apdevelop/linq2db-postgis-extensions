@@ -1,4 +1,4 @@
-123# Linq2db PostGIS Extensions
+# Linq2db PostGIS Extensions
 C# .NET Standard 2.0 library with OGC extensions methods on geometry (`NpgsqlTypes.PostgisGeometry` or `NetTopologySuite.Geometries.Geometry`) instances, providing access to [PostGIS](http://postgis.net/) functions on server side while using [linq2db](https://github.com/linq2db/linq2db) LINQ to database provider (lightweight ORM).
 
 ### Two implementations
@@ -14,7 +14,7 @@ C# .NET Standard 2.0 library with OGC extensions methods on geometry (`NpgsqlTyp
 `NpgsqlTypes.PostgisGeometry` or `NetTopologySuite.Geometries.Geometry` gets additional methods, similar to `Microsoft.SqlServer.Types.SqlGeometry` 
 [OGC Methods on Geometry Instances](https://docs.microsoft.com/sql/t-sql/spatial-geometry/ogc-methods-on-geometry-instances?view=sql-server-2016) or 
 [NetTopologySuite plugin for Entity Framework Core for PostgreSQL](https://www.npgsql.org/efcore/mapping/nts.html).
-These methods will be translated into PostGIS SQL operations, so evaluation will happen on the server side. Siple calling these methods on client side generates `InvalidOperationException`.
+These methods will be translated into PostGIS SQL operations, so evaluation will happen on the server side. Calling these methods on client side results in throwing `InvalidOperationException`.
 Naming convention follows OGC methods names, starting with `ST*` prefix.
 
 Using extensions methods inside LINQ expression:

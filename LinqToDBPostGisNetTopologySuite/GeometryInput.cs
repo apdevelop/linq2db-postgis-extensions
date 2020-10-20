@@ -26,5 +26,30 @@ namespace LinqToDBPostGisNetTopologySuite
         {
             throw new InvalidOperationException();
         }
+
+        /// <summary>
+        /// Constructs a PostGIS ST_Geometry object from the OGC Well-Known Text (WKT) representation.
+        /// https://postgis.net/docs/manual-3.0/ST_GeomFromText.html
+        /// </summary>
+        /// <param name="wkt">Well-Known Text (WKT)</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_GeomFromText", ServerSideOnly = true)]
+        public static NTSG STGeomFromText(string wkt)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs a PostGIS ST_Geometry object from the OGC Well-Known Text (WKT) representation.
+        /// https://postgis.net/docs/manual-3.0/ST_GeomFromText.html
+        /// </summary>
+        /// <param name="wkt">Well-Known Text (WKT)</param>
+        /// <param name="srid">SRID of geometry</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_GeomFromText", ServerSideOnly = true)]
+        public static NTSG STGeomFromText(string wkt, int srid)
+        {
+            throw new InvalidOperationException();
+        }
     }
 }

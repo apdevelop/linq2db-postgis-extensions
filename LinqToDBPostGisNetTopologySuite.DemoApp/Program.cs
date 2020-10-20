@@ -49,6 +49,7 @@ namespace LinqToDBPostGisNetTopologySuite.DemoApp
                             Area = c.Geometry.STArea(),
                             Distance = c.Geometry.STDistance(point),
                             Wkt = c.Geometry.STAsText(),
+                            EWkt = c.Geometry.STAsEWKT(),
                         });
 
                 var list = query.ToList();

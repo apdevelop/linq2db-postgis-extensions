@@ -30,15 +30,10 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 // Test data
                 const string ewkt = "SRID=2249;POLYGON((743238 2967416,743238 2967450, 743265 2967450,743265.625 2967416,743238 2967416))";
                 db.Insert(new TestGeometryEntity(1, null));
-                var geometry = db.TestGeometries
-                    .Select(g => GeometryInput.STGeomFromEWKT(ewkt))
-                    .Single();
+                var geometry = db.TestGeometries.Select(g => GeometryInput.STGeomFromEWKT(ewkt)).Single();
                 db.Update(new TestGeometryEntity(1, geometry));
 
-                var area = db.TestGeometries
-                    .Select(g => g.Geometry.STArea())
-                    .Single();
-
+                var area = db.TestGeometries.Select(g => g.Geometry.STArea()).Single();
                 Assert.AreEqual(928.625, area);
             }
         }
@@ -73,6 +68,68 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 Assert.AreEqual(2, distances3857.Count);
                 Assert.AreEqual(0.0, distances3857[0]);
                 Assert.AreEqual(167.441410065196, distances3857[1], 1.0E9);
+            }
+        }
+
+        [Test]
+        public void TestSTLength()
+        {
+            // https://postgis.net/docs/manual-3.0/ST_Length.html
+
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string ewkt = "SRID=2249;LINESTRING(743238 2967416,743238 2967450,743265 2967450, 743265.625 2967416,743238 2967416)";
+                db.Insert(new TestGeometryEntity(1, null));
+                var geometry = db.TestGeometries.Select(g => GeometryInput.STGeomFromEWKT(ewkt)).Single();
+                db.Update(new TestGeometryEntity(1, geometry));
+
+                var length = db.TestGeometries
+                    .Select(g => g.Geometry.STLength())
+                    .Single();
+
+                Assert.AreEqual(122.630744000095, length, 0.000000000001);
+            }
+        }
+
+        [Test]
+        public void TestSTPerimeter()
+        {
+            // https://postgis.net/docs/manual-3.0/ST_Perimeter.html
+
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string ewkt1 = "SRID=2249;POLYGON((743238 2967416,743238 2967450,743265 2967450, 743265.625 2967416,743238 2967416))";
+                db.Insert(new TestGeometryEntity(1, null));
+                var geometry1 = db.TestGeometries.Where(g => g.Id == 1).Select(g => GeometryInput.STGeomFromEWKT(ewkt1)).Single();
+                db.Update(new TestGeometryEntity(1, geometry1));
+
+                const string ewkt2 = @"SRID=2249;
+                    MULTIPOLYGON(((763104.471273676 2949418.44119003,
+                        763104.477769673 2949418.42538203,
+                        763104.189609677 2949418.22343004,763104.471273676 2949418.44119003)),
+                        ((763104.471273676 2949418.44119003,763095.804579742 2949436.33850239,
+                        763086.132105649 2949451.46730207,763078.452329651 2949462.11549407,
+                        763075.354136904 2949466.17407812,763064.362142565 2949477.64291974,
+                        763059.953961626 2949481.28983009,762994.637609571 2949532.04103014,
+                        762990.568508415 2949535.06640477,762986.710889563 2949539.61421415,
+                        763117.237897679 2949709.50493431,763235.236617789 2949617.95619822,
+                        763287.718121842 2949562.20592617,763111.553321674 2949423.91664605,
+                        763104.471273676 2949418.44119003)))";
+                db.Insert(new TestGeometryEntity(2, null));
+                var geometry2 = db.TestGeometries.Where(g => g.Id == 2).Select(g => GeometryInput.STGeomFromEWKT(ewkt2)).Single();
+                db.Update(new TestGeometryEntity(2, geometry2));
+
+                var perimeter1 = db.TestGeometries
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geometry.STPerimeter())
+                    .Single();
+                Assert.AreEqual(122.630744000095, perimeter1, 0.000000000001);
+
+                var perimeter2 = db.TestGeometries
+                    .Where(g => g.Id == 2)
+                    .Select(g => g.Geometry.STPerimeter())
+                    .Single();
+                Assert.AreEqual(845.227713366825, perimeter2, 0.000000000001);
             }
         }
     }
