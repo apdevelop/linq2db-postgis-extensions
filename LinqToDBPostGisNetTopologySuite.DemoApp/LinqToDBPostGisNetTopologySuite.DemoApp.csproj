@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="linq2db" Version="3.1.4" />
+    <PackageReference Include="linq2db" Version="3.1.5" />
     <PackageReference Include="NetTopologySuite" Version="2.1.0" />
     <PackageReference Include="NetTopologySuite.IO.PostGis" Version="2.0.0" />
     <PackageReference Include="Npgsql" Version="4.1.5" />
