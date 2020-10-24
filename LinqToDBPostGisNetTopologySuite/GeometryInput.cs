@@ -6,19 +6,20 @@ using NTSG = NetTopologySuite.Geometries.Geometry;
 
 namespace LinqToDBPostGisNetTopologySuite
 {
-    // Chapter 8. PostGIS Reference
-    // https://postgis.net/docs/manual-3.0/reference.html
-
     /// <summary>
-    /// 8.8. Geometry Output
-    /// https://postgis.net/docs/manual-3.0/reference.html#Geometry_Inputs
+    /// Geometry Input
     /// </summary>
+    /// <remarks>
+    /// 8.8. Geometry Input https://postgis.net/docs/manual-3.0/reference.html#Geometry_Inputs
+    /// </remarks>
     public static class GeometryInput
     {
         /// <summary>
-        /// Constructs a PostGIS ST_Geometry object from the OGC Extended Well-Known Text (EWKT) representation.
-        /// https://postgis.net/docs/manual-3.0/ST_GeomFromEWKT.html
+        /// Constructs geometry from the Extended Well-Known Text (EWKT) representation.
         /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_GeomFromEWKT.html
+        /// </remarks>
         /// <param name="ewkt">Extended Well-Known Text (EWKT)</param>
         /// <returns>Geometry</returns>
         [Sql.Function("ST_GeomFromEWKT", ServerSideOnly = true)]
@@ -28,9 +29,11 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
-        /// Constructs a PostGIS ST_Geometry object from the OGC Well-Known Text (WKT) representation.
-        /// https://postgis.net/docs/manual-3.0/ST_GeomFromText.html
+        /// Constructs geometry from the OGC Well-Known Text (WKT) representation.
         /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_GeomFromText.html
+        /// </remarks>
         /// <param name="wkt">Well-Known Text (WKT)</param>
         /// <returns>Geometry</returns>
         [Sql.Function("ST_GeomFromText", ServerSideOnly = true)]
@@ -40,9 +43,11 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
-        /// Constructs a PostGIS ST_Geometry object from the OGC Well-Known Text (WKT) representation.
-        /// https://postgis.net/docs/manual-3.0/ST_GeomFromText.html
+        /// Constructs geometry from the OGC Well-Known Text (WKT) representation with given SRID.
         /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_GeomFromText.html
+        /// </remarks>
         /// <param name="wkt">Well-Known Text (WKT)</param>
         /// <param name="srid">SRID of geometry</param>
         /// <returns>Geometry</returns>

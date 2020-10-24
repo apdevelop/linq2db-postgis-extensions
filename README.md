@@ -7,6 +7,7 @@ C# .NET Standard 2.0 library with OGC extensions methods on geometry (`NpgsqlTyp
 | -------------- |:---------------------------:|:------------------------------------:|
 | Extending type | `NpgsqlTypes.PostgisGeometry` | `NetTopologySuite.Geometries.Geometry` |
 | Npgsql version | 3.x                         | 4.x                                  |
+| PostGIS reference version     | 1.5                      | 3.0                      |
 | Status         | Legacy                      | Recommended way                      |
 | Dependencies   | linq2db, Npgsql           | linq2db, Npgsql, NetTopologySuite, Npgsql.NetTopologySuite, NetTopologySuite.IO.PostGis |
 

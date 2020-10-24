@@ -6,19 +6,20 @@ using NTSG = NetTopologySuite.Geometries.Geometry;
 
 namespace LinqToDBPostGisNetTopologySuite
 {
-    // Chapter 8. PostGIS Reference
-    // https://postgis.net/docs/manual-3.0/reference.html
-
     /// <summary>
-    /// 8.11. Spatial Relationships
-    /// https://postgis.net/docs/manual-3.0/reference.html#Spatial_Relationships
+    /// Spatial Relationships
     /// </summary>
+    /// <remarks>
+    /// 8.11. Spatial Relationships https://postgis.net/docs/manual-3.0/reference.html#Spatial_Relationships
+    /// </remarks>
     public static class SpatialRelationships
     {
         /// <summary>
-        /// Returns TRUE if geometry 2 is completely inside geometry 1.
-        /// https://postgis.net/docs/manual-3.0/ST_Contains.html
+        /// Returns true if geometry 2 is completely inside geometry 1.
         /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_Contains.html
+        /// </remarks>
         /// <param name="geometry">Input geometry 1</param>
         /// <param name="other">Input geometry 2</param>
         /// <returns>Is contains</returns>
@@ -29,12 +30,14 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
-        /// Returns true if no point in other geometry 2 is outside geometry 1
-        /// https://postgis.net/docs/manual-3.0/ST_Covers.html
+        /// Returns true if no point in geometry 2 is outside geometry 1
         /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_Covers.html
+        /// </remarks>
         /// <param name="geometry">Input geometry 1</param>
         /// <param name="other">Input geometry 2</param>
-        /// <returns>Is intersects</returns>
+        /// <returns>Is covers</returns>
         [Sql.Function("ST_Covers", ServerSideOnly = true)]
         public static bool STCovers(this NTSG geometry, NTSG other)
         {
@@ -43,8 +46,10 @@ namespace LinqToDBPostGisNetTopologySuite
 
         /// <summary>
         /// Tests if two geometries shares any portion of space then they intersect.
-        /// https://postgis.net/docs/manual-3.0/ST_Intersects.html
         /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_Intersects.html
+        /// </remarks>
         /// <param name="geometry">Input geometry 1</param>
         /// <param name="other">Input geometry 2</param>
         /// <returns>Is intersects</returns>

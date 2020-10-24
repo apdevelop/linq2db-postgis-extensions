@@ -26,7 +26,7 @@ namespace LinqToDBPostGisNpgsqlTypes
         /// http://postgis.refractions.net/documentation/manual-1.5/ST_SetSRID.html
         /// </summary>
         /// <param name="geom">Input geometry</param>
-        /// <param name="srid">Spatial reference system ID</param>
+        /// <param name="srid">Spatial Reference System Identifier</param>
         /// <returns></returns>
         [Sql.Function("ST_SetSRID", ServerSideOnly = true)]
         public static PostgisGeometry STSetSrid(this PostgisGeometry geom, int srid)
@@ -39,7 +39,7 @@ namespace LinqToDBPostGisNpgsqlTypes
         /// http://postgis.refractions.net/documentation/manual-1.5/ST_Transform.html
         /// </summary>
         /// <param name="geom">Input geometry</param>
-        /// <param name="srid">Spatial reference system ID</param>
+        /// <param name="srid">Spatial Reference System Identifier</param>
         /// <returns>Transformed geometry</returns>
         [Sql.Function("ST_Transform", ServerSideOnly = true)]
         public static PostgisGeometry STTransform(this PostgisGeometry geom, int srid)
