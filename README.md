@@ -9,6 +9,7 @@ C# .NET Standard 2.0 library with OGC extensions methods on geometry (`NpgsqlTyp
 | Npgsql version | 3.x                         | 4.x                                  |
 | PostGIS reference version     | 1.5                      | 3.0                      |
 | Status         | Legacy                      | Recommended way                      |
+| NuGet          |   &mdash;       |  [![NuGet](https://img.shields.io/nuget/v/LinqToDBPostGisNTS.svg)](https://www.nuget.org/packages/LinqToDBPostGisNTS/) |
 | Dependencies   | linq2db, Npgsql           | linq2db, Npgsql, NetTopologySuite, Npgsql.NetTopologySuite, NetTopologySuite.IO.PostGis |
 
 ### Usage
@@ -93,7 +94,6 @@ Depends on [linq2db](https://github.com/linq2db/linq2db), [Npgsql](https://githu
 ### TODOs
  * Implement more of PostGIS spatial methods.
  * Support of PostGIS `geography` data type.
- * Nuget package.
  * More automated tests (without external sql scripts)
  
 ### References
