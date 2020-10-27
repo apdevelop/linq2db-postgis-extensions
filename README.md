@@ -94,7 +94,8 @@ Depends on [linq2db](https://github.com/linq2db/linq2db), [Npgsql](https://githu
 ### TODOs
  * Implement more of PostGIS spatial methods.
  * Support of PostGIS `geography` data type.
- * More automated tests (without external sql scripts)
+ * More tests for methods.
+ * Tests for edge / corner cases of inputs.
  
 ### References
 * [PostGIS Reference](https://postgis.net/docs/manual-3.0/reference.html)
