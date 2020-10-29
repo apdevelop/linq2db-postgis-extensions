@@ -1,11 +1,7 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 using LinqToDB;
 using NUnit.Framework;
-using NTSG = NetTopologySuite.Geometries;
-
-using LinqToDBPostGisNetTopologySuite.Tests.Entities;
 
 namespace LinqToDBPostGisNetTopologySuite.Tests
 {
@@ -27,9 +23,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 const string wkt1 = "POINT(100 250)";
-                db.Insert(new TestGeometryEntity(1, null));
-                var geometry1 = db.TestGeometries.Select(g => GeometryInput.STGeomFromText(wkt1)).Single();
-                db.Update(new TestGeometryEntity(1, geometry1));
+                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(wkt1)).Insert();
 
                 var srid1 = db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STSrId()).Single();
                 Assert.AreEqual(0, srid1);
@@ -38,9 +32,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 Assert.AreEqual("POINT(100 250)", ewkt1);
 
                 const string wkt2 = "POINT(100 250)";
-                db.Insert(new TestGeometryEntity(2, null));
-                var geometry2 = db.TestGeometries.Where(g => g.Id == 2).Select(g => GeometryInput.STGeomFromText(wkt2, SRID3857)).Single();
-                db.Update(new TestGeometryEntity(2, geometry2));
+                db.TestGeometries.Value(g => g.Id, 2).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(wkt2, SRID3857)).Insert();
 
                 var srid2 = db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STSrId()).Single();
                 Assert.AreEqual(SRID3857, srid2);
