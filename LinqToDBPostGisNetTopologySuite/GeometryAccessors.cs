@@ -43,6 +43,20 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
+        /// Returns the coordinate dimension of given geometry.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_CoordDim.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <returns>Coordinate  dimension</returns>
+        [Sql.Function("ST_CoordDim", ServerSideOnly = true)]
+        public static int? STCoordDim(this NTSG geometry)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
         /// Returns the topological dimension of geometry, which must be less than or equal to the coordinate dimension.
         /// </summary>
         /// <remarks>
@@ -51,7 +65,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry</param>
         /// <returns>Topological dimension</returns>
         [Sql.Function("ST_Dimension", ServerSideOnly = true)]
-        public static int STDimension(this NTSG geometry)
+        public static int? STDimension(this NTSG geometry)
         {
             throw new InvalidOperationException();
         }
@@ -114,6 +128,20 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
+        /// Returns the type of geometry as string.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_GeometryType.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <returns>Geometry type string (with ST_ prefix)</returns>
+        [Sql.Function("ST_GeometryType", ServerSideOnly = true)]
+        public static string STGeometryType(this NTSG geometry)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
         /// Returns true if the LINESTRING's start and end points are coincident. For Polyhedral Surfaces, reports if the surface is areal (open) or volumetric (closed).
         /// </summary>
         /// <remarks>
@@ -122,7 +150,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry</param>
         /// <returns>Topological dimension</returns>
         [Sql.Function("ST_IsClosed", ServerSideOnly = true)]
-        public static bool STIsClosed(this NTSG geometry)
+        public static bool? STIsClosed(this NTSG geometry)
         {
             throw new InvalidOperationException();
         }
@@ -150,7 +178,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry</param>
         /// <returns>Is ring</returns>
         [Sql.Function("ST_IsRing", ServerSideOnly = true)]
-        public static bool STIsRing(this NTSG geometry)
+        public static bool? STIsRing(this NTSG geometry)
         {
             throw new InvalidOperationException();
         }
@@ -164,7 +192,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry</param>
         /// <returns>Is simple</returns>
         [Sql.Function("ST_IsSimple", ServerSideOnly = true)]
-        public static bool STIsSimple(this NTSG geometry)
+        public static bool? STIsSimple(this NTSG geometry)
         {
             throw new InvalidOperationException();
         }
@@ -192,7 +220,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry</param>
         /// <returns>Number of points</returns>
         [Sql.Function("ST_NPoints", ServerSideOnly = true)]
-        public static int STNPoints(this NTSG geometry)
+        public static int? STNPoints(this NTSG geometry)
         {
             throw new InvalidOperationException();
         }
@@ -206,7 +234,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry</param>
         /// <returns>Number of geometries</returns>
         [Sql.Function("ST_NumGeometries", ServerSideOnly = true)]
-        public static int STNumGeometries(this NTSG geometry)
+        public static int? STNumGeometries(this NTSG geometry)
         {
             throw new InvalidOperationException();
         }
@@ -220,7 +248,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry</param>
         /// <returns>Number of interior rings</returns>
         [Sql.Function("ST_NumInteriorRings", ServerSideOnly = true)]
-        public static int STNumInteriorRings(this NTSG geometry)
+        public static int? STNumInteriorRings(this NTSG geometry)
         {
             throw new InvalidOperationException();
         }
@@ -234,7 +262,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry</param>
         /// <returns>Number of points</returns>
         [Sql.Function("ST_NumPoints", ServerSideOnly = true)]
-        public static int STNumPoints(this NTSG geometry)
+        public static int? STNumPoints(this NTSG geometry)
         {
             throw new InvalidOperationException();
         }
@@ -277,7 +305,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry</param>
         /// <returns>X coordinate</returns>
         [Sql.Function("ST_X", ServerSideOnly = true)]
-        public static double STX(this NTSG geometry)
+        public static double? STX(this NTSG geometry)
         {
             throw new InvalidOperationException();
         }
@@ -291,7 +319,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry</param>
         /// <returns>Y coordinate</returns>
         [Sql.Function("ST_Y", ServerSideOnly = true)]
-        public static double STY(this NTSG geometry)
+        public static double? STY(this NTSG geometry)
         {
             throw new InvalidOperationException();
         }

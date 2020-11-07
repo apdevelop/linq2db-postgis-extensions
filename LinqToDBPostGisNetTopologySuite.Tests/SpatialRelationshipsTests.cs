@@ -19,7 +19,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
-        public void TestSTCovers()
+        public void TestSTCoversSTExteriorRing()
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
@@ -29,6 +29,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 const string wkt2 = "POINT(1 2)";
                 db.TestGeometries.Value(g => g.Id, 2).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(wkt2).STBuffer(20)).Insert();
                 var bigc = db.TestGeometries.Single(g => g.Id == 2).Geometry;
+                db.TestGeometries.Value(g => g.Id, 3).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(wkt1)).Insert();
 
                 Assert.IsTrue(db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STCovers(smallc)).Single());
                 Assert.IsFalse(db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STCovers(bigc)).Single());
@@ -39,6 +40,8 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 Assert.IsTrue(db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STCoveredBy(bigc)).Single());
                 Assert.IsTrue(db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STExteriorRing().STCoveredBy(bigc)).Single());
                 Assert.IsFalse(db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STExteriorRing().STWithin(bigc)).Single());
+
+                Assert.IsNull(db.TestGeometries.Where(g => g.Id == 3).Select(g => g.Geometry.STExteriorRing()).Single());
             }
         }
 
