@@ -1,5 +1,5 @@
 # Linq2db PostGIS Extensions
-C# .NET Standard 2.0 library with OGC extensions methods on geometry (`NpgsqlTypes.PostgisGeometry` or `NetTopologySuite.Geometries.Geometry`) instances, providing access to [PostGIS](http://postgis.net/) functions on server side while using [linq2db](https://github.com/linq2db/linq2db) LINQ to database provider (lightweight ORM).
+.NET Standard 2.0 library with OGC extensions methods on geometry (`NpgsqlTypes.PostgisGeometry` or `NetTopologySuite.Geometries.Geometry`) instances, providing access to [PostGIS](http://postgis.net/) functions on server side while using [linq2db](https://github.com/linq2db/linq2db) LINQ to database provider (lightweight ORM).
 
 ### Two implementations
 
@@ -92,10 +92,8 @@ Depends on [linq2db](https://github.com/linq2db/linq2db), [Npgsql](https://githu
 * Run application, view table data along with PostGIS functions results in console output.
 
 ### TODOs
- * Implement more of PostGIS spatial methods.
- * Support of PostGIS `geography` data type.
- * More tests for methods.
- * Tests for edge / corner cases of inputs.
+ * Implement full set of PostGIS methods.
+ * Add support for PostGIS `geography` data type.
  
 ### References
 * [PostGIS Reference](https://postgis.net/docs/manual-3.0/reference.html)
