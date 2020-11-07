@@ -39,6 +39,10 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 var ewkt2 = db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STAsEWKT()).Single();
                 Assert.AreEqual("SRID=3857;POINT(100 250)", ewkt2);
+
+                db.TestGeometries.Value(g => g.Id, 3).Value(p => p.Geometry, () => null).Insert();
+                var srid3 = db.TestGeometries.Where(g => g.Id == 3).Select(g => g.Geometry.STSrId()).Single();
+                Assert.IsNull(srid3);
             }
         }
     }

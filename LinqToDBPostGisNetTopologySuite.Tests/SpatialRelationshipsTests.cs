@@ -19,7 +19,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
-        public void TestSTCoversSTExteriorRing()
+        public void TestSTContainsSTCoversSTExteriorRing()
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
@@ -41,7 +41,11 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 Assert.IsTrue(db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STExteriorRing().STCoveredBy(bigc)).Single());
                 Assert.IsFalse(db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STExteriorRing().STWithin(bigc)).Single());
 
+                Assert.IsNull(db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STContains(null)).Single());
+                Assert.IsNull(db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STCovers(null)).Single());
+                Assert.IsNull(db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STCoveredBy(null)).Single());
                 Assert.IsNull(db.TestGeometries.Where(g => g.Id == 3).Select(g => g.Geometry.STExteriorRing()).Single());
+                Assert.IsNull(db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STExteriorRing().STWithin(null)).Single());
             }
         }
 
@@ -58,6 +62,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var point = new NTSG.Point(new NTSG.Coordinate(0, 0));
                 Assert.IsTrue(db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STDisjoint(point)).Single());
                 Assert.IsFalse(db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STDisjoint(point)).Single());
+                Assert.IsNull(db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STDisjoint(null)).Single());
             }
         }
 
@@ -74,6 +79,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var geometry2 = db.TestGeometries.Where(g => g.Id == 2).Single().Geometry;
                 Assert.IsTrue(db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STEquals(geometry2)).Single());
                 Assert.IsTrue(db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STReverse().STEquals(geometry2)).Single());
+                Assert.IsNull(db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STReverse().STEquals(null)).Single());
             }
         }
 
@@ -89,11 +95,9 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 var point = new NTSG.Point(new NTSG.Coordinate(0, 0));
 
-                var intersects1 = db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STIntersects(point)).Single();
-                var intersects2 = db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STIntersects(point)).Single();
-
-                Assert.IsFalse(intersects1);
-                Assert.IsTrue(intersects2);
+                Assert.IsFalse(db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STIntersects(point)).Single());
+                Assert.IsTrue(db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STIntersects(point)).Single());
+                Assert.IsNull(db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STIntersects(null)).Single());
             }
         }
 
@@ -110,6 +114,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var geometry2 = db.TestGeometries.Single(g => g.Id == 2).Geometry;
                 Assert.IsTrue(db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STOrderingEquals(geometry2)).Single());
                 Assert.IsFalse(db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STReverse().STOrderingEquals(geometry2)).Single());
+                Assert.IsNull(db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STReverse().STOrderingEquals(null)).Single());
             }
         }
     }

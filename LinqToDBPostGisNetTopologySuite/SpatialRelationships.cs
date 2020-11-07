@@ -24,7 +24,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2</param>
         /// <returns>Is contains</returns>
         [Sql.Function("ST_Contains", ServerSideOnly = true)]
-        public static bool STContains(this NTSG geometry, NTSG other)
+        public static bool? STContains(this NTSG geometry, NTSG other)
         {
             throw new InvalidOperationException();
         }
@@ -39,7 +39,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2</param>
         /// <returns>Is covers</returns>
         [Sql.Function("ST_Covers", ServerSideOnly = true)]
-        public static bool STCovers(this NTSG geometry, NTSG other)
+        public static bool? STCovers(this NTSG geometry, NTSG other)
         {
             throw new InvalidOperationException();
         }
@@ -54,7 +54,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2</param>
         /// <returns>Is covered by</returns>
         [Sql.Function("ST_CoveredBy", ServerSideOnly = true)]
-        public static bool STCoveredBy(this NTSG geometry, NTSG other)
+        public static bool? STCoveredBy(this NTSG geometry, NTSG other)
         {
             throw new InvalidOperationException();
         }
@@ -69,7 +69,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2</param>
         /// <returns>Is crosses</returns>
         [Sql.Function("ST_Crosses", ServerSideOnly = true)]
-        public static bool STCrosses(this NTSG geometry, NTSG other)
+        public static bool? STCrosses(this NTSG geometry, NTSG other)
         {
             throw new InvalidOperationException();
         }
@@ -84,7 +84,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2</param>
         /// <returns>Is disjoints</returns>
         [Sql.Function("ST_Disjoint", ServerSideOnly = true)]
-        public static bool STDisjoint(this NTSG geometry, NTSG other)
+        public static bool? STDisjoint(this NTSG geometry, NTSG other)
         {
             throw new InvalidOperationException();
         }
@@ -100,7 +100,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="distance">Distance in units defined by the spatial reference system</param>
         /// <returns>Is geometries are within distance</returns>
         [Sql.Function("ST_DWithin", ServerSideOnly = true)]
-        public static bool STDWithin(this NTSG geometry, NTSG other, double distance)
+        public static bool? STDWithin(this NTSG geometry, NTSG other, double distance)
         {
             throw new InvalidOperationException();
         }
@@ -115,7 +115,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2</param>
         /// <returns>Are spatially equal</returns>
         [Sql.Function("ST_Equals", ServerSideOnly = true)]
-        public static bool STEquals(this NTSG geometry, NTSG other)
+        public static bool? STEquals(this NTSG geometry, NTSG other)
         {
             throw new InvalidOperationException();
         }
@@ -130,7 +130,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2</param>
         /// <returns>Is intersects</returns>
         [Sql.Function("ST_Intersects", ServerSideOnly = true)]
-        public static bool STIntersects(this NTSG geometry, NTSG other)
+        public static bool? STIntersects(this NTSG geometry, NTSG other)
         {
             throw new InvalidOperationException();
         }
@@ -145,7 +145,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2</param>
         /// <returns>Is equal and coordinates are in the same order</returns>
         [Sql.Function("ST_OrderingEquals", ServerSideOnly = true)]
-        public static bool STOrderingEquals(this NTSG geometry, NTSG other)
+        public static bool? STOrderingEquals(this NTSG geometry, NTSG other)
         {
             throw new InvalidOperationException();
         }
@@ -160,7 +160,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2</param>
         /// <returns>Is spatially overlap</returns>
         [Sql.Function("ST_Overlaps", ServerSideOnly = true)]
-        public static bool STOverlaps(this NTSG geometry, NTSG other)
+        public static bool? STOverlaps(this NTSG geometry, NTSG other)
         {
             throw new InvalidOperationException();
         }
@@ -175,7 +175,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2</param>
         /// <returns>Is touches</returns>
         [Sql.Function("ST_Touches", ServerSideOnly = true)]
-        public static bool STTouches(this NTSG geometry, NTSG other)
+        public static bool? STTouches(this NTSG geometry, NTSG other)
         {
             throw new InvalidOperationException();
         }
@@ -190,7 +190,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2</param>
         /// <returns>Is within</returns>
         [Sql.Function("ST_Within", ServerSideOnly = true)]
-        public static bool STWithin(this NTSG geometry, NTSG other)
+        public static bool? STWithin(this NTSG geometry, NTSG other)
         {
             throw new InvalidOperationException();
         }

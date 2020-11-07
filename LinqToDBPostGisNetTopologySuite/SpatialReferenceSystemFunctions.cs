@@ -23,7 +23,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry</param>
         /// <returns>Spatial Reference System Identifier</returns>
         [Sql.Function("ST_SRID", ServerSideOnly = true)]
-        public static int STSrId(this NTSG geometry)
+        public static int? STSrId(this NTSG geometry)
         {
             throw new InvalidOperationException();
         }
