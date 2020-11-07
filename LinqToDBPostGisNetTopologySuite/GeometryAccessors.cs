@@ -198,7 +198,7 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
-        /// Returns M coordinate of Point, or null if not available. Input must be a Point.
+        /// Returns M coordinate (measure) of Point, or null if not available. Input must be a Point.
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_M.html
