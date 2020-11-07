@@ -25,11 +25,20 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                const string ewkt = "SRID=2249;POLYGON((743238 2967416,743238 2967450, 743265 2967450,743265.625 2967416,743238 2967416))";
-                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STGeomFromEWKT(ewkt)).Insert();
+                const string ewkt1 = "SRID=2249;POLYGON((743238 2967416,743238 2967450, 743265 2967450,743265.625 2967416,743238 2967416))";
+                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STGeomFromEWKT(ewkt1)).Insert();
+                const string wkt2 = "LINESTRING(0 0, 1 1)";
+                db.TestGeometries.Value(g => g.Id, 2).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(wkt2)).Insert();
+                db.TestGeometries.Value(g => g.Id, 3).Value(p => p.Geometry, () => null).Insert();
 
-                var area = db.TestGeometries.Select(g => g.Geometry.STArea()).Single();
-                Assert.AreEqual(928.625, area);
+                var area1 = db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STArea()).Single();
+                Assert.AreEqual(928.625, area1);
+
+                var area2 = db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STArea()).Single();
+                Assert.AreEqual(0.0, area2);
+
+                var area3 = db.TestGeometries.Where(g => g.Id == 3).Select(g => g.Geometry.STArea()).Single();
+                Assert.IsNull(area3);
             }
         }
 
@@ -39,8 +48,8 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 var point = new NTSG.Point(new NTSG.Coordinate(-72.1235, 42.3521)) { SRID = SRID4326 };
-                var lineString = new NTSG.LineString(new[] { new NTSG.Coordinate(-72.1260, 42.45), new NTSG.Coordinate(-72.123, 42.1546) }) { SRID = SRID4326 };
                 db.Insert(new TestGeometryEntity(1, point));
+                var lineString = new NTSG.LineString(new[] { new NTSG.Coordinate(-72.1260, 42.45), new NTSG.Coordinate(-72.123, 42.1546) }) { SRID = SRID4326 };
                 db.Insert(new TestGeometryEntity(2, lineString));
 
                 // Geometry example - units in planar degrees 4326 is WGS 84 long lat, units are degrees.
@@ -56,6 +65,9 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 Assert.AreEqual(2, distances3857.Count);
                 Assert.AreEqual(0.0, distances3857[0]);
                 Assert.AreEqual(167.441410065196, distances3857[1], 1.0E9);
+
+                var nullDistance = db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STDistance(null)).Single();
+                Assert.IsNull(nullDistance);
             }
         }
 
@@ -64,12 +76,20 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                const string ewkt = "SRID=2249;LINESTRING(743238 2967416,743238 2967450,743265 2967450, 743265.625 2967416,743238 2967416)";
-                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STGeomFromEWKT(ewkt)).Insert();
+                const string ewkt1 = "SRID=2249;LINESTRING(743238 2967416,743238 2967450,743265 2967450, 743265.625 2967416,743238 2967416)";
+                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STGeomFromEWKT(ewkt1)).Insert();
+                const string ewkt2 = "SRID=2249;POINT(0 0)";
+                db.TestGeometries.Value(g => g.Id, 2).Value(p => p.Geometry, () => GeometryInput.STGeomFromEWKT(ewkt2)).Insert();
+                db.TestGeometries.Value(g => g.Id, 3).Value(p => p.Geometry, () => null).Insert();
 
-                var length = db.TestGeometries.Select(g => g.Geometry.STLength()).Single();
+                var length1 = db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STLength()).Single();
+                Assert.AreEqual(122.630744000095, length1, 0.000000000001);
 
-                Assert.AreEqual(122.630744000095, length, 0.000000000001);
+                var length2 = db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STLength()).Single();
+                Assert.AreEqual(0.0, length2);
+
+                var length3 = db.TestGeometries.Where(g => g.Id == 3).Select(g => g.Geometry.STLength()).Single();
+                Assert.IsNull(length3);
             }
         }
 
@@ -95,17 +115,21 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                         763104.471273676 2949418.44119003)))";
                 db.TestGeometries.Value(g => g.Id, 2).Value(p => p.Geometry, () => GeometryInput.STGeomFromEWKT(ewkt2)).Insert();
 
-                var perimeter1 = db.TestGeometries
-                    .Where(g => g.Id == 1)
-                    .Select(g => g.Geometry.STPerimeter())
-                    .Single();
+                const string ewkt3 = "SRID=2249;POINT(0 0)";
+                db.TestGeometries.Value(g => g.Id, 3).Value(p => p.Geometry, () => GeometryInput.STGeomFromEWKT(ewkt3)).Insert();
+                db.TestGeometries.Value(g => g.Id, 4).Value(p => p.Geometry, () => null).Insert();
+
+                var perimeter1 = db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STPerimeter()).Single();
                 Assert.AreEqual(122.630744000095, perimeter1, 0.000000000001);
 
-                var perimeter2 = db.TestGeometries
-                    .Where(g => g.Id == 2)
-                    .Select(g => g.Geometry.STPerimeter())
-                    .Single();
+                var perimeter2 = db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STPerimeter()).Single();
                 Assert.AreEqual(845.227713366825, perimeter2, 0.000000000001);
+
+                var perimeter3 = db.TestGeometries.Where(g => g.Id == 3).Select(g => g.Geometry.STPerimeter()).Single();
+                Assert.AreEqual(0.0, perimeter3);
+
+                var perimeter4 = db.TestGeometries.Where(g => g.Id == 4).Select(g => g.Geometry.STPerimeter()).Single();
+                Assert.IsNull(perimeter4);
             }
         }
     }

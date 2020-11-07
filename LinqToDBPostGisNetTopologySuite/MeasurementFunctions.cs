@@ -23,7 +23,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry</param>
         /// <returns>Area</returns>
         [Sql.Function("ST_Area", ServerSideOnly = true)]
-        public static double STArea(this NTSG geometry)
+        public static double? STArea(this NTSG geometry)
         {
             throw new InvalidOperationException();
         }
@@ -38,7 +38,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2</param>
         /// <returns>Distance between two geometries</returns>
         [Sql.Function("ST_Distance", ServerSideOnly = true)]
-        public static double STDistance(this NTSG geometry, NTSG other)
+        public static double? STDistance(this NTSG geometry, NTSG other)
         {
             throw new InvalidOperationException();
         }
@@ -52,7 +52,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry</param>
         /// <returns>Length</returns>
         [Sql.Function("ST_Length", ServerSideOnly = true)]
-        public static double STLength(this NTSG geometry)
+        public static double? STLength(this NTSG geometry)
         {
             throw new InvalidOperationException();
         }
@@ -66,7 +66,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry</param>
         /// <returns>Perimeter</returns>
         [Sql.Function("ST_Perimeter", ServerSideOnly = true)]
-        public static double STPerimeter(this NTSG geometry)
+        public static double? STPerimeter(this NTSG geometry)
         {
             throw new InvalidOperationException();
         }
