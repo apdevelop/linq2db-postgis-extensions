@@ -69,5 +69,34 @@ namespace LinqToDBPostGisNetTopologySuite
         {
             throw new InvalidOperationException();
         }
+
+        /// <summary>
+        /// Returns GeoHash representation of given geometry
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_GeoHash.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <returns>GeoHash</returns>
+        [Sql.Function("ST_GeoHash", ServerSideOnly = true)]
+        public static string STGeoHash(this NTSG geometry)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns GeoHash representation of given geometry
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_GeoHash.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="maxchars">Maximum number of characters (precision)</param>
+        /// <returns>GeoHash</returns>
+        [Sql.Function("ST_GeoHash", ServerSideOnly = true)]
+        public static string STGeoHash(this NTSG geometry, int maxchars)
+        {
+            throw new InvalidOperationException();
+        }
     }
 }

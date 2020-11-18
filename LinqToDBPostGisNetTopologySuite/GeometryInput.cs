@@ -49,7 +49,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// See https://postgis.net/docs/manual-3.0/ST_GeomFromText.html
         /// </remarks>
         /// <param name="wkt">Well-Known Text (WKT)</param>
-        /// <param name="srid">SRID of geometry</param>
+        /// <param name="srid">Spatial Reference System Identifier for geometry</param>
         /// <returns>Geometry</returns>
         [Sql.Function("ST_GeomFromText", ServerSideOnly = true)]
         public static NTSG STGeomFromText(string wkt, int srid)

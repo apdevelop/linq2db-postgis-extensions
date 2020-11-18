@@ -15,6 +15,21 @@ namespace LinqToDBPostGisNetTopologySuite
     public static class SpatialReferenceSystemFunctions
     {
         /// <summary>
+        /// Sets the SRID on a geometry to particular value.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_SetSRID.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="srid">Spatial Reference System Identifier</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_SetSRID", ServerSideOnly = true)]
+        public static NTSG STSetSrId(this NTSG geometry, int srid)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
         /// Returns the spatial reference identifier for the geometry as defined in spatial_ref_sys table.
         /// </summary>
         /// <remarks>
@@ -29,16 +44,63 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
-        /// Returns a new geometry with its coordinates transformed to a different spatial reference system.
+        /// Returns new geometry with coordinates transformed to a different spatial reference system.
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_Transform.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
-        /// <param name="srid">Spatial Reference System Identifier</param>
+        /// <param name="srid">Destination Spatial Reference System Identifier</param>
         /// <returns>Transformed geometry</returns>
         [Sql.Function("ST_Transform", ServerSideOnly = true)]
         public static NTSG STTransform(this NTSG geometry, int srid)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns new geometry with coordinates transformed to a different spatial reference system.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_Transform.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="toProj">Destination spatial reference defined as PROJ.4 string</param>
+        /// <returns>Transformed geometry</returns>
+        [Sql.Function("ST_Transform", ServerSideOnly = true)]
+        public static NTSG STTransform(this NTSG geometry, string toProj)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns new geometry with coordinates transformed to a different spatial reference system.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_Transform.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="fromProj">Input spatial reference defined as PROJ.4 string</param>
+        /// <param name=" toProj">Destination spatial reference defined as PROJ.4 string</param>
+        /// <returns>Transformed geometry</returns>
+        [Sql.Function("ST_Transform", ServerSideOnly = true)]
+        public static NTSG STTransform(this NTSG geometry, string fromProj, string toProj)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns new geometry with coordinates transformed to a different spatial reference system.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_Transform.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="fromProj">Input spatial reference defined as PROJ.4 string</param>
+        /// <param name="toSrid">Destination Spatial Reference System Identifier</param>
+        /// <returns>Transformed geometry</returns>
+        [Sql.Function("ST_Transform", ServerSideOnly = true)]
+        public static NTSG STTransform(this NTSG geometry, string fromProj, int toSrid)
         {
             throw new InvalidOperationException();
         }
