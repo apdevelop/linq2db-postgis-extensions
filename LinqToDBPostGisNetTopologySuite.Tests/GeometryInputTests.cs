@@ -48,6 +48,52 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
+        public void TestGeometryFromWKB()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string wkt1 = "POINT(2 5)";
+                const string wkt2 = "LINESTRING(2 5,2 6)";
+                var wkb1 = db.Select(() => GeometryInput.STGeomFromText(wkt1).STAsBinary());
+                var wkb2 = db.Select(() => GeometryInput.STGeomFromText(wkt2).STAsBinary());
+
+                Assert.AreEqual(wkt1, db.Select(() => GeometryInput.STWKBToSQL(wkb1).STAsText()));
+                Assert.AreEqual(wkt1, db.Select(() => GeometryInput.STGeomFromWKB(wkb1).STAsText()));
+                Assert.AreEqual(wkt1, db.Select(() => GeometryInput.STPointFromWKB(wkb1).STAsText()));
+
+                Assert.AreEqual(SRID3857, db.Select(() => GeometryInput.STGeomFromWKB(wkb1, SRID3857).STSrId()));
+                Assert.AreEqual(SRID3857, db.Select(() => GeometryInput.STPointFromWKB(wkb1, SRID3857).STSrId()));
+
+                Assert.AreEqual(wkt2, db.Select(() => GeometryInput.STGeomFromWKB(wkb2).STAsText()));
+                Assert.AreEqual(wkt2, db.Select(() => GeometryInput.STLineFromWKB(wkb2).STAsText()));
+                Assert.AreEqual(wkt2, db.Select(() => GeometryInput.STLinestringFromWKB(wkb2).STAsText()));
+
+                Assert.AreEqual(SRID3857, db.Select(() => GeometryInput.STGeomFromWKB(wkb2, SRID3857).STSrId()));
+                Assert.AreEqual(SRID3857, db.Select(() => GeometryInput.STLineFromWKB(wkb2, SRID3857).STSrId()));
+                Assert.AreEqual(SRID3857, db.Select(() => GeometryInput.STLinestringFromWKB(wkb2, SRID3857).STSrId()));
+
+                Assert.IsNull(db.Select(() => GeometryInput.STGeomFromEWKB(null)));
+            }
+        }
+
+        [Test]
+        public void TestGeometryFromEWKB()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string ewkt1 = "SRID=4269;LINESTRING(-71.16028 42.258729,-71.160837 42.259112,-71.161143 42.25932)";
+                var ewkb1 = db.Select(() => GeometryInput.STGeomFromEWKT(ewkt1).STAsEWKB());
+
+                var g = db.Select(() => GeometryInput.STGeomFromEWKB(ewkb1));
+
+                Assert.AreEqual(ewkt1, db.Select(() => GeometryInput.STGeomFromEWKB(ewkb1).STAsEWKT()));
+                Assert.AreEqual(ewkt1, db.Select(() => GeometryInput.STGeomFromEWKB(ewkb1).STAsEWKT()));
+
+                Assert.IsNull(db.Select(() => GeometryInput.STGeomFromEWKB(null)));
+            }
+        }
+
+        [Test]
         public void TestSTGeomFromGeoHash()
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))

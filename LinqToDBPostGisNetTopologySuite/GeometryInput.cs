@@ -59,7 +59,155 @@ namespace LinqToDBPostGisNetTopologySuite
             throw new InvalidOperationException();
         }
 
-        // TODO: Implement 8.8.2. Well-Known Binary (WKB)
+        #region 8.8.2. Well-Known Binary (WKB)
+
+        // TODO: geography ST_GeogFromWKB(bytea wkb);
+
+        /// <summary>
+        /// Constructs geometry from Extended Well-Known Binary (EWKB) representation.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_GeomFromEWKB.html
+        /// </remarks>
+        /// <param name="ewkb">Extended Well-Known Binary (EWKB)</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_GeomFromEWKB", ServerSideOnly = true)]
+        public static NTSG STGeomFromEWKB(byte[] ewkb)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs geometry from Well-Known Binary (WKB) representation.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_GeomFromWKB.html
+        /// </remarks>
+        /// <param name="wkb">Well-Known Binary (WKB)</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_GeomFromWKB", ServerSideOnly = true)]
+        public static NTSG STGeomFromWKB(byte[] wkb)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs geometry from Well-Known Binary (WKB) representation with given SRID.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_GeomFromWKB.html
+        /// </remarks>
+        /// <param name="wkb">Well-Known Binary (WKB)</param>
+        /// <param name="srid">Spatial Reference System Identifier for geometry</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_GeomFromWKB", ServerSideOnly = true)]
+        public static NTSG STGeomFromWKB(byte[] wkb, int srid)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs geometry (LINESTRING) from Well-Known Binary (WKB) representation.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_LineFromWKB.html
+        /// </remarks>
+        /// <param name="wkb">Well-Known Binary (WKB)</param>
+        /// <returns>Geometry (LINESTRING)</returns>
+        [Sql.Function("ST_LineFromWKB", ServerSideOnly = true)]
+        public static NTSG STLineFromWKB(byte[] wkb)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs geometry (LINESTRING) from Well-Known Binary (WKB) representation with given SRID.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_LineFromWKB.html
+        /// </remarks>
+        /// <param name="wkb">Well-Known Binary (WKB)</param>
+        /// <param name="srid">Spatial Reference System Identifier for geometry</param>
+        /// <returns>Geometry (LINESTRING)</returns>
+        [Sql.Function("ST_LineFromWKB", ServerSideOnly = true)]
+        public static NTSG STLineFromWKB(byte[] wkb, int srid)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs geometry (LINESTRING) from Well-Known Binary (WKB) representation.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_LinestringFromWKB.html
+        /// </remarks>
+        /// <param name="wkb">Well-Known Binary (WKB)</param>
+        /// <returns>Geometry (LINESTRING)</returns>
+        [Sql.Function("ST_LinestringFromWKB", ServerSideOnly = true)]
+        public static NTSG STLinestringFromWKB(byte[] wkbd)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs geometry (LINESTRING) from Well-Known Binary (WKB) representation with given SRID.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_LinestringFromWKB.html
+        /// </remarks>
+        /// <param name="wkb">Well-Known Binary (WKB)</param>
+        /// <param name="srid">Spatial Reference System Identifier for geometry</param>
+        /// <returns>Geometry (LINESTRING)</returns>
+        [Sql.Function("ST_LinestringFromWKB", ServerSideOnly = true)]
+        public static NTSG STLinestringFromWKB(byte[] wkb, int srid)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs geometry (POINT) from Well-Known Binary (WKB) representation.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_PointFromWKB.html
+        /// </remarks>
+        /// <param name="wkb">Well-Known Binary (WKB)</param>
+        /// <returns>Geometry (POINT)</returns>
+        [Sql.Function("ST_PointFromWKB", ServerSideOnly = true)]
+        public static NTSG STPointFromWKB(byte[] wkb)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs geometry (POINT) from Well-Known Binary (WKB) representation with given SRID.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_PointFromWKB.html
+        /// </remarks>
+        /// <param name="wkb">Well-Known Binary (WKB)</param>
+        /// <param name="srid">Spatial Reference System Identifier for geometry</param>
+        /// <returns>Geometry (POINT)</returns>
+        [Sql.Function("ST_PointFromWKB", ServerSideOnly = true)]
+        public static NTSG STPointFromWKB(byte[] wkb, int srid)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs geometry from Well-Known Binary (WKB) representation.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_WKBToSQL.html
+        /// </remarks>
+        /// <param name="wkb">Well-Known Binary (WKB)</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_WKBToSQL", ServerSideOnly = true)]
+        public static NTSG STWKBToSQL(byte[] wkb)
+        {
+            throw new InvalidOperationException();
+        }
+
+        #endregion
 
         #region 8.8.3. Other Formats
 
@@ -159,7 +307,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_GeomFromTWKB.html
         /// </remarks>
-        /// <param name="twkb">Tiny Well-Known Binary (TWKB)</param>
+        /// <param name="ewkb">Tiny Well-Known Binary (TWKB)</param>
         /// <returns>Geometry</returns>
         [Sql.Function("ST_GeomFromTWKB", ServerSideOnly = true)]
         public static NTSG STGeomFromTWKB(byte[] twkb)

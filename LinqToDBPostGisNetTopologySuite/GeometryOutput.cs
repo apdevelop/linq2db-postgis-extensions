@@ -43,7 +43,7 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
-        /// Returns the Well-Known Binary representation of the geometry.
+        /// Returns the Well-Known Binary (WKB) representation of the geometry.
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_AsBinary.html
@@ -52,6 +52,20 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <returns>Well-Known Binary</returns>
         [Sql.Function("ST_AsBinary", ServerSideOnly = true)]
         public static byte[] STAsBinary(this NTSG geometry) // TODO: NDR_or_XDR version 
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns the Extended Well-Known Binary (EWKB) representation of the geometry.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_AsEWKB.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <returns>Extended Well-Known Binary</returns>
+        [Sql.Function("ST_AsEWKB", ServerSideOnly = true)]
+        public static byte[] STAsEWKB(this NTSG geometry) // TODO: NDR_or_XDR version 
         {
             throw new InvalidOperationException();
         }
