@@ -14,10 +14,72 @@ namespace LinqToDBPostGisNetTopologySuite
     /// </remarks>
     public static class GeometryInput
     {
-        // TODO: Complete 8.8.1. Well-Known Text (WKT)
+        #region 8.8.1. Well-Known Text (WKT)
 
         /// <summary>
-        /// Constructs geometry from the Extended Well-Known Text (EWKT) representation.
+        /// Constructs geometry (POLYGON) from arbitrary collection of closed linestrings as MultiLineString Well-Known Text representation.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_BdPolyFromText.html
+        /// </remarks>
+        /// <param name="wkt">Well-Known Text (WKT)</param>
+        /// <param name="srid">Spatial Reference System Identifier for geometry</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_BdPolyFromText", ServerSideOnly = true)]
+        public static NTSG STBdPolyFromText(string wkt, int srid)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs geometry (MULTIPOLYGON) from arbitrary collection of closed LineStrings, Polygons, MultiLineStrings as Well-Known Text representation.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_BdMPolyFromText.html
+        /// </remarks>
+        /// <param name="wkt">Well-Known Text (WKT)</param>
+        /// <param name="srid">Spatial Reference System Identifier for geometry</param>
+        /// <returns>Geometry (MULTIPOLYGON)</returns>
+        [Sql.Function("ST_BdMPolyFromText", ServerSideOnly = true)]
+        public static NTSG STBdMPolyFromText(string wkt, int srid)
+        {
+            throw new InvalidOperationException();
+        }
+
+        // TODO: geography ST_GeogFromText(text EWKT);
+        // TODO: geography ST_GeographyFromText(text EWKT);
+
+        /// <summary>
+        /// Constructs geometry (GEOMETRYCOLLECTION) from Well-Known Text representation.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_GeomCollFromText.html
+        /// </remarks>
+        /// <param name="wkt">Well-Known Text (WKT)</param>
+        /// <returns>Geometry (GEOMETRYCOLLECTION)</returns>
+        [Sql.Function("ST_GeomCollFromText", ServerSideOnly = true)]
+        public static NTSG STGeomCollFromText(string wkt)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs geometry (GEOMETRYCOLLECTION) from Well-Known Text representation.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_GeomCollFromText.html
+        /// </remarks>
+        /// <param name="wkt">Well-Known Text (WKT)</param>
+        /// <param name="srid">Spatial Reference System Identifier for geometry</param>
+        /// <returns>Geometry (GEOMETRYCOLLECTION)</returns>
+        [Sql.Function("ST_GeomCollFromText", ServerSideOnly = true)]
+        public static NTSG STGeomCollFromText(string wkt, int srid)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs geometry from Extended Well-Known Text (EWKT) representation.
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_GeomFromEWKT.html
@@ -31,7 +93,36 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
-        /// Constructs geometry from the OGC Well-Known Text (WKT) representation.
+        /// Constructs geometry from OGC Well-Known Text (WKT) representation.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_GeometryFromText.html
+        /// </remarks>
+        /// <param name="wkt">Well-Known Text (WKT)</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_GeometryFromText", ServerSideOnly = true)]
+        public static NTSG STGeometryFromText(string wkt)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs geometry from the OGC Well-Known Text (WKT) representation with given SRID.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_GeometryFromText.html
+        /// </remarks>
+        /// <param name="wkt">Well-Known Text (WKT)</param>
+        /// <param name="srid">Spatial Reference System Identifier for geometry</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_GeometryFromText", ServerSideOnly = true)]
+        public static NTSG STGeometryFromText(string wkt, int srid)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs geometry from OGC Well-Known Text (WKT) representation.
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_GeomFromText.html
@@ -58,6 +149,196 @@ namespace LinqToDBPostGisNetTopologySuite
         {
             throw new InvalidOperationException();
         }
+
+        /// <summary>
+        /// Constructs geometry (LINESTRING) from OGC Well-Known Text (WKT) representation.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_LineFromText.html
+        /// </remarks>
+        /// <param name="wkt">Well-Known Text (WKT)</param>
+        /// <returns>Geometry (LINESTRING); null if WKT is not a LINESTRING</returns>
+        [Sql.Function("ST_LineFromText", ServerSideOnly = true)]
+        public static NTSG STLineFromText(string wkt)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs geometry (LINESTRING) from OGC Well-Known Text (WKT) representation with given SRID.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_LineFromText.html
+        /// </remarks>
+        /// <param name="wkt">Well-Known Text (WKT)</param>
+        /// <param name="srid">Spatial Reference System Identifier for geometry</param>
+        /// <returns>Geometry (LINESTRING); null if WKT is not a LINESTRING</returns>
+        [Sql.Function("ST_LineFromText", ServerSideOnly = true)]
+        public static NTSG STLineFromText(string wkt, int srid)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs geometry (MULTILINESTRING) from OGC Well-Known Text (WKT) representation.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_MLineFromText.html
+        /// </remarks>
+        /// <param name="wkt">Well-Known Text (WKT)</param>
+        /// <returns>Geometry (MULTILINESTRING); null if WKT is not a MULTILINESTRING</returns>
+        [Sql.Function("ST_MLineFromText", ServerSideOnly = true)]
+        public static NTSG STMLineFromText(string wkt)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs geometry (MULTILINESTRING) from OGC Well-Known Text (WKT) representation with given SRID.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_MLineFromText.html
+        /// </remarks>
+        /// <param name="wkt">Well-Known Text (WKT)</param>
+        /// <param name="srid">Spatial Reference System Identifier for geometry</param>
+        /// <returns>Geometry (MULTILINESTRING); null if WKT is not a MULTILINESTRING</returns>
+        [Sql.Function("ST_MLineFromText", ServerSideOnly = true)]
+        public static NTSG STMLineFromText(string wkt, int srid)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs geometry (MULTIPOINT) from OGC Well-Known Text (WKT) representation.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_MPointFromText.html
+        /// </remarks>
+        /// <param name="wkt">Well-Known Text (WKT)</param>
+        /// <returns>Geometry (MULTIPOINT); null if WKT is not a MULTIPOINT</returns>
+        [Sql.Function("ST_MPointFromText", ServerSideOnly = true)]
+        public static NTSG STMPointFromText(string wkt)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs geometry (MULTIPOINT) from OGC Well-Known Text (WKT) representation with given SRID.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_MPointFromText.html
+        /// </remarks>
+        /// <param name="wkt">Well-Known Text (WKT)</param>
+        /// <param name="srid">Spatial Reference System Identifier for geometry</param>
+        /// <returns>Geometry (MULTIPOINT); null if WKT is not a MULTIPOINT</returns>
+        [Sql.Function("ST_MPointFromText", ServerSideOnly = true)]
+        public static NTSG STMPointFromText(string wkt, int srid)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs geometry (MULTIPOLYGON) from OGC Well-Known Text (WKT) representation.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_MPolyFromText.html
+        /// </remarks>
+        /// <param name="wkt">Well-Known Text (WKT)</param>
+        /// <returns>Geometry (MULTIPOLYGON); null if WKT is not a MULTIPOLYGON</returns>
+        [Sql.Function("ST_MPolyFromText", ServerSideOnly = true)]
+        public static NTSG STMPolyFromText(string wkt)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs geometry (MULTIPOLYGON) from OGC Well-Known Text (WKT) representation with given SRID.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_MPolyFromText.html
+        /// </remarks>
+        /// <param name="wkt">Well-Known Text (WKT)</param>
+        /// <param name="srid">Spatial Reference System Identifier for geometry</param>
+        /// <returns>Geometry (MULTIPOLYGON); null if WKT is not a MULTIPOLYGON</returns>
+        [Sql.Function("ST_MPolyFromText", ServerSideOnly = true)]
+        public static NTSG STMPolyFromText(string wkt, int srid)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs geometry (POINT) from OGC Well-Known Text (WKT) representation.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_PointFromText.html
+        /// </remarks>
+        /// <param name="wkt">Well-Known Text (WKT)</param>
+        /// <returns>Geometry (POINT); null if WKT is not a POINT</returns>
+        [Sql.Function("ST_PointFromText", ServerSideOnly = true)]
+        public static NTSG STPointFromText(string wkt)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs geometry (POINT) from OGC Well-Known Text (WKT) representation with given SRID.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_PointFromText.html
+        /// </remarks>
+        /// <param name="wkt">Well-Known Text (WKT)</param>
+        /// <param name="srid">Spatial Reference System Identifier for geometry</param>
+        /// <returns>Geometry (POINT); null if WKT is not a POINT</returns>
+        [Sql.Function("ST_PointFromText", ServerSideOnly = true)]
+        public static NTSG STPointFromText(string wkt, int srid)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs geometry (POLYGON) from OGC Well-Known Text (WKT) representation.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_PolygonFromText.html
+        /// </remarks>
+        /// <param name="wkt">Well-Known Text (WKT)</param>
+        /// <returns>Geometry (POLYGON); null if WKT is not a POLYGON</returns>
+        [Sql.Function("ST_PolygonFromText", ServerSideOnly = true)]
+        public static NTSG STPolygonFromText(string wkt)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs geometry (POLYGON) from OGC Well-Known Text (WKT) representation with given SRID.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_PolygonFromText.html
+        /// </remarks>
+        /// <param name="wkt">Well-Known Text (WKT)</param>
+        /// <param name="srid">Spatial Reference System Identifier for geometry</param>
+        /// <returns>Geometry (POLYGON); null if WKT is not a POLYGON</returns>
+        [Sql.Function("ST_PolygonFromText", ServerSideOnly = true)]
+        public static NTSG STPolygonFromText(string wkt, int srid)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs geometry from OGC Well-Known Text (WKT) representation.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_WKTToSQL.html
+        /// </remarks>
+        /// <param name="wkt">Well-Known Text (WKT)</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_WKTToSQL", ServerSideOnly = true)]
+        public static NTSG STWKTToSQL(string wkt)
+        {
+            throw new InvalidOperationException();
+        }
+
+        #endregion
 
         #region 8.8.2. Well-Known Binary (WKB)
 
@@ -144,7 +425,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="wkb">Well-Known Binary (WKB)</param>
         /// <returns>Geometry (LINESTRING)</returns>
         [Sql.Function("ST_LinestringFromWKB", ServerSideOnly = true)]
-        public static NTSG STLinestringFromWKB(byte[] wkbd)
+        public static NTSG STLinestringFromWKB(byte[] wkb)
         {
             throw new InvalidOperationException();
         }
@@ -307,7 +588,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_GeomFromTWKB.html
         /// </remarks>
-        /// <param name="ewkb">Tiny Well-Known Binary (TWKB)</param>
+        /// <param name="twkb">Tiny Well-Known Binary (TWKB)</param>
         /// <returns>Geometry</returns>
         [Sql.Function("ST_GeomFromTWKB", ServerSideOnly = true)]
         public static NTSG STGeomFromTWKB(byte[] twkb)

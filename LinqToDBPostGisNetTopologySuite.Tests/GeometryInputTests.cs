@@ -19,6 +19,22 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
+        public void TestSTGeomCollFromText()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string wkt1 = "GEOMETRYCOLLECTION (POINT (1 2), LINESTRING (1 2, 3 4))";
+
+                var g1 = db.Select(() => GeometryInput.STGeomCollFromText(wkt1, SRID3857));
+
+                Assert.AreEqual(wkt1, g1.AsText());
+                Assert.AreEqual(SRID3857, g1.SRID);
+
+                Assert.IsNull(db.Select(() => GeometryInput.STGeomCollFromText(null)));
+            }
+        }
+
+        [Test]
         public void TestSTGeomFromText()
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
@@ -44,6 +60,57 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 db.TestGeometries.Value(g => g.Id, 3).Value(p => p.Geometry, () => null).Insert();
                 var srid3 = db.TestGeometries.Where(g => g.Id == 3).Select(g => g.Geometry.STSrId()).Single();
                 Assert.IsNull(srid3);
+            }
+        }
+
+        [Test]
+        public void TestSTLineFromText()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string wkt1 = "LINESTRING (1 2, 3 4)";
+
+                var g1 = db.Select(() => GeometryInput.STLineFromText(wkt1, SRID3857));
+
+                Assert.AreEqual(wkt1, g1.AsText());
+                Assert.AreEqual(SRID3857, g1.SRID);
+
+                Assert.IsNull(db.Select(() => GeometryInput.STLineFromText("POINT(1 2)")));
+                Assert.IsNull(db.Select(() => GeometryInput.STLineFromText(null)));
+            }
+        }
+
+        [Test]
+        public void TestSTMPointFromText()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string wkt1 = "MULTIPOINT ((1 2), (3 4))";
+
+                var g1 = db.Select(() => GeometryInput.STMPointFromText(wkt1, SRID3857));
+
+                Assert.AreEqual(wkt1, g1.AsText());
+                Assert.AreEqual(SRID3857, g1.SRID);
+
+                Assert.IsNull(db.Select(() => GeometryInput.STMPointFromText("POINT(1 2)")));
+                Assert.IsNull(db.Select(() => GeometryInput.STMPointFromText(null)));
+            }
+        }
+
+        [Test]
+        public void TestSTPointFromText()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string wkt1 = "POINT (-71.064544 42.28787)";
+
+                var g1 = db.Select(() => GeometryInput.STPointFromText(wkt1, SRID3857));
+
+                Assert.AreEqual(wkt1, g1.AsText());
+                Assert.AreEqual(SRID3857, g1.SRID);
+
+                Assert.IsNull(db.Select(() => GeometryInput.STPointFromText("LINESTRING (1 2, 3 4)")));
+                Assert.IsNull(db.Select(() => GeometryInput.STPointFromText(null)));
             }
         }
 
