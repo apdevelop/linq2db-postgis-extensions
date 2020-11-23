@@ -19,28 +19,28 @@
 These methods will be translated into PostGIS SQL operations, so evaluation will happen on the server side. Calling these methods on client side results in throwing `InvalidOperationException`.
 Naming convention follows OGC methods names, starting with `ST*` prefix.
 
-Using extensions methods inside LINQ expression:
+Using extensions methods inside LINQ expression (Npgsql 4):
 
 ```c#
-using LinqToDBPostGisNpgsqlTypes; // or LinqToDBPostGisNetTopologySuite
+using LinqToDBPostGisNetTopologySuite
 
 using (var db = new PostGisTestDataConnection())
 {
-    NpgsqlTypes.PostgisGeometry point = db.STGeomFromEWKT("SRID=3857;POINT(0 5)"); // For Npgsql 3.x
-    NetTopologySuite.Geometries.Point point = new Point(new Coordinate(0, 5)) { SRID = 3857 }; // For Npgsql 4.x
+    NetTopologySuite.Geometries.Point point = new Point(new Coordinate(1492853, 6895498)) { SRID = 3857 };
+
+	var dms = db.Select(() => GeometryOutput.STAsLatLonText(point));
+
+    var nearestCity = db.Cities
+        .OrderBy(c => c.Geometry.STDistance(point))
+        .FirstOrDefault();
 
     var selected = db.Polygons
         .Where(p => p.Geometry.STArea() > 150.0)
         .OrderBy(p => p.Geometry.STDistance(point))
         .ToList();
 
-    var nearestCity = db.Cities
-        .OrderBy(c => c.Geometry.STDistance(point))
-        .FirstOrDefault();
-
-    var stats = db.Cities
-        .Select(c =>
-             new
+    var stats = db.Polygons
+        .Select(c => new
              {
                  Id = c.Id,
                  Name = c.Name,
@@ -59,16 +59,16 @@ using (var db = new PostGisTestDataConnection())
 public class PolygonEntity
 {
     [Column("geom")]
-    public NpgsqlTypes.PostgisGeometry Geometry { get; set; } // For Npgsql 3.x
-    public NetTopologySuite.Geometries.Geometry Geometry { get; set; } // For Npgsql 4.x
+    public NpgsqlTypes.PostgisGeometry Geometry { get; set; } // For Npgsql 3
+    public NetTopologySuite.Geometries.Geometry Geometry { get; set; } // For Npgsql 4
 }
 
 [Table("owm_cities", Schema = "public")]
 public class CityEntity
 {
     [Column("geom")]
-    public NpgsqlTypes.PostgisGeometry Geometry { get; set; } // For Npgsql 3.x
-    public NetTopologySuite.Geometries.Geometry Geometry { get; set; } // For Npgsql 4.x
+    public NpgsqlTypes.PostgisGeometry Geometry { get; set; } // For Npgsql 3
+    public NetTopologySuite.Geometries.Geometry Geometry { get; set; } // For Npgsql 4
 }
 
 class PostGisTestDataConnection : LinqToDB.Data.DataConnection
