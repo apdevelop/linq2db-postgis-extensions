@@ -342,7 +342,7 @@ namespace LinqToDBPostGisNetTopologySuite
             throw new InvalidOperationException();
         }
 
-        // TODO: box2d NTS mapping ?
+        // TODO: box2d NTS mapping implicit cast from geometry 
 
         ////[Sql.Function("ST_AsMVTGeom", ServerSideOnly = true)]
         ////public static NTSG STAsMVTGeom(this NTSG geometry)

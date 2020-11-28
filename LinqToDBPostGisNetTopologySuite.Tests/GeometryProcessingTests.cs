@@ -19,6 +19,26 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
+        public void TestSTBuffer()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                var pt1 = db.Select(() => GeometryInput.STGeomFromText("POINT(100 90)"));
+                var buffer1 = db.Select(() => GeometryProcessing.STBuffer(pt1, 50, "quad_segs=8").STGeometryType());
+                Assert.AreEqual("ST_Polygon", buffer1);
+
+                var buffer2 = db.Select(() => GeometryProcessing.STBuffer(pt1, 50).STNPoints());
+                Assert.AreEqual(33, buffer2);
+
+                var buffer3 = db.Select(() => GeometryProcessing.STBuffer(pt1, 50, 2).STNPoints());
+                Assert.AreEqual(9, buffer3);
+
+                Assert.IsNull(db.Select(() => GeometryProcessing.STBuffer(null, 0)));
+                Assert.IsNull(db.Select(() => GeometryProcessing.STBuffer(null, 0, null)));
+            }
+        }
+
+        [Test]
         public void TestSTCentroid()
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
@@ -34,6 +54,21 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
+        public void TestSTClipByBox2D()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                var geom1 = db.Select(() => GeometryInput.STGeomFromText("LINESTRING(0 0, 20 20)"));
+                var box1 = db.Select(() => GeometryConstructors.STMakeEnvelope(0, 0, 10, 10));
+
+                var clipped1 = db.Select(() => GeometryProcessing.STClipByBox2D(geom1, box1).STAsText());
+                Assert.AreEqual("LINESTRING(0 0,10 10)", clipped1);
+
+                Assert.IsNull(db.Select(() => GeometryProcessing.STClipByBox2D(null, null)));
+            }
+        }
+
+        [Test]
         public void TestSTConvexHull()
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
@@ -44,6 +79,8 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var convexHull1 = db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STConvexHull().STAsText()).Single();
 
                 Assert.AreEqual("POLYGON((50 5,10 8,10 10,100 190,150 30,150 10,50 5))", convexHull1);
+
+                Assert.IsNull(db.Select(() => GeometryProcessing.STConvexHull(null)));
             }
         }
 

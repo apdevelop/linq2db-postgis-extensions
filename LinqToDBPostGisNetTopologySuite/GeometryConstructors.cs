@@ -156,5 +156,20 @@ namespace LinqToDBPostGisNetTopologySuite
         {
             throw new InvalidOperationException();
         }
+
+        /// <summary>
+        /// Constructs 2D Point geometry.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_Point.html
+        /// </remarks>
+        /// <param name="x">X coordinate</param>
+        /// <param name="y">Y coordinate</param>
+        /// <returns>Geometry (POINT)</returns>
+        [Sql.Function("ST_Point", ServerSideOnly = true)]
+        public static NTSG STPoint(double x, double y)
+        {
+            throw new InvalidOperationException();
+        }
     }
 }

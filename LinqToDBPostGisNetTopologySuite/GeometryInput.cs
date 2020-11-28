@@ -493,6 +493,7 @@ namespace LinqToDBPostGisNetTopologySuite
         #region 8.8.3. Other Formats
 
         // TODO: ST_Box2dFromGeoHash return type NTS mapping?
+        // https://github.com/npgsql/efcore.pg/issues/1313#issuecomment-635202797
 
         /// <summary>
         /// Constructs Polygon geometry from given GeoHash string.

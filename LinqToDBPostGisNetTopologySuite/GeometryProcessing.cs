@@ -15,14 +15,14 @@ namespace LinqToDBPostGisNetTopologySuite
     public static class GeometryProcessing
     {
         /// <summary>
-        /// Returns geometry that represents all points whose distance from this geometry is less than or equal to distance. 
+        /// Returns geometry that represents all points whose distance from input geometry is less than or equal to distance. 
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_Buffer.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
-        /// <param name="radius">Buffer radius</param>
-        /// <returns>Buffer geometry</returns>
+        /// <param name="radius">Buffer radius, in SRS units</param>
+        /// <returns>Geometry</returns>
         [Sql.Function("ST_Buffer", ServerSideOnly = true)]
         public static NTSG STBuffer(this NTSG geometry, double radius)
         {
@@ -30,21 +30,117 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
-        /// Returns the geometric center of a geometry (the center of mass of the geometry) as a POINT.
+        /// Returns geometry that represents all points whose distance from input geometry is less than or equal to distance. 
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_Buffer.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="radius">Buffer radius, in SRS units</param>
+        /// <param name="style">Buffer style parameters</param> 
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_Buffer", ServerSideOnly = true)]
+        public static NTSG STBuffer(this NTSG geometry, double radius, string style)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns geometry that represents all points whose distance from input geometry is less than or equal to distance. 
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_Buffer.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="radius">Buffer radius, in SRS units</param>
+        /// <param name="segments">Number of segments</param> 
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_Buffer", ServerSideOnly = true)]
+        public static NTSG STBuffer(this NTSG geometry, double radius, int segments)
+        {
+            throw new InvalidOperationException();
+        }
+
+        // TODO: ST_Buffer(geography)
+
+        /// <summary>
+        /// Returns geometry formed by constituent linework of input geometry. 
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_BuildArea.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_BuildArea", ServerSideOnly = true)]
+        public static NTSG STBuildArea(this NTSG geometry) // TODO: tests
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns geometric center (center of mass) of input geometry.
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_Centroid.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
-        /// <returns>Centroid geometry</returns>
+        /// <returns>Geometry (POINT)</returns>
         [Sql.Function("ST_Centroid", ServerSideOnly = true)]
         public static NTSG STCentroid(this NTSG geometry)
         {
             throw new InvalidOperationException();
         }
 
+        // TODO: ST_Centroid(geography)
+
         /// <summary>
-        /// Returns the convex hull of given geometry.
+        /// Returns geometry clipped by 2D box. 
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_ClipByBox2D.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="box">Clipping box</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_ClipByBox2D", ServerSideOnly = true)]
+        public static NTSG STClipByBox2D(this NTSG geometry, NTSG box)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns concave hull of input geometry. 
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_ConcaveHull.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="targetPercent">Target percent of area of convex hull (0...1)</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_ConcaveHull", ServerSideOnly = true)]
+        public static NTSG STConcaveHull(this NTSG geometry, double targetPercent) // TODO: test
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns concave hull of input geometry. 
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_ConcaveHull.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="targetPercent">Target percent of area of convex hull (0...1)</param>
+        /// <param name="allowHoles">Allow holes</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_ConcaveHull", ServerSideOnly = true)]
+        public static NTSG STConcaveHull(this NTSG geometry, double targetPercent, bool allowHoles) // TODO: test
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns convex hull of input geometry.
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_ConvexHull.html
@@ -56,6 +152,9 @@ namespace LinqToDBPostGisNetTopologySuite
         {
             throw new InvalidOperationException();
         }
+
+
+
 
         /// <summary>
         /// Returns a geometry that represents that part of geometry 1 that does not intersect with geometry 2.
