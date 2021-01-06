@@ -85,6 +85,34 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
+        public void TestSTCurveToLine()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string wkt1 = "CIRCULARSTRING(0 0,100 -100,200 0)";
+                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(wkt1)).Insert();
+                var result1 = db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STCurveToLine(20, 1, 1).STAsText()).Single();
+                Assert.AreEqual("LINESTRING(0 0,50 -86.6025403784438,150 -86.6025403784439,200 0)", result1);
+
+                Assert.IsNull(db.Select(() => GeometryProcessing.STCurveToLine(null, 20, 1, 1)));
+            }
+        }
+
+        [Test]
+        public void TestSTDelaunayTriangles()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string wkt1 = "POLYGON((175 150, 20 40, 50 60, 125 100, 175 150))";
+                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(wkt1)).Insert();
+                var result1 = db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STDelaunayTriangles(0, 0).STAsText()).Single();
+                Assert.AreEqual("GEOMETRYCOLLECTION(POLYGON((20 40,125 100,50 60,20 40)),POLYGON((50 60,125 100,175 150,50 60)))", result1);
+
+                Assert.IsNull(db.Select(() => GeometryProcessing.STDelaunayTriangles(null, 0, 0)));
+            }
+        }
+
+        [Test]
         public void TestSTDifference()
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
@@ -99,6 +127,35 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var difference = db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STDifference(geometry2).STAsText()).Single();
 
                 Assert.AreEqual("LINESTRING(50 150,50 200)", difference);
+            }
+        }
+
+        [Test]
+        public void TestSTFlipCoordinates()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                var geom1 = db.Select(() => GeometryInput.STGeomFromText("POINT(1 2)"));
+
+                var result1 = db.Select(() => GeometryProcessing.STFlipCoordinates(geom1).STAsText());
+                Assert.AreEqual("POINT(2 1)", result1);
+
+                Assert.IsNull(db.Select(() => GeometryProcessing.STFlipCoordinates(null)));
+            }
+        }
+
+
+        [Test]
+        public void TestSTGeneratePoints()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                var geom1 = db.Select(() => GeometryInput.STGeomFromText("POLYGON((175 150, 20 40, 50 60, 125 100, 175 150))"));
+
+                var result1 = db.Select(() => GeometryProcessing.STGeneratePoints(geom1, 5, 1).STAsText());
+                Assert.AreEqual("MULTIPOINT(139.29283354478 118.602516148805,131.832615216622 108.222468996999,114.403606086077 103.400350731553,61.1688280123262 67.8262881638229,136.491955979797 111.749696268158)", result1);
+
+                Assert.IsNull(db.Select(() => GeometryProcessing.STGeneratePoints(null, 1)));
             }
         }
 

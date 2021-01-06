@@ -153,11 +153,41 @@ namespace LinqToDBPostGisNetTopologySuite
             throw new InvalidOperationException();
         }
 
-
-
+        /// <summary>
+        /// Converts CIRCULAR STRING to regular LINESTRING or CURVEPOLYGON to POLYGON or MULTISURFACE to MULTIPOLYGON.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_CurveToLine.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="tolerance">Tolerance value</param>
+        /// <param name="toleranceType">Tolerance type</param>
+        /// <param name="flags">Output options</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_CurveToLine", ServerSideOnly = true)]
+        public static NTSG STCurveToLine(this NTSG geometry, double tolerance, int toleranceType, int flags) // TODO: enums for arguments
+        {
+            throw new InvalidOperationException();
+        }
 
         /// <summary>
-        /// Returns a geometry that represents that part of geometry 1 that does not intersect with geometry 2.
+        /// Return a Delaunay triangulation around the vertices of the input geometry.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_DelaunayTriangles.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="tolerance">Tolerance value</param>
+        /// <param name="flags">Output options</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_DelaunayTriangles", ServerSideOnly = true)]
+        public static NTSG STDelaunayTriangles(this NTSG geometry, double tolerance, int flags) // TODO: enums for arguments
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns geometry that represents that part of geometry 1 that does not intersect with geometry 2.
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_Difference.html
@@ -170,6 +200,53 @@ namespace LinqToDBPostGisNetTopologySuite
         {
             throw new InvalidOperationException();
         }
+
+        /// <summary>
+        /// Returns geometry with with flipped X and Y axis of input geometry.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_FlipCoordinates.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_FlipCoordinates", ServerSideOnly = true)]
+        public static NTSG STFlipCoordinates(this NTSG geometry)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns MULTIPOINT set of pseudo-random points within input geometry
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_GeneratePoints.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="numberOfPoints">Number of points to generate</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_GeneratePoints", ServerSideOnly = true)]
+        public static NTSG STGeneratePoints(this NTSG geometry, int numberOfPoints)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns MULTIPOINT set of pseudo-random points within input geometry
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_GeneratePoints.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="numberOfPoints">Number of points to generate</param>
+        /// <param name="seed">Random seed (should be greater than zero)</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_GeneratePoints", ServerSideOnly = true)]
+        public static NTSG STGeneratePoints(this NTSG geometry, int numberOfPoints, int seed)
+        {
+            throw new InvalidOperationException();
+        }
+
+
 
         /// <summary>
         /// Returns geometry that represents the point set intersection of given geometries.
