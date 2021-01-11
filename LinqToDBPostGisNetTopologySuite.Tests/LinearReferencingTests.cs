@@ -21,12 +21,12 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         [Test]
         public void TestSTLineInterpolatePoint()
         {
-            var geomText = "LINESTRING(25 50, 100 125, 150 190)";
+            const string ewkt = "LINESTRING(25 50, 100 125, 150 190)";
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 db.TestGeometries
                 .Value(g => g.Id, 1)
-                .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(geomText))
+                .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(ewkt))
                 .Insert();
 
                 var result = db.TestGeometries
@@ -40,14 +40,14 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
-        public void TESTST3DLineInterpolatePoint()
+        public void TestST3DLineInterpolatePoint()
         {
-            var geomText = "LINESTRING(25 50 70, 100 125 90, 150 190 200)";
+            const string ewkt = "LINESTRING(25 50 70, 100 125 90, 150 190 200)";
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 db.TestGeometries
                 .Value(g => g.Id, 1)
-                .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(geomText))
+                .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(ewkt))
                 .Insert();
 
                 var result = db.TestGeometries
@@ -63,9 +63,9 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
-        public void TESTSTLineInterpolatePoints()
+        public void TestSTLineInterpolatePoints()
         {
-            var geomText = "LINESTRING(25 50, 100 125, 150 190)";
+            const string ewkt = "LINESTRING(25 50, 100 125, 150 190)";
             var expected = new double[][]
             {
                 new double[]{51.5974135047432, 76.5974135047432},
@@ -79,7 +79,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             {
                 db.TestGeometries
                 .Value(g => g.Id, 1)
-                .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(geomText))
+                .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(ewkt))
                 .Insert();
 
                 var result = db.TestGeometries
@@ -101,15 +101,15 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
-        public void TESTSTLineLocatePoint()
+        public void TestSTLineLocatePoint()
         {
-            var geomText = "LINESTRING(1 2, 4 5, 6 7)";
+            const string ewkt = "LINESTRING(1 2, 4 5, 6 7)";
             var givenPointText = "POINT(4 3)";
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 db.TestGeometries
                 .Value(g => g.Id, 1)
-                .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(geomText))
+                .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(ewkt))
                 .Insert();
 
                 var result = db.TestGeometries
@@ -123,14 +123,14 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
-        public void TESTSTLineSubstring()
+        public void TestSTLineSubstring()
         {
-            var geomText = "LINESTRING(25 50, 100 125, 150 190)";
+            const string ewkt = "LINESTRING(25 50, 100 125, 150 190)";
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 db.TestGeometries
                 .Value(g => g.Id, 1)
-                .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(geomText))
+                .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(ewkt))
                 .Insert();
 
                 var result = db.TestGeometries
@@ -154,14 +154,14 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
-        public void TESTSTLocateAlong()
+        public void TestSTLocateAlong()
         {
-            var geomText = "MULTILINESTRINGM((1 2 3, 3 4 2, 9 4 3),(1 2 3, 5 4 5))";
+            const string ewkt = "MULTILINESTRINGM((1 2 3, 3 4 2, 9 4 3),(1 2 3, 5 4 5))";
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 db.TestGeometries
                 .Value(g => g.Id, 1)
-                .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(geomText))
+                .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(ewkt))
                 .Insert();
 
                 var result = db.TestGeometries
@@ -187,20 +187,21 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
-        public void TESTSTLocateBetween()
+        public void TestSTLocateBetween()
         {
-            var geomText = "MULTILINESTRING M ((1 2 3, 3 4 2, 9 4 3),(1 2 3, 5 4 5))";
+            const string ewkt = "MULTILINESTRING M ((1 2 3, 3 4 2, 9 4 3),(1 2 3, 5 4 5))";
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 db.TestGeometries
                 .Value(g => g.Id, 1)
-                .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(geomText))
+                .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(ewkt))
                 .Insert();
 
                 var result = db.TestGeometries
                 .Where(g => g.Id == 1)
                 .Select(g => g.Geometry.STLocateBetween(1.5, 3.0, 0.0))
                 .Single() as NTSG.GeometryCollection;
+
 
                 Assert.IsNotNull(result);
                 Assert.AreEqual(2, result.NumGeometries);
@@ -233,14 +234,14 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
-        public void TESTSTLocateBetweenElevations()
+        public void TestSTLocateBetweenElevations()
         {
-            var geomText = "LINESTRING(1 2 3, 4 5 6)";
+            const string ewkt = "LINESTRING(1 2 3, 4 5 6)";
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 db.TestGeometries
                 .Value(g => g.Id, 1)
-                .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(geomText))
+                .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(ewkt))
                 .Insert();
 
                 var result = db.TestGeometries
@@ -262,20 +263,19 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
-        public void TESTSTInterpolatePoint()
+        public void TestSTInterpolatePoint()
         {
-            var geomLineText = "LINESTRING M (0 0 0, 10 0 20)";
-            var geomPointText = "POINT(5 5)";
+            const string ewkt = "LINESTRING M (0 0 0, 10 0 20)";
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 db.TestGeometries
                 .Value(g => g.Id, 1)
-                .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(geomLineText))
+                .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(ewkt))
                 .Insert();
 
                 var result = db.TestGeometries
                 .Where(g => g.Id == 1)
-                .Select(g => g.Geometry.STInterpolatePoint(GeometryInput.STGeomFromEWKT(geomPointText)))
+                .Select(g => g.Geometry.STInterpolatePoint(GeometryInput.STGeomFromEWKT("POINT(5 5)")))
                 .Single() as double?;
 
                 Assert.IsNotNull(result);
@@ -284,14 +284,14 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
-        public void TESTSTAddMeasure()
+        public void TestSTAddMeasure()
         {
-            var geomLineText = "LINESTRING(1 0, 2 0, 4 0)";
+            const string ewkt = "LINESTRING(1 0, 2 0, 4 0)";
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 db.TestGeometries
                 .Value(g => g.Id, 1)
-                .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(geomLineText))
+                .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(ewkt))
                 .Insert();
 
                 var result = db.TestGeometries

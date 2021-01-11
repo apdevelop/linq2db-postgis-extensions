@@ -115,12 +115,12 @@ namespace LinqToDBPostGisNetTopologySuite
         /// See https://postgis.net/docs/manual-3.0/ST_LocateBetween.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
-        /// <param name="measure_start">Measure start</param>
-        /// <param name="measure_end">Measure end</param>
+        /// <param name="measureStart">Measure start</param>
+        /// <param name="measureEnd">Measure end</param>
         /// <param name="offset">Offset</param>
         /// <returns>Derived geometry collection with elements that match the specified range of measures inclusively</returns>
         [Sql.Function("ST_LocateBetween", ServerSideOnly = true)]
-        public static NTS.GeometryCollection STLocateBetween(this NTSG geometry, double measure_start, double measure_end, double offset)
+        public static NTSG STLocateBetween(this NTSG geometry, double measureStart, double measureEnd, double offset)
         {
             throw new InvalidOperationException();
         }
@@ -148,7 +148,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// See https://postgis.net/docs/manual-3.0/ST_InterpolatePoint.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
-        /// <param name="point">Elevation_start</param>
+        /// <param name="point">Given point</param>
         /// <returns>The value of the measure dimension of a geometry at the point closed to the provided point</returns>
         [Sql.Function("ST_InterpolatePoint", ServerSideOnly = true)]
         public static double? STInterpolatePoint(this NTSG geometry, NTSG point)
