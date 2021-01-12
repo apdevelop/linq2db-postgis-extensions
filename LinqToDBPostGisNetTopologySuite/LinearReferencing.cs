@@ -3,7 +3,6 @@ using System;
 using LinqToDB;
 
 using NTSG = NetTopologySuite.Geometries.Geometry;
-using NTS = NetTopologySuite.Geometries;
 
 namespace LinqToDBPostGisNetTopologySuite
 {
