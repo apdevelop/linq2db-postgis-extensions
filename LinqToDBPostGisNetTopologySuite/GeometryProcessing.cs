@@ -246,7 +246,36 @@ namespace LinqToDBPostGisNetTopologySuite
             throw new InvalidOperationException();
         }
 
+        /// <summary>
+        /// Returns approximate geometric median of input MultiPoint geometry using the Weiszfeld algorithm.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_GeometricMedian.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry (MultiPoint)</param>
+        /// <param name="tolerance">Tolerance value</param>
+        /// <param name="maxIterations">Maximum number of iterations</param>
+        /// <param name="failIfNotConverged">Fail if not converged after maxIterations</param>
+        /// <returns>Geometric median</returns>
+        [Sql.Function("ST_GeometricMedian", ServerSideOnly = true)]
+        public static NTSG STGeometricMedian(this NTSG geometry, double tolerance, int maxIterations, bool failIfNotConverged)
+        {
+            throw new InvalidOperationException();
+        }
 
+        /// <summary>
+        /// Returns approximate geometric median of input MultiPoint geometry using the Weiszfeld algorithm.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_GeometricMedian.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry (MultiPoint)</param>
+        /// <returns>Geometric median</returns>
+        [Sql.Function("ST_GeometricMedian", ServerSideOnly = true)]
+        public static NTSG STGeometricMedian(this NTSG geometry)
+        {
+            throw new InvalidOperationException();
+        }
 
         /// <summary>
         /// Returns geometry that represents the point set intersection of given geometries.
@@ -262,6 +291,36 @@ namespace LinqToDBPostGisNetTopologySuite
         {
             throw new InvalidOperationException();
         }
+
+        /// <summary>
+        /// Converts plain input LineString/Polygon to CircularString/CurvePolygon.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_LineToCurve.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry (LineString/Polygon)</param>
+        /// <returns>Curved equivalent of input geometry</returns>
+        [Sql.Function("ST_LineToCurve", ServerSideOnly = true)]
+        public static NTSG STLineToCurve(this NTSG geometry)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Attempts to create a valid representation of input invalid geometry without losing any of input vertices.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_MakeValid.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <returns>Fixed valid geometry</returns>
+        [Sql.Function("ST_MakeValid", ServerSideOnly = true)]
+        public static NTSG STMakeValid(this NTSG geometry)
+        {
+            throw new InvalidOperationException();
+        }
+
+        // TODO: ST_MemUnion(geometry set)
 
         /// <summary>
         /// Returns POINT guaranteed to intersect a surface.
@@ -293,7 +352,7 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
-        /// Returns union of given geometries.
+        /// Returns union of input geometries.
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_Union.html

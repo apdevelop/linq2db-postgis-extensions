@@ -144,7 +144,6 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             }
         }
 
-
         [Test]
         public void TestSTGeneratePoints()
         {
@@ -156,6 +155,81 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 Assert.AreEqual("MULTIPOINT(139.29283354478 118.602516148805,131.832615216622 108.222468996999,114.403606086077 103.400350731553,61.1688280123262 67.8262881638229,136.491955979797 111.749696268158)", result1);
 
                 Assert.IsNull(db.Select(() => GeometryProcessing.STGeneratePoints(null, 1)));
+            }
+        }
+
+        [Test]
+        public void TestSTGeometricMedian()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string wkt = "MULTIPOINT((0 0), (1 1), (2 2), (200 200))";
+                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(wkt)).Insert();
+
+                var median = db.TestGeometries
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geometry.STGeometricMedian())
+                    .Single() as NTSG.Point;
+
+                Assert.AreEqual(1.9761550281255, median.X, 1.0E-8);
+                Assert.AreEqual(1.9761550281255, median.Y, 1.0E-8);
+            }
+        }
+
+        [Test]
+        public void TestSTLineToCurve()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string wkt = "POINT(1 3)";
+                db.TestGeometries
+                    .Value(g => g.Id, 1)
+                    .Value(p => p.Geometry, () =>
+                        GeometryInput.STGeomFromText(wkt).STBuffer(3.0))
+                    .Insert();
+
+                // NTS error: 'Geometry type not recognized. GeometryCode: 10'
+                var curvePolygon = db.TestGeometries
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geometry.STLineToCurve().STAsText())
+                    .Single();
+
+                Assert.AreEqual("CURVEPOLYGON(CIRCULARSTRING(4 3,-2 2.99999999999999,4 3))", curvePolygon);
+            }
+        }
+
+        [Test]
+        public void TestSTMakeValid()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string wkt1 = "LINESTRING(0 0,1 1)";
+                db.TestGeometries
+                    .Value(g => g.Id, 1)
+                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromText(wkt1))
+                    .Insert();
+
+                const string wkt2 = "POLYGON((0 0, 1 1, 1 2, 1 1, 0 0))";
+                db.TestGeometries
+                    .Value(g => g.Id, 2)
+                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromText(wkt2))
+                    .Insert();
+
+                var result1 = db.TestGeometries
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geometry.STMakeValid().STAsText())
+                    .Single();
+
+                var result2 = db.TestGeometries
+                    .Where(g => g.Id == 2)
+                    .Select(g => g.Geometry.STMakeValid().STAsText())
+                    .Single();
+
+                // Already-valid geometries are returned without further intervention:
+                Assert.AreEqual(wkt1, result1);
+
+                // Single polygons may become multi-geometries in case of self-intersections:
+                Assert.AreEqual("MULTILINESTRING((0 0,1 1),(1 1,1 2))", result2);
             }
         }
 
