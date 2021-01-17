@@ -323,6 +323,69 @@ namespace LinqToDBPostGisNetTopologySuite
         // TODO: ST_MemUnion(geometry set)
 
         /// <summary>
+        /// Returns smallest circle polygon that can fully contain input geometry.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_MinimumBoundingCircle.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="segmentsPerQuarterCircle">Number of segments per quarter circle</param>
+        /// <returns>Circle polygon</returns>
+        [Sql.Function("ST_MinimumBoundingCircle", ServerSideOnly = true)]
+        public static NTSG STMinimumBoundingCircle(this NTSG geometry, int segmentsPerQuarterCircle)
+        {
+            throw new InvalidOperationException();
+        }
+
+        // TODO: ST_MinimumBoundingRadius how to map record (geometry, double precision) in linq2db
+
+        /// <summary>
+        /// Returns mimimum rotated rectangle enclosing input geometry.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_OrientedEnvelope.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <returns>Rotated rectangle</returns>
+        [Sql.Function("ST_OrientedEnvelope", ServerSideOnly = true)]
+        public static NTSG STOrientedEnvelope(this NTSG geometry)
+        {
+            throw new InvalidOperationException();
+        }
+
+        // TODO: ? ST_Polygonize
+
+        /// <summary>
+        /// Fully node set of linestrings using the least possible number of nodes while preserving all of the input ones.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_Node.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_Node", ServerSideOnly = true)]
+        public static NTSG STNode(this NTSG geometry)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns offset line at given distance and side from input geometry.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_OffsetCurve.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry (LineString)</param>
+        /// <param name="distance">Distance</param>
+        /// <param name="style">Style parameters</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_OffsetCurve", ServerSideOnly = true)]
+        public static NTSG STOffsetCurve(this NTSG geometry, double distance, string style)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
         /// Returns POINT guaranteed to intersect a surface.
         /// </summary>
         /// <remarks>
@@ -332,6 +395,157 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <returns>Point on surface</returns>
         [Sql.Function("ST_PointOnSurface", ServerSideOnly = true)]
         public static NTSG STPointOnSurface(this NTSG geometry)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns input geometry with duplicated points removed.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_RemoveRepeatedPoints.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="tolerance">Tolerance</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_RemoveRepeatedPoints", ServerSideOnly = true)]
+        public static NTSG STRemoveRepeatedPoints(this NTSG geometry, double tolerance)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns a collection containing paths shared by the two input geometries.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_SharedPaths.html
+        /// </remarks>
+        /// <param name="lineal1">Input geometry 1</param>
+        /// <param name="lineal2">Input geometry 2</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_SharedPaths", ServerSideOnly = true)]
+        public static NTSG STSharedPaths(this NTSG lineal1, NTSG lineal2)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Reads every point/vertex in every component of every feature in input geometry, and if the longitude coordinate is less than 0, adds 360 to it.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_Shift_Longitude.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry (in long lat only)</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_ShiftLongitude", ServerSideOnly = true)]
+        public static NTSG STShiftLongitude(this NTSG geometry)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Splits the input geometries and then moves every resulting component falling on the right (for negative 'move') or on the left (for positive 'move') of given 'wrap' line in the direction specified by the 'move' parameter, finally re-unioning the pieces togheter.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_WrapX.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="wrap">Wrap line coordinate</param>
+        /// <param name="move">Move offset</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_WrapX", ServerSideOnly = true)]
+        public static NTSG STWrapX(this NTSG geometry, double wrap, double move)
+        {
+            throw new InvalidOperationException(); // TODO: tests
+        }
+
+        /// <summary>
+        /// Returns simplified version of input geometry using the Douglas-Peucker algorithm.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_Simplify.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="tolerance">Tolerance value</param>
+        /// <param name="preserveCollapsed">Preserve collapsed</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_Simplify", ServerSideOnly = true)]
+        public static NTSG STSimplify(this NTSG geometry, double tolerance, bool preserveCollapsed)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns simplified version of input geometry using the Douglas-Peucker algorithm.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_Simplify.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="tolerance">Tolerance value</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_Simplify", ServerSideOnly = true)]
+        public static NTSG STSimplify(this NTSG geometry, double tolerance)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns simplified version of input geometry using the Douglas-Peucker algorithm.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_SimplifyPreserveTopology.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="tolerance">Tolerance value</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_SimplifyPreserveTopology", ServerSideOnly = true)]
+        public static NTSG STSimplifyPreserveTopology(this NTSG geometry, double tolerance)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns simplified version of the given geometry using the Visvalingam-Whyatt algorithm.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_SimplifyVW.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="tolerance">Tolerance value</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_SimplifyVW", ServerSideOnly = true)]
+        public static NTSG STSimplifyVW(this NTSG geometry, double tolerance)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns smoothed version of input geometry using the Chaikin algorithm.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_ChaikinSmoothing.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="iterations">Number of iterations</param>
+        /// <param name="preserveEndPoints">Preserve end points </param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_ChaikinSmoothing", ServerSideOnly = true)]
+        public static NTSG STChaikinSmoothing(this NTSG geometry, int iterations, bool preserveEndPoints)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns smoothed version of input geometry using the Chaikin algorithm.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_ChaikinSmoothing.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_ChaikinSmoothing", ServerSideOnly = true)]
+        public static NTSG STChaikinSmoothing(this NTSG geometry)
         {
             throw new InvalidOperationException();
         }

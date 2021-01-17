@@ -28,7 +28,7 @@ using (var db = new PostGisTestDataConnection())
 {
     NetTopologySuite.Geometries.Point point = new Point(new Coordinate(1492853, 6895498)) { SRID = 3857 };
 
-	var dms = db.Select(() => GeometryOutput.STAsLatLonText(point));
+    var dms = db.Select(() => GeometryOutput.STAsLatLonText(point));
 
     var nearestCity = db.Cities
         .OrderBy(c => c.Geometry.STDistance(point))
@@ -94,8 +94,10 @@ Depends on [linq2db](https://github.com/linq2db/linq2db), [Npgsql](https://githu
 ### TODOs
  * Implement full set of PostGIS methods.
  * Add support for PostGIS `geography` data type.
+ * Test on various versions of PostgreSQL/PostGIS and platforms.
  
 ### References
 * [PostGIS Reference](https://postgis.net/docs/manual-3.0/reference.html)
 * [PostGIS/NetTopologySuite Type Plugin](https://www.npgsql.org/doc/types/nts.html)
+* [Spatial Mapping with NetTopologySuite in Entity Framework Core](https://www.npgsql.org/efcore/mapping/nts.html)
 * [How to teach LINQ to DB convert custom .NET methods and objects to SQL - Sql.Function attribute](http://blog.linq2db.com/2016/06/how-to-teach-linq-to-db-convert-custom.html)
