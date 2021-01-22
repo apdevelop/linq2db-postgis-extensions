@@ -551,6 +551,98 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
+        /// Returns a geometry with only vertex points that have a m-value larger or equal to the min value and smaller or equal to the max value.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_FilterByM.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="min">Minimum value for M</param>
+        /// <param name="max">Maximum value for M</param>
+        /// <param name="returnM">Retun M value in resulting geometry</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_FilterByM", ServerSideOnly = true)]
+        public static NTSG STFilterByM(this NTSG geometry, double min, double max, bool returnM)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns a geometry with only vertex points that have a m-value larger or equal to the min value and smaller or equal to the max value.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_FilterByM.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="min">Minimum value for M</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_FilterByM", ServerSideOnly = true)]
+        public static NTSG STFilterByM(this NTSG geometry, double min)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Sets the effective area for each vertex, using the Visvalingam-Whyatt algorithm.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_SetEffectiveArea.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="threshold">Threshold value</param>
+        /// <param name="setArea">Set area</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_SetEffectiveArea", ServerSideOnly = true)]
+        public static NTSG STSetEffectiveArea(this NTSG geometry, double threshold, int setArea)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Sets the effective area for each vertex, using the Visvalingam-Whyatt algorithm.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_SetEffectiveArea.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_SetEffectiveArea", ServerSideOnly = true)]
+        public static NTSG STSetEffectiveArea(this NTSG geometry)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Sets the effective area for each vertex, using the Visvalingam-Whyatt algorithm.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_SetEffectiveArea.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="threshold">Threshold value</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_SetEffectiveArea", ServerSideOnly = true)]
+        public static NTSG STSetEffectiveArea(this NTSG geometry, double threshold)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Splitting input line by (multi)point, (multi)line or (multi)polygon boundary, a (multi)polygon by line.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_Split.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="blade">Boundary geometry</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_Split", ServerSideOnly = true)]
+        public static NTSG STSplit(this NTSG geometry, NTSG blade)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
         /// Returns geometry that represents the portions of A and B that do not intersect.
         /// </summary>
         /// <remarks>
@@ -565,6 +657,8 @@ namespace LinqToDBPostGisNetTopologySuite
             throw new InvalidOperationException();
         }
 
+        // TODO: setof geometry ST_Subdivide
+
         /// <summary>
         /// Returns union of input geometries.
         /// </summary>
@@ -575,7 +669,97 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2</param>
         /// <returns>Union geometry</returns>
         [Sql.Function("ST_Union", ServerSideOnly = true)]
-        public static NTSG STUnion(this NTSG geometry, NTSG other) // TODO: other variants
+        public static NTSG STUnion(this NTSG geometry, NTSG other) // TODO: geometry set / geometry[]
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns union of input geometry.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_UnaryUnion.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <returns>Union geometry</returns>
+        [Sql.Function("ST_UnaryUnion", ServerSideOnly = true)]
+        public static NTSG STUnaryUnion(this NTSG geometry)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Computes a two-dimensional Voronoi diagram from the vertices of inpu geometry and returns the boundaries between cells in that diagram as a MultiLineString.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_VoronoiLines.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="tolerance">Threshold value</param>
+        /// <param name="extendTo">Extend to geometry</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_VoronoiLines", ServerSideOnly = true)]
+        public static NTSG STVoronoiLines(this NTSG geometry, double tolerance, NTSG extendTo)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Computes a two-dimensional Voronoi diagram from the vertices of inpu geometry and returns the boundaries between cells in that diagram as a MultiLineString.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_VoronoiLines.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="tolerance">Threshold value</param>
+        /// <returns>Geometry (MultiLineString)</returns>
+        [Sql.Function("ST_VoronoiLines", ServerSideOnly = true)]
+        public static NTSG STVoronoiLines(this NTSG geometry, double tolerance)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Computes a two-dimensional Voronoi diagram from the vertices of input geometry.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_VoronoiPolygons.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="tolerance">The distance within which vertices will be considered equivalent</param>
+        /// <param name="extendTo">Diagram will be extended to cover the envelope of the "extend_to" geometry</param>
+        /// <returns>Geometry (GeometryCollection of Polygons)</returns>
+        [Sql.Function("ST_VoronoiPolygons", ServerSideOnly = true)]
+        public static NTSG STVoronoiPolygons(this NTSG geometry, double tolerance, NTSG extendTo)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Computes a two-dimensional Voronoi diagram from the vertices of input geometry.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_VoronoiPolygons.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <returns>Geometry (GeometryCollection of Polygons)</returns>
+        [Sql.Function("ST_VoronoiPolygons", ServerSideOnly = true)]
+        public static NTSG STVoronoiPolygons(this NTSG geometry)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Computes a two-dimensional Voronoi diagram from the vertices of input geometry.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_VoronoiPolygons.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="tolerance">The distance within which vertices will be considered equivalent</param>
+        /// <returns>Geometry (GeometryCollection of Polygons)</returns>
+        [Sql.Function("ST_VoronoiPolygons", ServerSideOnly = true)]
+        public static NTSG STVoronoiPolygons(this NTSG geometry, double tolerance)
         {
             throw new InvalidOperationException();
         }

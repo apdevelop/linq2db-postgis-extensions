@@ -16,34 +16,33 @@ namespace LinqToDBPostGisNetTopologySuite
     public static class AffineTransformations
     {
         /// <summary>
-        /// Applies a 3D affine transformation to the geometry to do things like translate, rotate, scale in one   step.
+        /// Applies 3D affine transformation to input geometry.
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_Affine.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
-        /// <param name="a">A</param>
-        /// <param name="b">B</param>
-        /// <param name="c">C</param>
-        /// <param name="d">D</param>
-        /// <param name="e">E</param>
-        /// <param name="f">F</param>
-        /// <param name="g">G</param>
-        /// <param name="h">H</param>
-        /// <param name="i">I</param>
+        /// <param name="a">A of transformation matrix</param>
+        /// <param name="b">B of transformation matrix</param>
+        /// <param name="c">C of transformation matrix</param>
+        /// <param name="d">D of transformation matrix</param>
+        /// <param name="e">E of transformation matrix</param>
+        /// <param name="f">F of transformation matrix</param>
+        /// <param name="g">G of transformation matrix</param>
+        /// <param name="h">H of transformation matrix</param>
+        /// <param name="i">I of transformation matrix</param>
         /// <param name="xoff">XOff</param>
         /// <param name="yoff">YOff</param>
         /// <param name="zoff">ZOff</param>
         /// <returns>Affined Geometry</returns>
         [Sql.Function("ST_Affine", ServerSideOnly = true)]
-        public static NTSG STAffine(this NTSG geometry, double a, double b, double c, double d, double e, double f, double g, double h, double i,
-            double xoff, double yoff, double zoff)
+        public static NTSG STAffine(this NTSG geometry, double a, double b, double c, double d, double e, double f, double g, double h, double i, double xoff, double yoff, double zoff)
         {
             throw new InvalidOperationException();
         }
 
         /// <summary>
-        /// Applies a 2d affine transformation to the geometry.
+        /// Applies 2D affine transformation to input geometry.
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_Affine.html
@@ -57,14 +56,13 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="yoff">YOff</param>
         /// <returns>Affined geometry</returns>
         [Sql.Function("ST_Affine", ServerSideOnly = true)]
-        public static NTSG STAffine(this NTSG geometry, double a, double b, double d, double e,
-            double xoff, double yoff)
+        public static NTSG STAffine(this NTSG geometry, double a, double b, double d, double e, double xoff, double yoff)
         {
             throw new InvalidOperationException();
         }
 
         /// <summary>
-        /// Rotates geometry rotRadians counter-clockwise about the origin point(0 0).
+        /// Rotates input geometry counter-clockwise about the origin point(0 0).
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_Rotate.html
@@ -79,7 +77,7 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
-        /// Rotates geometry rotRadians counter-clockwise about the origin point(x0,y0).
+        /// Rotates input geometry counter-clockwise about the origin point(x0,y0).
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_Rotate.html
@@ -96,7 +94,7 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
-        /// Rotates geometry rotRadians counter-clockwise about the origin     point. 
+        /// Rotates input geometry counter-clockwise about origin point. 
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_Rotate.html
@@ -112,7 +110,7 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
-        /// Rotates a geometry geomA - rotRadians about the X axis.
+        /// Rotates input geometry about the X axis.
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_RotateX.html
@@ -127,7 +125,7 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
-        /// Rotates a geometry geomA - rotRadians about the Y axis.
+        /// Rotates input geometry about the Y axis.
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_RotateY.html
@@ -142,7 +140,7 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
-        /// Rotates a geometry geomA - rotRadians about the Z axis.
+        /// Rotates input geometry about the Z axis.
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_RotateZ.html
@@ -157,15 +155,15 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
-        /// Scales the geometry to a new size by multiplying the ordinates with the corresponding factor parameters.
+        /// Scales input geometry to new size by multiplying ordinates with corresponding factor parameters.
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_Scale.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
-        /// <param name="xFactor">Scale factor of x axis</param>
-        /// <param name="yFactor">Scale factor of y axis</param>
-        /// <param name="zFactor">Scale factor of z axis</param>
+        /// <param name="xFactor">Scale factor of X axis</param>
+        /// <param name="yFactor">Scale factor of Y axis</param>
+        /// <param name="zFactor">Scale factor of Z axis</param>
         /// <returns>Scaled geometry</returns>
         [Sql.Function("ST_Scale", ServerSideOnly = true)]
         public static NTSG STScale(this NTSG geometry, double xFactor, double yFactor, double zFactor)
@@ -173,16 +171,15 @@ namespace LinqToDBPostGisNetTopologySuite
             throw new InvalidOperationException();
         }
 
-
         /// <summary>
-        /// Scales the geometry to a new size by multiplying the ordinates with the corresponding factor parameters.
+        /// Scales input geometry to new size by multiplying ordinates with corresponding factor parameters.
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_Scale.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
-        /// <param name="xFactor">Scale factor of x axis</param>
-        /// <param name="yFactor">Scale factor of y axis</param>
+        /// <param name="xFactor">Scale factor of X axis</param>
+        /// <param name="yFactor">Scale factor of Y axis</param>
         /// <returns>Scaled geometry</returns>
         [Sql.Function("ST_Scale", ServerSideOnly = true)]
         public static NTSG STScale(this NTSG geometry, double xFactor, double yFactor)
@@ -191,7 +188,7 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
-        /// Scales the geometry to a new size by multiplying the ordinates with the corresponding factor parameters.Taking a geometry as the factor parameter allows passing a 2d, 3dm, 3dz or 4d point to set scaling factor for all supported dimensions. Missing dimensions in the factor point are equivalent to no scaling the corresponding dimension.
+        /// Scales input geometry to new size by multiplying ordinates with corresponding factor parameters.
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_Scale.html
@@ -206,7 +203,7 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
-        /// Scales the geometry to a new size by multiplying the ordinates with the corresponding factor parameters.Taking a geometry as the factor parameter allows passing a 2d, 3dm, 3dz or 4d point to set scaling factor for all supported dimensions. Missing dimensions in the factor point are equivalent to no scaling the corresponding dimension.This allows "scaling in place", for example using the centroid of the    geometry as the false origin. Without a false origin, scaling takes place relative to the actual origin, so all coordinates are just   multipled by the scale factor.
+        /// Scales input geometry to new size by multiplying ordinates with corresponding factor parameters.
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_Scale.html
@@ -222,14 +219,14 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
-        /// Returns a new geometry whose coordinates are translated delta x,delta y units. Units are based on the units defined in spatial reference  (SRID) for this geometry.
+        /// Returns new geometry whose coordinates are translated along axes.
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_Translate.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
-        /// <param name="deltaX">Scale factor</param>
-        /// <param name="deltaY">Scale origin</param>
+        /// <param name="deltaX">Translate value along X axis</param>
+        /// <param name="deltaY">Translate value along Y axis</param>
         /// <returns>Translated geometry</returns>
         [Sql.Function("ST_Translate", ServerSideOnly = true)]
         public static NTSG STTranslate(this NTSG geometry, double deltaX, double deltaY)
@@ -238,15 +235,15 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
-        /// Returns a new geometry whose coordinates are translated delta x,delta y,delta z units. Units are based on the units defined in spatial reference  (SRID) for this geometry.
+        /// Returns a new geometry whose coordinates are translated along axes.
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_Translate.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
-        /// <param name="deltaX">DeltaX</param>
-        /// <param name="deltaY">DeltaY</param>
-        /// <param name="deltaZ">DeltaZ</param>
+        /// <param name="deltaX">Translate value along X axis</param>
+        /// <param name="deltaY">Translate value along Y axis</param>
+        /// <param name="deltaZ">Translate value along Z axis</param>
         /// <returns>Translated geometry</returns>
         [Sql.Function("ST_Translate", ServerSideOnly = true)]
         public static NTSG STTranslate(this NTSG geometry, double deltaX, double deltaY, double deltaZ)
@@ -255,7 +252,7 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
-        /// Translates the geometry using the deltaX and deltaY args, then scales it using the XFactor, YFactor args, working in 2D only.
+        /// Translates input geometry using the deltaX and deltaY args, then scales it using the XFactor, YFactor args, working in 2D only.
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_TransScale.html

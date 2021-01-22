@@ -570,6 +570,101 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
+        public void TestSTFilterByM()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string wkt = "LINESTRING(5 2, 3 8, 6 20, 7 25, 10 10)";
+                db.TestGeometries
+                    .Value(g => g.Id, 1)
+                    .Value(p => p.Geometry, () => GeometryInput.STGeometryFromText(wkt).STSetEffectiveArea())
+                    .Insert();
+
+                var result = db.TestGeometries
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geometry.STFilterByM(30).STAsText())
+                    .Single();
+
+                Assert.AreEqual("LINESTRING(5 2,7 25,10 10)", result);
+            }
+        }
+
+        [Test]
+        public void TestSTSetEffectiveArea()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string wkt = "LINESTRING(5 2, 3 8, 6 20, 7 25, 10 10)";
+                db.TestGeometries
+                    .Value(g => g.Id, 1)
+                    .Value(p => p.Geometry, () => GeometryInput.STGeometryFromText(wkt))
+                    .Insert();
+
+                var result1 = db.TestGeometries
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geometry.STSetEffectiveArea().STAsText())
+                    .Single();
+
+                Assert.AreEqual("LINESTRING M (5 2 3.40282e+038,3 8 29,6 20 1.5,7 25 49.5,10 10 3.40282e+038)", result1);
+
+                var result2 = db.TestGeometries
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geometry.STSetEffectiveArea(30).STAsText())
+                    .Single();
+
+                Assert.AreEqual("LINESTRING M (5 2 3.40282e+038,7 25 49.5,10 10 3.40282e+038)", result2);
+            }
+        }
+
+        [Test]
+        public void TestSTSplit()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                db.TestGeometries
+                    .Value(g => g.Id, 1)
+                    .Value(p => p.Geometry, () => GeometryConstructors.STMakeLine(GeometryConstructors.STMakePoint(10, 10), GeometryConstructors.STMakePoint(190, 190)))
+                    .Insert();
+                db.TestGeometries
+                    .Value(g => g.Id, 2)
+                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromText("POINT(100 90)").STBuffer(50))
+                    .Insert();
+
+                var result = db.TestGeometries
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geometry.STSplit(db.TestGeometries.Where(g2 => g2.Id == 2).Single().Geometry))
+                    .Single() as NTSG.GeometryCollection;
+
+                Assert.IsNotNull(result);
+            }
+        }
+
+        [Test]
+        public void TestSTSymDifference()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string wkt1 = "LINESTRING(50 100, 50 200)";
+                const string wkt2 = "LINESTRING(50 50, 50 150)";
+                db.TestGeometries
+                    .Value(g => g.Id, 1)
+                    .Value(p => p.Geometry, () => GeometryInput.STGeometryFromText(wkt1))
+                    .Insert();
+                db.TestGeometries
+                    .Value(g => g.Id, 2)
+                    .Value(p => p.Geometry, () => GeometryInput.STGeometryFromText(wkt2))
+                    .Insert();
+
+                var result = db.TestGeometries
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geometry.STSymDifference(db.TestGeometries.Where(g2 => g2.Id == 2).Single().Geometry).STAsText())
+                    .Single();
+
+                Assert.AreEqual("MULTILINESTRING((50 150,50 200),(50 50,50 100))", result);
+            }
+        }
+
+        [Test]
         public void TestSTUnion()
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
@@ -584,6 +679,46 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var union = db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STUnion(geometry2).STAsText()).Single();
 
                 Assert.AreEqual("MULTIPOINT(1 2,-2 3)", union);
+            }
+        }
+
+        [Test]
+        public void TestSTVoronoiLines()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string wkt = "MULTIPOINT (50 30, 60 30, 100 100,10 150, 110 120)";
+                db.TestGeometries
+                    .Value(g => g.Id, 1)
+                    .Value(p => p.Geometry, () => GeometryInput.STGeometryFromText(wkt))
+                    .Insert();
+
+                var result = db.TestGeometries
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geometry.STVoronoiLines(30.0).STAsText())
+                    .Single();
+
+                Assert.AreEqual("MULTILINESTRING((135.555555555556 270,36.8181818181818 92.2727272727273),(36.8181818181818 92.2727272727273,-110 43.3333333333333),(230 -45.7142857142858,36.8181818181818 92.2727272727273))", result);
+            }
+        }
+
+        [Test]
+        public void TestSTVoronoiPolygons()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string wkt = "MULTIPOINT (50 30, 60 30, 100 100,10 150, 110 120)";
+                db.TestGeometries
+                     .Value(g => g.Id, 1)
+                     .Value(p => p.Geometry, () => GeometryInput.STGeomFromText(wkt))
+                     .Insert();
+
+                var result1 = db.TestGeometries
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geometry.STVoronoiPolygons())
+                    .Single() as NTSG.GeometryCollection;
+
+                Assert.IsNotNull(result1);
             }
         }
     }

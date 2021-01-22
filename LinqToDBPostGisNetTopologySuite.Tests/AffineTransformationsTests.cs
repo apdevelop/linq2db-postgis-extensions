@@ -3,6 +3,7 @@ using System.Linq;
 
 using LinqToDB;
 using NUnit.Framework;
+
 using NTSG = NetTopologySuite.Geometries;
 
 namespace LinqToDBPostGisNetTopologySuite.Tests
@@ -24,8 +25,8 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             var expected = new double[][]
                 {
-                    new[]{-1.0,-2.0,3.0},
-                    new[]{-1.0,-4.0,3.0}
+                    new[]{-1.0, -2.0, 3.0},
+                    new[]{-1.0, -4.0, 3.0}
                 };
 
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
@@ -49,8 +50,8 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             var expected = new double[][]
                 {
-                    new[]{0.0,0.0,3.0},
-                    new[]{0.0,0.0,3.0}
+                    new[]{0.0, 0.0, 3.0},
+                    new[]{0.0, 0.0, 3.0}
                 };
 
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
@@ -73,9 +74,9 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             var expected = new double[][]
                 {
-                    new[]{-50.00000000000002, -160.00},
-                    new[]{-50.00000000000001, -49.99999999999999},
-                    new[]{-100, -49.999999999999986}
+                    new[]{-50.0, -160.0},
+                    new[]{-50.0, -50.0},
+                    new[]{-100.0, -50.0}
                 };
 
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
@@ -96,9 +97,9 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             var expected = new double[][]
                 {
-                    new[]{50.00, 160.00},
-                    new[]{104.99999999999999 ,64.73720558371174},
-                    new[]{148.30127018922192 ,89.73720558371173}
+                    new[]{50.00, 160.0},
+                    new[]{105.0, 64.73720558371174},
+                    new[]{148.30127018922192, 89.73720558371173}
                 };
 
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
@@ -110,7 +111,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     .Select(g => g.Geometry.STRotate(Math.PI / 6.0, 50, 160))
                     .Single() as NTSG.LineString;
 
-                CheckLineEquals(expected, result, 1.0e-8);
+                CheckLineEquals(expected, result, 1.0E-8);
             }
         }
 
@@ -119,8 +120,8 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             var expected = new double[][]
                 {
-                    new[]{116.42245883568916 ,130.67207346706593},
-                    new[]{21.15966441940092 ,75.67207346706593},
+                    new[]{116.42245883568916, 130.67207346706593},
+                    new[]{21.15966441940092, 75.67207346706593},
                     new[]{46.15966441940093, 32.370803277844}
                 };
 
@@ -142,8 +143,8 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             var expected = new double[][]
                 {
-                    new[]{1.0 ,-3.0 ,2.0},
-                    new[]{1.0 ,-1.0 ,1.0}
+                    new[]{1.0, -3.0, 2.0},
+                    new[]{1.0, -1.0, 1.0}
                 };
 
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
@@ -164,8 +165,8 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             var expected = new double[][]
                 {
-                    new[]{3.0, 2.0 ,-1.0},
-                    new[]{1.0, 1.0 ,-1.0}
+                    new[]{3.0, 2.0, -1.0},
+                    new[]{1.0, 1.0, -1.0}
                 };
 
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
@@ -231,7 +232,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             var expected = new double[][]
                 {
                     new[]{0.5, 1.5, 3},
-                    new[]{0.5, 0.75 ,1}
+                    new[]{0.5, 0.75, 1}
                 };
 
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
@@ -274,8 +275,8 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             var expected = new double[][]
                 {
-                    new[]{1.00 ,1.00},
-                    new[]{3.00,3.00}
+                    new[]{1.00, 1.00},
+                    new[]{3.00, 3.00}
                 };
 
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
@@ -296,8 +297,8 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                const string geomText = "POINT(-71.01 42.37)";
-                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(geomText, 4326)).Insert();
+                const string wkt = "POINT(-71.01 42.37)";
+                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(wkt, 4326)).Insert();
                 var result = db.TestGeometries
                     .Where(g => g.Id == 1)
                     .Select(g => g.Geometry.STTranslate(1, 0))
@@ -313,8 +314,8 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                const string geomText = "POINT(0 0 0)";
-                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(geomText)).Insert();
+                const string wkt = "POINT(0 0 0)";
+                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(wkt)).Insert();
                 var result = db.TestGeometries
                     .Where(g => g.Id == 1)
                     .Select(g => g.Geometry.STTranslate(5, 12, 3))
@@ -336,8 +337,8 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                const string geomText = "LINESTRING(1 2 3, 1 1 1)";
-                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(geomText)).Insert();
+                const string wkt = "LINESTRING(1 2 3, 1 1 1)";
+                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(wkt)).Insert();
                 var result = db.TestGeometries
                     .Where(g => g.Id == 1)
                     .Select(g => g.Geometry.STTransScale(0.5, 1, 1, 2))
@@ -347,17 +348,17 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             }
         }
 
-        private void CheckLineEquals(double[][] expected, NTSG.LineString result, double tolerance)
+        private static void CheckLineEquals(double[][] expected, NTSG.LineString actual, double tolerance)
         {
             var pointsCount = expected.Length;
-            var dimensionCount = expected[0].Length;
+            var dimensionCount = expected[0].Length; // Depends on 2D / 3D geometry dimensions
 
-            for (int i = 0; i < pointsCount; i++)
+            for (var i = 0; i < pointsCount; i++)
             {
-                for (int j = 0; j < dimensionCount; j++)
+                for (var j = 0; j < dimensionCount; j++)
                 {
                     var exp = expected[i][j];
-                    var res = result.GetCoordinateN(i).CoordinateValue[j];
+                    var res = actual.GetCoordinateN(i).CoordinateValue[j];
 
                     Assert.AreEqual(exp, res, tolerance);
                 }
