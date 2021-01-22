@@ -77,11 +77,11 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/DropGeometryColumn.html
         /// </remarks>
-        /// <param name="tabelName">Table name</param>
+        /// <param name="tableName">Table name</param>
         /// <param name="columnName">Column name</param>
         /// <returns>Information about dropped column</returns>
         [Sql.Function("DropGeometryColumn", ServerSideOnly = true)]
-        public static string DropGeometryColumn(string tabelName, string columnName)
+        public static string DropGeometryColumn(string tableName, string columnName)
         {
             throw new InvalidOperationException();
         }
@@ -93,11 +93,11 @@ namespace LinqToDBPostGisNetTopologySuite
         /// See https://postgis.net/docs/manual-3.0/DropGeometryColumn.html
         /// </remarks>
         /// <param name="schemaName">Schema name</param>
-        /// <param name="tabelName">Table name</param>
+        /// <param name="tableName">Table name</param>
         /// <param name="columnName">Column name</param>
         /// <returns>Information about dropped column</returns>
         [Sql.Function("DropGeometryColumn", ServerSideOnly = true)]
-        public static string DropGeometryColumn(string schemaName, string tabelName, string columnName)
+        public static string DropGeometryColumn(string schemaName, string tableName, string columnName)
         {
             throw new InvalidOperationException();
         }
@@ -110,11 +110,11 @@ namespace LinqToDBPostGisNetTopologySuite
         /// </remarks>
         /// <param name="catalogName">Catalog name</param>
         /// <param name="schemaName">Schema name</param>
-        /// <param name="tabelName">Table name</param>
+        /// <param name="tableName">Table name</param>
         /// <param name="columnName">Column name</param>
         /// <returns>Information about dropped column</returns>
         [Sql.Function("DropGeometryColumn", ServerSideOnly = true)]
-        public static string DropGeometryColumn(string catalogName, string schemaName, string tabelName, string columnName)
+        public static string DropGeometryColumn(string catalogName, string schemaName, string tableName, string columnName)
         {
             throw new InvalidOperationException();
         }
