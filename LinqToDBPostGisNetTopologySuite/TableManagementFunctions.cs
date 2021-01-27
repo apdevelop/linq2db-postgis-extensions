@@ -179,5 +179,85 @@ namespace LinqToDBPostGisNetTopologySuite
         {
             throw new InvalidOperationException();
         }
+
+        /// <summary>
+        /// Ensures geometry columns have appropriate type modifiers or spatial constraints to ensure they are registered correctly in the geometry_columns view. By default will convert all geometry columns with no type modifier to ones with type modifiers
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/Populate_Geometry_Columns.html
+        /// </remarks>
+        /// <param name="useTypeMod">Use type modifiers</param>
+        /// <returns>Populate result</returns>
+        [Sql.Function("Populate_Geometry_Columns", ServerSideOnly = true)]
+        public static string PopulateGeometryColumns(bool useTypeMod)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Ensures geometry columns have appropriate type modifiers or spatial constraints to ensure they are registered correctly in the geometry_columns view. By default will convert all geometry columns with no type modifier to ones with type modifiers
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/Populate_Geometry_Columns.html
+        /// </remarks>
+        /// <param name="oId">OId</param>
+        /// <param name="useTypeMod">Use type modifiers</param>
+        /// <returns>Populate result</returns>
+        [Sql.Function("Populate_Geometry_Columns", ServerSideOnly = true)]
+        public static int PopulateGeometryColumns(int oId, bool useTypeMod)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Updates the SRID of all features in a geometry column, updating constraints and reference in geometry_columns. If the column was enforced by a type definition, the type definition will be changed
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/UpdateGeometrySRID.html
+        /// </remarks>
+        /// <param name="tableName"></param>
+        /// <param name="columnName"></param>
+        /// <param name="srid"></param>
+        /// <returns>SRID update information</returns>
+        [Sql.Function("UpdateGeometrySRID", ServerSideOnly = true)]
+        public static string UpdateGeometrySRID(string tableName, string columnName, int srid)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Updates the SRID of all features in a geometry column, updating constraints and reference in geometry_columns. If the column was enforced by a type definition, the type definition will be changed
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/UpdateGeometrySRID.html
+        /// </remarks>
+        /// <param name="schemaName">Schema name</param>
+        /// <param name="tableName"></param>
+        /// <param name="columnName"></param>
+        /// <param name="srid"></param>
+        /// <returns>SRID update information</returns>
+        [Sql.Function("UpdateGeometrySRID", ServerSideOnly = true)]
+        public static string UpdateGeometrySRID(string schemaName, string tableName, string columnName, int srid)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Updates the SRID of all features in a geometry column, updating constraints and reference in geometry_columns. If the column was enforced by a type definition, the type definition will be changed
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/UpdateGeometrySRID.html
+        /// </remarks>
+        /// <param name="catalogName">Catalog name</param>
+        /// <param name="schemaName">Schema name</param>
+        /// <param name="tableName">Table name</param>
+        /// <param name="columnName">Column name</param>
+        /// <param name="srid">Spatial Reference System Identifier</param>
+        /// <returns>SRID update information</returns>
+        [Sql.Function("UpdateGeometrySRID", ServerSideOnly = true)]
+        public static string UpdateGeometrySRID(string catalogName, string schemaName, string tableName, string columnName, int srid)
+        {
+            throw new InvalidOperationException();
+        }
     }
 }
