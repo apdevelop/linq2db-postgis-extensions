@@ -70,7 +70,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="ymin">Minimum Y coordinate</param>
         /// <param name="xmax">Maximum X coordinate</param>
         /// <param name="ymax">Maximum Y coordinate</param>
-        /// <param name="srid">Spatial Reference System Identifier</param>
+        /// <param name="srid">Spatial Reference System Identifier (SRID)</param>
         /// <returns>Constructed geometry</returns>
         [Sql.Function("ST_MakeEnvelope", ServerSideOnly = true)]
         public static NTSG STMakeEnvelope(double xmin, double ymin, double xmax, double ymax, int srid)
@@ -158,6 +158,20 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
+        /// Constructs Polygon geometry formed by given shell.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_MakePolygon.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry (closed LineString)</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_MakePolygon", ServerSideOnly = true)]
+        public static NTSG STMakePolygon(this NTSG geometry) // TODO: with interiorlinestrings
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
         /// Constructs 2D Point geometry.
         /// </summary>
         /// <remarks>
@@ -165,9 +179,57 @@ namespace LinqToDBPostGisNetTopologySuite
         /// </remarks>
         /// <param name="x">X coordinate</param>
         /// <param name="y">Y coordinate</param>
-        /// <returns>Geometry (POINT)</returns>
+        /// <returns>Geometry (Point)</returns>
         [Sql.Function("ST_Point", ServerSideOnly = true)]
         public static NTSG STPoint(double x, double y)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs Polygon geometry from given LineString.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_Polygon.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry (closed LineString)</param>
+        /// <param name="srid">Spatial Reference System Identifier (SRID)</param>
+        /// <returns>Geometry</returns>
+        [Sql.Function("ST_Polygon", ServerSideOnly = true)]
+        public static NTSG STPolygon(this NTSG geometry, int srid)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs rectangular Polygon in Web Mercator (SRID:3857) using XYZ tile system.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_TileEnvelope.html
+        /// </remarks>
+        /// <param name="tileZoom">Tile Z</param>
+        /// <param name="tileX">Tile X</param>
+        /// <param name="tileY">Tile Y</param>         
+        /// <returns>Geometry (Polygon)</returns>
+        [Sql.Function("ST_TileEnvelope", ServerSideOnly = true)]
+        public static NTSG STTileEnvelope(int tileZoom, int tileX, int tileY)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs rectangular Polygon in Web Mercator (SRID:3857) using XYZ tile system.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_TileEnvelope.html
+        /// </remarks>
+        /// <param name="tileZoom">Tile Z</param>
+        /// <param name="tileX">Tile X</param>
+        /// <param name="tileY">Tile Y</param>      
+        /// <param name="bounds">Bounds</param>
+        /// <returns>Geometry (Polygon)</returns>
+        [Sql.Function("ST_TileEnvelope", ServerSideOnly = true)]
+        public static NTSG STTileEnvelope(int tileZoom, int tileX, int tileY, NTSG bounds)
         {
             throw new InvalidOperationException();
         }
