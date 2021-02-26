@@ -187,6 +187,21 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
+        /// Removes point from input geometry (LineString)
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_RemovePoint.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry (LineString)</param>
+        /// <param name="index">Index of point to remove (zero-based)</param>
+        /// <returns>Geometry with point removed</returns>
+        [Sql.Function("ST_RemovePoint", ServerSideOnly = true)]
+        public static NTSG STRemovePoint(this NTSG geometry, int index) // TODO: test
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
         /// Returns geometry with reversed order of the vertexes.
         /// </summary>
         /// <remarks>
@@ -196,6 +211,22 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <returns>Geometry with reversed order of the vertexes</returns>
         [Sql.Function("ST_Reverse", ServerSideOnly = true)]
         public static NTSG STReverse(this NTSG geometry)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Replace point of input geometry with given point.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_SetPoint.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry (LineString)</param>
+        /// <param name="index">Index of point to remove (zero-based)</param>
+        /// <param name="point">New point</param>
+        /// <returns>Geometry with point replaced</returns>
+        [Sql.Function("ST_SetPoint", ServerSideOnly = true)]
+        public static NTSG STSetPoint(this NTSG geometry, int index, NTSG point)
         {
             throw new InvalidOperationException();
         }

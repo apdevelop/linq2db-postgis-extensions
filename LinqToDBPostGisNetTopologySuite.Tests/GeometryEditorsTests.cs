@@ -21,7 +21,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
-        public void TESTSTAddPoint()
+        public void TestSTAddPoint()
         {
             const string wkt = "LINESTRING(0 0 1, 0 0 2)";
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
@@ -56,7 +56,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
-        public void TESTSTAddPointWithPosition()
+        public void TestSTAddPointWithPosition()
         {
             const string wkt = "LINESTRING(0 0 1, 0 0 3)";
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
@@ -91,20 +91,20 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
-        public void TESTSTSTCollectionExtract()
+        public void TestSTCollectionExtract()
         {
             const string wkt = "GEOMETRYCOLLECTION(GEOMETRYCOLLECTION(LINESTRING(0 0, 1 1)),LINESTRING(2 2, 3 3))";
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 db.TestGeometries
-                .Value(g => g.Id, 1)
-                .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(wkt))
-                .Insert();
+                    .Value(g => g.Id, 1)
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(wkt))
+                    .Insert();
 
                 var result = db.TestGeometries
-                .Where(g => g.Id == 1)
-                .Select(g => g.Geometry.STCollectionExtract(2))
-                .Single();
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geometry.STCollectionExtract(2))
+                    .Single();
 
                 Assert.IsInstanceOf<NTSG.MultiLineString>(result);
                 var multiLine = result as NTSG.MultiLineString;
@@ -128,7 +128,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
-        public void TESTSTCollectionHomogenize()
+        public void TestSTCollectionHomogenize()
         {
             const string wkt = "GEOMETRYCOLLECTION(POINT(0 0),POINT(1 1))";
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
@@ -323,7 +323,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
-        public void TESTSTForcePolygonCCW()
+        public void TestSTForcePolygonCCW()
         {
             const string wkt = "POLYGON((0 0 1,0 5 1,5 0 1,0 0 1),(1 1 1,3 1 1,1 3 1,1 1 1))";
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
@@ -375,15 +375,15 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
-        public void TESTSTForceCollection()
+        public void TestSTForceCollection()
         {
             const string wkt = "POINT(0 0)";
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 db.TestGeometries
-                .Value(g => g.Id, 1)
-                .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(wkt))
-                .Insert();
+                    .Value(g => g.Id, 1)
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(wkt))
+                    .Insert();
 
                 var result = db.TestGeometries
                 .Where(g => g.Id == 1)
@@ -395,6 +395,30 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 Assert.AreEqual(0, result.Geometries[0].Coordinates[0].X);
                 Assert.AreEqual(0, result.Geometries[0].Coordinates[0].Y);
+            }
+        }
+
+        [Test]
+        public void TestSTSetPoint()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                db.TestGeometries
+                    .Value(g => g.Id, 1)
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText("LINESTRING(-1 2,-1 3)"))
+                    .Insert();
+
+                db.TestGeometries
+                    .Where(g => g.Id == 1)
+                    .Set(g => g.Geometry, g => g.Geometry.STSetPoint(0, GeometryInput.STGeomFromText("POINT(-1 1)")))
+                    .Update();
+
+                var result = db.TestGeometries
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geometry.STAsText())
+                    .Single();
+
+                Assert.AreEqual("LINESTRING(-1 1,-1 3)", result);
             }
         }
     }

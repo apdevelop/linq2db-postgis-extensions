@@ -59,16 +59,14 @@ using (var db = new PostGisTestDataConnection())
 public class PolygonEntity
 {
     [Column("geom")]
-    public NpgsqlTypes.PostgisGeometry Geometry { get; set; } // For Npgsql 3
-    public NetTopologySuite.Geometries.Geometry Geometry { get; set; } // For Npgsql 4
+    public NetTopologySuite.Geometries.Geometry Geometry { get; set; }
 }
 
 [Table("owm_cities", Schema = "public")]
 public class CityEntity
 {
     [Column("geom")]
-    public NpgsqlTypes.PostgisGeometry Geometry { get; set; } // For Npgsql 3
-    public NetTopologySuite.Geometries.Geometry Geometry { get; set; } // For Npgsql 4
+    public NetTopologySuite.Geometries.Geometry Geometry { get; set; }
 }
 
 class PostGisTestDataConnection : LinqToDB.Data.DataConnection
@@ -92,9 +90,10 @@ Depends on [linq2db](https://github.com/linq2db/linq2db), [Npgsql](https://githu
 * Run application, view table data along with PostGIS functions results in console output.
 
 ### TODOs
- * Implement full set of PostGIS methods.
+ * Implement full set of PostGIS methods (Currently implemented `195` of `303` methods, counted without overloads).
  * Add support for PostGIS `geography` data type.
  * Test on various versions of PostgreSQL/PostGIS and platforms (including .NET 5).
+ * More tests for corner cases.
  
 ### References
 * [PostGIS Reference](https://postgis.net/docs/manual-3.0/reference.html)
