@@ -15,6 +15,66 @@ namespace LinqToDBPostGisNetTopologySuite
     public static class GeometryEditors
     {
         /// <summary>
+        /// Append a point to a LineString
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_AddPoint.html
+        /// </remarks>
+        /// <param name="lineString">LineString</param>
+        /// <param name="point">Point</param>
+        /// <returns>LineString with point appended</returns>
+        [Sql.Function("ST_AddPoint", ServerSideOnly = true)]
+        public static NTSG STAddPoint(this NTSG lineString, NTSG point)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Insert a point to a LineString at given position(zero based)
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_AddPoint.html
+        /// </remarks>
+        /// <param name="lineString">Linestring</param>
+        /// <param name="point">Point</param>
+        /// <param name="position">Insert position(zero based)</param>
+        /// <returns>LineString with point inserted</returns>
+        [Sql.Function("ST_AddPoint", ServerSideOnly = true)]
+        public static NTSG STAddPoint(this NTSG lineString, NTSG point, int position)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Given a (multi)geometry, returns a (multi)geometry consisting only of elements of the specified type. If there are no sub-geometries of the right type, an EMPTY geometry will be returned
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_CollectionExtract.html
+        /// </remarks>
+        /// <param name="collection">Geometry</param>
+        /// <param name="type">Type(1 == POINT, 2 == LINESTRING, 3 == POLYGON)</param>
+        /// <returns>Geometry consisting only of elements of the specified type</returns>
+        [Sql.Function("ST_CollectionExtract", ServerSideOnly = true)]
+        public static NTSG STCollectionExtract(this NTSG collection, int type)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Given a geometry collection, returns the "simplest" representation of the contents
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_CollectionHomogenize.html
+        /// </remarks>
+        /// <param name="collection">Geometry collection</param>
+        /// <returns>Simplest" representation of the geometry collection</returns>
+        [Sql.Function("ST_CollectionHomogenize", ServerSideOnly = true)]
+        public static NTSG STCollectionHomogenize(this NTSG collection)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
         /// Forces the geometries into a "2-dimensional mode" so that all output representations will only have the X and Y coordinates
         /// </summary>
         /// <remarks>
@@ -80,6 +140,34 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <returns>Geometry in XYZM mode</returns>
         [Sql.Function("ST_Force4D", ServerSideOnly = true)]
         public static NTSG STForce4D(this NTSG geometry)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Forces (Multi)Polygons to use a counter-clockwise orientation for their exterior ring, and a clockwise orientation for their interior rings.Non-polygonal geometries are returned unchanged
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_ForcePolygonCCW.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <returns>Geometry with counter-clockwise/clockwise exterior/interior orientaion ring</returns>
+        [Sql.Function("ST_ForcePolygonCCW ", ServerSideOnly = true)]
+        public static NTSG STForcePolygonCCW(this NTSG geometry)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Converts the geometry into a GEOMETRYCOLLECTION
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_Force_Collection.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <returns>Geometry Collection</returns>
+        [Sql.Function("ST_ForceCollection ", ServerSideOnly = true)]
+        public static NTSG STForceCollection(this NTSG geometry)
         {
             throw new InvalidOperationException();
         }
