@@ -346,7 +346,6 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 //Assertion about interior ring
                 var originInteriorRing = originGeom.InteriorRings[0];
                 var ccwInteriorRing = ccwGeom.InteriorRings[0];
-                var numCoordinates = originInteriorRing.Coordinates.Length;
 
                 //Cause that head point equals end point forever,so only check point at index 1,2
                 Assert.AreEqual(originInteriorRing.Coordinates[1].Z, ccwInteriorRing.Coordinates[2].Z);
@@ -360,7 +359,6 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 //Assertion about exterior ring
                 var originExteriorRing = originGeom.ExteriorRing;
                 var ccwExteriorRing = ccwGeom.ExteriorRing;
-                var numCoords = originExteriorRing.Coordinates.Length;
 
                 //Cause that head point equals end point forever,so only check point at index 1,2
                 Assert.AreEqual(originExteriorRing.Coordinates[1].Z, ccwExteriorRing.Coordinates[2].Z);
@@ -371,6 +369,56 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 Assert.AreEqual(originExteriorRing.Coordinates[2].Z, ccwExteriorRing.Coordinates[1].Z);
                 Assert.AreEqual(originExteriorRing.Coordinates[2].X, ccwExteriorRing.Coordinates[1].X);
                 Assert.AreEqual(originExteriorRing.Coordinates[2].Y, ccwExteriorRing.Coordinates[1].Y);
+            }
+        }
+
+        [Test]
+        public void TestSTForcePolygonCW()
+        {
+            const string wkt = "POLYGON((0 0 1,5 0 1,0 5 1,0 0 1),(1 1 1,1 3 1,3 1 1,1 1 1))";
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                db.TestGeometries
+                .Value(g => g.Id, 1)
+                .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(wkt))
+                .Insert();
+
+                var cwGeom = db.TestGeometries
+                .Where(g => g.Id == 1)
+                .Select(g => g.Geometry.STForcePolygonCW())
+                .Single() as NTSG.Polygon;
+
+                var originGeom = db.TestGeometries
+                .Where(g => g.Id == 1)
+                .Select(g => g.Geometry)
+                .Single() as NTSG.Polygon;
+
+                //Assertion about interior ring
+                var originInteriorRing = originGeom.InteriorRings[0];
+                var cwInteriorRing = cwGeom.InteriorRings[0];
+
+                //Cause that head point equals end point forever,so only check point at index 1,2
+                Assert.AreEqual(originInteriorRing.Coordinates[1].Z, cwInteriorRing.Coordinates[2].Z);
+                Assert.AreEqual(originInteriorRing.Coordinates[1].X, cwInteriorRing.Coordinates[2].X);
+                Assert.AreEqual(originInteriorRing.Coordinates[1].Y, cwInteriorRing.Coordinates[2].Y);
+
+                Assert.AreEqual(originInteriorRing.Coordinates[2].Z, cwInteriorRing.Coordinates[1].Z);
+                Assert.AreEqual(originInteriorRing.Coordinates[2].X, cwInteriorRing.Coordinates[1].X);
+                Assert.AreEqual(originInteriorRing.Coordinates[2].Y, cwInteriorRing.Coordinates[1].Y);
+
+                //Assertion about exterior ring
+                var originExteriorRing = originGeom.ExteriorRing;
+                var cwExteriorRing = cwGeom.ExteriorRing;
+
+                //Cause that head point equals end point forever,so only check point at index 1,2
+                Assert.AreEqual(originExteriorRing.Coordinates[1].Z, cwExteriorRing.Coordinates[2].Z);
+                Assert.AreEqual(originExteriorRing.Coordinates[1].X, cwExteriorRing.Coordinates[2].X);
+                Assert.AreEqual(originExteriorRing.Coordinates[1].Y, cwExteriorRing.Coordinates[2].Y);
+
+                //Cause that head point equals end point forever,so only check point at index 1,2
+                Assert.AreEqual(originExteriorRing.Coordinates[2].Z, cwExteriorRing.Coordinates[1].Z);
+                Assert.AreEqual(originExteriorRing.Coordinates[2].X, cwExteriorRing.Coordinates[1].X);
+                Assert.AreEqual(originExteriorRing.Coordinates[2].Y, cwExteriorRing.Coordinates[1].Y);
             }
         }
 
@@ -395,6 +443,147 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 Assert.AreEqual(0, result.Geometries[0].Coordinates[0].X);
                 Assert.AreEqual(0, result.Geometries[0].Coordinates[0].Y);
+            }
+        }
+
+        [Test]
+        public void TestSTForceRHR()
+        {
+            const string wkt = "POLYGON((0 0 1,5 0 1,0 5 1,0 0 1),(1 1 1,1 3 1,3 1 1,1 1 1))";
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                db.TestGeometries
+                .Value(g => g.Id, 1)
+                .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(wkt))
+                .Insert();
+
+                var rhrGeom = db.TestGeometries
+                .Where(g => g.Id == 1)
+                .Select(g => g.Geometry.STForceRHR())
+                .Single() as NTSG.Polygon;
+
+                var originGeom = db.TestGeometries
+                .Where(g => g.Id == 1)
+                .Select(g => g.Geometry)
+                .Single() as NTSG.Polygon;
+
+                //Assertion about interior ring
+                var originInteriorRing = originGeom.InteriorRings[0];
+                var rrhInteriorRing = rhrGeom.InteriorRings[0];
+
+                //Cause that head point equals end point forever,so only check point at index 1,2
+                Assert.AreEqual(originInteriorRing.Coordinates[1].Z, rrhInteriorRing.Coordinates[2].Z);
+                Assert.AreEqual(originInteriorRing.Coordinates[1].X, rrhInteriorRing.Coordinates[2].X);
+                Assert.AreEqual(originInteriorRing.Coordinates[1].Y, rrhInteriorRing.Coordinates[2].Y);
+
+                Assert.AreEqual(originInteriorRing.Coordinates[2].Z, rrhInteriorRing.Coordinates[1].Z);
+                Assert.AreEqual(originInteriorRing.Coordinates[2].X, rrhInteriorRing.Coordinates[1].X);
+                Assert.AreEqual(originInteriorRing.Coordinates[2].Y, rrhInteriorRing.Coordinates[1].Y);
+
+                //Assertion about exterior ring
+                var originExteriorRing = originGeom.ExteriorRing;
+                var rrhExteriorRing = rhrGeom.ExteriorRing;
+
+                //Cause that head point equals end point forever,so only check point at index 1,2
+                Assert.AreEqual(originExteriorRing.Coordinates[1].Z, rrhExteriorRing.Coordinates[2].Z);
+                Assert.AreEqual(originExteriorRing.Coordinates[1].X, rrhExteriorRing.Coordinates[2].X);
+                Assert.AreEqual(originExteriorRing.Coordinates[1].Y, rrhExteriorRing.Coordinates[2].Y);
+
+                //Cause that head point equals end point forever,so only check point at index 1,2
+                Assert.AreEqual(originExteriorRing.Coordinates[2].Z, rrhExteriorRing.Coordinates[1].Z);
+                Assert.AreEqual(originExteriorRing.Coordinates[2].X, rrhExteriorRing.Coordinates[1].X);
+                Assert.AreEqual(originExteriorRing.Coordinates[2].Y, rrhExteriorRing.Coordinates[1].Y);
+            }
+        }
+
+        [Test]
+        public void TestSTForceCurve()
+        {
+            const string wkt = "POLYGON((0 0 1,5 0 1,0 5 1,0 0 1),(1 1 1,1 3 1,3 1 1,1 1 1))";
+            const string expected = "CURVEPOLYGON Z ((0 0 1,5 0 1,0 5 1,0 0 1),(1 1 1,1 3 1,3 1 1,1 1 1))";
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                db.TestGeometries
+                .Value(g => g.Id, 1)
+                .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(wkt))
+                .Insert();
+
+                var curvedGeomStr = db.TestGeometries
+                .Where(g => g.Id == 1)
+                .Select(g => g.Geometry.STForceCurve().STAsText())
+                .Single();
+
+                Assert.AreEqual(expected, curvedGeomStr);
+            }
+        }
+
+        [Test]
+        public void TestSTLineMerge()
+        {
+            const string wkt = "MULTILINESTRING M ((1 2 3, 9 4 3),(9 4 3, 5 4 5))";
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                db.TestGeometries
+                .Value(g => g.Id, 1)
+                .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(wkt))
+                .Insert();
+
+                var mergedGeom = db.TestGeometries
+                .Where(g => g.Id == 1)
+                .Select(g => g.Geometry.STLineMerge())
+                .Single();
+
+                Assert.IsInstanceOf<NTSG.LineString>(mergedGeom);
+                Assert.AreEqual(3, mergedGeom.NumPoints);
+
+                var mergedLine = mergedGeom as NTSG.LineString;
+                Assert.AreEqual(1, mergedLine.GetCoordinateN(0).X);
+                Assert.AreEqual(2, mergedLine.GetCoordinateN(0).Y);
+                Assert.AreEqual(double.NaN, mergedLine.GetCoordinateN(0).M);
+
+                Assert.AreEqual(9, mergedLine.GetCoordinateN(1).X);
+                Assert.AreEqual(4, mergedLine.GetCoordinateN(1).Y);
+                Assert.AreEqual(double.NaN, mergedLine.GetCoordinateN(1).M);
+
+                Assert.AreEqual(5, mergedLine.GetCoordinateN(2).X);
+                Assert.AreEqual(4, mergedLine.GetCoordinateN(2).Y);
+                Assert.AreEqual(double.NaN, mergedLine.GetCoordinateN(2).M);
+
+            }
+        }
+
+        [Test]
+        public void TestSTMulti()
+        {
+            const string wkt = "LINESTRING(25 50, 100 125, 150 190)";
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                db.TestGeometries
+                .Value(g => g.Id, 1)
+                .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(wkt))
+                .Insert();
+
+                var multiGeom = db.TestGeometries
+                .Where(g => g.Id == 1)
+                .Select(g => g.Geometry.STMulti())
+                .Single();
+
+                Assert.IsInstanceOf<NTSG.MultiLineString>(multiGeom);
+
+                var multiLine = multiGeom as NTSG.MultiLineString;
+
+                Assert.AreEqual(1, multiLine.NumGeometries);
+
+                var line = multiLine.GetGeometryN(0);
+
+                Assert.AreEqual(25, line.Coordinates[0].X);
+                Assert.AreEqual(50, line.Coordinates[0].Y);
+
+                Assert.AreEqual(100, line.Coordinates[1].X);
+                Assert.AreEqual(125, line.Coordinates[1].Y);
+
+                Assert.AreEqual(150, line.Coordinates[2].X);
+                Assert.AreEqual(190, line.Coordinates[2].Y);
             }
         }
 

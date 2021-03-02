@@ -173,6 +173,76 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
+        /// Forces (Multi)Polygons to use a clockwise orientation for their exterior ring, and a counter-clockwise orientation for their interior rings. Non-polygonal geometries are returned unchanged
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_ForcePolygonCW.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <returns>Geometry with counter-clockwise/clockwise interior/exterior orientaion ring</returns>
+        [Sql.Function("ST_ForcePolygonCW", ServerSideOnly = true)]
+        public static NTSG STForcePolygonCW(this NTSG geometry)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Forces the orientation of the vertices in a polygon to follow a Right-Hand-Rule, in which the area that is bounded by the polygon is to the right of the boundary. In particular, the exterior ring is orientated in a clockwise direction and the interior rings in a counter-clockwise direction
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_ForceRHR.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <returns>Geometry with vertices following a Right-Hand-Rule</returns>
+        [Sql.Function("ST_ForceRHR", ServerSideOnly = true)]
+        public static NTSG STForceRHR(this NTSG geometry)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Turns a geometry into its curved representation. Lines become compoundcurves, multilines become multicurves, polygons become curvepolygons, multipolygons become multisurfaces. A curved geometry returns back same as input
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_ForceCurve.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <returns>Geometry with curved representation</returns>
+        [Sql.Function("ST_ForceCurve", ServerSideOnly = true)]
+        public static NTSG STForceCurve(this NTSG geometry)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns a (set of) LineString(s) formed by sewing together the constituent line work of a MULTILINESTRING(Only use with MULTILINESTRING/LINESTRINGs. If you feed a polygon or geometry collection into this function, it will return an empty GEOMETRYCOLLECTION)
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_LineMerge.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry(MULTILINESTRING/LINESTRINGs only,polygon/geometry collection will return empty geomtry collection)</param>
+        /// <returns>A (set of) LineString(s) formed by sewing together the constituent line work of a MULTILINESTRING</returns>
+        [Sql.Function("ST_LineMerge", ServerSideOnly = true)]
+        public static NTSG STLineMerge(this NTSG geometry)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns the geometry as a MULTI* geometry. If the geometry is already a MULTI*, it is returned unchanged
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_Multi.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <returns>A MULTI* geometry</returns>
+        [Sql.Function("ST_Multi", ServerSideOnly = true)]
+        public static NTSG STMulti(this NTSG geometry)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
         /// Returns geometry in its normalized/canonical form.
         /// </summary>
         /// <remarks>
