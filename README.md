@@ -90,7 +90,7 @@ Depends on [linq2db](https://github.com/linq2db/linq2db), [Npgsql](https://githu
 * Run application, view table data along with PostGIS functions results in console output.
 
 ### TODOs
- * Implement full set of PostGIS methods (Currently implemented `195` of `303` methods, counted without overloads).
+ * Implement full set of PostGIS methods (Currently implemented `200` of `303` methods, counted without overloads).
  * Add support for PostGIS `geography` data type.
  * Test on various versions of PostgreSQL/PostGIS and platforms (including .NET 5).
  * More tests for corner cases.

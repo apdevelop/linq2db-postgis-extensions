@@ -7,7 +7,7 @@ using NTSG = NetTopologySuite.Geometries.Geometry;
 namespace LinqToDBPostGisNetTopologySuite
 {
     /// <summary>
-    /// Spatial Reference System Functions
+    /// Spatial Reference System Functions.
     /// </summary>
     /// <remarks>
     /// 8.7. Spatial Reference System Functions https://postgis.net/docs/manual-3.0/reference.html#SRS_Functions
@@ -15,14 +15,14 @@ namespace LinqToDBPostGisNetTopologySuite
     public static class SpatialReferenceSystemFunctions
     {
         /// <summary>
-        /// Sets the SRID on a geometry to particular value.
+        /// Sets the SRID on the input <paramref name="geometry"/> to particular <paramref name="srid" />.
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_SetSRID.html
         /// </remarks>
-        /// <param name="geometry">Input geometry</param>
-        /// <param name="srid">Spatial Reference System Identifier</param>
-        /// <returns>Geometry</returns>
+        /// <param name="geometry">Input geometry.</param>
+        /// <param name="srid">Spatial Reference System Identifier.</param>
+        /// <returns>Geometry with new SRID value.</returns>
         [Sql.Function("ST_SetSRID", ServerSideOnly = true)]
         public static NTSG STSetSrId(this NTSG geometry, int srid)
         {
@@ -30,13 +30,13 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
-        /// Returns the spatial reference identifier for the geometry as defined in spatial_ref_sys table.
+        /// Returns the SRID for the input <paramref name="geometry"/> as defined in spatial_ref_sys table.
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_SRID.html
         /// </remarks>
-        /// <param name="geometry">Input geometry</param>
-        /// <returns>Spatial Reference System Identifier</returns>
+        /// <param name="geometry">Input geometry.</param>
+        /// <returns>Spatial Reference System Identifier.</returns>
         [Sql.Function("ST_SRID", ServerSideOnly = true)]
         public static int? STSrId(this NTSG geometry)
         {
@@ -49,9 +49,9 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_Transform.html
         /// </remarks>
-        /// <param name="geometry">Input geometry</param>
-        /// <param name="srid">Destination Spatial Reference System Identifier</param>
-        /// <returns>Transformed geometry</returns>
+        /// <param name="geometry">Input geometry.</param>
+        /// <param name="srid">Destination Spatial Reference System Identifier.</param>
+        /// <returns>Transformed geometry.</returns>
         [Sql.Function("ST_Transform", ServerSideOnly = true)]
         public static NTSG STTransform(this NTSG geometry, int srid)
         {
@@ -64,9 +64,9 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_Transform.html
         /// </remarks>
-        /// <param name="geometry">Input geometry</param>
-        /// <param name="toProj">Destination spatial reference defined as PROJ.4 string</param>
-        /// <returns>Transformed geometry</returns>
+        /// <param name="geometry">Input geometry.</param>
+        /// <param name="toProj">Destination spatial reference system defined as PROJ.4 string.</param>
+        /// <returns>Transformed geometry.</returns>
         [Sql.Function("ST_Transform", ServerSideOnly = true)]
         public static NTSG STTransform(this NTSG geometry, string toProj)
         {
@@ -79,10 +79,10 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_Transform.html
         /// </remarks>
-        /// <param name="geometry">Input geometry</param>
-        /// <param name="fromProj">Input spatial reference defined as PROJ.4 string</param>
-        /// <param name=" toProj">Destination spatial reference defined as PROJ.4 string</param>
-        /// <returns>Transformed geometry</returns>
+        /// <param name="geometry">Input geometry.</param>
+        /// <param name="fromProj">Input spatial reference system defined as PROJ.4 string.</param>
+        /// <param name="toProj">Destination spatial reference system defined as PROJ.4 string.</param>
+        /// <returns>Transformed geometry.</returns>
         [Sql.Function("ST_Transform", ServerSideOnly = true)]
         public static NTSG STTransform(this NTSG geometry, string fromProj, string toProj)
         {
@@ -95,10 +95,10 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <remarks>
         /// See https://postgis.net/docs/manual-3.0/ST_Transform.html
         /// </remarks>
-        /// <param name="geometry">Input geometry</param>
-        /// <param name="fromProj">Input spatial reference defined as PROJ.4 string</param>
-        /// <param name="toSrid">Destination Spatial Reference System Identifier</param>
-        /// <returns>Transformed geometry</returns>
+        /// <param name="geometry">Input geometry.</param>
+        /// <param name="fromProj">Input spatial reference defined as PROJ.4 string.</param>
+        /// <param name="toSrid">Destination Spatial Reference System Identifier.</param>
+        /// <returns>Transformed geometry.</returns>
         [Sql.Function("ST_Transform", ServerSideOnly = true)]
         public static NTSG STTransform(this NTSG geometry, string fromProj, int toSrid)
         {
