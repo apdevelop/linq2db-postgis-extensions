@@ -180,7 +180,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <returns>Geometry with counter-clockwise/clockwise interior/exterior orientaion ring</returns>
-        [Sql.Function("ST_ForcePolygonCW  ", ServerSideOnly = true)]
+        [Sql.Function("ST_ForcePolygonCW", ServerSideOnly = true)]
         public static NTSG STForcePolygonCW(this NTSG geometry)
         {
             throw new InvalidOperationException();

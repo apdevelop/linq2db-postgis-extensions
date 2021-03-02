@@ -447,7 +447,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
-        public void TESTSTForceRHR()
+        public void TestSTForceRHR()
         {
             const string wkt = "POLYGON((0 0 1,5 0 1,0 5 1,0 0 1),(1 1 1,1 3 1,3 1 1,1 1 1))";
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
@@ -497,7 +497,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
-        public void TESTSTForceCurve()
+        public void TestSTForceCurve()
         {
             const string wkt = "POLYGON((0 0 1,5 0 1,0 5 1,0 0 1),(1 1 1,1 3 1,3 1 1,1 1 1))";
             const string expected = "CURVEPOLYGON Z ((0 0 1,5 0 1,0 5 1,0 0 1),(1 1 1,1 3 1,3 1 1,1 1 1))";
@@ -518,7 +518,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
-        public void TESTSTLineMerge()
+        public void TestSTLineMerge()
         {
             const string wkt = "MULTILINESTRING M ((1 2 3, 9 4 3),(9 4 3, 5 4 5))";
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
@@ -553,7 +553,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
-        public void TESTSTMulti()
+        public void TestSTMulti()
         {
             const string wkt = "LINESTRING(25 50, 100 125, 150 190)";
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
