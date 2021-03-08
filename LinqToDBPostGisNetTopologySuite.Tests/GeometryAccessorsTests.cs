@@ -149,6 +149,21 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
+        public void TestSTBoundingDiagonalWithFits()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                db.TestGeometries
+                    .Value(g => g.Id, 1)
+                    .Value(p => p.Geometry, () => GeometryConstructors.STMakePoint(0, 0).STBuffer(10))
+                    .Insert();
+
+                var bbBoxDiagonal = db.TestGeometries.Select(g => g.Geometry.STBoundingDiagonal(false).STAsText()).Single();
+                Assert.AreEqual("LINESTRING(-10 -10,10 10)", bbBoxDiagonal);
+            }
+        }
+
+        [Test]
         public void TestSTHasArc()
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
@@ -164,6 +179,93 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 Assert.IsTrue(db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STHasArc()).Single());
                 Assert.IsNull(db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STHasArc()).Single());
+            }
+        }
+
+        [Test]
+        public void TestSTInteriorRingN()
+        {
+            const string wkt = "POLYGON((0 0 1,0 5 1,5 0 1,0 0 1),(1 1 1,3 1 1,1 3 1,1 1 1))";
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                db.TestGeometries
+                    .Value(g => g.Id, 1)
+                    .Value(
+                        p => p.Geometry, () => GeometryInput.STGeomFromText(wkt)
+                        )
+                    .Insert();
+                var result = db.TestGeometries
+                                .Where(g => g.Id == 1)
+                                .Select(g => g.Geometry.STInteriorRingN(1))
+                                .Single() as NetTopologySuite.Geometries.LineString;
+                var emptyResult = db.TestGeometries
+                                .Where(g => g.Id == 1)
+                                .Select(g => g.Geometry.STInteriorRingN(2))
+                                .Single() as NetTopologySuite.Geometries.LineString;
+
+                Assert.IsNotNull(result);
+                Assert.IsNull(emptyResult);
+
+                System.Console.WriteLine(result.ToText());
+                Assert.AreEqual(1, result.Coordinates[0].X);
+                Assert.AreEqual(1, result.Coordinates[0].Y);
+                Assert.AreEqual(1, result.Coordinates[0].Z);
+
+                Assert.AreEqual(3, result.Coordinates[1].X);
+                Assert.AreEqual(1, result.Coordinates[1].Y);
+                Assert.AreEqual(1, result.Coordinates[1].Z);
+
+                Assert.AreEqual(1, result.Coordinates[2].X);
+                Assert.AreEqual(3, result.Coordinates[2].Y);
+                Assert.AreEqual(1, result.Coordinates[2].Z);
+
+                Assert.AreEqual(1, result.Coordinates[3].X);
+                Assert.AreEqual(1, result.Coordinates[3].Y);
+                Assert.AreEqual(1, result.Coordinates[3].Z);
+            }
+        }
+
+        [Test]
+        public void TestSTIsPolygonCCW()
+        {
+            const string wkt = "POLYGON((0 0 1,5 0 1,0 5 1,0 0 1),(1 1 1,1 3 1,3 1 1,1 1 1))";
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                db.TestGeometries
+                    .Value(g => g.Id, 1)
+                    .Value(
+                        p => p.Geometry, () => GeometryInput.STGeomFromText(wkt)
+                        )
+                    .Insert();
+                var result = db.TestGeometries
+                                .Where(g => g.Id == 1)
+                                .Select(g => g.Geometry.STIsPolygonCCW())
+                                .Single();
+
+                Assert.IsNotNull(result);
+                Assert.AreEqual(true, result);
+            }
+        }
+
+        [Test]
+        public void TestSTIsPolygonCW()
+        {
+            const string wkt = "POLYGON((0 0 1,0 5 1,5 0 1,0 0 1),(1 1 1,3 1 1,1 3 1,1 1 1))";
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                db.TestGeometries
+                    .Value(g => g.Id, 1)
+                    .Value(
+                        p => p.Geometry, () => GeometryInput.STGeomFromText(wkt)
+                        )
+                    .Insert();
+                var result = db.TestGeometries
+                                .Where(g => g.Id == 1)
+                                .Select(g => g.Geometry.STIsPolygonCW())
+                                .Single();
+
+                Assert.IsNotNull(result);
+                Assert.AreEqual(true, result);
             }
         }
 
@@ -352,6 +454,8 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 Assert.AreEqual(1, db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STNRings()).Single());
                 Assert.AreEqual(0, db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STNumInteriorRings()).Single());
+                //STNumInteriorRing is synonym to  STNumInteriorRings.See http://postgis.net/docs/manual-1.5/ST_NumInteriorRing.html
+                Assert.AreEqual(0, db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STNumInteriorRing()).Single());
                 Assert.IsNull(db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STNRings()).Single());
             }
         }
@@ -409,6 +513,26 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 Assert.AreEqual("POLYGON((0 0 0,0 1 0,1 1 0,1 0 0,0 0 0))", db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STPatchN(2).STAsEWKT()).Single());
                 Assert.IsNull(db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STPatchN(1)).Single());
                 Assert.IsNull(db.TestGeometries.Where(g => g.Id == 3).Select(g => g.Geometry.STPatchN(1)).Single());
+            }
+        }
+
+        [Test]
+        public void TestSTPointN()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string Wkt = "LINESTRING(0 0, 1 1, 2 2)";
+
+                db.TestGeometries
+                .Value(g => g.Id, 1)
+                .Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt))
+                .Insert();
+
+                var point = db.TestGeometries
+                .Where(g => g.Id == 1)
+                .Select(g => g.Geometry.STPointN(1).STAsText())
+                .Single();
+                Assert.AreEqual("POINT(0 0)", point);
             }
         }
 
