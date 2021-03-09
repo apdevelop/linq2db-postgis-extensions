@@ -194,5 +194,53 @@ namespace LinqToDBPostGisNetTopologySuite
         {
             throw new InvalidOperationException();
         }
+
+        /// <summary>
+        /// For geometry type returns true if the 3d distance between two objects is within distance_of_srid specified projected units (spatial ref units)
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_3DDWithin.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry 1</param>
+        /// <param name="other">Input geometry 2</param>
+        /// <param name="distance">Distance (in SRID units)</param>
+        /// <returns>If the 3d distance between two objects is within distanceOfSRID</returns>
+        [Sql.Function("ST_3DDWithin", ServerSideOnly = true)]
+        public static bool? ST3DDWithin(this NTSG geometry, NTSG other, double distance)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns true if the 3D geometries are fully within the specified distance(units defined by SRID) of one another
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_3DDFullyWithin.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry 1</param>
+        /// <param name="other">Input geometry 2</param>
+        /// <param name="distance">Distance (in SRID units)</param>
+        /// <returns>If the 3d distance between two objects is within distanceOfSRID</returns>
+        [Sql.Function("ST_3DDFullyWithin", ServerSideOnly = true)]
+        public static bool? ST3DDFullyWithin(this NTSG geometry, NTSG other, double distance)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns true if the geometries is fully within the specified distance of one another. The distance is specified in units defined by the spatial reference system of the geometries
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_DFullyWithin.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry 1</param>
+        /// <param name="other">Input geometry 2</param>
+        /// <param name="distance">Distance (in SRID units)</param>
+        /// <returns>If the geometries is fully within the specified distance of one another</returns>
+        [Sql.Function("ST_DFullyWithin", ServerSideOnly = true)]
+        public static bool? STDFullyWithin(this NTSG geometry, NTSG other, double distance)
+        {
+            throw new InvalidOperationException();
+        }
     }
 }

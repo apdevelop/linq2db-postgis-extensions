@@ -117,5 +117,90 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 Assert.IsNull(db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STReverse().STOrderingEquals(null)).Single());
             }
         }
+
+        [Test]
+        public void TestST3DDWithin()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string wkt1 = "POINT(1 1 2)";
+                const string wkt2 = "LINESTRING(1 5 2, 2 7 20, 1 9 100, 14 12 3)";
+                //srid 0 means default to EPSG:4326
+                var dWithin = db.Select(
+                    () =>
+                            SpatialRelationships
+                            .ST3DDWithin
+                            (
+                                GeometryInput.STGeomFromEWKT(wkt1),
+                                GeometryInput.STGeomFromEWKT(wkt2),
+                                10
+                            )
+                        );
+                var fullyDWithin = db.Select(
+                    () =>
+                            SpatialRelationships
+                            .ST3DDFullyWithin
+                            (
+                                GeometryInput.STGeomFromEWKT(wkt1),
+                                GeometryInput.STGeomFromEWKT(wkt2),
+                                10
+                            )
+                        );
+                Assert.NotNull(dWithin);
+                Assert.NotNull(fullyDWithin);
+
+                Assert.AreEqual(true, dWithin);
+                Assert.AreEqual(false, fullyDWithin);
+            }
+        }
+
+        [Test]
+        public void TestSTWithin()
+        {
+            const string wkt1 = "POINT(1 1)";
+            const string wkt2 = "LINESTRING(1 5, 2 7, 1 9, 14 12)";
+            //srid 0 means default to EPSG:4326
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                var dFullyWithin10 = db.Select(
+                    () =>
+                            SpatialRelationships
+                            .STDFullyWithin
+                            (
+                                GeometryInput.STGeomFromEWKT(wkt1),
+                                GeometryInput.STGeomFromEWKT(wkt2),
+                                10
+                            )
+                        );
+                var dFullyWithin20 = db.Select(
+                    () =>
+                            SpatialRelationships
+                            .STDFullyWithin
+                            (
+                                GeometryInput.STGeomFromEWKT(wkt1),
+                                GeometryInput.STGeomFromEWKT(wkt2),
+                                20
+                            )
+                        );
+                var dWithin10 = db.Select(
+                    () =>
+                            SpatialRelationships
+                            .STDWithin
+                            (
+                                GeometryInput.STGeomFromEWKT(wkt1),
+                                GeometryInput.STGeomFromEWKT(wkt2),
+                                10
+                            )
+                        );
+                Assert.NotNull(dFullyWithin10);
+                Assert.NotNull(dFullyWithin20);
+                Assert.NotNull(dWithin10);
+
+                Assert.AreEqual(false, dFullyWithin10);
+                Assert.AreEqual(true, dFullyWithin20);
+                Assert.AreEqual(true, dWithin10);
+            }
+        }
+
     }
 }
