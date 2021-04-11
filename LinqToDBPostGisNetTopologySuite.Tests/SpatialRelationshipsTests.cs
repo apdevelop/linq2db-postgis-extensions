@@ -119,6 +119,51 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
+        public void TestSTPointInsideCircle()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string point1 = "POINT(1 1)";
+                const string point2 = "POINT(100 100)";
+
+                const double circleX = 1.0;
+                const double circleY = 1.0;
+
+                db.TestGeometries
+                    .Value(g => g.Id, 1)
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(point1))
+                    .Insert();
+                db.TestGeometries
+                    .Value(g => g.Id, 2)
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(point2))
+                    .Insert();
+                var result1 = db.TestGeometries.Where(t => t.Id == 1)
+                                .Select(t => t.Geometry)
+                                .Select(g => g.STPointInsideCircle(circleX, circleY, 11))
+                                .Single();
+
+                var result2 = db.TestGeometries.Where(t => t.Id == 2)
+                                .Select(t => t.Geometry)
+                                .Select(g => g.STPointInsideCircle(circleX, circleY, 11))
+                                .Single();
+
+                Assert.NotNull(result1);
+                Assert.NotNull(result2);
+
+                Assert.AreEqual(true, result1);
+                Assert.AreEqual(false, result2);
+
+                var result3 = db
+                                .TestGeometries.Where(t => t.Id == 3)
+                                .Select(t => t.Geometry)
+                                .Select(g => g.STPointInsideCircle(circleX,circleY,11))
+                                .FirstOrDefault();
+                                
+                Assert.IsNull(result3);
+            }
+        }
+        
+        [Test]
         public void TestST3DDWithin()
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))

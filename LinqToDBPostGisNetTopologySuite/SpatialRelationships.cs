@@ -166,6 +166,23 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
+        /// Returns true if the geometry is a point and is inside the circle. Returns false otherwise
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_PointInsideCircle.html
+        /// </remarks>
+        /// <param name="geometry">Input point geometry</param>
+        /// <param name="centerX">Input circle x</param>
+        /// <param name="centerY">Input circle y</param>
+        /// <param name="radius">Radius of circle</param>
+        /// <returns>Is this point inside the circle</returns>
+        [Sql.Function("ST_PointInsideCircle", ServerSideOnly = true)]
+        public static bool? STPointInsideCircle(this NTSG geometry, double centerX, double centerY, double radius)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
         /// Returns true if the only points in common between geometry 1 and geometry 2 lie in the union of the boundaries of geometry 1 and geometry 2.
         /// </summary>
         /// <remarks>
