@@ -50,6 +50,34 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
+        public void TestSTLineCrossingDirection()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string line1 = "LINESTRING(25 169,89 114,40 70,86 43)";
+                const string line2 = "LINESTRING(171 154,20 140,71 74,161 53)";
+
+                var res1 = db
+                            .Select
+                            (
+                                () =>
+                                    GeometryInput
+                                        .STGeomFromText(line1)
+                                        .STLineCrossingDirection(GeometryInput.STGeomFromText(line2))
+                            );
+                Assert.IsNotNull(res1);
+                Assert.AreEqual(-3, res1);
+
+                var res2 = db.TestGeometries
+                             .Where(g => g.Id == 1)
+                             .Select(g => g.Geometry)
+                             .Select(g => g.STLineCrossingDirection(GeometryInput.STGeomFromText(line2)))
+                             .FirstOrDefault();
+                Assert.IsNull(res2);
+            }
+        }
+
+        [Test]
         public void TestSTDisjoint()
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
@@ -160,6 +188,42 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                                 .FirstOrDefault();
                                 
                 Assert.IsNull(result3);
+            }
+        }
+
+        [Test]
+        public void TestSTRelateBool()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string geom1 = "POINT(1 2)";
+                const string geom2 = "POINT(1 2)";
+
+                var result = db.Select
+                        (
+                            () =>
+                                GeometryInput
+                                .STGeomFromText(geom1)
+                                .STRelate(
+                                    GeometryProcessing.STBuffer(GeometryInput.STGeomFromText(geom2), 2)
+                                    ,
+                                    "0FFFFF212")
+                        );
+                Assert.IsNotNull(result);
+                Assert.AreEqual(true, result);
+
+                var result1 = db.TestGeometries
+                                .Where(g => g.Id == 1)
+                                .Select(g => g.Geometry)
+                                .Select(
+                                        g =>
+                                            g.STRelate(
+                                                       GeometryProcessing.STBuffer(GeometryInput.STGeomFromText(geom2), 2),
+                                                        "0FFFFF212"
+                                                       )
+                                        )
+                                .FirstOrDefault();
+                Assert.IsNull(result1);
             }
         }
         
