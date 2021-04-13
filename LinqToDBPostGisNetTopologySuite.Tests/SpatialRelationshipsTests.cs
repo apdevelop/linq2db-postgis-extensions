@@ -50,6 +50,28 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
+        public void TestSTContainsProperly()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string point1 = "POINT(1 1)";
+
+                var query1 = from g1 in db.SelectQuery(() => GeometryProcessing.STBuffer(GeometryInput.STGeomFromText(point1), 3))
+                             from g2 in db.SelectQuery(() => GeometryProcessing.STBuffer(GeometryInput.STGeomFromText(point1), 10))
+                             select g2.STContainsProperly(g1);
+                var result1 = query1.FirstOrDefault();
+                Assert.IsNotNull(result1);
+                Assert.AreEqual(true, result1);
+
+                var query2 = from g1 in db.TestGeometries.Where(g => g.Id == 1)
+                             from g2 in db.TestGeometries.Where(g => g.Id == 1)
+                             select g2.Geometry.STContainsProperly(g1.Geometry);
+                var result2 = query2.FirstOrDefault();
+                Assert.IsNull(result2);
+            }
+        }
+
+        [Test]
         public void TestSTLineCrossingDirection()
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
@@ -226,7 +248,102 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 Assert.IsNull(result1);
             }
         }
-        
+
+        [Test]
+        public void TestSTRelateDE9IM()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string geom1 = "POINT(1 2)";
+                const string geom2 = "POINT(3 4)";
+
+                var result1 = db.Select
+                        (
+                            () =>
+                                GeometryInput
+                                .STGeomFromText(geom1)
+                                .STRelate(GeometryInput.STGeomFromText(geom2))
+                        );
+                Assert.IsFalse(string.IsNullOrEmpty(result1));
+
+                var result2 = (
+                                from g1 in db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry)
+                                from g2 in db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry)
+                                select SpatialRelationships.STRelate(g1, g2)
+                            ).FirstOrDefault();
+                Assert.IsTrue(string.IsNullOrEmpty(result2));
+            }
+        }
+
+        [Test]
+        public void TestSTRelateWithBoundaryRule()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string geom1 = "POINT(1 2)";
+                const string geom2 = "POINT(3 4)";
+
+                var result1 = db.Select
+                        (
+                            () =>
+                                GeometryInput
+                                .STGeomFromText(geom1)
+                                .STRelate(GeometryInput.STGeomFromText(geom2), 1)
+                        );
+                var result2 = db.Select
+                        (
+                            () =>
+                                GeometryInput
+                                .STGeomFromText(geom1)
+                                .STRelate(GeometryInput.STGeomFromText(geom2), 2)
+                        );
+                var result3 = db.Select
+                        (
+                            () =>
+                                GeometryInput
+                                .STGeomFromText(geom1)
+                                .STRelate(GeometryInput.STGeomFromText(geom2), 3)
+                        );
+                var result4 = db.Select
+                        (
+                            () =>
+                                GeometryInput
+                                .STGeomFromText(geom1)
+                                .STRelate(GeometryInput.STGeomFromText(geom2), 4)
+                        );
+                var result5 = (
+                                from g1 in db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry)
+                                from g2 in db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry)
+                                select SpatialRelationships.STRelate(g1, g2, 1)
+                            ).FirstOrDefault();
+
+                Assert.IsFalse(string.IsNullOrEmpty(result1));
+                Assert.IsFalse(string.IsNullOrEmpty(result2));
+                Assert.IsFalse(string.IsNullOrEmpty(result3));
+                Assert.IsFalse(string.IsNullOrEmpty(result4));
+
+                Assert.AreEqual("FF0FFF0F2", result1);
+                Assert.AreEqual("FF0FFF0F2", result2);
+                Assert.AreEqual("FF0FFF0F2", result3);
+                Assert.AreEqual("FF0FFF0F2", result4);
+
+                Assert.IsTrue(string.IsNullOrEmpty(result5));
+            }
+        }
+
+        [Test]
+        public void TestSTRelateMatch()
+        {
+            const string matrix = "101202FFF";
+            const string matrixPattern = "TTTTTTFFF";
+
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                var result1 = db.Select(() => matrix.STRelateMatch(matrixPattern));
+                Assert.IsFalse(string.IsNullOrEmpty(result1));
+            }
+        }
+
         [Test]
         public void TestST3DDWithin()
         {
