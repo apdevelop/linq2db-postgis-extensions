@@ -269,7 +269,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="intersectionMatrixPattern">Input intersectionMatrixPattern</param>
         /// <returns>If the intersectionMatrix satisfies the intersectionMatrixPattern</returns>
         [Sql.Function("ST_RelateMatch", ServerSideOnly = true)]
-        public static string STRelateMatch(this string intersectionMatrix, string intersectionMatrixPattern)
+        public static string STRelateMatch(string intersectionMatrix, string intersectionMatrixPattern)
         {
             throw new InvalidOperationException();
         }

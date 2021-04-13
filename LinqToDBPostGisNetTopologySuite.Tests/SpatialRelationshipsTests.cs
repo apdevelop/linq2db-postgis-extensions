@@ -339,7 +339,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                var result1 = db.Select(() => matrix.STRelateMatch(matrixPattern));
+                var result1 = db.Select(() => SpatialRelationships.STRelateMatch(matrix, matrixPattern));
                 Assert.IsFalse(string.IsNullOrEmpty(result1));
             }
         }
