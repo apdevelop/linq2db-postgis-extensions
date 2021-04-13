@@ -75,6 +75,21 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
+        /// Given 2 linestrings, returns a number between -3 and 3 denoting what kind of crossing behavior. 0 is no crossing
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_LineCrossingDirection.html
+        /// </remarks>
+        /// <param name="geometry">Input given linestring</param>
+        /// <param name="other">Input the other linestring</param>
+        /// <returns>Crossing behavior number.0 means no cross,-1 cross left,1 cross right,-2 multicross end left,-3 multicross end same first left,3 multicross end same first right</returns>
+        [Sql.Function("ST_LineCrossingDirection", ServerSideOnly = true)]
+        public static int? STLineCrossingDirection(this NTSG geometry, NTSG other)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
         /// If any of the Overlaps, Touches, Within returns true, then the geometries are not spatially disjoint.
         /// </summary>
         /// <remarks>
@@ -178,6 +193,22 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <returns>Is this point inside the circle</returns>
         [Sql.Function("ST_PointInsideCircle", ServerSideOnly = true)]
         public static bool? STPointInsideCircle(this NTSG geometry, double centerX, double centerY, double radius)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Takes geomA, geomB, intersectionMatrix and Returns 1 (TRUE) if this Geometry is spatially related to anotherGeometry, by testing for intersections between the Interior, Boundary and Exterior of the two geometries as specified by the values in the DE-9IM matrix pattern
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_Relate.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="other">Input geometry other</param>
+        /// <param name="intersectionMatrixPattern">Input intersection matrix pattern</param>
+        /// <returns>If this Geometry is spatially related to the other geometry</returns>
+        [Sql.Function("ST_Relate", ServerSideOnly = true)]
+        public static bool? STRelate(this NTSG geometry, NTSG other, string intersectionMatrixPattern)
         {
             throw new InvalidOperationException();
         }
