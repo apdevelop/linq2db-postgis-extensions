@@ -30,6 +30,21 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
+        /// Returns true if B intersects the interior of A but not the boundary (or exterior).A does not contain properly itself, but does contain itself
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_ContainsProperly.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="other">Input other geometry</param>
+        /// <returns>If B intersects the interior of A but not the boundary (or exterior)</returns>
+        [Sql.Function("ST_ContainsProperly", ServerSideOnly = true)]
+        public static bool? STContainsProperly(this NTSG geometry, NTSG other)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
         /// Returns true if no point in geometry 2 is outside geometry 1
         /// </summary>
         /// <remarks>
@@ -209,6 +224,52 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <returns>If this Geometry is spatially related to the other geometry</returns>
         [Sql.Function("ST_Relate", ServerSideOnly = true)]
         public static bool? STRelate(this NTSG geometry, NTSG other, string intersectionMatrixPattern)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Takes geomA and geomB and returns the DE-9IM
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_Relate.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="other">Input other geometry</param>
+        /// <returns>DE-9IM between input geometries</returns>
+        [Sql.Function("ST_Relate", ServerSideOnly = true)]
+        public static string STRelate(this NTSG geometry, NTSG other)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Takes geomA and geomB and returns the DE-9IM
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_Relate.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="other">Input other geometry</param>
+        /// <param name="BoundaryNodeRule">Boundary node rule (1:OGC/MOD2, 2:Endpoint, 3:MultivalentEndpoint, 4:MonovalentEndpoint)</param>
+        /// <returns>DE-9IM between input geometries</returns>
+        [Sql.Function("ST_Relate", ServerSideOnly = true)]
+        public static string STRelate(this NTSG geometry, NTSG other, int BoundaryNodeRule)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Takes intersectionMatrix and intersectionMatrixPattern and Returns true if the intersectionMatrix satisfies the intersectionMatrixPattern
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_RelateMatch.html
+        /// </remarks>
+        /// <param name="intersectionMatrix">Input intersectionMatrix</param>
+        /// <param name="intersectionMatrixPattern">Input intersectionMatrixPattern</param>
+        /// <returns>If the intersectionMatrix satisfies the intersectionMatrixPattern</returns>
+        [Sql.Function("ST_RelateMatch", ServerSideOnly = true)]
+        public static string STRelateMatch(string intersectionMatrix, string intersectionMatrixPattern)
         {
             throw new InvalidOperationException();
         }
