@@ -790,9 +790,9 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             {
                 const string Ewkt = @"POLYHEDRALSURFACE(
                                         ((0 0 0, 0 0 1, 0 1 1, 0 1 0, 0 0 0)),
-		                                ((0 0 0, 0 1 0, 1 1 0, 1 0 0, 0 0 0)), ((0 0 0, 1 0 0, 1 0 1, 0 0 1, 0 0 0)),
-		                                ((1 1 0, 1 1 1, 1 0 1, 1 0 0, 1 1 0)),
-		                                ((0 1 0, 0 1 1, 1 1 1, 1 1 0, 0 1 0)), ((0 0 1, 1 0 1, 1 1 1, 0 1 1, 0 0 1)) )";
+                                        ((0 0 0, 0 1 0, 1 1 0, 1 0 0, 0 0 0)), ((0 0 0, 1 0 0, 1 0 1, 0 0 1, 0 0 0)),
+                                        ((1 1 0, 1 1 1, 1 0 1, 1 0 0, 1 1 0)),
+                                        ((0 1 0, 0 1 1, 1 1 1, 1 1 0, 0 1 0)), ((0 0 1, 1 0 1, 1 1 1, 0 1 1, 0 0 1)) )";
                 db.TestGeometries.Value(g => g.Id, 1).Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt)).Insert();
                 db.TestGeometries.Value(g => g.Id, 2).Value(g => g.Geometry, () => GeometryInput.STGeomFromText("POINT(1 1)")).Insert();
                 db.TestGeometries.Value(g => g.Id, 3).Value(g => g.Geometry, () => null).Insert();
@@ -831,10 +831,10 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 const string Ewkt = @"POLYHEDRALSURFACE( 
-                    ((0 0 0, 0 0 1, 0 1 1, 0 1 0, 0 0 0)),
-	                ((0 0 0, 0 1 0, 1 1 0, 1 0 0, 0 0 0)), ((0 0 0, 1 0 0, 1 0 1, 0 0 1, 0 0 0)),
-	                ((1 1 0, 1 1 1, 1 0 1, 1 0 0, 1 1 0)),
-	                ((0 1 0, 0 1 1, 1 1 1, 1 1 0, 0 1 0)), ((0 0 1, 1 0 1, 1 1 1, 0 1 1, 0 0 1)) )";
+                                        ((0 0 0, 0 0 1, 0 1 1, 0 1 0, 0 0 0)),
+                                        ((0 0 0, 0 1 0, 1 1 0, 1 0 0, 0 0 0)), ((0 0 0, 1 0 0, 1 0 1, 0 0 1, 0 0 0)),
+                                        ((1 1 0, 1 1 1, 1 0 1, 1 0 0, 1 1 0)),
+                                        ((0 1 0, 0 1 1, 1 1 1, 1 1 0, 0 1 0)), ((0 0 1, 1 0 1, 1 1 1, 0 1 1, 0 0 1)) )";
                 db.TestGeometries.Value(g => g.Id, 1).Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt)).Insert();
                 db.TestGeometries.Value(g => g.Id, 2).Value(g => g.Geometry, () => GeometryInput.STGeomFromText("POINT(1 1)")).Insert();
                 db.TestGeometries.Value(g => g.Id, 3).Value(g => g.Geometry, () => null).Insert();
@@ -880,11 +880,14 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 const string Wkt = "POLYGON Z ((30 10 4,10 30 5,40 40 6, 30 10 4))";
-                db.TestGeometries.Value(g => g.Id, 1).Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt)).Insert();
+                db.TestGeometries
+                    .Value(g => g.Id, 1)
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt))
+                    .Insert();
 
                 const string ExpectedMultiPoint = "MULTIPOINT Z (30 10 4,10 30 5,40 40 6,30 10 4)";
                 Assert.AreEqual(ExpectedMultiPoint, db.TestGeometries.Select(g => g.Geometry.STPoints().STAsText()).Single());
-                Assert.AreEqual(ExpectedMultiPoint, db.Select(() => GeometryAccessors.STPoints(Wkt)));
+                Assert.AreEqual(ExpectedMultiPoint, db.Select(() => GeometryAccessors.STPoints(Wkt).STAsText()));
                 Assert.IsNull(db.Select(() => GeometryAccessors.STPoints((NTSG)null)));
             }
         }
@@ -960,7 +963,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 Assert.AreEqual(1, db.Select(() => GeometryAccessors.STX(Wkt1)));
                 Assert.AreEqual(2, db.Select(() => GeometryAccessors.STY(Wkt1)));
                 Assert.AreEqual(3, db.Select(() => GeometryAccessors.STZ(Wkt1)));
-                Assert.AreEqual(4, db.Select(() => GeometryAccessors.STZ(Wkt1)));
+                Assert.AreEqual(4, db.Select(() => GeometryAccessors.STM(Wkt1)));
 
                 var query2 = db.TestGeometries.Where(g => g.Id == 2);
                 Assert.AreEqual(1, query2.Select(g => g.Geometry.STX()).Single());
