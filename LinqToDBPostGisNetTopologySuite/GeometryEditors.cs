@@ -7,7 +7,7 @@ using NTSG = NetTopologySuite.Geometries.Geometry;
 namespace LinqToDBPostGisNetTopologySuite
 {
     /// <summary>
-    /// Geometry Editors
+    /// Geometry Editors.
     /// </summary>
     /// <remarks>
     /// 8.5. Geometry Editors https://postgis.net/docs/manual-3.0/reference.html#Geometry_Editors
@@ -297,6 +297,36 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <returns>Geometry with point replaced</returns>
         [Sql.Function("ST_SetPoint", ServerSideOnly = true)]
         public static NTSG STSetPoint(this NTSG geometry, int index, NTSG point)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns a version of input <paramref name="geometry"/> with given ordinates swapped.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_SwapOrdinates.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry.</param>
+        /// <param name="ordinates">Two-characters string naming the ordinates to swap. Valid names are: x,y,z and m.</param>
+        /// <returns>Geometry with point removed</returns>
+        [Sql.Function("ST_SwapOrdinates", ServerSideOnly = true)]
+        public static NTSG STSwapOrdinates(this NTSG geometry, string ordinates)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns a version of input <paramref name="geometry"/> in text representation with given ordinates swapped.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_SwapOrdinates.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry.</param>
+        /// <param name="ordinates">Two-characters string naming the ordinates to swap. Valid names are: x,y,z and m.</param>
+        /// <returns>Geometry with point removed</returns>
+        [Sql.Function("ST_SwapOrdinates", ServerSideOnly = true)]
+        public static NTSG STSwapOrdinates(string geometry, string ordinates)
         {
             throw new InvalidOperationException();
         }

@@ -610,5 +610,38 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 Assert.AreEqual("LINESTRING(-1 1,-1 3)", result);
             }
         }
+
+        [Test]
+        public void TestSTSwapOrdinates()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                Assert.AreEqual(
+                    "POINT(2 1)",
+                    db.Select(() => GeometryInput
+                        .STGeomFromText("POINT(1 2)")
+                        .STSwapOrdinates("xy")
+                        .STAsText()));
+
+                Assert.AreEqual(
+                    "POINT(2 1)",
+                    db.Select(() => GeometryEditors
+                        .STSwapOrdinates("POINT(1 2)", "xy")
+                        .STAsText()));
+
+                Assert.AreEqual(
+                    "POINT ZM (0 0 0 4)",
+                    db.Select(() => GeometryInput
+                        .STGeomFromText("POINT ZM (0 0 0 2)")
+                        .STSwapOrdinates("xm")
+                        .STScale(2, 1)
+                        .STSwapOrdinates("xm")
+                        .STAsText()));
+
+                Assert.IsNull(db.Select(() => GeometryEditors.STSwapOrdinates((NTSG.Geometry)null, null)));
+                Assert.IsNull(db.Select(() => GeometryEditors.STSwapOrdinates((NTSG.Geometry)null, String.Empty)));
+                Assert.IsNull(db.Select(() => GeometryEditors.STSwapOrdinates((string)null, null)));
+            }
+        }
     }
 }
