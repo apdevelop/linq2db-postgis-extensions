@@ -19,6 +19,30 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
+        public void TestST3DIntersects()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string line1 = "LINESTRING(0 0 1, 0 0 2, 0 0 3)";
+                const string line2 = "LINESTRING(0 0 1, 0 0 4, 0 0 5)";
+
+                const string line3 = "LINESTRING(0 0 1, 0 0 2, 0 0 3)";
+                const string line4 = "LINESTRING(9 9 0, 9 9 1, 9 9 2)";
+
+                var result1 = db.Select(() => GeometryInput.STGeomFromText(line1).ST3DIntersects(GeometryInput.STGeomFromText(line2)));
+                var result2 = db.Select(() => GeometryInput.STGeomFromText(line3).ST3DIntersects(GeometryInput.STGeomFromText(line4)));
+                var result3 = db.Select(() => SpatialRelationships.ST3DIntersects((NTSG.Geometry)null,(NTSG.Geometry)null));
+
+                Assert.IsNotNull(result1);
+                Assert.IsNotNull(result2);
+                Assert.IsNull(result3);
+
+                Assert.AreEqual(true, result1);
+                Assert.AreEqual(false, result2);
+            }
+        }
+
+        [Test]
         public void TestSTContainsSTCoversSTExteriorRing()
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
