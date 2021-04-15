@@ -1,0 +1,53 @@
+name: test_on_postgis_2.5
+
+on: [push, pull_request]
+
+jobs:
+  test_on_postgis_2.5:
+
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: ['2.1.x' ]
+        postgis-version: ['postgis/postgis:12-2.5-alpine', 'postgis/postgis:11-2.5-alpine', 'postgis/postgis:10-2.5-alpine', '9.6-2.5-alpine' ]
+    services:
+      postgis:
+        image: ${{ matrix.postgis-version }}
+        env:
+          POSTGRES_USER: reader
+          POSTGRES_PASSWORD: reader
+          POSTGRES_DB: postgistest
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+          
+    steps:
+    - name: init database table owm_cities
+      run: psql -h localhost -p 5432 -d postgistest -U reader -c "CREATE TABLE IF NOT EXISTS owm_cities(  id   integer primary key,  city_name  varchar not null,  geom       geometry not null)"
+      env:
+        PGPASSWORD: reader
+
+    - name: init database table test_geometry
+      run: psql -h localhost -p 5432 -d postgistest -U reader -c "CREATE TABLE test_geometry(  id   integer primary key,  geom  geometry);"
+      env:
+        PGPASSWORD: reader
+
+    - name: get source
+      uses: actions/checkout@v2
+
+    - name: Setup .NET Core SDK ${{ matrix.dotnet-version }}
+      uses: actions/setup-dotnet@v1.7.2
+      with:
+        dotnet-version: ${{ matrix.dotnet-version }}
+
+    - name: Install dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --configuration Release --no-restore
+    - name: Test
+      run: dotnet test --no-restore --verbosity normal
