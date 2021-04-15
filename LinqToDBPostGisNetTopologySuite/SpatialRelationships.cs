@@ -15,6 +15,21 @@ namespace LinqToDBPostGisNetTopologySuite
     public static class SpatialRelationships
     {
         /// <summary>
+        /// Returns TRUE if the Geometries "spatially intersect" in 3D - only for points, linestrings, polygons, polyhedral surface (area)
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_3DIntersects.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry</param>
+        /// <param name="other">Input other geometry</param>
+        /// <returns>If the Geometries "spatially intersect" in 3D - only for points, linestrings, polygons, polyhedral surface (area)</returns>
+        [Sql.Function("ST_3DIntersects", ServerSideOnly = true)]
+        public static bool? ST3DIntersects(this NTSG geometry, NTSG other)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
         /// Returns true if geometry 2 is completely inside geometry 1.
         /// </summary>
         /// <remarks>
