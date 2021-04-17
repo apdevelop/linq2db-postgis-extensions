@@ -302,6 +302,90 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
+        /// Snaps all points of input <paramref name="geometry"/> to the grid defined by its origin and cell size.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_SnapToGrid.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry.</param>
+        /// <param name="originX">X coordinate of grid origin.</param>
+        /// <param name="originY">Y coordinate of grid origin.</param>
+        /// <param name="sizeX">Grid cell size by X axis.</param>
+        /// <param name="sizeY">Grid cell size by Y axis.</param>
+        /// <returns>Geometry with all points snapped to grid.</returns>
+        [Sql.Function("ST_SnapToGrid", ServerSideOnly = true)]
+        public static NTSG STSnapToGrid(this NTSG geometry, double originX, double originY, double sizeX, double sizeY)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Snaps all points of input <paramref name="geometry"/> to the grid defined by its cell size.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_SnapToGrid.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry.</param>
+        /// <param name="sizeX">Grid cell size by X axis.</param>
+        /// <param name="sizeY">Grid cell size by Y axis.</param>
+        /// <returns>Geometry with all points snapped to grid.</returns>
+        [Sql.Function("ST_SnapToGrid", ServerSideOnly = true)]
+        public static NTSG STSnapToGrid(this NTSG geometry, double sizeX, double sizeY)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Snaps all points of input <paramref name="geometry"/> to the grid defined by its cell size.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_SnapToGrid.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry.</param>
+        /// <param name="size">Grid cell size.</param>
+        /// <returns>Geometry with all points snapped to grid.</returns>
+        [Sql.Function("ST_SnapToGrid", ServerSideOnly = true)]
+        public static NTSG STSnapToGrid(this NTSG geometry, double size)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Snaps all points of input <paramref name="geometry"/> to the grid defined by its origin point and cell sizes.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_SnapToGrid.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry.</param>
+        /// <param name="origin">Grid origin (Point).</param>
+        /// <param name="sizeX">Grid cell size by X axis.</param>
+        /// <param name="sizeY">Grid cell size by Y axis.</param>
+        /// <param name="sizeZ">Grid cell size by Z axis.</param>
+        /// <param name="sizeM">Grid cell size by M axis.</param>
+        /// <returns>Geometry with all points snapped to grid.</returns>
+        [Sql.Function("ST_SnapToGrid", ServerSideOnly = true)]
+        public static NTSG STSnapToGrid(this NTSG geometry, NTSG origin, double sizeX, double sizeY, double sizeZ, double sizeM)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Snaps the vertices and segments of input <paramref name="geometry"/> to <paramref name="reference"/> geometry vertices.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/manual-3.0/ST_Snap.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry.</param>
+        /// <param name="reference">Reference geometry.</param>
+        /// <param name="tolerance">Snap distance tolerance.</param>
+        /// <returns>Geometry with the vertices snapped.</returns>
+        [Sql.Function("ST_Snap", ServerSideOnly = true)]
+        public static NTSG STSnap(this NTSG geometry, NTSG reference, double tolerance)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
         /// Returns a version of input <paramref name="geometry"/> with given ordinates swapped.
         /// </summary>
         /// <remarks>
@@ -309,7 +393,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <param name="ordinates">Two-characters string naming the ordinates to swap. Valid names are: x,y,z and m.</param>
-        /// <returns>Geometry with point removed</returns>
+        /// <returns>Geometry with given ordinates swapped.</returns>
         [Sql.Function("ST_SwapOrdinates", ServerSideOnly = true)]
         public static NTSG STSwapOrdinates(this NTSG geometry, string ordinates)
         {
@@ -324,7 +408,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <param name="ordinates">Two-characters string naming the ordinates to swap. Valid names are: x,y,z and m.</param>
-        /// <returns>Geometry with point removed</returns>
+        /// <returns>Geometry with given ordinates swapped.</returns>
         [Sql.Function("ST_SwapOrdinates", ServerSideOnly = true)]
         public static NTSG STSwapOrdinates(string geometry, string ordinates)
         {
