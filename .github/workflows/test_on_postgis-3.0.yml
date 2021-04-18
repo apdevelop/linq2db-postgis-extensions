@@ -1,4 +1,4 @@
-name: test_on_postgis_3.0
+name: PostGIS_3.0
 
 on: [push, pull_request]
 

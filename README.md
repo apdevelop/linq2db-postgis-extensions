@@ -1,7 +1,7 @@
 # Linq2db PostGIS Extensions
-![PostGIS 2.5](https://github.com/apdevelop/linq2db-postgis-extensions/actions/workflows/postgis-2.5.yml/badge.svg)
-![PostGIS 3.0](https://github.com/apdevelop/linq2db-postgis-extensions/actions/workflows/postgis-3.0.yml/badge.svg)
-![PostGIS 3.1](https://github.com/apdevelop/linq2db-postgis-extensions/actions/workflows/postgis-3.1.yml/badge.svg)
+![PostGIS 2.5](https://github.com/apdevelop/linq2db-postgis-extensions/actions/workflows/test_on_postgis-2.5.yml/badge.svg)
+![PostGIS 3.0](https://github.com/apdevelop/linq2db-postgis-extensions/actions/workflows/test_on_postgis-3.0.yml/badge.svg)
+![PostGIS 3.1](https://github.com/apdevelop/linq2db-postgis-extensions/actions/workflows/test_on_postgis-3.1.yml/badge.svg)
 
 .NET Standard 2.0 library with OGC extensions methods on geometry (`NpgsqlTypes.PostgisGeometry` or `NetTopologySuite.Geometries.Geometry`) instances, providing strongly typed access to [PostGIS](http://postgis.net/) functions on server side while using [linq2db](https://github.com/linq2db/linq2db) LINQ to database provider.
 

@@ -1,15 +1,15 @@
-name: test_on_postgis_3.1
+name: PostGIS_2.5
 
 on: [push, pull_request]
 
 jobs:
-  test_on_postgis_31:
+  test_on_postgis_25:
 
     runs-on: ubuntu-latest
     strategy:
       matrix:
         dotnet-version: ['2.1.x' ]
-        postgis-version: ['postgis/postgis:13-3.1-alpine', 'postgis/postgis:12-3.1-alpine', 'postgis/postgis:11-3.1-alpine', 'postgis/postgis:10-3.1-alpine', 'postgis/postgis:9.6-3.1-alpine' ]
+        postgis-version: ['postgis/postgis:12-2.5-alpine', 'postgis/postgis:11-2.5-alpine', 'postgis/postgis:10-2.5-alpine', 'postgis/postgis:9.6-2.5-alpine' ]
     services:
       postgis:
         image: ${{ matrix.postgis-version }}
