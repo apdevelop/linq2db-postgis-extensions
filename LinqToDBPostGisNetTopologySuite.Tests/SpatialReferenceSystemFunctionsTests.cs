@@ -4,6 +4,8 @@ using System.Linq;
 using LinqToDB;
 using NUnit.Framework;
 
+using NTSGS = NetTopologySuite.Geometries;
+
 namespace LinqToDBPostGisNetTopologySuite.Tests
 {
     [TestFixture]
@@ -23,17 +25,39 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryConstructors.STMakePoint(-123.365556, 48.428611).STSetSrId(SRID4326)).Insert();
-                db.TestGeometries.Value(g => g.Id, 2).Value(p => p.Geometry, () => GeometryConstructors.STMakePoint(-123.365556, 48.428611).STSetSrId(SRID4326).STTransform(3785)).Insert();
+                db.TestGeometries
+                    .Value(g => g.Id, 1)
+                    .Value(g => g.Geometry, () => GeometryConstructors.STMakePoint(-123.365556, 48.428611).STSetSrId(SRID4326))
+                    .Insert();
+                db.TestGeometries
+                    .Value(g => g.Id, 2)
+                    .Value(g => g.Geometry, () => GeometryConstructors.STMakePoint(-123.365556, 48.428611).STSetSrId(SRID4326).STTransform(3785))
+                    .Insert();
 
-                var ewkt1 = db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STAsEWKT()).Single();
-                Assert.AreEqual("SRID=4326;POINT(-123.365556 48.428611)", ewkt1);
-                var srid1 = db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STSrId()).Single();
+                var ewkt1 = db.TestGeometries
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geometry.STAsEWKT())
+                    .Single();
+                StringAssert.StartsWith("SRID=4326;POINT", ewkt1);
+
+                var srid1 = db.TestGeometries
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geometry.STSrId())
+                    .Single();
                 Assert.AreEqual(SRID4326, srid1);
 
-                var ewkt2 = db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STAsEWKT()).Single();
-                Assert.AreEqual("SRID=3785;POINT(-13732990.8753491 6178458.96425423)", ewkt2);
-                var srid2 = db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STSrId()).Single();
+                var point2 = db.TestGeometries
+                    .Where(g => g.Id == 2)
+                    .Select(g => g.Geometry)
+                    .Single() as NTSGS.Point;
+                Assert.AreEqual(3785, point2.SRID);
+                Assert.AreEqual(-13732990.8753491, point2.X, 1.0E-6);
+                Assert.AreEqual(6178458.96425423, point2.Y, 1.0E-6);
+
+                var srid2 = db.TestGeometries
+                    .Where(g => g.Id == 2)
+                    .Select(g => g.Geometry.STSrId())
+                    .Single();
                 Assert.AreEqual(3785, srid2);
             }
         }

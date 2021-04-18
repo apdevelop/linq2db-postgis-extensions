@@ -3,7 +3,7 @@
 using LinqToDB;
 using NUnit.Framework;
 
-using NTS = NetTopologySuite.Geometries;
+using NTSGS = NetTopologySuite.Geometries;
 using NTSG = NetTopologySuite.Geometries.Geometry;
 
 namespace LinqToDBPostGisNetTopologySuite.Tests
@@ -400,17 +400,17 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result = db.TestGeometries
                                 .Where(g => g.Id == 1)
                                 .Select(g => g.Geometry.STInteriorRingN(1))
-                                .Single() as NTS.LineString;
+                                .Single() as NTSGS.LineString;
 
                 var result2 = db.TestGeometries
                     .Where(g => g.Id == 1)
                     .Select(g => GeometryAccessors.STInteriorRingN(g.Geometry.STAsText(), 1))
-                    .Single() as NTS.LineString;
+                    .Single() as NTSGS.LineString;
 
                 var emptyResult = db.TestGeometries
                                 .Where(g => g.Id == 1)
                                 .Select(g => g.Geometry.STInteriorRingN(2))
-                                .Single() as NTS.LineString;
+                                .Single() as NTSGS.LineString;
 
                 Assert.IsNotNull(result);
                 Assert.IsNull(emptyResult);

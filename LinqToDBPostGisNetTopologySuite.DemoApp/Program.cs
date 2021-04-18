@@ -2,7 +2,7 @@
 using System.Configuration;
 using System.Linq;
 
-using NTSG = NetTopologySuite.Geometries;
+using NTSGS = NetTopologySuite.Geometries;
 using Npgsql;
 using LinqToDB;
 
@@ -31,7 +31,7 @@ namespace LinqToDBPostGisNetTopologySuite.DemoApp
         {
             using (var db = new Tests.PostGisTestDataConnection(ConnectionString))
             {
-                var point = new NTSG.Point(new NTSG.Coordinate(0, 7200000)) { SRID = 3857 };
+                var point = new NTSGS.Point(new NTSGS.Coordinate(0, 7200000)) { SRID = 3857 };
 
                 var nearestCity = db.OwmCities
                     .OrderBy(c => c.Geometry.STDistance(point))

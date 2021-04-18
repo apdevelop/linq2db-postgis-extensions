@@ -2,7 +2,8 @@
 
 using LinqToDB;
 using NUnit.Framework;
-using NTSG = NetTopologySuite.Geometries;
+
+using NTSGS = NetTopologySuite.Geometries;
 
 using LinqToDBPostGisNetTopologySuite.Tests.Entities;
 
@@ -83,14 +84,15 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                var pt = db.Select(() => GeometryInput.STPointFromText("POINT(100 100)"));
+                var point = db.Select(() => GeometryInput.STPointFromText("POINT(100 100)"));
                 var line = db.Select(() => GeometryInput.STLineFromText("LINESTRING (20 80, 98 190, 110 180, 50 75)"));
 
-                var p1 = db.Select(() => MeasurementFunctions.STClosestPoint(pt, line).STAsText());
-                var p2 = db.Select(() => MeasurementFunctions.STClosestPoint(line, pt).STAsText());
+                var p1 = db.Select(() => MeasurementFunctions.STClosestPoint(point, line).STAsText());
+                var p2 = db.Select(() => MeasurementFunctions.STClosestPoint(line, point)) as NTSGS.Point;
 
                 Assert.AreEqual("POINT(100 100)", p1);
-                Assert.AreEqual("POINT(73.0769230769231 115.384615384615)", p2);
+                Assert.AreEqual(73.0769230769231, p2.X, 1.0E-9);
+                Assert.AreEqual(115.384615384615, p2.Y, 1.0E-9);
             }
         }
 
@@ -115,9 +117,9 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                var point = new NTSG.Point(new NTSG.Coordinate(-72.1235, 42.3521)) { SRID = SRID4326 };
+                var point = new NTSGS.Point(new NTSGS.Coordinate(-72.1235, 42.3521)) { SRID = SRID4326 };
                 db.Insert(new TestGeometryEntity(1, point));
-                var lineString = new NTSG.LineString(new[] { new NTSG.Coordinate(-72.1260, 42.45), new NTSG.Coordinate(-72.123, 42.1546) }) { SRID = SRID4326 };
+                var lineString = new NTSGS.LineString(new[] { new NTSGS.Coordinate(-72.1260, 42.45), new NTSGS.Coordinate(-72.123, 42.1546) }) { SRID = SRID4326 };
                 db.Insert(new TestGeometryEntity(2, lineString));
 
                 // Geometry example - units in planar degrees 4326 is WGS 84 long lat, units are degrees.
@@ -132,7 +134,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 Assert.AreEqual(2, distances3857.Count);
                 Assert.AreEqual(0.0, distances3857[0]);
-                Assert.AreEqual(167.441410065196, distances3857[1], 1.0E9);
+                Assert.AreEqual(167.441410065196, distances3857[1], 1.0E-9);
 
                 var nullDistance = db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STDistance(null)).Single();
                 Assert.IsNull(nullDistance);
@@ -406,11 +408,14 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                var pt = db.Select(() => GeometryInput.STPointFromText("POINT(100 100)"));
+                var point = db.Select(() => GeometryInput.STPointFromText("POINT(100 100)"));
                 var line = db.Select(() => GeometryInput.STLineFromText("LINESTRING (20 80, 98 190, 110 180, 50 75)"));
 
-                var sline1 = db.Select(() => MeasurementFunctions.STShortestLine(pt, line).STAsText());
-                Assert.AreEqual("LINESTRING(100 100,73.0769230769231 115.384615384615)", sline1);
+                var sline1 = db.Select(() => MeasurementFunctions.STShortestLine(point, line)) as NTSGS.LineString;
+                Assert.AreEqual(100, sline1.Coordinates[0].X, 1.0E-6);
+                Assert.AreEqual(100, sline1.Coordinates[0].Y, 1.0E-6);
+                Assert.AreEqual(73.0769230769231, sline1.Coordinates[1].X, 1.0E-9);
+                Assert.AreEqual(115.384615384615, sline1.Coordinates[1].Y, 1.0E-9);
 
                 Assert.IsNull(db.Select(() => MeasurementFunctions.STShortestLine(null, null)));
             }

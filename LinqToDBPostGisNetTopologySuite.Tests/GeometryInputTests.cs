@@ -4,6 +4,8 @@ using System.Linq;
 using LinqToDB;
 using NUnit.Framework;
 
+using NTSGS = NetTopologySuite.Geometries;
+
 namespace LinqToDBPostGisNetTopologySuite.Tests
 {
     [TestFixture]
@@ -165,15 +167,15 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                const string geoHash = "9qqj7nmxncgyy4d0dbxqz0";
+                const string GeoHash = "9qqj7nmxncgyy4d0dbxqz0";
 
-                var wkt1 = db.Select(() => GeometryInput.STGeomFromGeoHash(geoHash).STAsText());
+                var wkt1 = db.Select(() => GeometryInput.STGeomFromGeoHash(GeoHash).STAsText());
                 Assert.AreEqual("POLYGON((-115.172816 36.114646,-115.172816 36.114646,-115.172816 36.114646,-115.172816 36.114646,-115.172816 36.114646))", wkt1);
 
-                var wkt2 = db.Select(() => GeometryInput.STGeomFromGeoHash(geoHash, 4).STAsText());
+                var wkt2 = db.Select(() => GeometryInput.STGeomFromGeoHash(GeoHash, 4).STAsText());
                 Assert.AreEqual("POLYGON((-115.3125 36.03515625,-115.3125 36.2109375,-114.9609375 36.2109375,-114.9609375 36.03515625,-115.3125 36.03515625))", wkt2);
 
-                var wkt3 = db.Select(() => GeometryInput.STGeomFromGeoHash(geoHash, 10).STAsText());
+                var wkt3 = db.Select(() => GeometryInput.STGeomFromGeoHash(GeoHash, 10).STAsText());
                 Assert.AreEqual("POLYGON((-115.17282128334 36.1146408319473,-115.17282128334 36.1146461963654,-115.172810554504 36.1146461963654,-115.172810554504 36.1146408319473,-115.17282128334 36.1146408319473))", wkt3);
 
                 Assert.IsNull(db.Select(() => GeometryInput.STGeomFromGeoHash(null)));
@@ -265,19 +267,22 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                const string geohash1 = "9qqj7nmxncgyy4d0dbxqz0";
-                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STPointFromGeoHash(geohash1)).Insert();
-                db.TestGeometries.Value(g => g.Id, 2).Value(p => p.Geometry, () => GeometryInput.STPointFromGeoHash(geohash1, 4)).Insert();
-                db.TestGeometries.Value(g => g.Id, 3).Value(p => p.Geometry, () => GeometryInput.STPointFromGeoHash(geohash1, 10)).Insert();
+                const string Geohash = "9qqj7nmxncgyy4d0dbxqz0";
+                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STPointFromGeoHash(Geohash)).Insert();
+                db.TestGeometries.Value(g => g.Id, 2).Value(p => p.Geometry, () => GeometryInput.STPointFromGeoHash(Geohash, 4)).Insert();
+                db.TestGeometries.Value(g => g.Id, 3).Value(p => p.Geometry, () => GeometryInput.STPointFromGeoHash(Geohash, 10)).Insert();
 
-                var wkt1 = db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STAsText()).Single();
-                Assert.AreEqual("POINT(-115.172816 36.114646)", wkt1);
+                var point1 = db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry).Single() as NTSGS.Point;
+                Assert.AreEqual(-115.172816 , point1.X, 1.0E-6);
+                Assert.AreEqual(36.114646, point1.Y, 1.0E-6);
 
-                var wkt2 = db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STAsText()).Single();
-                Assert.AreEqual("POINT(-115.13671875 36.123046875)", wkt2);
+                var point2 = db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry).Single() as NTSGS.Point;
+                Assert.AreEqual(-115.13671875, point2.X, 1.0E-8);
+                Assert.AreEqual(36.123046875, point2.Y, 1.0E-8);
 
-                var wkt3 = db.TestGeometries.Where(g => g.Id == 3).Select(g => g.Geometry.STAsText()).Single();
-                Assert.AreEqual("POINT(-115.172815918922 36.1146435141563)", wkt3);
+                var point3 = db.TestGeometries.Where(g => g.Id == 3).Select(g => g.Geometry).Single() as NTSGS.Point;
+                Assert.AreEqual(-115.172815918922, point3.X, 1.0E-12);
+                Assert.AreEqual(36.1146435141563, point3.Y, 1.0E-12);
 
                 db.TestGeometries.Value(g => g.Id, 4).Value(p => p.Geometry, () => GeometryInput.STPointFromGeoHash(String.Empty)).Insert();
                 db.TestGeometries.Value(g => g.Id, 5).Value(p => p.Geometry, () => GeometryInput.STPointFromGeoHash(null)).Insert();

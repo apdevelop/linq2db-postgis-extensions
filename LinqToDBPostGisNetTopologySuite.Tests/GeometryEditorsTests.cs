@@ -4,7 +4,7 @@ using System.Linq;
 using LinqToDB;
 using NUnit.Framework;
 
-using NTSG = NetTopologySuite.Geometries;
+using NTSGS = NetTopologySuite.Geometries;
 
 namespace LinqToDBPostGisNetTopologySuite.Tests
 {
@@ -34,7 +34,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result = db.TestGeometries
                 .Where(g => g.Id == 1)
                 .Select(g => g.Geometry.STAddPoint(GeometryConstructors.STMakePoint(0, 0, 3)))
-                .Single() as NTSG.LineString;
+                .Single() as NTSGS.LineString;
 
                 Assert.AreEqual(3, result.NumPoints);
 
@@ -69,7 +69,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result = db.TestGeometries
                 .Where(g => g.Id == 1)
                 .Select(g => g.Geometry.STAddPoint(GeometryConstructors.STMakePoint(0, 0, 2), 1))
-                .Single() as NTSG.LineString;
+                .Single() as NTSGS.LineString;
 
                 Assert.AreEqual(3, result.NumPoints);
 
@@ -106,8 +106,8 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     .Select(g => g.Geometry.STCollectionExtract(2))
                     .Single();
 
-                Assert.IsInstanceOf<NTSG.MultiLineString>(result);
-                var multiLine = result as NTSG.MultiLineString;
+                Assert.IsInstanceOf<NTSGS.MultiLineString>(result);
+                var multiLine = result as NTSGS.MultiLineString;
 
                 var line1 = multiLine.GetGeometryN(0);
                 var point1Line1 = line1.Coordinates[0];
@@ -143,8 +143,8 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 .Select(g => g.Geometry.STCollectionHomogenize())
                 .Single();
 
-                Assert.IsInstanceOf<NTSG.MultiPoint>(result);
-                var multiPoint = result as NTSG.MultiPoint;
+                Assert.IsInstanceOf<NTSGS.MultiPoint>(result);
+                var multiPoint = result as NTSGS.MultiPoint;
 
                 var point1 = multiPoint.GetGeometryN(0);
                 Assert.AreEqual(0, point1.Coordinates[0].X);
@@ -170,7 +170,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result = db.TestGeometries
                 .Where(g => g.Id == 1)
                 .Select(g => g.Geometry.STForce2D())
-                .Single() as NTSG.LineString;
+                .Single() as NTSGS.LineString;
 
                 Assert.AreEqual(2, result.CoordinateSequence.Dimension);
                 Assert.AreEqual(25, result.GetCoordinateN(0).X);
@@ -196,7 +196,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result = db.TestGeometries
                 .Where(g => g.Id == 1)
                 .Select(g => g.Geometry.STForce3D())
-                .Single() as NTSG.LineString;
+                .Single() as NTSGS.LineString;
 
                 Assert.AreEqual(3, result.CoordinateSequence.Dimension);
 
@@ -232,7 +232,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result = db.TestGeometries
                 .Where(g => g.Id == 1)
                 .Select(g => g.Geometry.STForce3DZ())
-                .Single() as NTSG.LineString;
+                .Single() as NTSGS.LineString;
 
                 Assert.AreEqual(3, result.CoordinateSequence.Dimension);
                 var nonExistM = result.GetCoordinateN(0).M;
@@ -267,7 +267,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result = db.TestGeometries
                 .Where(g => g.Id == 1)
                 .Select(g => g.Geometry.STForce3DM())
-                .Single() as NTSG.LineString;
+                .Single() as NTSGS.LineString;
 
                 Assert.AreEqual(3, result.CoordinateSequence.Dimension);
                 var existM = result.GetCoordinateN(0).M;
@@ -302,7 +302,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result = db.TestGeometries
                 .Where(g => g.Id == 1)
                 .Select(g => g.Geometry.STForce4D())
-                .Single() as NTSG.LineString;
+                .Single() as NTSGS.LineString;
 
                 Assert.AreEqual(4, result.CoordinateSequence.Dimension);
                 var existM = result.GetCoordinateN(0).M;
@@ -336,12 +336,12 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var ccwGeom = db.TestGeometries
                 .Where(g => g.Id == 1)
                 .Select(g => g.Geometry.STForcePolygonCCW())
-                .Single() as NTSG.Polygon;
+                .Single() as NTSGS.Polygon;
 
                 var originGeom = db.TestGeometries
                 .Where(g => g.Id == 1)
                 .Select(g => g.Geometry)
-                .Single() as NTSG.Polygon;
+                .Single() as NTSGS.Polygon;
 
                 //Assertion about interior ring
                 var originInteriorRing = originGeom.InteriorRings[0];
@@ -386,12 +386,12 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var cwGeom = db.TestGeometries
                 .Where(g => g.Id == 1)
                 .Select(g => g.Geometry.STForcePolygonCW())
-                .Single() as NTSG.Polygon;
+                .Single() as NTSGS.Polygon;
 
                 var originGeom = db.TestGeometries
                 .Where(g => g.Id == 1)
                 .Select(g => g.Geometry)
-                .Single() as NTSG.Polygon;
+                .Single() as NTSGS.Polygon;
 
                 //Assertion about interior ring
                 var originInteriorRing = originGeom.InteriorRings[0];
@@ -436,10 +436,10 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result = db.TestGeometries
                 .Where(g => g.Id == 1)
                 .Select(g => g.Geometry.STForceCollection())
-                .Single() as NTSG.GeometryCollection;
+                .Single() as NTSGS.GeometryCollection;
 
                 Assert.AreEqual(1, result.NumGeometries);
-                Assert.IsInstanceOf<NTSG.Point>(result.Geometries[0]);
+                Assert.IsInstanceOf<NTSGS.Point>(result.Geometries[0]);
 
                 Assert.AreEqual(0, result.Geometries[0].Coordinates[0].X);
                 Assert.AreEqual(0, result.Geometries[0].Coordinates[0].Y);
@@ -460,12 +460,12 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var rhrGeom = db.TestGeometries
                 .Where(g => g.Id == 1)
                 .Select(g => g.Geometry.STForceRHR())
-                .Single() as NTSG.Polygon;
+                .Single() as NTSGS.Polygon;
 
                 var originGeom = db.TestGeometries
                 .Where(g => g.Id == 1)
                 .Select(g => g.Geometry)
-                .Single() as NTSG.Polygon;
+                .Single() as NTSGS.Polygon;
 
                 //Assertion about interior ring
                 var originInteriorRing = originGeom.InteriorRings[0];
@@ -533,10 +533,10 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 .Select(g => g.Geometry.STLineMerge())
                 .Single();
 
-                Assert.IsInstanceOf<NTSG.LineString>(mergedGeom);
+                Assert.IsInstanceOf<NTSGS.LineString>(mergedGeom);
                 Assert.AreEqual(3, mergedGeom.NumPoints);
 
-                var mergedLine = mergedGeom as NTSG.LineString;
+                var mergedLine = mergedGeom as NTSGS.LineString;
                 Assert.AreEqual(1, mergedLine.GetCoordinateN(0).X);
                 Assert.AreEqual(2, mergedLine.GetCoordinateN(0).Y);
                 Assert.AreEqual(double.NaN, mergedLine.GetCoordinateN(0).M);
@@ -567,9 +567,9 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 .Select(g => g.Geometry.STMulti())
                 .Single();
 
-                Assert.IsInstanceOf<NTSG.MultiLineString>(multiGeom);
+                Assert.IsInstanceOf<NTSGS.MultiLineString>(multiGeom);
 
-                var multiLine = multiGeom as NTSG.MultiLineString;
+                var multiLine = multiGeom as NTSGS.MultiLineString;
 
                 Assert.AreEqual(1, multiLine.NumGeometries);
 
@@ -686,8 +686,8 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                         .STSwapOrdinates("xm")
                         .STAsText()));
 
-                Assert.IsNull(db.Select(() => GeometryEditors.STSwapOrdinates((NTSG.Geometry)null, null)));
-                Assert.IsNull(db.Select(() => GeometryEditors.STSwapOrdinates((NTSG.Geometry)null, String.Empty)));
+                Assert.IsNull(db.Select(() => GeometryEditors.STSwapOrdinates((NTSGS.Geometry)null, null)));
+                Assert.IsNull(db.Select(() => GeometryEditors.STSwapOrdinates((NTSGS.Geometry)null, String.Empty)));
                 Assert.IsNull(db.Select(() => GeometryEditors.STSwapOrdinates((string)null, null)));
             }
         }

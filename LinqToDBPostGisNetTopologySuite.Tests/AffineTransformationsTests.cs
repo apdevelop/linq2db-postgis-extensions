@@ -4,7 +4,7 @@ using System.Linq;
 using LinqToDB;
 using NUnit.Framework;
 
-using NTSG = NetTopologySuite.Geometries;
+using NTSGS = NetTopologySuite.Geometries;
 
 namespace LinqToDBPostGisNetTopologySuite.Tests
 {
@@ -39,7 +39,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                         g.Geometry.STAffine(Math.Cos(Math.PI),
                             -1 * Math.Sin(Math.PI), 0, Math.Sin(Math.PI), Math.Cos(Math.PI), 0, 0, 0, 1, 0, 0, 0)
                     )
-                    .Single() as NTSG.LineString;
+                    .Single() as NTSGS.LineString;
 
                 CheckLineEquals(expected, result, 1.0E-8);
             }
@@ -63,7 +63,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     .Select(g =>
                         g.Geometry.STAffine(0, 0, 0, 0, 0, 0)
                     )
-                    .Single() as NTSG.LineString;
+                    .Single() as NTSGS.LineString;
 
                 CheckLineEquals(expected, result, 1.0E-8);
             }
@@ -86,7 +86,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result = db.TestGeometries
                     .Where(g => g.Id == 1)
                     .Select(g => g.Geometry.STRotate(Math.PI))
-                    .Single() as NTSG.LineString;
+                    .Single() as NTSGS.LineString;
 
                 CheckLineEquals(expected, result, 1.0E-8);
             }
@@ -109,7 +109,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result = db.TestGeometries
                     .Where(g => g.Id == 1)
                     .Select(g => g.Geometry.STRotate(Math.PI / 6.0, 50, 160))
-                    .Single() as NTSG.LineString;
+                    .Single() as NTSGS.LineString;
 
                 CheckLineEquals(expected, result, 1.0E-8);
             }
@@ -132,7 +132,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result = db.TestGeometries
                     .Where(g => g.Id == 1)
                     .Select(g => g.Geometry.STRotate(-1.0 * Math.PI / 3.0, g.Geometry.STCentroid()))
-                    .Single() as NTSG.LineString;
+                    .Single() as NTSGS.LineString;
 
                 CheckLineEquals(expected, result, 1.0E-8);
             }
@@ -154,7 +154,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result = db.TestGeometries
                     .Where(g => g.Id == 1)
                     .Select(g => g.Geometry.STRotateX(Math.PI / 2.0))
-                    .Single() as NTSG.LineString;
+                    .Single() as NTSGS.LineString;
 
                 CheckLineEquals(expected, result, 1.0E-8);
             }
@@ -176,7 +176,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result = db.TestGeometries
                     .Where(g => g.Id == 1)
                     .Select(g => g.Geometry.STRotateY(Math.PI / 2.0))
-                    .Single() as NTSG.LineString;
+                    .Single() as NTSGS.LineString;
 
                 CheckLineEquals(expected, result, 1.0E-8);
             }
@@ -198,7 +198,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result = db.TestGeometries
                     .Where(g => g.Id == 1)
                     .Select(g => g.Geometry.STRotateZ(Math.PI / 2.0))
-                    .Single() as NTSG.LineString;
+                    .Single() as NTSGS.LineString;
 
                 CheckLineEquals(expected, result, 1.0E-8);
             }
@@ -220,7 +220,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result = db.TestGeometries
                     .Where(g => g.Id == 1)
                     .Select(g => g.Geometry.STScale(0.5, 0.75, 0.8))
-                    .Single() as NTSG.LineString;
+                    .Single() as NTSGS.LineString;
 
                 CheckLineEquals(expected, result, 1.0E-8);
             }
@@ -242,7 +242,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result = db.TestGeometries
                     .Where(g => g.Id == 1)
                     .Select(g => g.Geometry.STScale(0.5, 0.75))
-                    .Single() as NTSG.LineString;
+                    .Single() as NTSGS.LineString;
 
                 CheckLineEquals(expected, result, 1.0E-8);
             }
@@ -264,7 +264,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result = db.TestGeometries
                     .Where(g => g.Id == 1)
                     .Select(g => g.Geometry.STScale(GeometryConstructors.STMakePoint(0.5, 0.75, 2, -1)))
-                    .Single() as NTSG.LineString;
+                    .Single() as NTSGS.LineString;
 
                 CheckLineEquals(expected, result, 1.0E-8);
             }
@@ -286,7 +286,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result = db.TestGeometries
                     .Where(g => g.Id == 1)
                     .Select(g => g.Geometry.STScale(GeometryInput.STGeomFromEWKT("POINT(2 2)"), GeometryInput.STGeomFromEWKT("POINT(1 1)")))
-                    .Single() as NTSG.LineString;
+                    .Single() as NTSGS.LineString;
 
                 CheckLineEquals(expected, result, 1.0E-8);
             }
@@ -342,13 +342,13 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result = db.TestGeometries
                     .Where(g => g.Id == 1)
                     .Select(g => g.Geometry.STTransScale(0.5, 1, 1, 2))
-                    .Single() as NTSG.LineString;
+                    .Single() as NTSGS.LineString;
 
                 CheckLineEquals(expected, result, 1.0E-8);
             }
         }
 
-        private static void CheckLineEquals(double[][] expected, NTSG.LineString actual, double tolerance)
+        private static void CheckLineEquals(double[][] expected, NTSGS.LineString actual, double tolerance)
         {
             var pointsCount = expected.Length;
             var dimensionCount = expected[0].Length; // Depends on 2D / 3D geometry dimensions

@@ -2,7 +2,8 @@
 
 using LinqToDB;
 using NUnit.Framework;
-using NTSG = NetTopologySuite.Geometries;
+
+using NTSGS = NetTopologySuite.Geometries;
 
 namespace LinqToDBPostGisNetTopologySuite.Tests
 {
@@ -46,7 +47,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 const string wkt1 = "MULTIPOINT ( -1 0, -1 2, -1 3, -1 4, -1 7, 0 1, 0 3, 1 1, 2 0, 6 0, 7 8, 9 8, 10 6 )";
                 db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(wkt1)).Insert();
 
-                var centroid1 = db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STCentroid()).Single() as NTSG.Point;
+                var centroid1 = db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STCentroid()).Single() as NTSGS.Point;
 
                 Assert.AreEqual(2.30769230769231, centroid1.X, 1.0E-12);
                 Assert.AreEqual(3.30769230769231, centroid1.Y, 1.0E-12);
@@ -90,9 +91,24 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 const string wkt1 = "CIRCULARSTRING(0 0,100 -100,200 0)";
-                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(wkt1)).Insert();
-                var result1 = db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STCurveToLine(20, 1, 1).STAsText()).Single();
-                Assert.AreEqual("LINESTRING(0 0,50 -86.6025403784438,150 -86.6025403784439,200 0)", result1);
+                db.TestGeometries
+                    .Value(g => g.Id, 1)
+                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromText(wkt1))
+                    .Insert();
+
+                var result1 = db.TestGeometries
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geometry.STCurveToLine(20, 1, 1))
+                    .Single() as NTSGS.LineString;
+
+                Assert.AreEqual(0, result1.Coordinates[0].X);
+                Assert.AreEqual(0, result1.Coordinates[0].Y);
+                Assert.AreEqual(50, result1.Coordinates[1].X, 1.0E-9);
+                Assert.AreEqual(-86.6025403784438, result1.Coordinates[1].Y, 1.0E-9);
+                Assert.AreEqual(150, result1.Coordinates[2].X, 1.0E-9);
+                Assert.AreEqual(-86.6025403784439, result1.Coordinates[2].Y, 1.0E-9);
+                Assert.AreEqual(200, result1.Coordinates[3].X, 1.0E-9);
+                Assert.AreEqual(0, result1.Coordinates[3].Y, 1.0E-9);
 
                 Assert.IsNull(db.Select(() => GeometryProcessing.STCurveToLine(null, 20, 1, 1)));
             }
@@ -151,8 +167,22 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             {
                 var geom1 = db.Select(() => GeometryInput.STGeomFromText("POLYGON((175 150, 20 40, 50 60, 125 100, 175 150))"));
 
-                var result1 = db.Select(() => GeometryProcessing.STGeneratePoints(geom1, 5, 1).STAsText());
-                Assert.AreEqual("MULTIPOINT(139.29283354478 118.602516148805,131.832615216622 108.222468996999,114.403606086077 103.400350731553,61.1688280123262 67.8262881638229,136.491955979797 111.749696268158)", result1);
+                var result1 = db.Select(() => GeometryProcessing.STGeneratePoints(geom1, 5, 1)) as NTSGS.MultiPoint;
+                var expected = new double[][]
+                {
+                    new[]{ 139.29283354478, 118.602516148805 },
+                    new[]{ 131.832615216622, 108.222468996999 },
+                    new[]{ 114.403606086077, 103.400350731553 },
+                    new[]{ 61.1688280123262, 67.8262881638229 },
+                    new[]{ 136.491955979797, 111.749696268158 },
+                };
+
+                Assert.AreEqual(expected.Length, result1.Coordinates.Length);
+                for (var i = 0; i < expected.Length; i++)
+                {
+                    Assert.AreEqual(expected[i][0], result1.Coordinates[i].X, 1.0E-9);
+                    Assert.AreEqual(expected[i][1], result1.Coordinates[i].Y, 1.0E-9);
+                }
 
                 Assert.IsNull(db.Select(() => GeometryProcessing.STGeneratePoints(null, 1)));
             }
@@ -169,7 +199,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var median = db.TestGeometries
                     .Where(g => g.Id == 1)
                     .Select(g => g.Geometry.STGeometricMedian())
-                    .Single() as NTSG.Point;
+                    .Single() as NTSGS.Point;
 
                 Assert.AreEqual(1.9761550281255, median.X, 1.0E-8);
                 Assert.AreEqual(1.9761550281255, median.Y, 1.0E-8);
@@ -294,7 +324,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result2 = db.TestGeometries
                     .Where(g => g.Id == 2)
                     .Select(g => g.Geometry.STOrientedEnvelope())
-                    .Single() as NTSG.Polygon;
+                    .Single() as NTSGS.Polygon;
 
                 Assert.AreEqual(20, result2.ExteriorRing.GetPointN(0).X, 1.0E-8);
                 Assert.AreEqual(80, result2.ExteriorRing.GetPointN(0).Y, 1.0E-8);
@@ -337,10 +367,27 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 var result = db.TestGeometries
                     .Where(g => g.Id == 1)
-                    .Select(g => g.Geometry.STOffsetCurve(15, "quad_segs=4 join=round").STAsText())
-                    .Single();
+                    .Select(g => g.Geometry.STOffsetCurve(15, "quad_segs=4 join=round"))
+                    .Single() as NTSGS.LineString;
 
-                Assert.AreEqual("LINESTRING(164 1,18 1,12.2597485145237 2.1418070123307,7.39339828220179 5.39339828220179,5.39339828220179 7.39339828220179,2.14180701233067 12.2597485145237,1 18,1 195)", result);
+                var expected = new double[][]
+                {
+                    new[]{ 164.0, 1.0 },
+                    new[]{ 18.0, 1.0 },
+                    new[]{ 12.2597485145237, 2.1418070123307 },
+                    new[]{ 7.39339828220179, 5.39339828220179 },
+                    new[]{ 5.39339828220179, 7.39339828220179 },
+                    new[]{ 2.14180701233067, 12.2597485145237 },
+                    new[]{ 1.0, 18.0 },
+                    new[]{ 1.0, 195.0 },
+                };
+
+                Assert.AreEqual(expected.Length, result.Coordinates.Length);
+                for (var i = 0; i < expected.Length; i++)
+                {
+                    Assert.AreEqual(expected[i][0], result.Coordinates[i].X, 1.0E-9);
+                    Assert.AreEqual(expected[i][1], result.Coordinates[i].Y, 1.0E-9);
+                }
             }
         }
 
@@ -633,7 +680,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result = db.TestGeometries
                     .Where(g => g.Id == 1)
                     .Select(g => g.Geometry.STSplit(db.TestGeometries.Where(g2 => g2.Id == 2).Single().Geometry))
-                    .Single() as NTSG.GeometryCollection;
+                    .Single() as NTSGS.GeometryCollection;
 
                 Assert.IsNotNull(result);
             }
@@ -716,7 +763,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result1 = db.TestGeometries
                     .Where(g => g.Id == 1)
                     .Select(g => g.Geometry.STVoronoiPolygons())
-                    .Single() as NTSG.GeometryCollection;
+                    .Single() as NTSGS.GeometryCollection;
 
                 Assert.IsNotNull(result1);
             }

@@ -2,7 +2,8 @@ using System.Linq;
 
 using LinqToDB;
 using NUnit.Framework;
-using NTSG = NetTopologySuite.Geometries;
+
+using NTSGS = NetTopologySuite.Geometries;
 
 namespace LinqToDBPostGisNetTopologySuite.Tests
 {
@@ -32,7 +33,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result = db.TestGeometries
                 .Where(g => g.Id == 1)
                 .Select(g => g.Geometry.STLineInterpolatePoint(0.20))
-                .Single() as NTSG.Point;
+                .Single() as NTSGS.Point;
 
                 Assert.AreEqual(51.5974135047432, result.X, 1.0E-8);
                 Assert.AreEqual(76.5974135047432, result.Y, 1.0E-8);
@@ -55,7 +56,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result = db.TestGeometries
                 .Where(g => g.Id == 1)
                 .Select(g => g.Geometry.ST3DLineInterpolatePoint(0.20))
-                .Single() as NTSG.Point;
+                .Single() as NTSGS.Point;
 
                 Assert.AreEqual(59.0675892910822, result.X, 1.0E-8);
                 Assert.AreEqual(84.0675892910822, result.Y, 1.0E-8);
@@ -88,13 +89,13 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result = db.TestGeometries
                 .Where(g => g.Id == 1)
                 .Select(g => g.Geometry.STLineInterpolatePoints(0.20, true))
-                .Single() as NTSG.MultiPoint;
+                .Single() as NTSGS.MultiPoint;
 
                 Assert.AreEqual(expected.Length, result.NumPoints);
                 for (int i = 0; i < expected.Length; i++)
                 {
                     var exp = expected[i];
-                    var res = result.Geometries[i] as NTSG.Point;
+                    var res = result.Geometries[i] as NTSGS.Point;
 
                     Assert.AreEqual(exp[0], res.X, 1.0E-8);
                     Assert.AreEqual(exp[1], res.Y, 1.0E-8);
@@ -141,7 +142,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result = db.TestGeometries
                 .Where(g => g.Id == 1)
                 .Select(g => g.Geometry.STLineSubstring(0.333, 0.666))
-                .Single() as NTSG.LineString;
+                .Single() as NTSGS.LineString;
 
                 Assert.AreEqual(3.0, result.Coordinates.Length, 1.0E-8);
 
@@ -172,7 +173,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result = db.TestGeometries
                 .Where(g => g.Id == 1)
                 .Select(g => g.Geometry.STLocateAlong(3, 0.0))
-                .Single() as NTSG.MultiPoint;
+                .Single() as NTSGS.MultiPoint;
 
                 Assert.AreEqual(3, result.NumPoints);
 
@@ -206,7 +207,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result = db.TestGeometries
                 .Where(g => g.Id == 1)
                 .Select(g => g.Geometry.STLocateBetween(1.5, 3.0, 0.0))
-                .Single() as NTSG.GeometryCollection;
+                .Single() as NTSGS.GeometryCollection;
 
 
                 Assert.AreEqual(2, result.NumGeometries);
@@ -214,11 +215,11 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var geom1 = result.Geometries[0];
                 var geom2 = result.Geometries[1];
 
-                Assert.IsInstanceOf<NTSG.LineString>(geom1);
-                Assert.IsInstanceOf<NTSG.Point>(geom2);
+                Assert.IsInstanceOf<NTSGS.LineString>(geom1);
+                Assert.IsInstanceOf<NTSGS.Point>(geom2);
 
-                var resLineString = geom1 as NTSG.LineString;
-                var resPoint = geom2 as NTSG.Point;
+                var resLineString = geom1 as NTSGS.LineString;
+                var resPoint = geom2 as NTSGS.Point;
 
                 Assert.AreEqual(1.0, resLineString.Coordinates[0].X, 1.0E-8);
                 Assert.AreEqual(2.0, resLineString.Coordinates[0].Y, 1.0E-8);
@@ -254,7 +255,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result = db.TestGeometries
                 .Where(g => g.Id == 1)
                 .Select(g => g.Geometry.STLocateBetweenElevations(2.0, 4.0))
-                .Single() as NTSG.MultiLineString;
+                .Single() as NTSGS.MultiLineString;
 
                 Assert.AreEqual(1, result.NumGeometries);
 
@@ -306,7 +307,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var result = db.TestGeometries
                 .Where(g => g.Id == 1)
                 .Select(g => g.Geometry.STAddMeasure(1.0, 4.0))
-                .Single() as NTSG.LineString;
+                .Single() as NTSGS.LineString;
 
 
                 Assert.AreEqual(1.0, result.Coordinates[0].X, 1.0E-8);

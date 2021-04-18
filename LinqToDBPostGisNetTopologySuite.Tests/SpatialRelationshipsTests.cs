@@ -2,7 +2,8 @@
 
 using LinqToDB;
 using NUnit.Framework;
-using NTSG = NetTopologySuite.Geometries;
+
+using NTSGS = NetTopologySuite.Geometries;
 
 namespace LinqToDBPostGisNetTopologySuite.Tests
 {
@@ -31,7 +32,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 var result1 = db.Select(() => GeometryInput.STGeomFromText(line1).ST3DIntersects(GeometryInput.STGeomFromText(line2)));
                 var result2 = db.Select(() => GeometryInput.STGeomFromText(line3).ST3DIntersects(GeometryInput.STGeomFromText(line4)));
-                var result3 = db.Select(() => SpatialRelationships.ST3DIntersects((NTSG.Geometry)null,(NTSG.Geometry)null));
+                var result3 = db.Select(() => SpatialRelationships.ST3DIntersects((NTSGS.Geometry)null,(NTSGS.Geometry)null));
 
                 Assert.IsNotNull(result1);
                 Assert.IsNotNull(result2);
@@ -133,7 +134,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 const string wkt2 = "LINESTRING ( 0 0, 0 2 )";
                 db.TestGeometries.Value(g => g.Id, 2).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(wkt2)).Insert();
 
-                var point = new NTSG.Point(new NTSG.Coordinate(0, 0));
+                var point = new NTSGS.Point(new NTSGS.Coordinate(0, 0));
                 Assert.IsTrue(db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STDisjoint(point)).Single());
                 Assert.IsFalse(db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STDisjoint(point)).Single());
                 Assert.IsNull(db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STDisjoint(null)).Single());
@@ -167,7 +168,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 const string wkt2 = "LINESTRING ( 0 0, 0 2 )";
                 db.TestGeometries.Value(g => g.Id, 2).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(wkt2)).Insert();
 
-                var point = new NTSG.Point(new NTSG.Coordinate(0, 0));
+                var point = new NTSGS.Point(new NTSGS.Coordinate(0, 0));
 
                 Assert.IsFalse(db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STIntersects(point)).Single());
                 Assert.IsTrue(db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STIntersects(point)).Single());
