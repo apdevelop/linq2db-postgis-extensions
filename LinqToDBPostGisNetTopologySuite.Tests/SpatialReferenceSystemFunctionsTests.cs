@@ -67,11 +67,31 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                const string wkt1 = "POLYGON((743238 2967416,743238 2967450, 743265 2967450,743265.625 2967416,743238 2967416))";
-                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(wkt1, 2249)).Insert();
+                const string Wkt = "POLYGON((743238 2967416,743238 2967450, 743265 2967450,743265.625 2967416,743238 2967416))";
+                db.TestGeometries
+                    .Value(g => g.Id, 1)
+                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt, 2249))
+                    .Insert();
 
-                var geometry1 = db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STTransform(SRID4326).STAsText()).Single();
-                Assert.AreEqual("POLYGON((-71.1776848522251 42.3902896512902,-71.1776843766326 42.3903829478009,-71.1775844305465 42.3903826677917,-71.1775825927231 42.3902893647987,-71.1776848522251 42.3902896512902))", geometry1);
+                var result = db.TestGeometries
+                    .Select(g => g.Geometry.STTransform(SRID4326))
+                    .Single() as NTSGS.Polygon;
+
+                var expected = new double[][]
+                {
+                    new[]{ -71.1776848522251, 42.3902896512902 },
+                    new[]{ -71.1776843766326, 42.3903829478009 },
+                    new[]{ -71.1775844305465, 42.3903826677917 },
+                    new[]{ -71.1775825927231, 42.3902893647987 },
+                    new[]{ -71.1776848522251, 42.3902896512902 },
+                };
+
+                Assert.AreEqual(expected.Length, result.Coordinates.Length);
+                for (var i = 0; i < expected.Length; i++)
+                {
+                    Assert.AreEqual(expected[i][0], result.Coordinates[i].X, 1.0E-12);
+                    Assert.AreEqual(expected[i][1], result.Coordinates[i].Y, 1.0E-12);
+                }
             }
         }
 
@@ -81,20 +101,33 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 const string Gnom = "+proj=gnom +ellps=WGS84 +lat_0=70 +lon_0=-160 +no_defs";
-                const string wkt1 = "POLYGON((170 50,170 72,-130 72,-130 50,170 50))";
-                const string wkt2 = "POLYGON((-170 68,-170 90,-141 90,-141 68,-170 68))";
-                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(wkt1, SRID4326)).Insert();
-                db.TestGeometries.Value(g => g.Id, 2).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(wkt2, SRID4326)).Insert();
+                const string Wkt1 = "POLYGON((170 50,170 72,-130 72,-130 50,170 50))";
+                const string Wkt2 = "POLYGON((-170 68,-170 90,-141 90,-141 68,-170 68))";
+                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt1, SRID4326)).Insert();
+                db.TestGeometries.Value(g => g.Id, 2).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt2, SRID4326)).Insert();
 
                 var result = db.TestGeometries
                     .Select(g => GeometryProcessing.STIntersection(
                         db.TestGeometries.Where(g1 => g1.Id == 1).Single().Geometry.STTransform(Gnom),
                         db.TestGeometries.Where(g2 => g2.Id == 2).Single().Geometry.STTransform(Gnom)
-                    ).STTransform(Gnom, SRID4326)
-                    .STAsText())
-                    .First();
+                    ).STTransform(Gnom, SRID4326))
+                    .First() as NTSGS.Polygon;
 
-                Assert.AreEqual("POLYGON((-170 74.053793645338,-141 73.4268621378904,-141 68,-170 68,-170 74.053793645338))", result);
+                var expected = new double[][]
+                {
+                    new[]{ -170, 74.053793645338 },
+                    new[]{ -141, 73.4268621378904 },
+                    new[]{ -141, 68.0 },
+                    new[]{ -170, 68.0 },
+                    new[]{ -170, 74.053793645338 },
+                };
+
+                Assert.AreEqual(expected.Length, result.Coordinates.Length);
+                for (var i = 0; i < expected.Length; i++)
+                {
+                    Assert.AreEqual(expected[i][0], result.Coordinates[i].X, 1.0E-12);
+                    Assert.AreEqual(expected[i][1], result.Coordinates[i].Y, 1.0E-12);
+                }
             }
         }
     }

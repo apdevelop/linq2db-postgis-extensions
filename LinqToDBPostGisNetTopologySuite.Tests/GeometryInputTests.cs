@@ -169,14 +169,62 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             {
                 const string GeoHash = "9qqj7nmxncgyy4d0dbxqz0";
 
-                var wkt1 = db.Select(() => GeometryInput.STGeomFromGeoHash(GeoHash).STAsText());
-                Assert.AreEqual("POLYGON((-115.172816 36.114646,-115.172816 36.114646,-115.172816 36.114646,-115.172816 36.114646,-115.172816 36.114646))", wkt1);
+                {
+                    var result1 = db.Select(() => GeometryInput.STGeomFromGeoHash(GeoHash)) as NTSGS.Polygon;
+                    var expected1 = new double[][]
+                    {
+                        new[]{ -115.172816, 36.114646 },
+                        new[]{ -115.172816, 36.114646 },
+                        new[]{ -115.172816, 36.114646 },
+                        new[]{ -115.172816, 36.114646 },
+                        new[]{ -115.172816, 36.114646 },
+                    };
 
-                var wkt2 = db.Select(() => GeometryInput.STGeomFromGeoHash(GeoHash, 4).STAsText());
-                Assert.AreEqual("POLYGON((-115.3125 36.03515625,-115.3125 36.2109375,-114.9609375 36.2109375,-114.9609375 36.03515625,-115.3125 36.03515625))", wkt2);
+                    Assert.AreEqual(expected1.Length, result1.Coordinates.Length);
+                    for (var i = 0; i < expected1.Length; i++)
+                    {
+                        Assert.AreEqual(expected1[i][0], result1.Coordinates[i].X, 1.0E-6);
+                        Assert.AreEqual(expected1[i][1], result1.Coordinates[i].Y, 1.0E-6);
+                    }
+                }
 
-                var wkt3 = db.Select(() => GeometryInput.STGeomFromGeoHash(GeoHash, 10).STAsText());
-                Assert.AreEqual("POLYGON((-115.17282128334 36.1146408319473,-115.17282128334 36.1146461963654,-115.172810554504 36.1146461963654,-115.172810554504 36.1146408319473,-115.17282128334 36.1146408319473))", wkt3);
+                {
+                    var result2 = db.Select(() => GeometryInput.STGeomFromGeoHash(GeoHash, 4)) as NTSGS.Polygon;
+                    var expected2 = new double[][]
+                    {
+                        new[]{ -115.3125, 36.03515625 },
+                        new[]{ -115.3125, 36.2109375 },
+                        new[]{ -114.9609375, 36.2109375 },
+                        new[]{ -114.9609375, 36.03515625 },
+                        new[]{ -115.3125, 36.03515625 },
+                    };
+
+                    Assert.AreEqual(expected2.Length, result2.Coordinates.Length);
+                    for (var i = 0; i < expected2.Length; i++)
+                    {
+                        Assert.AreEqual(expected2[i][0], result2.Coordinates[i].X, 1.0E-6);
+                        Assert.AreEqual(expected2[i][1], result2.Coordinates[i].Y, 1.0E-6);
+                    }
+                }
+
+                {
+                    var result3 = db.Select(() => GeometryInput.STGeomFromGeoHash(GeoHash, 10)) as NTSGS.Polygon;
+                    var expected3 = new double[][]
+                    {
+                        new[]{ -115.17282128334, 36.1146408319473 },
+                        new[]{ -115.17282128334, 36.1146461963654 },
+                        new[]{ -115.172810554504, 36.1146461963654 },
+                        new[]{ -115.172810554504, 36.1146408319473 },
+                        new[]{ -115.17282128334, 36.1146408319473 },
+                    };
+
+                    Assert.AreEqual(expected3.Length, result3.Coordinates.Length);
+                    for (var i = 0; i < expected3.Length; i++)
+                    {
+                        Assert.AreEqual(expected3[i][0], result3.Coordinates[i].X, 1.0E-6);
+                        Assert.AreEqual(expected3[i][1], result3.Coordinates[i].Y, 1.0E-6);
+                    }
+                }
 
                 Assert.IsNull(db.Select(() => GeometryInput.STGeomFromGeoHash(null)));
             }

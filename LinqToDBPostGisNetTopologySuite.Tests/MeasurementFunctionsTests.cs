@@ -101,14 +101,18 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                var pt = db.Select(() => GeometryInput.STPointFromText("POINT(100 100 30)"));
+                var point = db.Select(() => GeometryInput.STPointFromText("POINT(100 100 30)"));
                 var line = db.Select(() => GeometryInput.STLineFromText("LINESTRING (20 80 20, 98 190 1, 110 180 3, 50 75 1000)"));
 
-                var p1 = db.Select(() => MeasurementFunctions.ST3DClosestPoint(line, pt).STAsEWKT());
-                var p2 = db.Select(() => MeasurementFunctions.STClosestPoint(line, pt).STAsEWKT());
+                var point1 = db.Select(() => MeasurementFunctions.ST3DClosestPoint(line, point)) as NTSGS.Point;
+                var point2 = db.Select(() => MeasurementFunctions.STClosestPoint(line, point)) as NTSGS.Point;
 
-                Assert.AreEqual("POINT(54.6993798867619 128.935022917228 11.5475869506606)", p1);
-                Assert.AreEqual("POINT(73.0769230769231 115.384615384615)", p2);
+                Assert.AreEqual(54.6993798867619, point1.X, 1.0E-9);
+                Assert.AreEqual(128.935022917228, point1.Y, 1.0E-9);
+                Assert.AreEqual(11.5475869506606, point1.Z, 1.0E-9);
+
+                Assert.AreEqual(73.0769230769231, point2.X, 1.0E-9);
+                Assert.AreEqual(115.384615384615, point2.Y, 1.0E-9);
             }
         }
 
@@ -426,11 +430,16 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                var pt = db.Select(() => GeometryInput.STPointFromText("POINT(100 100 30)"));
+                var point = db.Select(() => GeometryInput.STPointFromText("POINT(100 100 30)"));
                 var line = db.Select(() => GeometryInput.STLineFromText("LINESTRING (20 80 20, 98 190 1, 110 180 3, 50 75 1000)"));
 
-                var sline1 = db.Select(() => MeasurementFunctions.ST3DShortestLine(line, pt).STAsEWKT());
-                Assert.AreEqual("LINESTRING(54.6993798867619 128.935022917228 11.5475869506606,100 100 30)", sline1);
+                var sline1 = db.Select(() => MeasurementFunctions.ST3DShortestLine(line, point)) as NTSGS.LineString;
+                Assert.AreEqual(54.6993798867619, sline1.Coordinates[0].X, 1.0E-6);
+                Assert.AreEqual(128.935022917228, sline1.Coordinates[0].Y, 1.0E-6);
+                Assert.AreEqual(11.5475869506606, sline1.Coordinates[0].Z, 1.0E-9);
+                Assert.AreEqual(100, sline1.Coordinates[1].X, 1.0E-6);
+                Assert.AreEqual(100, sline1.Coordinates[1].Y, 1.0E-6);
+                Assert.AreEqual(30, sline1.Coordinates[1].Z, 1.0E-9);
 
                 Assert.IsNull(db.Select(() => MeasurementFunctions.ST3DShortestLine(null, null)));
             }

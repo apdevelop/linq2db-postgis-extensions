@@ -357,16 +357,16 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 var result1 = db.TestGeometries.Where(g => g.Id == 1);
                 var poly1 = result1.Select(g => g.Geometry).Single() as NTSGS.Polygon;
-                Assert.AreEqual(-10018754.1713945, poly1.Coordinates[0].X, 1.0E-9);
-                Assert.AreEqual(0, poly1.Coordinates[0].Y, 1.0E-9);
-                Assert.AreEqual(-10018754.1713945, poly1.Coordinates[1].X, 1.0E-9);
-                Assert.AreEqual(10018754.1713945, poly1.Coordinates[1].Y, 1.0E-9);
-                Assert.AreEqual(0, poly1.Coordinates[2].X, 1.0E-9);
-                Assert.AreEqual(10018754.1713945, poly1.Coordinates[2].Y, 1.0E-9);
-                Assert.AreEqual(0, poly1.Coordinates[3].X, 1.0E-9);
-                Assert.AreEqual(0, poly1.Coordinates[3].Y, 1.0E-9);
-                Assert.AreEqual(-10018754.1713945, poly1.Coordinates[4].X, 1.0E-9);
-                Assert.AreEqual(0, poly1.Coordinates[4].Y, 1.0E-9);
+                Assert.AreEqual(-10018754.1713945, poly1.Coordinates[0].X, 1.0E-6);
+                Assert.AreEqual(0, poly1.Coordinates[0].Y, 1.0E-6);
+                Assert.AreEqual(-10018754.1713945, poly1.Coordinates[1].X, 1.0E-6);
+                Assert.AreEqual(10018754.1713945, poly1.Coordinates[1].Y, 1.0E-6);
+                Assert.AreEqual(0, poly1.Coordinates[2].X, 1.0E-6);
+                Assert.AreEqual(10018754.1713945, poly1.Coordinates[2].Y, 1.0E-6);
+                Assert.AreEqual(0, poly1.Coordinates[3].X, 1.0E-6);
+                Assert.AreEqual(0, poly1.Coordinates[3].Y, 1.0E-6);
+                Assert.AreEqual(-10018754.1713945, poly1.Coordinates[4].X, 1.0E-6);
+                Assert.AreEqual(0, poly1.Coordinates[4].Y, 1.0E-6);
                 Assert.AreEqual(SRID3857, poly1.SRID);
 
                 var result2 = db.TestGeometries.Where(g => g.Id == 2);
@@ -377,16 +377,16 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 var result3 = db.TestGeometries.Where(g => g.Id == 3);
                 var poly3 = result3.Select(g => g.Geometry).Single() as NTSGS.Polygon;
-                Assert.AreEqual(-10018754.1713945, poly3.Coordinates[0].X, 1.0E-9);
-                Assert.AreEqual(0, poly3.Coordinates[0].Y, 1.0E-9);
-                Assert.AreEqual(-10018754.1713945, poly3.Coordinates[1].X, 1.0E-9);
-                Assert.AreEqual(10018754.1713945, poly3.Coordinates[1].Y, 1.0E-9);
-                Assert.AreEqual(0, poly3.Coordinates[2].X, 1.0E-9);
-                Assert.AreEqual(10018754.1713945, poly3.Coordinates[2].Y, 1.0E-9);
-                Assert.AreEqual(0, poly3.Coordinates[3].X, 1.0E-9);
-                Assert.AreEqual(0, poly3.Coordinates[3].Y, 1.0E-9);
-                Assert.AreEqual(-10018754.1713945, poly3.Coordinates[4].X, 1.0E-9);
-                Assert.AreEqual(0, poly3.Coordinates[4].Y, 1.0E-9);
+                Assert.AreEqual(-10018754.1713945, poly3.Coordinates[0].X, 1.0E-6);
+                Assert.AreEqual(0, poly3.Coordinates[0].Y, 1.0E-6);
+                Assert.AreEqual(-10018754.1713945, poly3.Coordinates[1].X, 1.0E-6);
+                Assert.AreEqual(10018754.1713945, poly3.Coordinates[1].Y, 1.0E-6);
+                Assert.AreEqual(0, poly3.Coordinates[2].X, 1.0E-6);
+                Assert.AreEqual(10018754.1713945, poly3.Coordinates[2].Y, 1.0E-6);
+                Assert.AreEqual(0, poly3.Coordinates[3].X, 1.0E-6);
+                Assert.AreEqual(0, poly3.Coordinates[3].Y, 1.0E-6);
+                Assert.AreEqual(-10018754.1713945, poly3.Coordinates[4].X, 1.0E-6);
+                Assert.AreEqual(0, poly3.Coordinates[4].Y, 1.0E-6);
                 Assert.AreEqual(SRID3857, poly3.SRID);
             }
         }

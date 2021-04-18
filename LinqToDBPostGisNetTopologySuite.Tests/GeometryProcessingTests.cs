@@ -461,29 +461,32 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                const string ewkt1 = "SRID=4326;POINT(-118.58 38.38 10)";
-                const string ewkt2 = "SRID=4326;POINT(241.42 38.38 10)";
+                const string Ewkt1 = "SRID=4326;POINT(-118.58 38.38 10)";
+                const string Ewkt2 = "SRID=4326;POINT(241.42 38.38 10)";
                 db.TestGeometries
                     .Value(g => g.Id, 1)
-                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromEWKT(ewkt1))
+                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt1))
                     .Insert();
                 db.TestGeometries
                     .Value(g => g.Id, 2)
-                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromEWKT(ewkt2))
+                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt2))
                     .Insert();
 
                 var result1 = db.TestGeometries
                     .Where(g => g.Id == 1)
-                    .Select(g => g.Geometry.STShiftLongitude().STAsEWKT())
-                    .Single();
+                    .Select(g => g.Geometry.STShiftLongitude())
+                    .Single() as NTSGS.Point;
 
                 var result2 = db.TestGeometries
                     .Where(g => g.Id == 2)
-                    .Select(g => g.Geometry.STShiftLongitude().STAsEWKT())
-                    .Single();
+                    .Select(g => g.Geometry.STShiftLongitude())
+                    .Single() as NTSGS.Point;
 
-                Assert.AreEqual("SRID=4326;POINT(241.42 38.38 10)", result1);
-                Assert.AreEqual("SRID=4326;POINT(-118.58 38.38 10)", result2);
+                Assert.AreEqual(241.42, result1.X, 1.0E-2);
+                Assert.AreEqual(38.38, result1.Y, 1.0E-2);
+
+                Assert.AreEqual(-118.58, result2.X, 1.0E-2);
+                Assert.AreEqual(38.38, result2.Y, 1.0E-2);
             }
         }
 
@@ -649,17 +652,23 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 var result1 = db.TestGeometries
                     .Where(g => g.Id == 1)
-                    .Select(g => g.Geometry.STSetEffectiveArea().STAsText())
-                    .Single();
+                    .Select(g => g.Geometry.STSetEffectiveArea())
+                    .Single() as NTSGS.LineString;
 
-                Assert.AreEqual("LINESTRING M (5 2 3.40282e+038,3 8 29,6 20 1.5,7 25 49.5,10 10 3.40282e+038)", result1);
+                Assert.AreEqual(3.40282e+038, result1.Coordinates[0].M, 0.00001E38);
+                Assert.AreEqual(29, result1.Coordinates[1].M, 1.0E-3);
+                Assert.AreEqual(1.5, result1.Coordinates[2].M, 1.0E-3);
+                Assert.AreEqual(49.5, result1.Coordinates[3].M, 1.0E-3);
+                Assert.AreEqual(3.40282e+038, result1.Coordinates[4].M, 0.00001E38);
 
                 var result2 = db.TestGeometries
                     .Where(g => g.Id == 1)
-                    .Select(g => g.Geometry.STSetEffectiveArea(30).STAsText())
-                    .Single();
+                    .Select(g => g.Geometry.STSetEffectiveArea(30))
+                    .Single() as NTSGS.LineString;
 
-                Assert.AreEqual("LINESTRING M (5 2 3.40282e+038,7 25 49.5,10 10 3.40282e+038)", result2);
+                Assert.AreEqual(3.40282e+038, result2.Coordinates[0].M, 0.00001E38);
+                Assert.AreEqual(49.5, result2.Coordinates[1].M, 1.0E-3);
+                Assert.AreEqual(3.40282e+038, result2.Coordinates[2].M, 0.00001E38);
             }
         }
 
@@ -734,18 +743,32 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                const string wkt = "MULTIPOINT (50 30, 60 30, 100 100,10 150, 110 120)";
+                const string Wkt = "MULTIPOINT (50 30, 60 30, 100 100,10 150, 110 120)";
                 db.TestGeometries
                     .Value(g => g.Id, 1)
-                    .Value(p => p.Geometry, () => GeometryInput.STGeometryFromText(wkt))
+                    .Value(p => p.Geometry, () => GeometryInput.STGeometryFromText(Wkt))
                     .Insert();
 
                 var result = db.TestGeometries
-                    .Where(g => g.Id == 1)
-                    .Select(g => g.Geometry.STVoronoiLines(30.0).STAsText())
-                    .Single();
+                    .Select(g => g.Geometry.STVoronoiLines(30.0))
+                    .Single() as NTSGS.MultiLineString;
 
-                Assert.AreEqual("MULTILINESTRING((135.555555555556 270,36.8181818181818 92.2727272727273),(36.8181818181818 92.2727272727273,-110 43.3333333333333),(230 -45.7142857142858,36.8181818181818 92.2727272727273))", result);
+                Assert.AreEqual(3, result.Geometries.Length);
+
+                Assert.AreEqual(135.555555555556, result.Geometries[0].Coordinates[0].X, 1.0E-12);
+                Assert.AreEqual(270, result.Geometries[0].Coordinates[0].Y, 1.0E-12);
+                Assert.AreEqual(36.8181818181818, result.Geometries[0].Coordinates[1].X, 1.0E-12);
+                Assert.AreEqual(92.2727272727273, result.Geometries[0].Coordinates[1].Y, 1.0E-12);
+
+                Assert.AreEqual(36.8181818181818, result.Geometries[1].Coordinates[0].X, 1.0E-12);
+                Assert.AreEqual(92.2727272727273, result.Geometries[1].Coordinates[0].Y, 1.0E-12);
+                Assert.AreEqual(-110, result.Geometries[1].Coordinates[1].X, 1.0E-12);
+                Assert.AreEqual(43.3333333333333, result.Geometries[1].Coordinates[1].Y, 1.0E-12);
+
+                Assert.AreEqual(230, result.Geometries[2].Coordinates[0].X, 1.0E-12);
+                Assert.AreEqual(-45.7142857142858, result.Geometries[2].Coordinates[0].Y, 1.0E-12);
+                Assert.AreEqual(36.8181818181818, result.Geometries[2].Coordinates[1].X, 1.0E-12);
+                Assert.AreEqual(92.2727272727273, result.Geometries[2].Coordinates[1].Y, 1.0E-12);
             }
         }
 
