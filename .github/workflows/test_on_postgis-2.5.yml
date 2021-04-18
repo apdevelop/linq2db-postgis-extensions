@@ -9,7 +9,7 @@ jobs:
     strategy:
       matrix:
         dotnet-version: ['2.1.x' ]
-        postgis-version: ['postgis/postgis:12-2.5-alpine', 'postgis/postgis:11-2.5-alpine', 'postgis/postgis:10-2.5-alpine', '9.6-2.5-alpine' ]
+        postgis-version: ['postgis/postgis:12-2.5-alpine', 'postgis/postgis:11-2.5-alpine', 'postgis/postgis:10-2.5-alpine', 'postgis/postgis:9.6-2.5-alpine' ]
     services:
       postgis:
         image: ${{ matrix.postgis-version }}
