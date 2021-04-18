@@ -3,7 +3,7 @@ name: test_on_postgis_3.0
 on: [push, pull_request]
 
 jobs:
-  test_on_postgis_3.0:
+  test_on_postgis_30:
 
     runs-on: ubuntu-latest
     strategy:
