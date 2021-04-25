@@ -623,11 +623,12 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                         .STAsText()));
 
                 Assert.AreEqual(
-                    "POINT(100.123455047607 0)",
+                    100.123455047607,
                     db.Select(() => GeometryEditors
                         .STQuantizeCoordinates(
                             GeometryConstructors.STMakePoint(100.123456, 0), 4)
-                        .STAsText()));
+                        .STX()),
+                    1.0E-12);
 
                 Assert.IsNull(db.Select(() => GeometryEditors.STQuantizeCoordinates((NTSG)null, 0, 0, 0, 0)));
             }
