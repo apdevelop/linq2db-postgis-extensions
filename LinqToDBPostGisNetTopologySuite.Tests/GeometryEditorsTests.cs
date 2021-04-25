@@ -4,6 +4,7 @@ using System.Linq;
 using LinqToDB;
 using NUnit.Framework;
 
+using NTSG = NetTopologySuite.Geometries.Geometry;
 using NTSGS = NetTopologySuite.Geometries;
 
 namespace LinqToDBPostGisNetTopologySuite.Tests
@@ -447,6 +448,29 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
+        public void TestSTForceSFS()
+        {
+            const string Wkt = "CURVEPOLYGON Z ((0 0 1,5 0 1,0 5 1,0 0 1),(1 1 1,1 3 1,3 1 1,1 1 1))";
+            const string Expected = "POLYGON Z ((0 0 1,5 0 1,0 5 1,0 0 1),(1 1 1,1 3 1,3 1 1,1 1 1))";
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                db.TestGeometries
+                    .Value(g => g.Id, 1)
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt))
+                    .Insert();
+
+                var actual = db.TestGeometries
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geometry.STForceSFS().STAsText())
+                    .Single();
+
+                Assert.AreEqual(Expected, actual);
+
+                Assert.IsNull(db.Select(() => GeometryEditors.STForceSFS((NTSG)null)));
+            }
+        }
+
+        [Test]
         public void TestSTForceRHR()
         {
             const string wkt = "POLYGON((0 0 1,5 0 1,0 5 1,0 0 1),(1 1 1,1 3 1,3 1 1,1 1 1))";
@@ -583,6 +607,47 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 Assert.AreEqual(150, line.Coordinates[2].X);
                 Assert.AreEqual(190, line.Coordinates[2].Y);
+            }
+        }
+        [Test]
+
+        public void TestSTQuantizeCoordinates()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                Assert.AreEqual(
+                    "POINT(100.0625 0)",
+                    db.Select(() => GeometryEditors
+                        .STQuantizeCoordinates(
+                            GeometryConstructors.STMakePoint(100.123456, 0), 0, 0, 0, 0)
+                        .STAsText()));
+
+                Assert.AreEqual(
+                    "POINT(100.123455047607 0)",
+                    db.Select(() => GeometryEditors
+                        .STQuantizeCoordinates(
+                            GeometryConstructors.STMakePoint(100.123456, 0), 4)
+                        .STAsText()));
+
+                Assert.IsNull(db.Select(() => GeometryEditors.STQuantizeCoordinates((NTSG)null, 0, 0, 0, 0)));
+            }
+        }
+
+        public void TestSTSegmentize()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string InputWkt = "LINESTRING(0 0, 100 0)";
+                const string Expected = "LINESTRING(0 0,50 0,100 0)";
+                Assert.AreEqual(
+                    Expected,
+                    db.Select(() => GeometryEditors.STSegmentize(GeometryInput.STGeomFromText(InputWkt), 50).STAsText()));
+
+                Assert.AreEqual(
+                    Expected,
+                    db.Select(() => GeometryEditors.STSegmentize(InputWkt, 50).STAsText()));
+
+                Assert.IsNull(db.Select(() => GeometryEditors.STSegmentize((NTSG)null, 0)));
             }
         }
 

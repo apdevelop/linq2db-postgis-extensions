@@ -10,7 +10,8 @@ namespace LinqToDBPostGisNetTopologySuite
     /// Geometry Editors.
     /// </summary>
     /// <remarks>
-    /// 8.5. Geometry Editors https://postgis.net/docs/manual-3.0/reference.html#Geometry_Editors
+    /// 8.5. Geometry Editors 
+    /// https://postgis.net/docs/manual-3.0/reference.html#Geometry_Editors
     /// </remarks>
     public static class GeometryEditors
     {
@@ -187,6 +188,36 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
+        /// Forces the input <paramref name="geometry"/> to use SFS 1.1 geometry types only.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_ForceSFS.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry.</param>
+        /// <returns>Geometry.</returns>
+        [Sql.Function("ST_ForceSFS", ServerSideOnly = true)]
+        public static NTSG STForceSFS(this NTSG geometry)
+        {
+            throw new InvalidOperationException();
+        }
+
+        // TODO: geometry ST_ForceSFS(geometry geomA, text version);
+
+        /// <summary>
+        /// Forces the input <paramref name="geometry"/> in text representation to use SFS 1.1 geometry types only.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_ForceSFS.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry.</param>
+        /// <returns>Geometry.</returns>
+        [Sql.Function("ST_ForceSFS", ServerSideOnly = true)]
+        public static NTSG STForceSFS(string geometry)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
         /// Forces the orientation of the vertices in a polygon to follow a Right-Hand-Rule, in which the area that is bounded by the polygon is to the right of the boundary. In particular, the exterior ring is orientated in a clockwise direction and the interior rings in a counter-clockwise direction
         /// </summary>
         /// <remarks>
@@ -257,6 +288,39 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
+        /// Returns input <paramref name="geometry"/> with its coordinates quantized.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_QuantizeCoordinates.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry.</param>
+        /// <param name="precisionX">Precision for X coordinate.</param>
+        /// <param name="precisionY">Precision for Y coordinate.</param>
+        /// <param name="precisionZ">Precision for Z coordinate.</param>
+        /// <param name="precisionM">Precision for M coordinate.</param>
+        /// <returns>Geometry.</returns>
+        [Sql.Function("ST_QuantizeCoordinates", ServerSideOnly = true)]
+        public static NTSG STQuantizeCoordinates(this NTSG geometry, int precisionX, int precisionY, int precisionZ, int precisionM)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns input <paramref name="geometry"/> with its coordinates quantized.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_QuantizeCoordinates.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry.</param>
+        /// <param name="precision">Precision for X, Y, Z, M coordinates.</param>
+        /// <returns>Geometry.</returns>
+        [Sql.Function("ST_QuantizeCoordinates", ServerSideOnly = true)]
+        public static NTSG STQuantizeCoordinates(this NTSG geometry, int precision)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
         /// Removes point from input geometry (LineString)
         /// </summary>
         /// <remarks>
@@ -281,6 +345,36 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <returns>Geometry with reversed order of the vertexes</returns>
         [Sql.Function("ST_Reverse", ServerSideOnly = true)]
         public static NTSG STReverse(this NTSG geometry)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns a modified input <paramref name="geometry"/> having no segment longer than the given <paramref name="maxSegmentLength"/>.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_Segmentize.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry.</param>
+        /// <param name="maxSegmentLength">Max segment length.</param>
+        /// <returns>Geometry.</returns>
+        [Sql.Function("ST_Segmentize", ServerSideOnly = true)]
+        public static NTSG STSegmentize(this NTSG geometry, double maxSegmentLength)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns a modified input <paramref name="geometry"/> in text represenation having no segment longer than the given <paramref name="maxSegmentLength"/>.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_Segmentize.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry.</param>
+        /// <param name="maxSegmentLength">Max segment length.</param>
+        /// <returns>Geometry.</returns>
+        [Sql.Function("ST_Segmentize", ServerSideOnly = true)]
+        public static NTSG STSegmentize(string geometry, double maxSegmentLength)
         {
             throw new InvalidOperationException();
         }
