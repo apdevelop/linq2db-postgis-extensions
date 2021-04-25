@@ -11,7 +11,7 @@ namespace LinqToDBPostGisNetTopologySuite
     /// </summary>
     /// <remarks>
     /// 8.4. Geometry Accessors
-    /// https://postgis.net/docs/manual-3.0/reference.html#Geometry_Accessors
+    /// https://postgis.net/docs/reference.html#Geometry_Accessors
     /// </remarks>
     public static class GeometryAccessors
     {
@@ -19,7 +19,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the type of input <paramref name="geometry"/> as string.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/GeometryType.html
+        /// See https://postgis.net/docs/GeometryType.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Geometry type string (Eg: 'LINESTRING', 'POLYGON', 'MULTIPOINT', etc.).</returns>
@@ -33,7 +33,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the closure of the combinatorial boundary of input <paramref name="geometry"/>.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Boundary.html
+        /// See https://postgis.net/docs/ST_Boundary.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Boundary geometry.</returns>
@@ -47,7 +47,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the closure of the combinatorial boundary of input <paramref name="geometry"/> in text representation.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Boundary.html
+        /// See https://postgis.net/docs/ST_Boundary.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Boundary geometry.</returns>
@@ -61,7 +61,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the coordinate dimension of input <paramref name="geometry"/>.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_CoordDim.html
+        /// See https://postgis.net/docs/ST_CoordDim.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Coordinate dimension.</returns>
@@ -75,7 +75,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the coordinate dimension of input <paramref name="geometry"/> in text representation.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_CoordDim.html
+        /// See https://postgis.net/docs/ST_CoordDim.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Coordinate dimension.</returns>
@@ -89,7 +89,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the topological dimension of input <paramref name="geometry"/>.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Dimension.html
+        /// See https://postgis.net/docs/ST_Dimension.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Topological dimension (must be less than or equal to the coordinate dimension).</returns>
@@ -103,7 +103,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the topological dimension of input <paramref name="geometry"/> in text representation.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Dimension.html
+        /// See https://postgis.net/docs/ST_Dimension.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Topological dimension (must be less than or equal to the coordinate dimension).</returns>
@@ -121,7 +121,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the last point of input <paramref name="geometry"/> as a Point. Returns null if the input is not a LineString.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_EndPoint.html
+        /// See https://postgis.net/docs/ST_EndPoint.html
         /// </remarks>
         /// <param name="geometry">Input geometry (LineString).</param>
         /// <returns>Last point.</returns>
@@ -135,7 +135,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the last point of input <paramref name="geometry"/> in text representation as a Point. Returns null if the input is not a LineString.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_EndPoint.html
+        /// See https://postgis.net/docs/ST_EndPoint.html
         /// </remarks>
         /// <param name="geometry">Input geometry (LineString).</param>
         /// <returns>Last point.</returns>
@@ -149,7 +149,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the minimum bounding box for input <paramref name="geometry"/>, as geometry.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Envelope.html
+        /// See https://postgis.net/docs/ST_Envelope.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Bounding box geometry.</returns>
@@ -163,7 +163,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the minimum bounding box for input <paramref name="geometry"/> in text representation, as geometry.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Envelope.html
+        /// See https://postgis.net/docs/ST_Envelope.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Bounding box geometry.</returns>
@@ -177,7 +177,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the diagonal of input <paramref name="geometry"/> bounding box.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_BoundingDiagonal.html
+        /// See https://postgis.net/docs/ST_BoundingDiagonal.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Diagonal of the bounding box (LineString).</returns>
@@ -191,7 +191,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the diagonal of input <paramref name="geometry"/> in text representation bounding box.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_BoundingDiagonal.html
+        /// See https://postgis.net/docs/ST_BoundingDiagonal.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Diagonal of the bounding box (LineString).</returns>
@@ -205,7 +205,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the diagonal of input <paramref name="geometry"/> bounding box.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_BoundingDiagonal.html
+        /// See https://postgis.net/docs/ST_BoundingDiagonal.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <param name="fits">Specifies if the best fit is needed.</param>
@@ -220,7 +220,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the diagonal of input <paramref name="geometry"/> in text representation bounding box.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_BoundingDiagonal.html
+        /// See https://postgis.net/docs/ST_BoundingDiagonal.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <param name="fits">Specifies if the best fit is needed.</param>
@@ -235,7 +235,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the exterior ring of input <paramref name="geometry"/>. Returns null if input <paramref name="geometry"/> is not a Polygon.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_ExteriorRing.html
+        /// See https://postgis.net/docs/ST_ExteriorRing.html
         /// </remarks>
         /// <param name="geometry">Input geometry (Polygon).</param>
         /// <returns>Exterior ring geometry (LineString).</returns>
@@ -249,7 +249,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the exterior ring of input <paramref name="geometry"/> in text representation. Returns null if input <paramref name="geometry"/> is not a Polygon.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_ExteriorRing.html
+        /// See https://postgis.net/docs/ST_ExteriorRing.html
         /// </remarks>
         /// <param name="geometry">Input geometry (Polygon).</param>
         /// <returns>Exterior ring geometry (LineString).</returns>
@@ -263,7 +263,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the Nth geometry of input <paramref name="geometry"/>.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_GeometryN.html
+        /// See https://postgis.net/docs/ST_GeometryN.html
         /// </remarks>
         /// <param name="geometry">Input geometry (GeometryCollection, Multi* or PolyhedralSurface).</param>
         /// <param name="n">Index of geometry (1-based).</param>
@@ -278,7 +278,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the Nth geometry of input <paramref name="geometry"/> in text representation.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_GeometryN.html
+        /// See https://postgis.net/docs/ST_GeometryN.html
         /// </remarks>
         /// <param name="geometry">Input geometry (GeometryCollection, Multi* or PolyhedralSurface).</param>
         /// <param name="n">Index of geometry (1-based).</param>
@@ -293,7 +293,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the type of input <paramref name="geometry"/> as string.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_GeometryType.html
+        /// See https://postgis.net/docs/ST_GeometryType.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Geometry type string (with 'ST_' prefix).</returns>
@@ -307,7 +307,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the type of input <paramref name="geometry"/> in text representation as string.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_GeometryType.html
+        /// See https://postgis.net/docs/ST_GeometryType.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Geometry type string (with 'ST_' prefix).</returns>
@@ -321,7 +321,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns true if input <paramref name="geometry"/> contains a circular string.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_HasArc.html
+        /// See https://postgis.net/docs/ST_HasArc.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Input geometry or geometry collection contains a circular string.</returns>
@@ -335,7 +335,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns true if input <paramref name="geometry"/> in text representation contains a circular string.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_HasArc.html
+        /// See https://postgis.net/docs/ST_HasArc.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Input geometry or geometry collection contains a circular string.</returns>
@@ -349,7 +349,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the Nth interior ring of input <paramref name="geometry"/>.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_InteriorRingN.html
+        /// See https://postgis.net/docs/ST_InteriorRingN.html
         /// </remarks>
         /// <param name="geometry">Input geometry (Polygon).</param>
         /// <param name="n">Index of interior ring (1-based).</param>
@@ -364,7 +364,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the Nth interior ring of input <paramref name="geometry"/> in text representation.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_InteriorRingN.html
+        /// See https://postgis.net/docs/ST_InteriorRingN.html
         /// </remarks>
         /// <param name="geometry">Input geometry (Polygon).</param>
         /// <param name="n">Index of interior ring (1-based).</param>
@@ -379,7 +379,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns true if all polygonal components of input <paramref name="geometry"/> use a counter-clockwise orientation for their exterior ring, and a clockwise direction for all interior rings.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_IsPolygonCCW.html
+        /// See https://postgis.net/docs/ST_IsPolygonCCW.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Check result.</returns>
@@ -393,7 +393,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns true if all polygonal components of input <paramref name="geometry"/> in text representation use a counter-clockwise orientation for their exterior ring, and a clockwise direction for all interior rings.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_IsPolygonCCW.html
+        /// See https://postgis.net/docs/ST_IsPolygonCCW.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Check result.</returns>
@@ -407,7 +407,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns true if all polygonal components of input <paramref name="geometry"/> use a clockwise orientation for their exterior ring, and a counter-clockwise direction for all interior rings.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_IsPolygonCW.html
+        /// See https://postgis.net/docs/ST_IsPolygonCW.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Check result.</returns>
@@ -421,7 +421,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns true if all polygonal components of input <paramref name="geometry"/> in text representation use a clockwise orientation for their exterior ring, and a counter-clockwise direction for all interior rings.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_IsPolygonCW.html
+        /// See https://postgis.net/docs/ST_IsPolygonCW.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Check result.</returns>
@@ -435,7 +435,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns true if input LineString <paramref name="geometry"/> start and end points are coincident.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_IsClosed.html
+        /// See https://postgis.net/docs/ST_IsClosed.html
         /// </remarks>
         /// <param name="geometry">Input geometry (LineString).</param>
         /// <returns>Check result.</returns>
@@ -449,7 +449,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns true if input LineString <paramref name="geometry"/> in text representation start and end points are coincident.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_IsClosed.html
+        /// See https://postgis.net/docs/ST_IsClosed.html
         /// </remarks>
         /// <param name="geometry">Input geometry (LineString).</param>
         /// <returns>Check result.</returns>
@@ -463,7 +463,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns true if input <paramref name="geometry"/> type is a geometry collection type.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_IsCollection.html
+        /// See https://postgis.net/docs/ST_IsCollection.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Check result.</returns>
@@ -477,7 +477,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns true if input <paramref name="geometry"/> in text representation type is a geometry collection type.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_IsCollection.html
+        /// See https://postgis.net/docs/ST_IsCollection.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Check result.</returns>
@@ -491,7 +491,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns true if input <paramref name="geometry"/> is an empty geometry.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_IsEmpty.html
+        /// See https://postgis.net/docs/ST_IsEmpty.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Geometry is empty.</returns>
@@ -505,7 +505,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns true if input <paramref name="geometry"/> in text representation is an empty geometry.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_IsEmpty.html
+        /// See https://postgis.net/docs/ST_IsEmpty.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Geometry is empty.</returns>
@@ -519,7 +519,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns true if input <paramref name="geometry"/> is both IsClosed and IsSimple (does not self intersect).
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_IsRing.html
+        /// See https://postgis.net/docs/ST_IsRing.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Geometry is ring.</returns>
@@ -533,7 +533,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns true if input <paramref name="geometry"/> in text representation is both IsClosed and IsSimple (does not self intersect).
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_IsRing.html
+        /// See https://postgis.net/docs/ST_IsRing.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Geometry is ring.</returns>
@@ -547,7 +547,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns true if input <paramref name="geometry"/> has no anomalous geometric points, such as self intersection or self tangency.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_IsSimple.html
+        /// See https://postgis.net/docs/ST_IsSimple.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Geometry is simple.</returns>
@@ -561,7 +561,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns true if input <paramref name="geometry"/> in text representation has no anomalous geometric points, such as self intersection or self tangency.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_IsSimple.html
+        /// See https://postgis.net/docs/ST_IsSimple.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Geometry is simple.</returns>
@@ -575,7 +575,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns M coordinate (measure) of input Point <paramref name="geometry"/>, or null if not available.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_M.html
+        /// See https://postgis.net/docs/ST_M.html
         /// </remarks>
         /// <param name="geometry">Input geometry (Point).</param>
         /// <returns>Value of M coordinate (measure).</returns>
@@ -589,7 +589,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns M coordinate (measure) of input Point <paramref name="geometry"/> in text representation, or null if not available.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_M.html
+        /// See https://postgis.net/docs/ST_M.html
         /// </remarks>
         /// <param name="geometry">Input geometry (Point).</param>
         /// <returns>Value of M coordinate (measure).</returns>
@@ -603,7 +603,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the amount of memory space (in bytes) input <paramref name="geometry"/> takes.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_MemSize.html
+        /// See https://postgis.net/docs/ST_MemSize.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Amount of memory space (in bytes).</returns>
@@ -617,7 +617,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the amount of memory space (in bytes) input <paramref name="geometry"/> in text representation takes.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_MemSize.html
+        /// See https://postgis.net/docs/ST_MemSize.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Amount of memory space (in bytes).</returns>
@@ -631,7 +631,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the coordinate dimension of input <paramref name="geometry"/>.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_NDims.html
+        /// See https://postgis.net/docs/ST_NDims.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Coordinate dimension.</returns>
@@ -645,7 +645,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the coordinate dimension of input <paramref name="geometry"/> in text representation.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_NDims.html
+        /// See https://postgis.net/docs/ST_NDims.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Coordinate dimension.</returns>
@@ -659,7 +659,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the number of points in input <paramref name="geometry"/>.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_NPoints.html
+        /// See https://postgis.net/docs/ST_NPoints.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Number of points.</returns>
@@ -673,7 +673,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the number of points in input <paramref name="geometry"/> in text representation.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_NPoints.html
+        /// See https://postgis.net/docs/ST_NPoints.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Number of points.</returns>
@@ -687,7 +687,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the number of rings in input <paramref name="geometry"/>.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_NRings.html
+        /// See https://postgis.net/docs/ST_NRings.html
         /// </remarks>
         /// <param name="geometry">Input geometry (Polygon or MultiPolygon).</param>
         /// <returns>Number of rings.</returns>
@@ -701,7 +701,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the number of rings in input <paramref name="geometry"/> in text representation.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_NRings.html
+        /// See https://postgis.net/docs/ST_NRings.html
         /// </remarks>
         /// <param name="geometry">Input geometry (Polygon or MultiPolygon).</param>
         /// <returns>Number of rings.</returns>
@@ -715,7 +715,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the number of geometries in input <paramref name="geometry"/>.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_NumGeometries.html
+        /// See https://postgis.net/docs/ST_NumGeometries.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Number of geometries.</returns>
@@ -729,7 +729,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the number of geometries in input <paramref name="geometry"/> in text representation.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_NumGeometries.html
+        /// See https://postgis.net/docs/ST_NumGeometries.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Number of geometries.</returns>
@@ -743,7 +743,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the number of interior rings in input <paramref name="geometry"/>.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_NumInteriorRings.html
+        /// See https://postgis.net/docs/ST_NumInteriorRings.html
         /// </remarks>
         /// <param name="geometry">Input geometry (Polygon).</param>
         /// <returns>Number of interior rings.</returns>
@@ -757,7 +757,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the number of interior rings in input <paramref name="geometry"/> in text representation.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_NumInteriorRings.html
+        /// See https://postgis.net/docs/ST_NumInteriorRings.html
         /// </remarks>
         /// <param name="geometry">Input geometry (Polygon).</param>
         /// <returns>Number of interior rings.</returns>
@@ -771,7 +771,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the number of interior rings in input <paramref name="geometry"/>.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_NumInteriorRings.html
+        /// See https://postgis.net/docs/ST_NumInteriorRings.html
         /// </remarks>
         /// <param name="geometry">Input geometry (Polygon).</param>
         /// <returns>Number of interior rings.</returns>
@@ -785,7 +785,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the number of interior rings in input <paramref name="geometry"/> in text representation.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_NumInteriorRings.html
+        /// See https://postgis.net/docs/ST_NumInteriorRings.html
         /// </remarks>
         /// <param name="geometry">Input geometry (Polygon).</param>
         /// <returns>Number of interior rings.</returns>
@@ -799,7 +799,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the number of faces on input <paramref name="geometry"/>.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_NumPatches.html
+        /// See https://postgis.net/docs/ST_NumPatches.html
         /// </remarks>
         /// <param name="geometry">Input geometry (Polyhedral Surface).</param>
         /// <returns>Number of faces, null for non-polyhedral geometries.</returns>
@@ -813,7 +813,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the number of faces on input <paramref name="geometry"/> in text representation.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_NumPatches.html
+        /// See https://postgis.net/docs/ST_NumPatches.html
         /// </remarks>
         /// <param name="geometry">Input geometry (Polyhedral Surface).</param>
         /// <returns>Number of faces, null for non-polyhedral geometries.</returns>
@@ -827,7 +827,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the number of points in input <paramref name="geometry"/>.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_NumPoints.html
+        /// See https://postgis.net/docs/ST_NumPoints.html
         /// </remarks>
         /// <param name="geometry">Input geometry (LineString or CircularString).</param>
         /// <returns>Number of points.</returns>
@@ -841,7 +841,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the number of points in input <paramref name="geometry"/> in text representation.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_NumPoints.html
+        /// See https://postgis.net/docs/ST_NumPoints.html
         /// </remarks>
         /// <param name="geometry">Input geometry (LineString or CircularString).</param>
         /// <returns>Number of points.</returns>
@@ -855,7 +855,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the Nth face of input <paramref name="geometry"/>.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_PatchN.html
+        /// See https://postgis.net/docs/ST_PatchN.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <param name="n">Index of face (1-based).</param>
@@ -870,7 +870,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the Nth face of input <paramref name="geometry"/> in text representation.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_PatchN.html
+        /// See https://postgis.net/docs/ST_PatchN.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <param name="n">Index of face (1-based).</param>
@@ -885,7 +885,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the Nth point in input <paramref name="geometry"/>.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_PointN.html
+        /// See https://postgis.net/docs/ST_PointN.html
         /// </remarks>
         /// <param name="geometry">Input geometry (LineString or CircularString).</param>
         /// <param name="n">Index of point (1-based).</param>
@@ -900,7 +900,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the Nth point in input <paramref name="geometry"/> in text representation.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_PointN.html
+        /// See https://postgis.net/docs/ST_PointN.html
         /// </remarks>
         /// <param name="geometry">Input geometry (LineString or CircularString).</param>
         /// <param name="n">Index of point (1-based).</param>
@@ -915,7 +915,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns geometry (MultiPoint), containing all of the coordinates of input <paramref name="geometry"/>.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Points.html
+        /// See https://postgis.net/docs/ST_Points.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>MultiPoint geometry.</returns>
@@ -929,7 +929,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns geometry (MultiPoint), containing all of the coordinates of input <paramref name="geometry"/> in text representation.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Points.html
+        /// See https://postgis.net/docs/ST_Points.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>MultiPoint geometry.</returns>
@@ -943,7 +943,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns first point of input <paramref name="geometry"/>.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_StartPoint.html
+        /// See https://postgis.net/docs/ST_StartPoint.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>First point geometry (Point).</returns>
@@ -957,7 +957,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns first point of input <paramref name="geometry"/> in text representation.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_StartPoint.html
+        /// See https://postgis.net/docs/ST_StartPoint.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>First point geometry (Point).</returns>
@@ -971,12 +971,12 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns a text summary of the contents of input <paramref name="geometry"/>.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Summary.html
+        /// See https://postgis.net/docs/ST_Summary.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Text summary.</returns>
         [Sql.Function("ST_Summary", ServerSideOnly = true)]
-        public static string STSummary(this NTSG geometry) 
+        public static string STSummary(this NTSG geometry)
         {
             throw new InvalidOperationException();
         }
@@ -988,7 +988,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns X coordinate of input <paramref name="geometry"/>.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_X.html
+        /// See https://postgis.net/docs/ST_X.html
         /// </remarks>
         /// <param name="geometry">Input geometry (Point).</param>
         /// <returns>Value of X coordinate.</returns>
@@ -1002,7 +1002,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns X coordinate of input <paramref name="geometry"/> in text representation.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_X.html
+        /// See https://postgis.net/docs/ST_X.html
         /// </remarks>
         /// <param name="geometry">Input geometry (Point).</param>
         /// <returns>Value of X coordinate.</returns>
@@ -1016,7 +1016,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns Y coordinate of input <paramref name="geometry"/>.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Y.html
+        /// See https://postgis.net/docs/ST_Y.html
         /// </remarks>
         /// <param name="geometry">Input geometry (Point).</param>
         /// <returns>Value of Y coordinate.</returns>
@@ -1030,7 +1030,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns Y coordinate of input <paramref name="geometry"/> in text representation.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Y.html
+        /// See https://postgis.net/docs/ST_Y.html
         /// </remarks>
         /// <param name="geometry">Input geometry (Point).</param>
         /// <returns>Value of Y coordinate.</returns>
@@ -1044,7 +1044,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns Z coordinate of input <paramref name="geometry"/>.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Z.html
+        /// See https://postgis.net/docs/ST_Z.html
         /// </remarks>
         /// <param name="geometry">Input geometry (Point).</param>
         /// <returns>Value of Z coordinate.</returns>
@@ -1058,7 +1058,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns Z coordinate of input <paramref name="geometry"/> in text representation.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Z.html
+        /// See https://postgis.net/docs/ST_Z.html
         /// </remarks>
         /// <param name="geometry">Input geometry (Point).</param>
         /// <returns>Value of Z coordinate.</returns>
@@ -1072,7 +1072,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns a code indicating the ZM coordinate dimension of input <paramref name="geometry"/>.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Zmflag.html
+        /// See https://postgis.net/docs/ST_Zmflag.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>ZM coordinate dimension code.</returns>
@@ -1086,7 +1086,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns a code indicating the ZM coordinate dimension of input <paramref name="geometry"/> in text representation.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Zmflag.html
+        /// See https://postgis.net/docs/ST_Zmflag.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>ZM coordinate dimension code.</returns>

@@ -11,7 +11,7 @@ namespace LinqToDBPostGisNetTopologySuite
     /// </summary>
     /// <remarks>
     /// 8.3. Geometry Constructors
-    /// https://postgis.net/docs/manual-3.0/reference.html#Geometry_Constructors
+    /// https://postgis.net/docs/reference.html#Geometry_Constructors
     /// </remarks>
     public static class GeometryConstructors
     {
@@ -20,7 +20,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <para>The result is either a Multi* or a GeometryCollection, depending on whether the input geometries have the same or different types (homogeneous or heterogeneous).</para>
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Collect.html
+        /// See https://postgis.net/docs/ST_Collect.html
         /// </remarks>
         /// <param name="geometry">Input geometry 1.</param>
         /// <param name="other">Input geometry 2.</param>
@@ -36,7 +36,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <para>The result is either a Multi* or a GeometryCollection, depending on whether the input geometries have the same or different types (homogeneous or heterogeneous).</para>
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Collect.html
+        /// See https://postgis.net/docs/ST_Collect.html
         /// </remarks>
         /// <param name="geometry1">Input geometry 1.</param>
         /// <param name="geometry2">Input geometry 2.</param>
@@ -54,7 +54,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Creates a LineString geometry from a MultiPoint input geometry.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_LineFromMultiPoint.html
+        /// See https://postgis.net/docs/ST_LineFromMultiPoint.html
         /// </remarks>
         /// <param name="geometry">Input geometry (MultiPoint).</param>
         /// <returns>Constructed geometry (LineString).</returns>
@@ -68,7 +68,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Creates a LineString geometry from a MultiPoint input geometry in text representation.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_LineFromMultiPoint.html
+        /// See https://postgis.net/docs/ST_LineFromMultiPoint.html
         /// </remarks>
         /// <param name="geometry">Input geometry (MultiPoint).</param>
         /// <returns>Constructed geometry (LineString).</returns>
@@ -82,7 +82,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Creates a rectangular Polygon geometry from minimum and maximum values for X and Y.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_MakeEnvelope.html
+        /// See https://postgis.net/docs/ST_MakeEnvelope.html
         /// </remarks>
         /// <param name="xmin">Minimum X coordinate in unknown SRS (SRID 0) units.</param>
         /// <param name="ymin">Minimum Y coordinate in unknown SRS (SRID 0) units.</param>
@@ -99,7 +99,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Creates a rectangular Polygon geometry from minimum and maximum values for X and Y.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_MakeEnvelope.html
+        /// See https://postgis.net/docs/ST_MakeEnvelope.html
         /// </remarks>
         /// <param name="xmin">Minimum X coordinate in SRS units, specified by the <paramref name="srid"/>.</param>
         /// <param name="ymin">Minimum Y coordinate in SRS units, specified by the <paramref name="srid"/>.</param>
@@ -117,7 +117,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Creates a LineString geometry containing the points of input geometries (Point, MultiPoint, or LineString).
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_MakeLine.html
+        /// See https://postgis.net/docs/ST_MakeLine.html
         /// </remarks>
         /// <param name="geometry">Input geometry 1.</param>
         /// <param name="other">Input geometry 2.</param>
@@ -132,7 +132,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Creates a LineString geometry containing the points of input geometries (Point, MultiPoint, or LineString).
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_MakeLine.html
+        /// See https://postgis.net/docs/ST_MakeLine.html
         /// </remarks>
         /// <param name="geometry1">Input geometry 1.</param>
         /// <param name="geometry2">Input geometry 2.</param>
@@ -150,7 +150,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Creates a Point (2D) geometry from given X and Y coordinates.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_MakePoint.html
+        /// See https://postgis.net/docs/ST_MakePoint.html
         /// </remarks>
         /// <seealso cref="STPoint(double, double)"/>
         /// <param name="x">X coordinate.</param>
@@ -166,7 +166,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Creates a Point (3D Z) geometry from given X, Y and Z coordinates.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_MakePoint.html
+        /// See https://postgis.net/docs/ST_MakePoint.html
         /// </remarks>
         /// <param name="x">X coordinate.</param>
         /// <param name="y">Y coordinate.</param>
@@ -182,7 +182,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Creates a Point (4D ZM) geometry from given X, Y, Z and M coordinates.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_MakePoint.html
+        /// See https://postgis.net/docs/ST_MakePoint.html
         /// </remarks>
         /// <param name="x">X coordinate.</param>
         /// <param name="y">Y coordinate.</param>
@@ -199,7 +199,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Creates a Point (2D M) geometry from given X, Y and M coordinates.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_MakePointM.html
+        /// See https://postgis.net/docs/ST_MakePointM.html
         /// </remarks>
         /// <param name="x">X coordinate.</param>
         /// <param name="y">Y coordinate.</param>
@@ -215,7 +215,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Creates a Polygon geometry formed by the given shell geometry.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_MakePolygon.html
+        /// See https://postgis.net/docs/ST_MakePolygon.html
         /// </remarks>
         /// <param name="geometry">Input shell geometry (closed LineString).</param>
         /// <returns>Geometry (Polygon).</returns>
@@ -231,7 +231,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Creates a Point (2D) geometry from given X and Y coordinates.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Point.html
+        /// See https://postgis.net/docs/ST_Point.html
         /// </remarks>
         /// <seealso cref="STMakePoint(double, double)"/>
         /// <param name="x">X coordinate.</param>
@@ -247,7 +247,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Creates a Polygon geometry from input LineString geometry.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Polygon.html
+        /// See https://postgis.net/docs/ST_Polygon.html
         /// </remarks>
         /// <param name="geometry">Input geometry (closed LineString).</param>
         /// <param name="srid">Spatial Reference System Identifier (SRID).</param>
@@ -262,7 +262,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Creates a Polygon geometry from input LineString geometry in text representation.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Polygon.html
+        /// See https://postgis.net/docs/ST_Polygon.html
         /// </remarks>
         /// <param name="geometry">Input geometry (closed LineString).</param>
         /// <param name="srid">Spatial Reference System Identifier (SRID).</param>
@@ -277,7 +277,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Creates a rectangular Polygon geometry of tile in Web Mercator (SRID:3857) using the XYZ tile system with default bounds.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_TileEnvelope.html
+        /// See https://postgis.net/docs/ST_TileEnvelope.html
         /// </remarks>
         /// <param name="tileZoom">Tile Z coordinate (zoom level).</param>
         /// <param name="tileX">Tile X coordinate.</param>
@@ -293,7 +293,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Creates a rectangular Polygon geometry of tile in Web Mercator (SRID:3857) using the XYZ tile system with given <paramref name="bounds"/>.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_TileEnvelope.html
+        /// See https://postgis.net/docs/ST_TileEnvelope.html
         /// </remarks>
         /// <param name="tileZoom">Tile Z coordinate (zoom level).</param>
         /// <param name="tileX">Tile X coordinate.</param>
@@ -310,7 +310,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Creates a rectangular Polygon geometry of tile in Web Mercator (SRID:3857) using the XYZ tile system with given <paramref name="bounds"/> in text representation.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_TileEnvelope.html
+        /// See https://postgis.net/docs/ST_TileEnvelope.html
         /// </remarks>
         /// <param name="tileZoom">Tile Z coordinate (zoom level).</param>
         /// <param name="tileX">Tile X coordinate.</param>
