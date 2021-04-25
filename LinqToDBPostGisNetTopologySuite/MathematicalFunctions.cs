@@ -5,18 +5,19 @@ using LinqToDB;
 namespace LinqToDBPostGisNetTopologySuite
 {
     /// <summary>
-    /// Mathematical Functions
+    /// Mathematical Functions.
     /// </summary>
     /// <remarks>
-    /// See https://www.postgresql.org/docs/9.1/functions-math.html
+    /// 9.3. Mathematical Functions and Operators
+    /// https://www.postgresql.org/docs/9.1/functions-math.html
     /// </remarks>
     public static class MathematicalFunctions
     {
         /// <summary>
-        /// Convert radians to degrees
+        /// Convert radians to degrees.
         /// </summary>
-        /// <param name="radians">Radians</param>
-        /// <returns>Degrees</returns>
+        /// <param name="radians">Radians.</param>
+        /// <returns>Degrees.</returns>
         [Sql.Function("degrees", ServerSideOnly = true)]
         public static double? Degrees(double? radians)
         {
@@ -24,12 +25,12 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
-        /// Convert degrees to radians
+        /// Convert degrees to radians.
         /// </summary>
-        /// <param name="radians">Radians</param>
-        /// <returns>Degrees</returns>
+        /// <param name="degrees">Degrees.</param>
+        /// <returns>Radians.</returns>
         [Sql.Function("radians", ServerSideOnly = true)]
-        public static double? Radians(double? radians)
+        public static double? Radians(double? degrees)
         {
             throw new InvalidOperationException();
         }
