@@ -752,7 +752,37 @@ namespace LinqToDBPostGisNetTopologySuite
             throw new InvalidOperationException();
         }
 
-        // TODO: ST_Project(geography)
+        /// <summary>
+        /// Returns a point projected from a start point along a geodesic using a given distance and azimuth (bearing)
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_Project.html
+        /// </remarks>
+        /// <param name="geography">Input geography</param>
+        /// <param name="distance">Distance given in meters.Negative values are supported</param>
+        /// <param name="azimuth">Azimuth (bearing) given in radians, measured clockwise.Negative values and values greater than 2π (360 degrees) are supported</param>
+        /// <returns>Point projected</returns>
+        [Sql.Function("ST_Project", ServerSideOnly = true)]
+        public static NTSG STProject(this NTSG geography, double distance, double azimuth)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns a point projected from a start point along a geodesic using a given distance and azimuth (bearing)
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_Project.html
+        /// </remarks>
+        /// <param name="geography">Input geography</param>
+        /// <param name="distance">Distance given in meters.Negative values are supported</param>
+        /// <param name="azimuth">Azimuth (bearing) given in radians, measured clockwise.Negative values and values greater than 2π (360 degrees) are supported</param>
+        /// <returns>Point projected</returns>
+        [Sql.Function("ST_Project", ServerSideOnly = true)]
+        public static NTSG STProject(string geography, double distance, double azimuth)
+        {
+            throw new InvalidOperationException();
+        }
 
         /// <summary>
         /// Returns the 2D shortest line between two input geometries.

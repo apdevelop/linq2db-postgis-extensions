@@ -7,6 +7,7 @@ using NTSGS = NetTopologySuite.Geometries;
 using NTSG = NetTopologySuite.Geometries.Geometry;
 
 using LinqToDBPostGisNetTopologySuite.Tests.Entities;
+using System;
 
 namespace LinqToDBPostGisNetTopologySuite.Tests
 {
@@ -603,6 +604,28 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 Assert.AreEqual(105.465793597674, db.Select(() => MeasurementFunctions.ST3DPerimeter(Ewkt)), 1.0E-9);
 
                 Assert.IsNull(db.Select(() => MeasurementFunctions.ST3DPerimeter((NTSG)null)));
+            }
+        }
+
+        [Test]
+        public void TestSTProject()
+        {
+            const string wkt = "POINT(0 0)";
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                var result1 = db.Select(() => MeasurementFunctions.STProject(GeometryInput.STGeomFromText(wkt),100000,(Math.PI/180.0)*45.0)) as NTSGS.Point;
+                var result2 = db.Select(() => MeasurementFunctions.STProject(wkt, 100000, (Math.PI / 180.0) * 45.0)) as NTSGS.Point;
+                var result3 = db.Select(() => MeasurementFunctions.STProject((NTSG)null, 100000, (Math.PI / 180.0) * 45.0)) as NTSGS.Point;
+
+                Assert.IsNotNull(result1);
+                Assert.AreEqual(0.635231029125537,result1.X,1.0E-5);
+                Assert.AreEqual(0.639472334729198,result1.Y,1.0E-5);
+
+                Assert.IsNotNull(result2);
+                Assert.AreEqual(0.635231029125537,result2.X,1.0E-5);
+                Assert.AreEqual(0.639472334729198,result2.Y,1.0E-5);
+
+                Assert.IsNull(result3);
             }
         }
 
