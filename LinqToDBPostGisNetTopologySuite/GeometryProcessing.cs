@@ -306,20 +306,6 @@ namespace LinqToDBPostGisNetTopologySuite
             throw new InvalidOperationException();
         }
 
-        /// <summary>
-        /// Attempts to create a valid representation of input invalid geometry without losing any of input vertices.
-        /// </summary>
-        /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_MakeValid.html
-        /// </remarks>
-        /// <param name="geometry">Input geometry</param>
-        /// <returns>Fixed valid geometry</returns>
-        [Sql.Function("ST_MakeValid", ServerSideOnly = true)]
-        public static NTSG STMakeValid(this NTSG geometry)
-        {
-            throw new InvalidOperationException();
-        }
-
         // TODO: ST_MemUnion(geometry set)
 
         /// <summary>
@@ -337,7 +323,7 @@ namespace LinqToDBPostGisNetTopologySuite
             throw new InvalidOperationException();
         }
 
-        // TODO: ST_MinimumBoundingRadius how to map record (geometry, double precision) in linq2db
+        // TODO: (geometry, double precision) ST_MinimumBoundingRadius(geometry geom) try map record to object[]
 
         /// <summary>
         /// Returns mimimum rotated rectangle enclosing input geometry.

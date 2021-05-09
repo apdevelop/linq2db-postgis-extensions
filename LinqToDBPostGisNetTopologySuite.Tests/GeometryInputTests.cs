@@ -21,16 +21,49 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
+        public void TestSTBdPolyFromText()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string Wkt1 = "MULTILINESTRING ((0 0, 0 150, 150 150, 150 0, 0 0), (20 20, 50 20, 50 50, 20 50, 20 20))";
+                Assert.AreEqual(
+                    "SRID=23030;POLYGON((0 0,0 150,150 150,150 0,0 0),(20 20,50 20,50 50,20 50,20 20))",
+                    db.Select(() => GeometryInput.STBdPolyFromText(Wkt1, 23030).STAsEWKT()));
+
+                Assert.IsNull(db.Select(() => GeometryInput.STBdPolyFromText("MULTILINESTRING ((0 0, 0 150, 150 150, 150 0, 20 20))", 0).STAsEWKT()));
+
+                Assert.IsNull(db.Select(() => GeometryInput.STBdPolyFromText(null, 0)));
+            }
+        }
+
+        [Test]
+        public void TestSTBdMPolyFromText()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string Wkt1 = "MULTILINESTRING ((0 0 -10, 1 0 -5, 1 1 -5, 0 1 -5, 0 0 10), (2 2 -3, 4 2 -1, 4 4 -1, 2 4 -1, 2 2 -3))";
+                Assert.AreEqual(
+                    "SRID=23030;MULTIPOLYGON(((0 0 10,0 1 -5,1 1 -5,1 0 -5,0 0 -10)),((2 2 -3,2 4 -1,4 4 -1,4 2 -1,2 2 -3)))",
+                    db.Select(() => GeometryInput.STBdMPolyFromText(Wkt1, 23030).STAsEWKT()));
+
+                Assert.IsNull(db.Select(() => GeometryInput.STBdMPolyFromText(null, 0)));
+            }
+        }
+
+        [Test]
         public void TestSTGeomCollFromText()
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                const string wkt1 = "GEOMETRYCOLLECTION (POINT (1 2), LINESTRING (1 2, 3 4))";
+                const string Wkt1 = "GEOMETRYCOLLECTION (POINT (1 2), LINESTRING (1 2, 3 4))";
 
-                var g1 = db.Select(() => GeometryInput.STGeomCollFromText(wkt1, SRID3857));
+                var g1 = db.Select(() => GeometryInput.STGeomCollFromText(Wkt1));
+                Assert.AreEqual(Wkt1, g1.AsText());
+                Assert.AreEqual(-1, g1.SRID);
 
-                Assert.AreEqual(wkt1, g1.AsText());
-                Assert.AreEqual(SRID3857, g1.SRID);
+                var g2 = db.Select(() => GeometryInput.STGeomCollFromText(Wkt1, SRID3857));
+                Assert.AreEqual(Wkt1, g2.AsText());
+                Assert.AreEqual(SRID3857, g2.SRID);
 
                 Assert.IsNull(db.Select(() => GeometryInput.STGeomCollFromText(null)));
             }
@@ -113,6 +146,36 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 Assert.IsNull(db.Select(() => GeometryInput.STPointFromText("LINESTRING (1 2, 3 4)")));
                 Assert.IsNull(db.Select(() => GeometryInput.STPointFromText(null)));
+            }
+        }
+
+        [Test]
+        public void TestSTPolygonFromText()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string Wkt = "POLYGON((0 0,0 150,150 150,150 0,0 0),(20 20,50 20,50 50,20 50,20 20))";
+                Assert.AreEqual(
+                    "SRID=3857;" + Wkt,
+                    db.Select(() => GeometryInput.STPolygonFromText(Wkt, SRID3857).STAsEWKT()));
+
+                Assert.IsNull(db.Select(() => GeometryInput.STPolygonFromText("LINESTRING (1 2, 3 4)")));
+                Assert.IsNull(db.Select(() => GeometryInput.STPolygonFromText(null)));
+            }
+        }
+
+        [Test]
+        public void TestSTWKTToSQL()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string Wkt1 = "LINESTRING (1 2, 3 4)";
+
+                var g1 = db.Select(() => GeometryInput.STWKTToSQL(Wkt1));
+                Assert.AreEqual(Wkt1, g1.AsText());
+                Assert.AreEqual(-1, g1.SRID);
+
+                Assert.IsNull(db.Select(() => GeometryInput.STWKTToSQL(null)));
             }
         }
 
@@ -321,7 +384,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 db.TestGeometries.Value(g => g.Id, 3).Value(p => p.Geometry, () => GeometryInput.STPointFromGeoHash(Geohash, 10)).Insert();
 
                 var point1 = db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry).Single() as NTSGS.Point;
-                Assert.AreEqual(-115.172816 , point1.X, 1.0E-6);
+                Assert.AreEqual(-115.172816, point1.X, 1.0E-6);
                 Assert.AreEqual(36.114646, point1.Y, 1.0E-6);
 
                 var point2 = db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry).Single() as NTSGS.Point;
