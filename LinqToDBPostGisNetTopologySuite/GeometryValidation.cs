@@ -10,7 +10,7 @@ namespace LinqToDBPostGisNetTopologySuite
     /// Geometry Validation.
     /// </summary>
     /// <remarks>
-    /// 8.6. Geometry Validation
+    /// 5.6. Geometry Validation
     /// https://postgis.net/docs/reference.html#Geometry_Validation
     /// </remarks>
     public static class GeometryValidation

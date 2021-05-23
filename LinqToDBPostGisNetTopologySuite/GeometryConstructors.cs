@@ -10,7 +10,7 @@ namespace LinqToDBPostGisNetTopologySuite
     /// Geometry Constructors.
     /// </summary>
     /// <remarks>
-    /// 8.3. Geometry Constructors
+    /// 5.3. Geometry Constructors
     /// https://postgis.net/docs/reference.html#Geometry_Constructors
     /// </remarks>
     public static class GeometryConstructors

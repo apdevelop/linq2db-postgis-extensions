@@ -7,7 +7,8 @@ namespace LinqToDBPostGisNetTopologySuite
     /// Table Management Functions
     /// </summary>
     /// <remarks>
-    /// 8.2. Table Management Functions https://postgis.net/docs/manual-3.0/reference.html#Management_Functions
+    /// 5.2. Table Management Functions
+    /// https://postgis.net/docs/reference.html#Management_Functions
     /// </remarks>
     public static class TableManagementFunctions
     {
@@ -15,7 +16,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Adds a geometry column to an existing table of attributes.If you require the old behavior of constraints use the default use_typmod, but set useTypMod to false
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/AddGeometryColumn.html
+        /// See https://postgis.net/docs/AddGeometryColumn.html
         /// </remarks>
         /// <param name="tableName">Table name</param>
         /// <param name="columnName">Column name</param>
@@ -34,7 +35,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Adds a geometry column to an existing table of attributes.If you require the old behavior of constraints use the default use_typmod, but set useTypMod to false
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/AddGeometryColumn.html
+        /// See https://postgis.net/docs/AddGeometryColumn.html
         /// </remarks>
         /// <param name="schemaName">Schema Name</param>
         /// <param name="tableName">Table name</param>
@@ -54,7 +55,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Adds a geometry column to an existing table of attributes.If you require the old behavior of constraints use the default use_typmod, but set useTypMod to false
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/AddGeometryColumn.html
+        /// See https://postgis.net/docs/AddGeometryColumn.html
         /// </remarks>
         /// <param name="catalogName">Catalog name</param>
         /// <param name="schemaName">Schema name</param>
@@ -75,7 +76,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Removes a geometry column from a spatial table. Schema_name will need to match the f_table_schema field of the table's row in the geometry_columns table
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/DropGeometryColumn.html
+        /// See https://postgis.net/docs/DropGeometryColumn.html
         /// </remarks>
         /// <param name="tableName">Table name</param>
         /// <param name="columnName">Column name</param>
@@ -90,7 +91,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Removes a geometry column from a spatial table. Schema_name will need to match the f_table_schema field of the table's row in the geometry_columns table
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/DropGeometryColumn.html
+        /// See https://postgis.net/docs/DropGeometryColumn.html
         /// </remarks>
         /// <param name="schemaName">Schema name</param>
         /// <param name="tableName">Table name</param>
@@ -106,7 +107,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Removes a geometry column from a spatial table. Schema_name will need to match the f_table_schema field of the table's row in the geometry_columns table
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/DropGeometryColumn.html
+        /// See https://postgis.net/docs/DropGeometryColumn.html
         /// </remarks>
         /// <param name="catalogName">Catalog name</param>
         /// <param name="schemaName">Schema name</param>
@@ -123,7 +124,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Drops a table and all its references in geometry_columns
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/DropGeometryTable.html
+        /// See https://postgis.net/docs/DropGeometryTable.html
         /// </remarks>
         /// <param name="tableName">Table name</param>
         /// <returns>Table Dropped</returns>
@@ -137,7 +138,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Drops a table and all its references in geometry_columns
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/DropGeometryTable.html
+        /// See https://postgis.net/docs/DropGeometryTable.html
         /// </remarks>
         /// <param name="schemaName">Schema name</param>
         /// <param name="tableName">Table name</param>
@@ -152,7 +153,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Drops a table and all its references in geometry_columns
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/DropGeometryTable.html
+        /// See https://postgis.net/docs/DropGeometryTable.html
         /// </remarks>
         /// <param name="catalogName">Catalog name</param>
         /// <param name="schemaName">Schema name</param>
@@ -168,7 +169,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the integer SRID of the specified geometry column by searching through the GEOMETRY_COLUMNS table. If the geometry column has not been properly added (e.g. with the AddGeometryColumn function), this function will not work
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/Find_SRID.html
+        /// See https://postgis.net/docs/Find_SRID.html
         /// </remarks>
         /// <param name="schemaName">Schema name</param>
         /// <param name="tableName">Table name</param>
@@ -184,7 +185,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Ensures geometry columns have appropriate type modifiers or spatial constraints to ensure they are registered correctly in the geometry_columns view. By default will convert all geometry columns with no type modifier to ones with type modifiers
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/Populate_Geometry_Columns.html
+        /// See https://postgis.net/docs/Populate_Geometry_Columns.html
         /// </remarks>
         /// <param name="useTypeMod">Use type modifiers</param>
         /// <returns>Populate result</returns>
@@ -198,7 +199,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Ensures geometry columns have appropriate type modifiers or spatial constraints to ensure they are registered correctly in the geometry_columns view. By default will convert all geometry columns with no type modifier to ones with type modifiers
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/Populate_Geometry_Columns.html
+        /// See https://postgis.net/docs/Populate_Geometry_Columns.html
         /// </remarks>
         /// <param name="oId">OId</param>
         /// <param name="useTypeMod">Use type modifiers</param>
@@ -213,7 +214,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Updates the SRID of all features in a geometry column, updating constraints and reference in geometry_columns. If the column was enforced by a type definition, the type definition will be changed
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/UpdateGeometrySRID.html
+        /// See https://postgis.net/docs/UpdateGeometrySRID.html
         /// </remarks>
         /// <param name="tableName"></param>
         /// <param name="columnName"></param>
@@ -229,7 +230,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Updates the SRID of all features in a geometry column, updating constraints and reference in geometry_columns. If the column was enforced by a type definition, the type definition will be changed
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/UpdateGeometrySRID.html
+        /// See https://postgis.net/docs/UpdateGeometrySRID.html
         /// </remarks>
         /// <param name="schemaName">Schema name</param>
         /// <param name="tableName"></param>
@@ -246,7 +247,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Updates the SRID of all features in a geometry column, updating constraints and reference in geometry_columns. If the column was enforced by a type definition, the type definition will be changed
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/UpdateGeometrySRID.html
+        /// See https://postgis.net/docs/UpdateGeometrySRID.html
         /// </remarks>
         /// <param name="catalogName">Catalog name</param>
         /// <param name="schemaName">Schema name</param>

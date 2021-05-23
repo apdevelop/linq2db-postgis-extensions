@@ -10,8 +10,8 @@ namespace LinqToDBPostGisNetTopologySuite
     /// Geometry Editors.
     /// </summary>
     /// <remarks>
-    /// 8.5. Geometry Editors 
-    /// https://postgis.net/docs/manual-3.0/reference.html#Geometry_Editors
+    /// 5.5. Geometry Editors
+    /// https://postgis.net/docs/reference.html#Geometry_Editors
     /// </remarks>
     public static class GeometryEditors
     {
@@ -19,7 +19,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Append a point to a LineString
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_AddPoint.html
+        /// See https://postgis.net/docs/ST_AddPoint.html
         /// </remarks>
         /// <param name="lineString">LineString</param>
         /// <param name="point">Point</param>
@@ -34,7 +34,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Insert a point to a LineString at given position(zero based)
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_AddPoint.html
+        /// See https://postgis.net/docs/ST_AddPoint.html
         /// </remarks>
         /// <param name="lineString">Linestring</param>
         /// <param name="point">Point</param>
@@ -50,7 +50,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Given a (multi)geometry, returns a (multi)geometry consisting only of elements of the specified type. If there are no sub-geometries of the right type, an EMPTY geometry will be returned
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_CollectionExtract.html
+        /// See https://postgis.net/docs/ST_CollectionExtract.html
         /// </remarks>
         /// <param name="collection">Geometry</param>
         /// <param name="type">Type(1 == POINT, 2 == LINESTRING, 3 == POLYGON)</param>
@@ -65,7 +65,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Given a geometry collection, returns the "simplest" representation of the contents
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_CollectionHomogenize.html
+        /// See https://postgis.net/docs/ST_CollectionHomogenize.html
         /// </remarks>
         /// <param name="collection">Geometry collection</param>
         /// <returns>Simplest" representation of the geometry collection</returns>
@@ -79,7 +79,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Forces the geometries into a "2-dimensional mode" so that all output representations will only have the X and Y coordinates
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Force2D.html
+        /// See https://postgis.net/docs/ST_Force2D.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <returns>Geometry in XY mode</returns>
@@ -93,7 +93,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Forces the geometries into XYZ mode. This is an alias for ST_Force_3DZ. If a geometry has no Z component, then a 0 Z coordinate is tacked on
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Force_3D.html
+        /// See https://postgis.net/docs/ST_Force_3D.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <returns>Geometry in XYZ mode</returns>
@@ -107,7 +107,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Forces the geometries into XYZ mode. This is a synonym for ST_Force3DZ. If a geometry has no Z component, then a 0 Z coordinate is tacked on
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Force_3DZ.html
+        /// See https://postgis.net/docs/ST_Force_3DZ.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <returns>Geometry in XYZ mode</returns>
@@ -121,7 +121,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Forces the geometries into XYM mode. If a geometry has no M component, then a 0 M coordinate is tacked on. If it has a Z component, then Z is removed
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Force_3DM.html
+        /// See https://postgis.net/docs/ST_Force_3DM.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <returns>Geometry in XYM mode</returns>
@@ -135,7 +135,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Forces the geometries into XYZM mode. 0 is tacked on for missing Z and M dimensions.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Force_4D.html
+        /// See https://postgis.net/docs/ST_Force_4D.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <returns>Geometry in XYZM mode</returns>
@@ -149,7 +149,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Forces (Multi)Polygons to use a counter-clockwise orientation for their exterior ring, and a clockwise orientation for their interior rings.Non-polygonal geometries are returned unchanged
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_ForcePolygonCCW.html
+        /// See https://postgis.net/docs/ST_ForcePolygonCCW.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <returns>Geometry with counter-clockwise/clockwise exterior/interior orientaion ring</returns>
@@ -163,7 +163,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Converts the geometry into a GEOMETRYCOLLECTION
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Force_Collection.html
+        /// See https://postgis.net/docs/ST_Force_Collection.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <returns>Geometry Collection</returns>
@@ -177,7 +177,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Forces (Multi)Polygons to use a clockwise orientation for their exterior ring, and a counter-clockwise orientation for their interior rings. Non-polygonal geometries are returned unchanged
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_ForcePolygonCW.html
+        /// See https://postgis.net/docs/ST_ForcePolygonCW.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <returns>Geometry with counter-clockwise/clockwise interior/exterior orientaion ring</returns>
@@ -221,7 +221,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Forces the orientation of the vertices in a polygon to follow a Right-Hand-Rule, in which the area that is bounded by the polygon is to the right of the boundary. In particular, the exterior ring is orientated in a clockwise direction and the interior rings in a counter-clockwise direction
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_ForceRHR.html
+        /// See https://postgis.net/docs/ST_ForceRHR.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <returns>Geometry with vertices following a Right-Hand-Rule</returns>
@@ -235,7 +235,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Turns a geometry into its curved representation. Lines become compoundcurves, multilines become multicurves, polygons become curvepolygons, multipolygons become multisurfaces. A curved geometry returns back same as input
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_ForceCurve.html
+        /// See https://postgis.net/docs/ST_ForceCurve.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <returns>Geometry with curved representation</returns>
@@ -249,7 +249,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns a (set of) LineString(s) formed by sewing together the constituent line work of a MULTILINESTRING(Only use with MULTILINESTRING/LINESTRINGs. If you feed a polygon or geometry collection into this function, it will return an empty GEOMETRYCOLLECTION)
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_LineMerge.html
+        /// See https://postgis.net/docs/ST_LineMerge.html
         /// </remarks>
         /// <param name="geometry">Input geometry(MULTILINESTRING/LINESTRINGs only,polygon/geometry collection will return empty geomtry collection)</param>
         /// <returns>A (set of) LineString(s) formed by sewing together the constituent line work of a MULTILINESTRING</returns>
@@ -263,7 +263,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the geometry as a MULTI* geometry. If the geometry is already a MULTI*, it is returned unchanged
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Multi.html
+        /// See https://postgis.net/docs/ST_Multi.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <returns>A MULTI* geometry</returns>
@@ -277,7 +277,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns geometry in its normalized/canonical form.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Normalize.html
+        /// See https://postgis.net/docs/ST_Normalize.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <returns>Normalized geometry</returns>
@@ -324,7 +324,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Removes point from input geometry (LineString)
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_RemovePoint.html
+        /// See https://postgis.net/docs/ST_RemovePoint.html
         /// </remarks>
         /// <param name="geometry">Input geometry (LineString)</param>
         /// <param name="index">Index of point to remove (zero-based)</param>
@@ -339,7 +339,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns geometry with reversed order of the vertexes.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Reverse.html
+        /// See https://postgis.net/docs/ST_Reverse.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <returns>Geometry with reversed order of the vertexes</returns>
@@ -383,7 +383,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Replace point of input geometry with given point.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_SetPoint.html
+        /// See https://postgis.net/docs/ST_SetPoint.html
         /// </remarks>
         /// <param name="geometry">Input geometry (LineString)</param>
         /// <param name="index">Index of point to remove (zero-based)</param>
@@ -399,7 +399,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Snaps all points of input <paramref name="geometry"/> to the grid defined by its origin and cell size.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_SnapToGrid.html
+        /// See https://postgis.net/docs/ST_SnapToGrid.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <param name="originX">X coordinate of grid origin.</param>
@@ -417,7 +417,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Snaps all points of input <paramref name="geometry"/> to the grid defined by its cell size.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_SnapToGrid.html
+        /// See https://postgis.net/docs/ST_SnapToGrid.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <param name="sizeX">Grid cell size by X axis.</param>
@@ -433,7 +433,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Snaps all points of input <paramref name="geometry"/> to the grid defined by its cell size.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_SnapToGrid.html
+        /// See https://postgis.net/docs/ST_SnapToGrid.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <param name="size">Grid cell size.</param>
@@ -448,7 +448,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Snaps all points of input <paramref name="geometry"/> to the grid defined by its origin point and cell sizes.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_SnapToGrid.html
+        /// See https://postgis.net/docs/ST_SnapToGrid.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <param name="origin">Grid origin (Point).</param>
@@ -467,7 +467,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Snaps the vertices and segments of input <paramref name="geometry"/> to <paramref name="reference"/> geometry vertices.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Snap.html
+        /// See https://postgis.net/docs/ST_Snap.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <param name="reference">Reference geometry.</param>
@@ -483,7 +483,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns a version of input <paramref name="geometry"/> with given ordinates swapped.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_SwapOrdinates.html
+        /// See https://postgis.net/docs/ST_SwapOrdinates.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <param name="ordinates">Two-characters string naming the ordinates to swap. Valid names are: x,y,z and m.</param>
@@ -498,7 +498,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns a version of input <paramref name="geometry"/> in text representation with given ordinates swapped.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_SwapOrdinates.html
+        /// See https://postgis.net/docs/ST_SwapOrdinates.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <param name="ordinates">Two-characters string naming the ordinates to swap. Valid names are: x,y,z and m.</param>

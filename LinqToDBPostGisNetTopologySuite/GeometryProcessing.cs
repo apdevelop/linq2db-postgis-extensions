@@ -10,7 +10,7 @@ namespace LinqToDBPostGisNetTopologySuite
     /// Geometry Processing
     /// </summary>
     /// <remarks>
-    /// 8.13. Geometry Processing https://postgis.net/docs/manual-3.0/reference.html#Geometry_Processing
+    /// 5.14. Geometry Processing https://postgis.net/docs/reference.html#Geometry_Processing
     /// </remarks>
     public static class GeometryProcessing
     {
@@ -18,7 +18,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns geometry that represents all points whose distance from input geometry is less than or equal to distance. 
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Buffer.html
+        /// See https://postgis.net/docs/ST_Buffer.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <param name="radius">Buffer radius, in SRS units</param>
@@ -33,7 +33,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns geometry that represents all points whose distance from input geometry is less than or equal to distance. 
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Buffer.html
+        /// See https://postgis.net/docs/ST_Buffer.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <param name="radius">Buffer radius, in SRS units</param>
@@ -49,7 +49,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns geometry that represents all points whose distance from input geometry is less than or equal to distance. 
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Buffer.html
+        /// See https://postgis.net/docs/ST_Buffer.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <param name="radius">Buffer radius, in SRS units</param>
@@ -67,7 +67,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns geometry formed by constituent linework of input geometry. 
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_BuildArea.html
+        /// See https://postgis.net/docs/ST_BuildArea.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <returns>Geometry</returns>
@@ -81,7 +81,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns geometric center (center of mass) of input geometry.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Centroid.html
+        /// See https://postgis.net/docs/ST_Centroid.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <returns>Geometry (POINT)</returns>
@@ -97,7 +97,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns geometry clipped by 2D box. 
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_ClipByBox2D.html
+        /// See https://postgis.net/docs/ST_ClipByBox2D.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <param name="box">Clipping box</param>
@@ -112,7 +112,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns concave hull of input geometry. 
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_ConcaveHull.html
+        /// See https://postgis.net/docs/ST_ConcaveHull.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <param name="targetPercent">Target percent of area of convex hull (0...1)</param>
@@ -127,7 +127,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns concave hull of input geometry. 
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_ConcaveHull.html
+        /// See https://postgis.net/docs/ST_ConcaveHull.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <param name="targetPercent">Target percent of area of convex hull (0...1)</param>
@@ -143,7 +143,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns convex hull of input geometry.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_ConvexHull.html
+        /// See https://postgis.net/docs/ST_ConvexHull.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <returns>Convex hull geometry</returns>
@@ -157,7 +157,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Converts CIRCULAR STRING to regular LINESTRING or CURVEPOLYGON to POLYGON or MULTISURFACE to MULTIPOLYGON.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_CurveToLine.html
+        /// See https://postgis.net/docs/ST_CurveToLine.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <param name="tolerance">Tolerance value</param>
@@ -174,7 +174,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Return a Delaunay triangulation around the vertices of the input geometry.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_DelaunayTriangles.html
+        /// See https://postgis.net/docs/ST_DelaunayTriangles.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <param name="tolerance">Tolerance value</param>
@@ -190,7 +190,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns geometry that represents that part of geometry 1 that does not intersect with geometry 2.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Difference.html
+        /// See https://postgis.net/docs/ST_Difference.html
         /// </remarks>
         /// <param name="geometry">Input geometry 1</param>
         /// <param name="other">Input geometry 2</param>
@@ -205,7 +205,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns geometry with with flipped X and Y axis of input geometry.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_FlipCoordinates.html
+        /// See https://postgis.net/docs/ST_FlipCoordinates.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <returns>Geometry</returns>
@@ -219,7 +219,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns MULTIPOINT set of pseudo-random points within input geometry
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_GeneratePoints.html
+        /// See https://postgis.net/docs/ST_GeneratePoints.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <param name="numberOfPoints">Number of points to generate</param>
@@ -234,7 +234,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns MULTIPOINT set of pseudo-random points within input geometry
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_GeneratePoints.html
+        /// See https://postgis.net/docs/ST_GeneratePoints.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <param name="numberOfPoints">Number of points to generate</param>
@@ -250,7 +250,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns approximate geometric median of input MultiPoint geometry using the Weiszfeld algorithm.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_GeometricMedian.html
+        /// See https://postgis.net/docs/ST_GeometricMedian.html
         /// </remarks>
         /// <param name="geometry">Input geometry (MultiPoint)</param>
         /// <param name="tolerance">Tolerance value</param>
@@ -267,7 +267,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns approximate geometric median of input MultiPoint geometry using the Weiszfeld algorithm.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_GeometricMedian.html
+        /// See https://postgis.net/docs/ST_GeometricMedian.html
         /// </remarks>
         /// <param name="geometry">Input geometry (MultiPoint)</param>
         /// <returns>Geometric median</returns>
@@ -281,7 +281,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns geometry that represents the point set intersection of given geometries.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Intersection.html
+        /// See https://postgis.net/docs/ST_Intersection.html
         /// </remarks>
         /// <param name="geometry">Input geometry 1</param>
         /// <param name="other">Input geometry 2</param>
@@ -296,7 +296,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Converts plain input LineString/Polygon to CircularString/CurvePolygon.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_LineToCurve.html
+        /// See https://postgis.net/docs/ST_LineToCurve.html
         /// </remarks>
         /// <param name="geometry">Input geometry (LineString/Polygon)</param>
         /// <returns>Curved equivalent of input geometry</returns>
@@ -312,7 +312,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns smallest circle polygon that can fully contain input geometry.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_MinimumBoundingCircle.html
+        /// See https://postgis.net/docs/ST_MinimumBoundingCircle.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <param name="segmentsPerQuarterCircle">Number of segments per quarter circle</param>
@@ -329,7 +329,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns mimimum rotated rectangle enclosing input geometry.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_OrientedEnvelope.html
+        /// See https://postgis.net/docs/ST_OrientedEnvelope.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <returns>Rotated rectangle</returns>
@@ -345,7 +345,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Fully node set of linestrings using the least possible number of nodes while preserving all of the input ones.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Node.html
+        /// See https://postgis.net/docs/ST_Node.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <returns>Geometry</returns>
@@ -359,7 +359,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns offset line at given distance and side from input geometry.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_OffsetCurve.html
+        /// See https://postgis.net/docs/ST_OffsetCurve.html
         /// </remarks>
         /// <param name="geometry">Input geometry (LineString)</param>
         /// <param name="distance">Distance</param>
@@ -375,7 +375,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns POINT guaranteed to intersect a surface.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_PointOnSurface.html
+        /// See https://postgis.net/docs/ST_PointOnSurface.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <returns>Point on surface</returns>
@@ -389,7 +389,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns input geometry with duplicated points removed.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_RemoveRepeatedPoints.html
+        /// See https://postgis.net/docs/ST_RemoveRepeatedPoints.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <param name="tolerance">Tolerance</param>
@@ -404,7 +404,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns a collection containing paths shared by the two input geometries.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_SharedPaths.html
+        /// See https://postgis.net/docs/ST_SharedPaths.html
         /// </remarks>
         /// <param name="lineal1">Input geometry 1</param>
         /// <param name="lineal2">Input geometry 2</param>
@@ -419,7 +419,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Reads every point/vertex in every component of every feature in input geometry, and if the longitude coordinate is less than 0, adds 360 to it.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Shift_Longitude.html
+        /// See https://postgis.net/docs/ST_Shift_Longitude.html
         /// </remarks>
         /// <param name="geometry">Input geometry (in long lat only)</param>
         /// <returns>Geometry</returns>
@@ -433,7 +433,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Splits the input geometries and then moves every resulting component falling on the right (for negative 'move') or on the left (for positive 'move') of given 'wrap' line in the direction specified by the 'move' parameter, finally re-unioning the pieces togheter.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_WrapX.html
+        /// See https://postgis.net/docs/ST_WrapX.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <param name="wrap">Wrap line coordinate</param>
@@ -449,7 +449,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns simplified version of input geometry using the Douglas-Peucker algorithm.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Simplify.html
+        /// See https://postgis.net/docs/ST_Simplify.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <param name="tolerance">Tolerance value</param>
@@ -465,7 +465,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns simplified version of input geometry using the Douglas-Peucker algorithm.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Simplify.html
+        /// See https://postgis.net/docs/ST_Simplify.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <param name="tolerance">Tolerance value</param>
@@ -480,7 +480,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns simplified version of input geometry using the Douglas-Peucker algorithm.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_SimplifyPreserveTopology.html
+        /// See https://postgis.net/docs/ST_SimplifyPreserveTopology.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <param name="tolerance">Tolerance value</param>
@@ -495,7 +495,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns simplified version of the given geometry using the Visvalingam-Whyatt algorithm.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_SimplifyVW.html
+        /// See https://postgis.net/docs/ST_SimplifyVW.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <param name="tolerance">Tolerance value</param>
@@ -510,7 +510,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns smoothed version of input geometry using the Chaikin algorithm.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_ChaikinSmoothing.html
+        /// See https://postgis.net/docs/ST_ChaikinSmoothing.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <param name="iterations">Number of iterations</param>
@@ -526,7 +526,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns smoothed version of input geometry using the Chaikin algorithm.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_ChaikinSmoothing.html
+        /// See https://postgis.net/docs/ST_ChaikinSmoothing.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <returns>Geometry</returns>
@@ -540,7 +540,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns a geometry with only vertex points that have a m-value larger or equal to the min value and smaller or equal to the max value.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_FilterByM.html
+        /// See https://postgis.net/docs/ST_FilterByM.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <param name="min">Minimum value for M</param>
@@ -557,7 +557,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns a geometry with only vertex points that have a m-value larger or equal to the min value and smaller or equal to the max value.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_FilterByM.html
+        /// See https://postgis.net/docs/ST_FilterByM.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <param name="min">Minimum value for M</param>
@@ -572,7 +572,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Sets the effective area for each vertex, using the Visvalingam-Whyatt algorithm.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_SetEffectiveArea.html
+        /// See https://postgis.net/docs/ST_SetEffectiveArea.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <param name="threshold">Threshold value</param>
@@ -588,7 +588,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Sets the effective area for each vertex, using the Visvalingam-Whyatt algorithm.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_SetEffectiveArea.html
+        /// See https://postgis.net/docs/ST_SetEffectiveArea.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <returns>Geometry</returns>
@@ -602,7 +602,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Sets the effective area for each vertex, using the Visvalingam-Whyatt algorithm.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_SetEffectiveArea.html
+        /// See https://postgis.net/docs/ST_SetEffectiveArea.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <param name="threshold">Threshold value</param>
@@ -617,7 +617,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Splitting input line by (multi)point, (multi)line or (multi)polygon boundary, a (multi)polygon by line.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Split.html
+        /// See https://postgis.net/docs/ST_Split.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <param name="blade">Boundary geometry</param>
@@ -632,7 +632,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns geometry that represents the portions of A and B that do not intersect.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_SymDifference.html
+        /// See https://postgis.net/docs/ST_SymDifference.html
         /// </remarks>
         /// <param name="geometry">Input geometry 1</param>
         /// <param name="other">Input geometry 2</param>
@@ -649,7 +649,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns union of input geometries.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Union.html
+        /// See https://postgis.net/docs/ST_Union.html
         /// </remarks>
         /// <param name="geometry">Input geometry 1</param>
         /// <param name="other">Input geometry 2</param>
@@ -664,7 +664,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns union of input geometry.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_UnaryUnion.html
+        /// See https://postgis.net/docs/ST_UnaryUnion.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <returns>Union geometry</returns>
@@ -678,7 +678,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Computes a two-dimensional Voronoi diagram from the vertices of inpu geometry and returns the boundaries between cells in that diagram as a MultiLineString.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_VoronoiLines.html
+        /// See https://postgis.net/docs/ST_VoronoiLines.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <param name="tolerance">Threshold value</param>
@@ -694,7 +694,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Computes a two-dimensional Voronoi diagram from the vertices of inpu geometry and returns the boundaries between cells in that diagram as a MultiLineString.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_VoronoiLines.html
+        /// See https://postgis.net/docs/ST_VoronoiLines.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <param name="tolerance">Threshold value</param>
@@ -709,7 +709,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Computes a two-dimensional Voronoi diagram from the vertices of input geometry.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_VoronoiPolygons.html
+        /// See https://postgis.net/docs/ST_VoronoiPolygons.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <param name="tolerance">The distance within which vertices will be considered equivalent</param>
@@ -725,7 +725,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Computes a two-dimensional Voronoi diagram from the vertices of input geometry.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_VoronoiPolygons.html
+        /// See https://postgis.net/docs/ST_VoronoiPolygons.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <returns>Geometry (GeometryCollection of Polygons)</returns>
@@ -739,7 +739,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Computes a two-dimensional Voronoi diagram from the vertices of input geometry.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_VoronoiPolygons.html
+        /// See https://postgis.net/docs/ST_VoronoiPolygons.html
         /// </remarks>
         /// <param name="geometry">Input geometry</param>
         /// <param name="tolerance">The distance within which vertices will be considered equivalent</param>

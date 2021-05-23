@@ -10,12 +10,12 @@ namespace LinqToDBPostGisNetTopologySuite
     /// Geometry Output.
     /// </summary>
     /// <remarks>
-    /// 8.9. Geometry Output
+    /// 5.9. Geometry Output
     /// https://postgis.net/docs/reference.html#Geometry_Outputs
     /// </remarks>
     public static class GeometryOutput
     {
-        #region 8.9.1. Well-Known Text (WKT)
+        #region 5.9.1. Well-Known Text (WKT)
         /// <summary>
         /// Returns the Extended Well-Known Text (EWKT) representation of input <paramref name="geometry"/>.
         /// </summary>
@@ -92,9 +92,9 @@ namespace LinqToDBPostGisNetTopologySuite
         {
             throw new InvalidOperationException();
         }
-        #endregion 8.9.1. Well-Known Text (WKT)
+        #endregion 5.9.1. Well-Known Text (WKT)
 
-        #region 8.9.2. Well-Known Binary (WKB)
+        #region 5.9.2. Well-Known Binary (WKB)
         /// <summary>
         /// Returns the Well-Known Binary (WKB) representation of input <paramref name="geometry"/>.
         /// </summary>
@@ -214,9 +214,9 @@ namespace LinqToDBPostGisNetTopologySuite
         {
             throw new InvalidOperationException();
         }
-        #endregion 8.9.2. Well-Known Binary (WKB)
+        #endregion 5.9.2. Well-Known Binary (WKB)
 
-        #region 8.9.3. Other Formats
+        #region 5.9.3. Other Formats
         /// <summary>
         /// Returns the Encoded Polyline representation of input <paramref name="geometry"/>.
         /// </summary>
@@ -606,6 +606,6 @@ namespace LinqToDBPostGisNetTopologySuite
         {
             throw new InvalidOperationException();
         }
-        #endregion 8.9.3. Other Formats
+        #endregion 5.9.3. Other Formats
     }
 }

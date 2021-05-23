@@ -10,7 +10,8 @@ namespace LinqToDBPostGisNetTopologySuite
     /// Spatial Reference System Functions.
     /// </summary>
     /// <remarks>
-    /// 8.7. Spatial Reference System Functions https://postgis.net/docs/manual-3.0/reference.html#SRS_Functions
+    /// 5.7. Spatial Reference System Functions 
+    /// https://postgis.net/docs/reference.html#SRS_Functions
     /// </remarks>
     public static class SpatialReferenceSystemFunctions
     {
@@ -18,7 +19,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Sets the SRID on the input <paramref name="geometry"/> to particular <paramref name="srid" />.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_SetSRID.html
+        /// See https://postgis.net/docs/ST_SetSRID.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <param name="srid">Spatial Reference System Identifier.</param>
@@ -33,7 +34,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns the SRID for the input <paramref name="geometry"/> as defined in spatial_ref_sys table.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_SRID.html
+        /// See https://postgis.net/docs/ST_SRID.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Spatial Reference System Identifier.</returns>
@@ -47,7 +48,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns new geometry with coordinates transformed to a different spatial reference system.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Transform.html
+        /// See https://postgis.net/docs/ST_Transform.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <param name="srid">Destination Spatial Reference System Identifier.</param>
@@ -62,7 +63,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns new geometry with coordinates transformed to a different spatial reference system.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Transform.html
+        /// See https://postgis.net/docs/ST_Transform.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <param name="toProj">Destination spatial reference system defined as PROJ.4 string.</param>
@@ -77,7 +78,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns new geometry with coordinates transformed to a different spatial reference system.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Transform.html
+        /// See https://postgis.net/docs/ST_Transform.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <param name="fromProj">Input spatial reference system defined as PROJ.4 string.</param>
@@ -93,7 +94,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Returns new geometry with coordinates transformed to a different spatial reference system.
         /// </summary>
         /// <remarks>
-        /// See https://postgis.net/docs/manual-3.0/ST_Transform.html
+        /// See https://postgis.net/docs/ST_Transform.html
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <param name="fromProj">Input spatial reference defined as PROJ.4 string.</param>

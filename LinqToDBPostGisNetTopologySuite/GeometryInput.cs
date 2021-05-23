@@ -10,12 +10,12 @@ namespace LinqToDBPostGisNetTopologySuite
     /// Geometry Input.
     /// </summary>
     /// <remarks>
-    /// 8.8. Geometry Input
+    /// 5.8. Geometry Input
     /// https://postgis.net/docs/reference.html#Geometry_Inputs
     /// </remarks>
     public static class GeometryInput
     {
-        #region 8.8.1. Well-Known Text (WKT)
+        #region 5.8.1. Well-Known Text (WKT)
         /// <summary>
         /// Constructs the geometry (Polygon) from arbitrary collection of closed LineStrings as MultiLineString Well-Known Text representation.
         /// </summary>
@@ -337,9 +337,9 @@ namespace LinqToDBPostGisNetTopologySuite
         {
             throw new InvalidOperationException();
         }
-        #endregion 8.8.1. Well-Known Text (WKT)
+        #endregion 5.8.1. Well-Known Text (WKT)
 
-        #region 8.8.2. Well-Known Binary (WKB)
+        #region 5.8.2. Well-Known Binary (WKB)
         // TODO: geography ST_GeogFromWKB(bytea wkb);
 
         /// <summary>
@@ -485,9 +485,9 @@ namespace LinqToDBPostGisNetTopologySuite
         {
             throw new InvalidOperationException();
         }
-        #endregion 8.8.2. Well-Known Binary (WKB)
+        #endregion 5.8.2. Well-Known Binary (WKB)
 
-        #region 8.8.3. Other Formats
+        #region 5.8.3. Other Formats
         // TODO: ST_Box2dFromGeoHash return type NTS mapping?
         // https://github.com/npgsql/efcore.pg/issues/1313#issuecomment-635202797
 
@@ -679,6 +679,6 @@ namespace LinqToDBPostGisNetTopologySuite
         {
             throw new InvalidOperationException();
         }
-        #endregion 8.8.3. Other Formats
+        #endregion 5.8.3. Other Formats
     }
 }

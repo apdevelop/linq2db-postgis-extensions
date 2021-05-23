@@ -10,7 +10,7 @@ namespace LinqToDBPostGisNetTopologySuite
     /// Measurement Functions.
     /// </summary>
     /// <remarks>
-    /// 8.12. Measurement Functions 
+    /// 5.12. Measurement Functions 
     /// https://postgis.net/docs/reference.html#Measurement_Functions
     /// </remarks>
     public static class MeasurementFunctions

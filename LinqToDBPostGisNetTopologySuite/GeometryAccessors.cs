@@ -10,7 +10,7 @@ namespace LinqToDBPostGisNetTopologySuite
     /// Geometry Accessors.
     /// </summary>
     /// <remarks>
-    /// 8.4. Geometry Accessors
+    /// 5.4. Geometry Accessors
     /// https://postgis.net/docs/reference.html#Geometry_Accessors
     /// </remarks>
     public static class GeometryAccessors

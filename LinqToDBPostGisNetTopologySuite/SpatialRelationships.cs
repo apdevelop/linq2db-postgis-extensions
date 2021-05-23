@@ -15,7 +15,7 @@ namespace LinqToDBPostGisNetTopologySuite
     /// </remarks>
     public static class SpatialRelationships
     {
-        #region Topological Relationships
+        #region 5.11.1. Topological Relationships
         /// <summary>
         /// Checks if input geometries spatially intersects (overlaps, touches, within) in 3D.
         /// </summary>
@@ -486,9 +486,9 @@ namespace LinqToDBPostGisNetTopologySuite
         {
             throw new InvalidOperationException();
         }
-        #endregion Topological Relationships
+        #endregion 5.11.1. Topological Relationships
 
-        #region Distance Relationships
+        #region 5.11.2. Distance Relationships
         /// <summary>
         /// Checks if the 3D distance between input geometries is within given <paramref name="distance"/>.
         /// </summary>
@@ -650,6 +650,6 @@ namespace LinqToDBPostGisNetTopologySuite
         {
             throw new InvalidOperationException();
         }
-        #endregion Distance Relationships
+        #endregion 5.11.2. Distance Relationships
     }
 }
