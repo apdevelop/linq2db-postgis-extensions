@@ -95,6 +95,10 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 db.TestGeometries.Value(g => g.Id, 3).Value(p => p.Geometry, () => null).Insert();
                 var srid3 = db.TestGeometries.Where(g => g.Id == 3).Select(g => g.Geometry.STSrId()).Single();
                 Assert.IsNull(srid3);
+
+                // TODO: EMPTY geometry issue was fixed in NetTopologySuite >= 5.0.5
+                ////var pointEmpty = db.Select(() => GeometryInput.STGeomFromText("POINT EMPTY"));
+                ////var polygonEmpty = db.Select(() => GeometryInput.STGeomFromText("POLYGON EMPTY"));
             }
         }
 
@@ -378,10 +382,10 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                const string Geohash = "9qqj7nmxncgyy4d0dbxqz0";
-                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STPointFromGeoHash(Geohash)).Insert();
-                db.TestGeometries.Value(g => g.Id, 2).Value(p => p.Geometry, () => GeometryInput.STPointFromGeoHash(Geohash, 4)).Insert();
-                db.TestGeometries.Value(g => g.Id, 3).Value(p => p.Geometry, () => GeometryInput.STPointFromGeoHash(Geohash, 10)).Insert();
+                const string GeoHash = "9qqj7nmxncgyy4d0dbxqz0";
+                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STPointFromGeoHash(GeoHash)).Insert();
+                db.TestGeometries.Value(g => g.Id, 2).Value(p => p.Geometry, () => GeometryInput.STPointFromGeoHash(GeoHash, 4)).Insert();
+                db.TestGeometries.Value(g => g.Id, 3).Value(p => p.Geometry, () => GeometryInput.STPointFromGeoHash(GeoHash, 10)).Insert();
 
                 var point1 = db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry).Single() as NTSGS.Point;
                 Assert.AreEqual(-115.172816, point1.X, 1.0E-6);

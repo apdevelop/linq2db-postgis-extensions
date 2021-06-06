@@ -86,35 +86,6 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
-        public void TestSTCurveToLine()
-        {
-            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
-            {
-                const string wkt1 = "CIRCULARSTRING(0 0,100 -100,200 0)";
-                db.TestGeometries
-                    .Value(g => g.Id, 1)
-                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromText(wkt1))
-                    .Insert();
-
-                var result1 = db.TestGeometries
-                    .Where(g => g.Id == 1)
-                    .Select(g => g.Geometry.STCurveToLine(20, 1, 1))
-                    .Single() as NTSGS.LineString;
-
-                Assert.AreEqual(0, result1.Coordinates[0].X);
-                Assert.AreEqual(0, result1.Coordinates[0].Y);
-                Assert.AreEqual(50, result1.Coordinates[1].X, 1.0E-9);
-                Assert.AreEqual(-86.6025403784438, result1.Coordinates[1].Y, 1.0E-9);
-                Assert.AreEqual(150, result1.Coordinates[2].X, 1.0E-9);
-                Assert.AreEqual(-86.6025403784439, result1.Coordinates[2].Y, 1.0E-9);
-                Assert.AreEqual(200, result1.Coordinates[3].X, 1.0E-9);
-                Assert.AreEqual(0, result1.Coordinates[3].Y, 1.0E-9);
-
-                Assert.IsNull(db.Select(() => GeometryProcessing.STCurveToLine(null, 20, 1, 1)));
-            }
-        }
-
-        [Test]
         public void TestSTDelaunayTriangles()
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
@@ -143,20 +114,6 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var difference = db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STDifference(geometry2).STAsText()).Single();
 
                 Assert.AreEqual("LINESTRING(50 150,50 200)", difference);
-            }
-        }
-
-        [Test]
-        public void TestSTFlipCoordinates()
-        {
-            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
-            {
-                var geom1 = db.Select(() => GeometryInput.STGeomFromText("POINT(1 2)"));
-
-                var result1 = db.Select(() => GeometryProcessing.STFlipCoordinates(geom1).STAsText());
-                Assert.AreEqual("POINT(2 1)", result1);
-
-                Assert.IsNull(db.Select(() => GeometryProcessing.STFlipCoordinates(null)));
             }
         }
 
@@ -203,28 +160,6 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 Assert.AreEqual(1.9761550281255, median.X, 1.0E-8);
                 Assert.AreEqual(1.9761550281255, median.Y, 1.0E-8);
-            }
-        }
-
-        [Test]
-        public void TestSTLineToCurve()
-        {
-            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
-            {
-                const string wkt = "POINT(1 3)";
-                db.TestGeometries
-                    .Value(g => g.Id, 1)
-                    .Value(p => p.Geometry, () =>
-                        GeometryInput.STGeomFromText(wkt).STBuffer(3.0))
-                    .Insert();
-
-                // NTS error: 'Geometry type not recognized. GeometryCode: 10'
-                var curvePolygon = db.TestGeometries
-                    .Where(g => g.Id == 1)
-                    .Select(g => g.Geometry.STLineToCurve().STAsText())
-                    .Single();
-
-                Assert.AreEqual("CURVEPOLYGON(CIRCULARSTRING(4 3,-2 2.99999999999999,4 3))", curvePolygon);
             }
         }
 
@@ -358,8 +293,8 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             {
                 const string wkt = @"LINESTRING(164 16,144 16,124 16,104 16,84 16,64 16,
                                     44 16,24 16,20 16,18 16,17 17,
-	                                16 18,16 20,16 40,16 60,16 80,16 100,
-	                                16 120,16 140,16 160,16 180,16 195)";
+                                    16 18,16 20,16 40,16 60,16 80,16 100,
+                                    16 120,16 140,16 160,16 180,16 195)";
                 db.TestGeometries
                     .Value(g => g.Id, 1)
                     .Value(p => p.Geometry, () => GeometryInput.STGeomFromText(wkt))
@@ -412,26 +347,6 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
-        public void TestSTRemoveRepeatedPoints()
-        {
-            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
-            {
-                const string wkt = "LINESTRING(0 5, 0 0, 0 0, 0 10)";
-                db.TestGeometries
-                    .Value(g => g.Id, 1)
-                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromText(wkt))
-                    .Insert();
-
-                var result = db.TestGeometries
-                    .Where(g => g.Id == 1)
-                    .Select(g => g.Geometry.STRemoveRepeatedPoints(1).AsText())
-                    .Single();
-
-                Assert.AreEqual("LINESTRING (0 5, 0 0, 0 10)", result);
-            }
-        }
-
-        [Test]
         public void TestSTSharedPaths()
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
@@ -453,40 +368,6 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     .Single();
 
                 Assert.AreEqual("GEOMETRYCOLLECTION (MULTILINESTRING ((126 156.25, 126 125), (101 150, 90 161), (90 161, 76 175)), MULTILINESTRING EMPTY)", result);
-            }
-        }
-
-        [Test]
-        public void TestSTShiftLongitude()
-        {
-            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
-            {
-                const string Ewkt1 = "SRID=4326;POINT(-118.58 38.38 10)";
-                const string Ewkt2 = "SRID=4326;POINT(241.42 38.38 10)";
-                db.TestGeometries
-                    .Value(g => g.Id, 1)
-                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt1))
-                    .Insert();
-                db.TestGeometries
-                    .Value(g => g.Id, 2)
-                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt2))
-                    .Insert();
-
-                var result1 = db.TestGeometries
-                    .Where(g => g.Id == 1)
-                    .Select(g => g.Geometry.STShiftLongitude())
-                    .Single() as NTSGS.Point;
-
-                var result2 = db.TestGeometries
-                    .Where(g => g.Id == 2)
-                    .Select(g => g.Geometry.STShiftLongitude())
-                    .Single() as NTSGS.Point;
-
-                Assert.AreEqual(241.42, result1.X, 1.0E-2);
-                Assert.AreEqual(38.38, result1.Y, 1.0E-2);
-
-                Assert.AreEqual(-118.58, result2.X, 1.0E-2);
-                Assert.AreEqual(38.38, result2.Y, 1.0E-2);
             }
         }
 

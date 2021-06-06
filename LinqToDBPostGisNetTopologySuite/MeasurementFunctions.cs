@@ -790,8 +790,8 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <remarks>
         /// See https://postgis.net/docs/ST_3DShortestLine.html
         /// </remarks>
-        /// <param name="geometry">Input geometry 1</param>
-        /// <param name="other">Input geometry 2</param>
+        /// <param name="geometry">Input geometry 1.</param>
+        /// <param name="other">Input geometry 2.</param>
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_3DShortestLine", ServerSideOnly = true)]
         public static NTSG ST3DShortestLine(this NTSG geometry, NTSG other)

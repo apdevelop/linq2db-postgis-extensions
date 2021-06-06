@@ -282,8 +282,8 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <remarks>
         /// See https://postgis.net/docs/ST_AsGeoJSON.html
         /// </remarks>
-        /// <param name="geometry">Input geometry</param>
-        /// <param name="maxDecimalDigits">Maximum number of decimal places used in output (defaults to 9)</param>
+        /// <param name="geometry">Input geometry.</param>
+        /// <param name="maxDecimalDigits">Maximum number of decimal places used in output (defaults to 9).</param>
         /// <returns>GeoJSON string representation.</returns>
         [Sql.Function("ST_AsGeoJSON", ServerSideOnly = true)]
         public static string STAsGeoJSON(this NTSG geometry, int maxDecimalDigits)
@@ -297,9 +297,9 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <remarks>
         /// See https://postgis.net/docs/ST_AsGeoJSON.html
         /// </remarks>
-        /// <param name="geometry">Input geometry</param>
-        /// <param name="maxDecimalDigits">Maximum number of decimal places used in output (defaults to 9)</param>
-        /// <param name="options">Options to add BBOX or CRS to output (defaults to 8 = GeoJSON Short CRS if not EPSG:4326)</param>
+        /// <param name="geometry">Input geometry.</param>
+        /// <param name="maxDecimalDigits">Maximum number of decimal places used in output (defaults to 9).</param>
+        /// <param name="options">Options to add BBOX or CRS to output (defaults to 8 = GeoJSON Short CRS if not EPSG:4326).</param>
         /// <returns>GeoJSON string representation.</returns>
         [Sql.Function("ST_AsGeoJSON", ServerSideOnly = true)]
         public static string STAsGeoJSON(this NTSG geometry, int maxDecimalDigits, int options) // TODO: options enum (bitfield ?)
