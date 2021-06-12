@@ -346,7 +346,10 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             {
                 // TODO: ? Some helper version classes / attributes for methods?
                 var version = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
-                if (version >= new Version("3.1.0")) // TODO: ? const
+                var geos = db.Select(() => VersionFunctions.PostGISGEOSVersion());
+                var geosVersion = geos != null ? new Version(geos.Substring(0, geos.IndexOf('-'))) : null;
+
+                if ((version >= new Version("3.1.0")) && (geosVersion != null) && (geosVersion >= new Version("3.9"))) // TODO: ? const
                 {
                     const string Wkt = "POINT(1.412 19.323)";
 

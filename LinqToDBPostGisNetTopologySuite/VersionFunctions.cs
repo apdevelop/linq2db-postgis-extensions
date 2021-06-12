@@ -13,6 +13,36 @@ namespace LinqToDBPostGisNetTopologySuite
     public static class VersionFunctions
     {
         /// <summary>
+        /// Returns full PostGIS version and build configuration information.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/PostGIS_Full_Version.html
+        /// </remarks>
+        /// <returns>
+        /// Full PostGIS version and build configuration information.
+        /// </returns>
+        [Sql.Function("PostGIS_Full_Version", ServerSideOnly = true)]
+        public static string PostGISFullVersion()
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns the version number of the GEOS library, or null if GEOS support is not enabled.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/PostGIS_GEOS_Version.html
+        /// </remarks>
+        /// <returns>
+        /// Version number of the GEOS library.
+        /// </returns>
+        [Sql.Function("PostGIS_GEOS_Version", ServerSideOnly = true)]
+        public static string PostGISGEOSVersion()
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
         /// Returns the version number of the PostGIS library.
         /// </summary>
         /// <remarks>
