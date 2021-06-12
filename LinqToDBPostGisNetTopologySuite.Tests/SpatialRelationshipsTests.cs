@@ -39,12 +39,17 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 Assert.IsNotNull(result2);
                 Assert.IsNull(result3);
 
-                Assert.AreEqual(true, result1);
-                Assert.AreEqual(false, result2);
+                Assert.IsTrue(result1);
+                Assert.IsFalse(result2);
 
-                Assert.IsTrue(db.Select(() => SpatialRelationships.ST3DIntersects(
-                    "TIN(((0 0 0,1 0 0,0 1 0,0 0 0)))",
-                    "POINT(.1 .1 0)")));
+                var version = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
+                if (version >= new Version("3.0.0"))
+                {
+                    Assert.IsTrue(
+                        db.Select(() => SpatialRelationships.ST3DIntersects(
+                            "TIN(((0 0 0,1 0 0,0 1 0,0 0 0)))",
+                            "POINT(.1 .1 0)")));
+                }
             }
         }
 
@@ -54,14 +59,14 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 const string Wkt1 = "POINT(1 2)";
-                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt1).STBuffer(10)).Insert();
+                db.TestGeometries.Value(g => g.Id, 1).Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt1).STBuffer(10)).Insert();
                 var smallc = db.TestGeometries.Single(g => g.Id == 1).Geometry;
 
                 const string Wkt2 = "POINT(1 2)";
-                db.TestGeometries.Value(g => g.Id, 2).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt2).STBuffer(20)).Insert();
+                db.TestGeometries.Value(g => g.Id, 2).Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt2).STBuffer(20)).Insert();
 
                 var bigc = db.TestGeometries.Single(g => g.Id == 2).Geometry;
-                db.TestGeometries.Value(g => g.Id, 3).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt1)).Insert();
+                db.TestGeometries.Value(g => g.Id, 3).Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt1)).Insert();
 
                 Assert.IsTrue(db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STCovers(smallc)).Single());
                 Assert.IsFalse(db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STCovers(bigc)).Single());
@@ -182,10 +187,10 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 const string Wkt1 = "LINESTRING ( 2 0, 0 2 )";
-                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt1)).Insert();
+                db.TestGeometries.Value(g => g.Id, 1).Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt1)).Insert();
 
                 const string Wkt2 = "LINESTRING ( 0 0, 0 2 )";
-                db.TestGeometries.Value(g => g.Id, 2).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt2)).Insert();
+                db.TestGeometries.Value(g => g.Id, 2).Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt2)).Insert();
 
                 const string PointWkt = "POINT(0 0)";
                 var point = new NTSGS.Point(new NTSGS.Coordinate(0, 0));
@@ -204,10 +209,10 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 const string Wkt1 = "LINESTRING(0 0, 10 10)";
-                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt1)).Insert();
+                db.TestGeometries.Value(g => g.Id, 1).Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt1)).Insert();
 
                 const string Wkt2 = "LINESTRING(0 0, 5 5, 10 10)";
-                db.TestGeometries.Value(g => g.Id, 2).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt2)).Insert();
+                db.TestGeometries.Value(g => g.Id, 2).Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt2)).Insert();
 
                 var geometry2 = db.TestGeometries.Where(g => g.Id == 2).Single().Geometry;
                 Assert.IsTrue(db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STEquals(geometry2)).Single());
@@ -225,10 +230,10 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 const string Wkt1 = "LINESTRING ( 2 0, 0 2 )";
-                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt1)).Insert();
+                db.TestGeometries.Value(g => g.Id, 1).Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt1)).Insert();
 
                 const string Wkt2 = "LINESTRING ( 0 0, 0 2 )";
-                db.TestGeometries.Value(g => g.Id, 2).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt2)).Insert();
+                db.TestGeometries.Value(g => g.Id, 2).Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt2)).Insert();
 
                 const string PointWkt = "POINT(0 0)";
                 var point = new NTSGS.Point(new NTSGS.Coordinate(0, 0));
@@ -251,13 +256,13 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 const string Wkt1 = "LINESTRING(0 0, 10 10, 20 20)";
                 db.TestGeometries
                     .Value(g => g.Id, 1)
-                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt1))
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt1))
                     .Insert();
 
                 const string Wkt2 = "LINESTRING(0 0, 10 10, 20 20)";
                 db.TestGeometries
                     .Value(g => g.Id, 2)
-                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt2))
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt2))
                     .Insert();
 
                 var geometry2 = db.TestGeometries.Single(g => g.Id == 2).Geometry;
@@ -282,12 +287,12 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 db.TestGeometries
                     .Value(g => g.Id, 1)
-                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt1))
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt1))
                     .Insert();
 
                 db.TestGeometries
                     .Value(g => g.Id, 2)
-                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt2))
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt2))
                     .Insert();
 
                 var geometry2 = db.TestGeometries.Where(g => g.Id == 2).Single().Geometry;

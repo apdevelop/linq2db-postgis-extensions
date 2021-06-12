@@ -70,7 +70,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 const string Wkt = "POLYGON((743238 2967416,743238 2967450, 743265 2967450,743265.625 2967416,743238 2967416))";
                 db.TestGeometries
                     .Value(g => g.Id, 1)
-                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt, 2249))
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt, 2249))
                     .Insert();
 
                 var result = db.TestGeometries
@@ -103,23 +103,24 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 const string Gnom = "+proj=gnom +ellps=WGS84 +lat_0=70 +lon_0=-160 +no_defs";
                 const string Wkt1 = "POLYGON((170 50,170 72,-130 72,-130 50,170 50))";
                 const string Wkt2 = "POLYGON((-170 68,-170 90,-141 90,-141 68,-170 68))";
-                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt1, SRID4326)).Insert();
-                db.TestGeometries.Value(g => g.Id, 2).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt2, SRID4326)).Insert();
+                db.TestGeometries.Value(g => g.Id, 1).Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt1, SRID4326)).Insert();
+                db.TestGeometries.Value(g => g.Id, 2).Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt2, SRID4326)).Insert();
 
                 var result = db.TestGeometries
-                    .Select(g => GeometryProcessing.STIntersection(
-                        db.TestGeometries.Where(g1 => g1.Id == 1).Single().Geometry.STTransform(Gnom),
-                        db.TestGeometries.Where(g2 => g2.Id == 2).Single().Geometry.STTransform(Gnom)
-                    ).STTransform(Gnom, SRID4326))
+                    .Select(g => OverlayFunctions
+                        .STIntersection(
+                            db.TestGeometries.Where(g1 => g1.Id == 1).Single().Geometry.STTransform(Gnom),
+                            db.TestGeometries.Where(g2 => g2.Id == 2).Single().Geometry.STTransform(Gnom))
+                        .STTransform(Gnom, SRID4326))
                     .First() as NTSGS.Polygon;
 
                 var expected = new double[][]
                 {
-                    new[]{ -170, 74.053793645338 },
-                    new[]{ -141, 73.4268621378904 },
-                    new[]{ -141, 68.0 },
-                    new[]{ -170, 68.0 },
-                    new[]{ -170, 74.053793645338 },
+                    new[] { -170, 74.053793645338 },
+                    new[] { -141, 73.4268621378904 },
+                    new[] { -141, 68.0 },
+                    new[] { -170, 68.0 },
+                    new[] { -170, 74.053793645338 },
                 };
 
                 Assert.AreEqual(expected.Length, result.Coordinates.Length);

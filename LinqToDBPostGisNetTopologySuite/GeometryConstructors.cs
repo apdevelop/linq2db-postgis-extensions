@@ -322,5 +322,71 @@ namespace LinqToDBPostGisNetTopologySuite
         {
             throw new InvalidOperationException();
         }
+
+        /// <summary>
+        /// Creates hexagon geometry at given cell coordinates and origin.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_Hexagon.html
+        /// </remarks>
+        /// <param name="size">Edge size of square.</param>
+        /// <param name="cellI">Cell index by X axis.</param>
+        /// <param name="cellJ">Cell index by Y axis.</param>
+        /// <param name="origin">Origin (Point).</param>
+        /// <returns>Hexagon geometry (Polygon).</returns>
+        [Sql.Function("ST_Hexagon", ServerSideOnly = true)]
+        public static NTSG STHexagon(double size, int cellI, int cellJ, NTSG origin)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Creates hexagon geometry at given cell coordinates.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_Hexagon.html
+        /// </remarks>
+        /// <param name="size">Edge size of square.</param>
+        /// <param name="cellI">Cell index by X axis.</param>
+        /// <param name="cellJ">Cell index by Y axis.</param>
+        /// <returns>Hexagon geometry (Polygon).</returns>
+        [Sql.Function("ST_Hexagon", ServerSideOnly = true)]
+        public static NTSG STHexagon(double size, int cellI, int cellJ)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Creates square geometry at given cell coordinates and origin.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_Square.html
+        /// </remarks>
+        /// <param name="size">Edge size of square.</param>
+        /// <param name="cellI">Cell index by X axis.</param>
+        /// <param name="cellJ">Cell index by Y axis.</param>
+        /// <param name="origin">Origin (Point).</param>
+        /// <returns>Square geometry (Polygon).</returns>
+        [Sql.Function("ST_Square", ServerSideOnly = true)]
+        public static NTSG STSquare(double size, int cellI, int cellJ, NTSG origin)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Creates square geometry at given cell coordinates.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_Square.html
+        /// </remarks>
+        /// <param name="size">Edge size of square.</param>
+        /// <param name="cellI">Cell index by X axis.</param>
+        /// <param name="cellJ">Cell index by Y axis.</param>
+        /// <returns>Square geometry (Polygon).</returns>
+        [Sql.Function("ST_Square", ServerSideOnly = true)]
+        public static NTSG STSquare(double size, int cellI, int cellJ)
+        {
+            throw new InvalidOperationException();
+        }
     }
 }

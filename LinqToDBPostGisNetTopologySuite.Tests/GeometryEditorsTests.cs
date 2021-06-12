@@ -887,11 +887,11 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 const string Ewkt2 = "SRID=4326;POINT(241.42 38.38 10)";
                 db.TestGeometries
                     .Value(g => g.Id, 1)
-                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt1))
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt1))
                     .Insert();
                 db.TestGeometries
                     .Value(g => g.Id, 2)
-                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt2))
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt2))
                     .Insert();
 
                 var result1 = db.TestGeometries

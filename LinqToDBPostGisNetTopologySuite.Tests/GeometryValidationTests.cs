@@ -26,16 +26,16 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 const string Wkt1 = "LINESTRING(0 0, 1 1)";
                 db.TestGeometries
                     .Value(g => g.Id, 1)
-                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt1))
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt1))
                     .Insert();
 
                 const string Wkt2 = "POLYGON((0 0, 1 1, 1 2, 1 1, 0 0))";
                 db.TestGeometries.Value(g => g.Id, 2)
-                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt2))
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt2))
                     .Insert();
 
                 db.TestGeometries.Value(g => g.Id, 3)
-                    .Value(p => p.Geometry, () => null)
+                    .Value(g => g.Geometry, () => null)
                     .Insert();
 
                 Assert.IsTrue(db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STIsValid()).Single());
@@ -60,16 +60,16 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 const string Wkt1 = "LINESTRING(0 0, 1 1)";
                 db.TestGeometries
                     .Value(g => g.Id, 1)
-                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt1))
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt1))
                     .Insert();
 
                 const string Wkt2 = "POLYGON((0 0, 1 1, 1 2, 1 1, 0 0))";
                 db.TestGeometries
                     .Value(g => g.Id, 2)
-                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt2))
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt2))
                     .Insert();
 
-                db.TestGeometries.Value(g => g.Id, 3).Value(p => p.Geometry, () => null).Insert();
+                db.TestGeometries.Value(g => g.Id, 3).Value(g => g.Geometry, () => null).Insert();
 
                 // TODO: ! utility (extension) method to globally register composite types, 
                 // like 'NpgsqlConnection.GlobalTypeMapper.UseNetTopologySuite()' or 'conn.TypeMapper.UseNetTopologySuite()'
@@ -119,16 +119,16 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 const string Wkt1 = "LINESTRING(0 0, 1 1)";
                 db.TestGeometries
                     .Value(g => g.Id, 1)
-                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt1))
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt1))
                     .Insert();
 
                 const string Wkt2 = "POLYGON((0 0, 1 1, 1 2, 1 1, 0 0))";
                 db.TestGeometries
                     .Value(g => g.Id, 2)
-                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt2))
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt2))
                     .Insert();
 
-                db.TestGeometries.Value(g => g.Id, 3).Value(p => p.Geometry, () => null).Insert();
+                db.TestGeometries.Value(g => g.Id, 3).Value(g => g.Geometry, () => null).Insert();
 
                 Assert.AreEqual(
                     "Valid Geometry",
@@ -164,11 +164,11 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 const string Wkt1 = "LINESTRING(0 0,1 1)";
-                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt1)).Insert();
+                db.TestGeometries.Value(g => g.Id, 1).Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt1)).Insert();
 
                 const string Wkt2 = "POLYGON((0 0,1 1,1 2, 1 1,0 0))";
-                db.TestGeometries.Value(g => g.Id, 2).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt2)).Insert();
-                db.TestGeometries.Value(g => g.Id, 3).Value(p => p.Geometry, () => null).Insert();
+                db.TestGeometries.Value(g => g.Id, 2).Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt2)).Insert();
+                db.TestGeometries.Value(g => g.Id, 3).Value(g => g.Geometry, () => null).Insert();
 
                 Assert.AreEqual(
                     Wkt1,

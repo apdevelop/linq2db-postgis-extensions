@@ -66,7 +66,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 const string Wkt1 = "POINT(2.0 4.0)";
-                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt1)).Insert();
+                db.TestGeometries.Value(g => g.Id, 1).Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt1)).Insert();
 
                 var wkb = db.TestGeometries.Select(g => g.Geometry.STAsBinary()).Single();
 
@@ -140,7 +140,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 const string Wkt1 = "POINT(2.48 4.75)";
-                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt1)).Insert();
+                db.TestGeometries.Value(g => g.Id, 1).Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt1)).Insert();
 
                 var geojson1 = db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STAsGeoJSON()).Single();
                 Assert.AreEqual("{\"type\":\"Point\",\"coordinates\":[2.48,4.75]}", geojson1);
@@ -150,15 +150,16 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
 
                 const string Wkt2 = "LINESTRING(1 2 3, 4 5 6)";
-                db.TestGeometries.Value(g => g.Id, 2).Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt2)).Insert();
+                db.TestGeometries.Value(g => g.Id, 2).Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt2)).Insert();
 
                 var geojson2 = db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STAsGeoJSON()).Single();
                 Assert.AreEqual("{\"type\":\"LineString\",\"coordinates\":[[1,2,3],[4,5,6]]}", geojson2);
 
 
                 const string Ewkt3 = "SRID=3857;POINT(2.48 4.75)";
-                db.TestGeometries.Value(g => g.Id, 3).Value(p => p.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt3)).Insert();
+                db.TestGeometries.Value(g => g.Id, 3).Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt3)).Insert();
 
+                // TODO: Fix fail on PostGIS 2.5
                 var geojson3 = db.TestGeometries.Where(g => g.Id == 3).Select(g => g.Geometry.STAsGeoJSON()).Single();
                 Assert.AreEqual("{\"type\":\"Point\",\"crs\":{\"type\":\"name\",\"properties\":{\"name\":\"EPSG:3857\"}},\"coordinates\":[2.48,4.75]}", geojson3);
 
@@ -277,11 +278,11 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 Assert.AreEqual(
-                    "1 2", 
+                    "1 2",
                     db.Select(() => GeometryInput.STGeomFromText("POINT (1 2)").STAsX3D()));
 
                 Assert.AreEqual(
-                    "<LineSet  vertexCount='2'><Coordinate point='1 1 5 5' /></LineSet>", 
+                    "<LineSet  vertexCount='2'><Coordinate point='1 1 5 5' /></LineSet>",
                     db.Select(() => GeometryInput.STGeomFromText("LINESTRING(1 1,5 5)").STAsX3D()));
 
                 Assert.IsNull(db.Select(() => GeometryOutput.STAsX3D(null)));
@@ -293,8 +294,8 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                db.TestGeometries.Value(g => g.Id, 1).Value(p => p.Geometry, () => GeometryConstructors.STMakePoint(-126, 48).STSetSrId(SRID4326)).Insert();
-                db.TestGeometries.Value(g => g.Id, 2).Value(p => p.Geometry, () => null).Insert();
+                db.TestGeometries.Value(g => g.Id, 1).Value(g => g.Geometry, () => GeometryConstructors.STMakePoint(-126, 48).STSetSrId(SRID4326)).Insert();
+                db.TestGeometries.Value(g => g.Id, 2).Value(g => g.Geometry, () => null).Insert();
 
                 var geohash1 = db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STGeoHash()).Single();
                 Assert.AreEqual("c0w3hf1s70w3hf1s70w3", geohash1);

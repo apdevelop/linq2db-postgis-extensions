@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 using LinqToDB;
 using NUnit.Framework;
@@ -304,21 +305,17 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     .Value(g => g.Geometry, () => GeometryConstructors.STPolygon(GeometryInput.STGeomFromText(Wkt1), SRID4326))
                     .Insert();
 
-                db.TestGeometries
-                    .Value(g => g.Id, 2)
-                    .Value(g => g.Geometry, () => GeometryConstructors.STPolygon(GeometryInput.STGeomFromText(Wkt2), SRID4326))
-                    .Insert();
-
-                db.TestGeometries
-                    .Value(g => g.Id, 3)
-                    .Value(g => g.Geometry, () => GeometryConstructors.STPolygon(Wkt1, SRID4326))
-                    .Insert();
-
                 Assert.AreEqual(
                     "POLYGON((75 29,77 29,77 29,75 29))",
                     db.TestGeometries.Where(g => g.Id == 1)
                         .Select(g => g.Geometry.STAsText())
                         .Single());
+
+                db.TestGeometries
+                    .Value(g => g.Id, 2)
+                    .Value(g => g.Geometry, () => GeometryConstructors.STPolygon(GeometryInput.STGeomFromText(Wkt2), SRID4326))
+                    .Insert();
+
 
                 Assert.AreEqual(
                     "SRID=4326;POLYGON((75 29 1,77 29 2,77 29 3,75 29 1))",
@@ -327,11 +324,21 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                         .Select(g => g.Geometry.STAsEWKT())
                         .Single());
 
-                Assert.AreEqual(
-                    "POLYGON((75 29,77 29,77 29,75 29))",
-                    db.TestGeometries.Where(g => g.Id == 3)
-                        .Select(g => g.Geometry.STAsText())
-                        .Single());
+                // TODO: ? reason of error?  ST_Polygon(text) not works in 2.5 ?
+                var version = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
+                if (version >= new Version("3.0.0"))
+                {
+                    db.TestGeometries
+                        .Value(g => g.Id, 3)
+                        .Value(g => g.Geometry, () => GeometryConstructors.STPolygon(Wkt1, SRID4326))
+                        .Insert();
+
+                    Assert.AreEqual(
+                        "POLYGON((75 29,77 29,77 29,75 29))",
+                        db.TestGeometries.Where(g => g.Id == 3)
+                            .Select(g => g.Geometry.STAsText())
+                            .Single());
+                }
             }
         }
 
@@ -340,54 +347,100 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                db.TestGeometries
-                    .Value(g => g.Id, 1)
-                    .Value(g => g.Geometry, () => GeometryConstructors.STTileEnvelope(2, 1, 1))
-                    .Insert();
+                var version = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
+                if (version >= new Version("3.0.0"))
+                {
+                    db.TestGeometries
+                        .Value(g => g.Id, 1)
+                        .Value(g => g.Geometry, () => GeometryConstructors.STTileEnvelope(2, 1, 1))
+                        .Insert();
 
-                db.TestGeometries
-                    .Value(g => g.Id, 2)
-                    .Value(g => g.Geometry, () => GeometryConstructors.STTileEnvelope(3, 1, 1, GeometryConstructors.STMakeEnvelope(-180, -90, 180, 90, SRID4326)))
-                    .Insert();
+                    db.TestGeometries
+                        .Value(g => g.Id, 2)
+                        .Value(g => g.Geometry, () => GeometryConstructors.STTileEnvelope(3, 1, 1, GeometryConstructors.STMakeEnvelope(-180, -90, 180, 90, SRID4326)))
+                        .Insert();
 
-                db.TestGeometries
-                    .Value(g => g.Id, 3)
-                    .Value(g => g.Geometry, () => GeometryConstructors.STTileEnvelope(2, 1, 1, "SRID=3857;LINESTRING(-20037508.342789 -20037508.342789,20037508.342789 20037508.342789)"))
-                    .Insert();
+                    db.TestGeometries
+                        .Value(g => g.Id, 3)
+                        .Value(g => g.Geometry, () => GeometryConstructors.STTileEnvelope(2, 1, 1, "SRID=3857;LINESTRING(-20037508.342789 -20037508.342789,20037508.342789 20037508.342789)"))
+                        .Insert();
 
-                var result1 = db.TestGeometries.Where(g => g.Id == 1);
-                var poly1 = result1.Select(g => g.Geometry).Single() as NTSGS.Polygon;
-                Assert.AreEqual(-10018754.1713945, poly1.Coordinates[0].X, 1.0E-6);
-                Assert.AreEqual(0, poly1.Coordinates[0].Y, 1.0E-6);
-                Assert.AreEqual(-10018754.1713945, poly1.Coordinates[1].X, 1.0E-6);
-                Assert.AreEqual(10018754.1713945, poly1.Coordinates[1].Y, 1.0E-6);
-                Assert.AreEqual(0, poly1.Coordinates[2].X, 1.0E-6);
-                Assert.AreEqual(10018754.1713945, poly1.Coordinates[2].Y, 1.0E-6);
-                Assert.AreEqual(0, poly1.Coordinates[3].X, 1.0E-6);
-                Assert.AreEqual(0, poly1.Coordinates[3].Y, 1.0E-6);
-                Assert.AreEqual(-10018754.1713945, poly1.Coordinates[4].X, 1.0E-6);
-                Assert.AreEqual(0, poly1.Coordinates[4].Y, 1.0E-6);
-                Assert.AreEqual(SRID3857, poly1.SRID);
+                    var result1 = db.TestGeometries.Where(g => g.Id == 1);
+                    var poly1 = result1.Select(g => g.Geometry).Single() as NTSGS.Polygon;
+                    Assert.AreEqual(-10018754.1713945, poly1.Coordinates[0].X, 1.0E-6);
+                    Assert.AreEqual(0, poly1.Coordinates[0].Y, 1.0E-6);
+                    Assert.AreEqual(-10018754.1713945, poly1.Coordinates[1].X, 1.0E-6);
+                    Assert.AreEqual(10018754.1713945, poly1.Coordinates[1].Y, 1.0E-6);
+                    Assert.AreEqual(0, poly1.Coordinates[2].X, 1.0E-6);
+                    Assert.AreEqual(10018754.1713945, poly1.Coordinates[2].Y, 1.0E-6);
+                    Assert.AreEqual(0, poly1.Coordinates[3].X, 1.0E-6);
+                    Assert.AreEqual(0, poly1.Coordinates[3].Y, 1.0E-6);
+                    Assert.AreEqual(-10018754.1713945, poly1.Coordinates[4].X, 1.0E-6);
+                    Assert.AreEqual(0, poly1.Coordinates[4].Y, 1.0E-6);
+                    Assert.AreEqual(SRID3857, poly1.SRID);
 
-                var result2 = db.TestGeometries.Where(g => g.Id == 2);
-                Assert.AreEqual("POLYGON((-135 45,-135 67.5,-90 67.5,-90 45,-135 45))",
-                    result2.Select(g => g.Geometry.STAsText()).Single());
-                Assert.AreEqual(SRID4326,
-                    result2.Select(g => g.Geometry.STSrId()).Single());
+                    var result2 = db.TestGeometries.Where(g => g.Id == 2);
+                    Assert.AreEqual("POLYGON((-135 45,-135 67.5,-90 67.5,-90 45,-135 45))",
+                        result2.Select(g => g.Geometry.STAsText()).Single());
+                    Assert.AreEqual(SRID4326,
+                        result2.Select(g => g.Geometry.STSrId()).Single());
 
-                var result3 = db.TestGeometries.Where(g => g.Id == 3);
-                var poly3 = result3.Select(g => g.Geometry).Single() as NTSGS.Polygon;
-                Assert.AreEqual(-10018754.1713945, poly3.Coordinates[0].X, 1.0E-6);
-                Assert.AreEqual(0, poly3.Coordinates[0].Y, 1.0E-6);
-                Assert.AreEqual(-10018754.1713945, poly3.Coordinates[1].X, 1.0E-6);
-                Assert.AreEqual(10018754.1713945, poly3.Coordinates[1].Y, 1.0E-6);
-                Assert.AreEqual(0, poly3.Coordinates[2].X, 1.0E-6);
-                Assert.AreEqual(10018754.1713945, poly3.Coordinates[2].Y, 1.0E-6);
-                Assert.AreEqual(0, poly3.Coordinates[3].X, 1.0E-6);
-                Assert.AreEqual(0, poly3.Coordinates[3].Y, 1.0E-6);
-                Assert.AreEqual(-10018754.1713945, poly3.Coordinates[4].X, 1.0E-6);
-                Assert.AreEqual(0, poly3.Coordinates[4].Y, 1.0E-6);
-                Assert.AreEqual(SRID3857, poly3.SRID);
+                    var result3 = db.TestGeometries.Where(g => g.Id == 3);
+                    var poly3 = result3.Select(g => g.Geometry).Single() as NTSGS.Polygon;
+                    Assert.AreEqual(-10018754.1713945, poly3.Coordinates[0].X, 1.0E-6);
+                    Assert.AreEqual(0, poly3.Coordinates[0].Y, 1.0E-6);
+                    Assert.AreEqual(-10018754.1713945, poly3.Coordinates[1].X, 1.0E-6);
+                    Assert.AreEqual(10018754.1713945, poly3.Coordinates[1].Y, 1.0E-6);
+                    Assert.AreEqual(0, poly3.Coordinates[2].X, 1.0E-6);
+                    Assert.AreEqual(10018754.1713945, poly3.Coordinates[2].Y, 1.0E-6);
+                    Assert.AreEqual(0, poly3.Coordinates[3].X, 1.0E-6);
+                    Assert.AreEqual(0, poly3.Coordinates[3].Y, 1.0E-6);
+                    Assert.AreEqual(-10018754.1713945, poly3.Coordinates[4].X, 1.0E-6);
+                    Assert.AreEqual(0, poly3.Coordinates[4].Y, 1.0E-6);
+                    Assert.AreEqual(SRID3857, poly3.SRID);
+                }
+            }
+        }
+
+        [Test]
+        public void TestSTHexagon()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                var version = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
+                if (version >= new Version("3.1.0"))
+                {
+                    var origin = db.Select(() => GeometryConstructors.STMakePoint(0, 0));
+
+                    var hexagon1 = db.Select(() => GeometryConstructors.STHexagon(1.0, 0, 0, origin)) as NTSGS.Polygon;
+                    Assert.IsNotNull(hexagon1);
+                    Assert.AreEqual(7, hexagon1.Coordinates.Length);
+
+                    var hexagon2 = db.Select(() => GeometryConstructors.STHexagon(1.0, 0, 0)) as NTSGS.Polygon;
+                    Assert.IsNotNull(hexagon2);
+                    Assert.AreEqual(7, hexagon2.Coordinates.Length);
+                }
+            }
+        }
+
+        [Test]
+        public void TestSTSquare()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                var version = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
+                if (version >= new Version("3.1.0"))
+                {
+                    var origin = db.Select(() => GeometryConstructors.STMakePoint(0, 0));
+
+                    var square1 = db.Select(() => GeometryConstructors.STSquare(1.0, 0, 0, origin)) as NTSGS.Polygon;
+                    Assert.IsNotNull(square1);
+                    Assert.AreEqual(5, square1.Coordinates.Length);
+
+                    var square2 = db.Select(() => GeometryConstructors.STSquare(1.0, 0, 0)) as NTSGS.Polygon;
+                    Assert.IsNotNull(square2);
+                    Assert.AreEqual(5, square2.Coordinates.Length);
+                }
             }
         }
     }

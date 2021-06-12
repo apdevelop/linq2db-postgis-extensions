@@ -765,5 +765,21 @@ namespace LinqToDBPostGisNetTopologySuite
         {
             throw new InvalidOperationException();
         }
+
+        /// <summary>
+        /// Splits the input geometries and then moves every resulting component falling on the right (for negative 'move') or on the left (for positive 'move') of given 'wrap' line in the direction specified by the 'move' parameter, finally re-unioning the pieces togheter.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_WrapX.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry.</param>
+        /// <param name="wrap">Wrap line coordinate.</param>
+        /// <param name="move">Move offset.</param>
+        /// <returns>Geometry.</returns>
+        [Sql.Function("ST_WrapX", ServerSideOnly = true)]
+        public static NTSG STWrapX(this NTSG geometry, double wrap, double move)
+        {
+            throw new InvalidOperationException();
+        }
     }
 }

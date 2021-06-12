@@ -1,3 +1,4 @@
+using System;
 using System.Linq;
 
 using LinqToDB;
@@ -54,26 +55,30 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             const string Wkt = "LINESTRING(25 50 70, 100 125 90, 150 190 200)";
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                db.TestGeometries
+                var version = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
+                if (version >= new Version("3.0.0"))
+                {
+                    db.TestGeometries
                     .Value(g => g.Id, 1)
                     .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(Wkt))
                     .Insert();
 
-                var result = db.TestGeometries
-                    .Where(g => g.Id == 1)
-                    .Select(g => g.Geometry.ST3DLineInterpolatePoint(0.20))
-                    .Single() as NTSGS.Point;
+                    var result = db.TestGeometries
+                        .Where(g => g.Id == 1)
+                        .Select(g => g.Geometry.ST3DLineInterpolatePoint(0.20))
+                        .Single() as NTSGS.Point;
 
-                Assert.AreEqual(59.0675892910822, result.X, 1.0E-8);
-                Assert.AreEqual(84.0675892910822, result.Y, 1.0E-8);
-                Assert.AreEqual(79.0846904776219, result.Z, 1.0E-8);
+                    Assert.AreEqual(59.0675892910822, result.X, 1.0E-8);
+                    Assert.AreEqual(84.0675892910822, result.Y, 1.0E-8);
+                    Assert.AreEqual(79.0846904776219, result.Z, 1.0E-8);
 
-                Assert.IsNull(db.Select(() => LinearReferencing.ST3DLineInterpolatePoint((NTSG)null, 0.5)));
+                    Assert.IsNull(db.Select(() => LinearReferencing.ST3DLineInterpolatePoint((NTSG)null, 0.5)));
 
-                var result2 = db.Select(() => LinearReferencing.ST3DLineInterpolatePoint(Wkt, 0.20)) as NTSGS.Point;
-                Assert.AreEqual(59.0675892910822, result2.X, 1.0E-8);
-                Assert.AreEqual(84.0675892910822, result2.Y, 1.0E-8);
-                Assert.AreEqual(79.0846904776219, result2.Z, 1.0E-8);
+                    var result2 = db.Select(() => LinearReferencing.ST3DLineInterpolatePoint(Wkt, 0.20)) as NTSGS.Point;
+                    Assert.AreEqual(59.0675892910822, result2.X, 1.0E-8);
+                    Assert.AreEqual(84.0675892910822, result2.Y, 1.0E-8);
+                    Assert.AreEqual(79.0846904776219, result2.Z, 1.0E-8);
+                }
             }
         }
 

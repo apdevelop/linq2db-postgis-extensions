@@ -30,17 +30,17 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 const string Ewkt1 = "SRID=2249;POLYGON((743238 2967416,743238 2967450, 743265 2967450,743265.625 2967416,743238 2967416))";
                 db.TestGeometries
                     .Value(g => g.Id, 1)
-                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt1))
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt1))
                     .Insert();
 
                 const string Wkt2 = "LINESTRING(0 0, 1 1)";
                 db.TestGeometries
                     .Value(g => g.Id, 2)
-                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromText(Wkt2))
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt2))
                     .Insert();
                 db.TestGeometries
                     .Value(g => g.Id, 3)
-                    .Value(p => p.Geometry, () => null)
+                    .Value(g => g.Geometry, () => null)
                     .Insert();
 
                 Assert.AreEqual(928.625, db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STArea()).Single(), 1.0E-3);
@@ -324,15 +324,15 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             {
                 const string Ewkt1 = "SRID=2249;LINESTRING(743238 2967416,743238 2967450,743265 2967450, 743265.625 2967416,743238 2967416)";
                 db.TestGeometries.Value(g => g.Id, 1)
-                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt1))
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt1))
                     .Insert();
 
                 const string Ewkt2 = "SRID=2249;POINT(0 0)";
                 db.TestGeometries.Value(g => g.Id, 2)
-                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt2))
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt2))
                     .Insert();
                 db.TestGeometries.Value(g => g.Id, 3)
-                    .Value(p => p.Geometry, () => null)
+                    .Value(g => g.Geometry, () => null)
                     .Insert();
 
                 var length1 = db.TestGeometries
@@ -550,7 +550,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 const string Ewkt1 = "SRID=2249;POLYGON((743238 2967416,743238 2967450,743265 2967450, 743265.625 2967416,743238 2967416))";
                 db.TestGeometries
                     .Value(g => g.Id, 1)
-                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt1))
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt1))
                     .Insert();
 
                 const string Ewkt2 = @"SRID=2249;
@@ -567,15 +567,15 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                         763104.471273676 2949418.44119003)))";
                 db.TestGeometries
                     .Value(g => g.Id, 2)
-                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt2))
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt2))
                     .Insert();
 
                 const string Ewkt3 = "SRID=2249;POINT(0 0)";
                 db.TestGeometries.Value(g => g.Id, 3)
-                    .Value(p => p.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt3))
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt3))
                     .Insert();
                 db.TestGeometries.Value(g => g.Id, 4)
-                    .Value(p => p.Geometry, () => null)
+                    .Value(g => g.Geometry, () => null)
                     .Insert();
 
                 Assert.AreEqual(122.630744000095, db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STPerimeter()).Single(), 0.000000000001);
