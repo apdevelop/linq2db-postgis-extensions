@@ -11,11 +11,14 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
     [TestFixture]
     class GeometryOutputTests : TestsBase
     {
+        private Version CurrentVersion;
+
         [SetUp]
         public void Setup()
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
+                this.CurrentVersion = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
                 db.TestGeometries.Delete();
             }
         }
@@ -152,16 +155,37 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 const string Wkt2 = "LINESTRING(1 2 3, 4 5 6)";
                 db.TestGeometries.Value(g => g.Id, 2).Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt2)).Insert();
 
-                var geojson2 = db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STAsGeoJSON()).Single();
+                var geojson2 = db.TestGeometries
+                    .Where(g => g.Id == 2)
+                    .Select(g => g.Geometry.STAsGeoJSON())
+                    .Single();
                 Assert.AreEqual("{\"type\":\"LineString\",\"coordinates\":[[1,2,3],[4,5,6]]}", geojson2);
 
 
                 const string Ewkt3 = "SRID=3857;POINT(2.48 4.75)";
-                db.TestGeometries.Value(g => g.Id, 3).Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt3)).Insert();
+                db.TestGeometries
+                    .Value(g => g.Id, 3)
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt3))
+                    .Insert();
 
-                // TODO: Fix fail on PostGIS 2.5
-                var geojson3 = db.TestGeometries.Where(g => g.Id == 3).Select(g => g.Geometry.STAsGeoJSON()).Single();
-                Assert.AreEqual("{\"type\":\"Point\",\"crs\":{\"type\":\"name\",\"properties\":{\"name\":\"EPSG:3857\"}},\"coordinates\":[2.48,4.75]}", geojson3);
+
+                var geojson3 = db.TestGeometries
+                    .Where(g => g.Id == 3)
+                    .Select(g => g.Geometry.STAsGeoJSON())
+                    .Single();
+
+                if (this.CurrentVersion >= new Version("3.0.0"))
+                {
+                    Assert.AreEqual(
+                    "{\"type\":\"Point\",\"crs\":{\"type\":\"name\",\"properties\":{\"name\":\"EPSG:3857\"}},\"coordinates\":[2.48,4.75]}",
+                    geojson3);
+                }
+                else
+                {
+                    Assert.AreEqual(
+                        "{\"type\":\"Point\",\"coordinates\":[2.48,4.75]}",
+                        geojson3);
+                }
 
                 var geojson3crs = db.TestGeometries.Where(g => g.Id == 3).Select(g => g.Geometry.STAsGeoJSON(1, 4)).Single();
                 Assert.AreEqual("{\"type\":\"Point\",\"crs\":{\"type\":\"name\",\"properties\":{\"name\":\"urn:ogc:def:crs:EPSG::3857\"}},\"coordinates\":[2.5,4.8]}", geojson3crs);

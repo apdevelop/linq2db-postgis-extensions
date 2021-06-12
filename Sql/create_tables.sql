@@ -1,3 +1,9 @@
+-- Enable the PostGIS extension for the database:
+-- CREATE EXTENSION postgis;
+
+-- Check the PostGIS presense and version.
+-- SELECT PostGIS_Full_Version();
+
 CREATE TABLE owm_cities
 (
   id   integer primary key,

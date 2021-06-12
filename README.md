@@ -11,7 +11,7 @@
 | -------------- |:---------------------------:|:------------------------------------:|
 | Extending type | `NpgsqlTypes.PostgisGeometry` | `NetTopologySuite.Geometries.Geometry` |
 | Npgsql version | 3.x                         | 4.x                                  |
-| PostGIS reference version     | 1.5                      | 3.0                      |
+| PostGIS reference version     | 1.5                      | 3.0/3.1                  |
 | Status         | Legacy                      | Recommended way                      |
 | NuGet          |   &mdash;       |  [![NuGet](https://img.shields.io/nuget/v/LinqToDBPostGisNTS.svg)](https://www.nuget.org/packages/LinqToDBPostGisNTS/) |
 | Dependencies   | linq2db, Npgsql           | linq2db, Npgsql, NetTopologySuite, Npgsql.NetTopologySuite, NetTopologySuite.IO.PostGis |
@@ -82,7 +82,7 @@ class PostGisTestDataConnection : LinqToDB.Data.DataConnection
 
 ### Technologies
 Developed using MS Visual Studio 2017.
-Tested on PostgreSQL version 9.6.1, PostGIS version 3.0.2.
+Tested on PostgreSQL version 9.6/11, PostGIS version 2.5/3.0/3.1.
 Depends on [linq2db](https://github.com/linq2db/linq2db), [Npgsql](https://github.com/npgsql/npgsql).
 
 ### Getting started with demo application
@@ -94,7 +94,7 @@ Depends on [linq2db](https://github.com/linq2db/linq2db), [Npgsql](https://githu
 * Run application, view table data along with PostGIS functions results in console output.
 
 ### TODOs
- * Implement full set of PostGIS methods (Currently implemented `215` of `303` methods, counted without overloads).
+ * Implement full set of PostGIS methods.
  * Add support for PostGIS `geography` data type.
  * Test on various versions of PostgreSQL/PostGIS and platforms (including .NET 5).
  * More tests for corner cases.
