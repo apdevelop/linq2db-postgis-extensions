@@ -142,7 +142,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 Assert.AreEqual(0.4, result.Value, 1.0E-8);
 
-                Assert.AreEqual(0.4, db.Select(() => LinearReferencing.STLineLocatePoint(LineWkt, PointWkt)), 1.0E-8);
+                Assert.AreEqual(0.4, db.Select(() => LinearReferencing.STLineLocatePoint(LineWkt, PointWkt)).Value, 1.0E-8);
 
                 Assert.IsNull(db.Select(() => LinearReferencing.STLineLocatePoint((NTSG)null, (NTSG)null)));
             }

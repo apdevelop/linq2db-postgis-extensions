@@ -43,12 +43,12 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     .Value(g => g.Geometry, () => null)
                     .Insert();
 
-                Assert.AreEqual(928.625, db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STArea()).Single(), 1.0E-3);
-                Assert.AreEqual(86.2724306, db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STTransform(26986).STArea()).Single(), 1.0E-5);
-                Assert.AreEqual(0.0, db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STArea()).Single());
+                Assert.AreEqual(928.625, db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STArea()).Single().Value, 1.0E-3);
+                Assert.AreEqual(86.2724306, db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STTransform(26986).STArea()).Single().Value, 1.0E-5);
+                Assert.AreEqual(0.0, db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STArea()).Single().Value);
                 Assert.IsNull(db.TestGeometries.Where(g => g.Id == 3).Select(g => g.Geometry.STArea()).Single());
 
-                Assert.AreEqual(928.625, db.Select(() => MeasurementFunctions.STArea(Ewkt1)), 1.0E-3);
+                Assert.AreEqual(928.625, db.Select(() => MeasurementFunctions.STArea(Ewkt1)).Value, 1.0E-3);
                 Assert.AreEqual(0.0, db.Select(() => MeasurementFunctions.STArea(Wkt2)));
             }
         }
@@ -64,8 +64,8 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var a1 = db.Select(() => MathematicalFunctions.Degrees(MeasurementFunctions.STAzimuth(p1, p2)));
                 var a2 = db.Select(() => MathematicalFunctions.Degrees(MeasurementFunctions.STAzimuth(p2, p1)));
 
-                Assert.AreEqual(42.2736890060937, a1, 1.0E-8);
-                Assert.AreEqual(222.273689006094, a2, 1.0E-8);
+                Assert.AreEqual(42.2736890060937, a1.Value, 1.0E-8);
+                Assert.AreEqual(222.273689006094, a2.Value, 1.0E-8);
 
                 Assert.IsNull(db.Select(() => MeasurementFunctions.STAzimuth(p1, p1)));
                 Assert.IsNull(db.Select(() => MeasurementFunctions.STAzimuth(p1, null)));
@@ -85,10 +85,10 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var p4 = db.Select(() => GeometryConstructors.STPoint(100, 0));
 
                 var a1 = db.Select(() => MathematicalFunctions.Degrees(MeasurementFunctions.STAngle(p1, p2, p3, p4)));
-                Assert.AreEqual(45, a1, 1.0E-8);
+                Assert.AreEqual(45, a1.Value, 1.0E-8);
 
                 var a2 = db.Select(() => MathematicalFunctions.Degrees(MeasurementFunctions.STAngle(p2, p1, p4)));
-                Assert.AreEqual(45, a2, 1.0E-8);
+                Assert.AreEqual(45, a2.Value, 1.0E-8);
 
                 Assert.IsNull(db.Select(() => MeasurementFunctions.STAngle(p1, p1, p1, p1)));
             }
@@ -143,7 +143,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 Assert.AreEqual(
                     54.6993798867619,
-                    db.Select(() => MeasurementFunctions.ST3DClosestPoint(LineWkt, PointWkt).STX()),
+                    db.Select(() => MeasurementFunctions.ST3DClosestPoint(LineWkt, PointWkt).STX()).Value,
                     1.0E-9);
 
                 Assert.IsNull(db.Select(() => MeasurementFunctions.ST3DClosestPoint((NTSG)null, (NTSG)null)));
@@ -168,7 +168,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 Assert.AreEqual(2, distances4326.Count);
                 Assert.AreEqual(0.0, distances4326[0]);
-                Assert.AreEqual(0.00150567726382822, distances4326[1], 1.0E-9);
+                Assert.AreEqual(0.00150567726382822, distances4326[1].Value, 1.0E-9);
 
                 // Geometry example - units in meters (SRID:3857, proportional to pixels on popular web maps).
                 var distances3857 = db.TestGeometries
@@ -177,7 +177,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 Assert.AreEqual(2, distances3857.Count);
                 Assert.AreEqual(0.0, distances3857[0]);
-                Assert.AreEqual(167.441410065196, distances3857[1], 1.0E-9);
+                Assert.AreEqual(167.441410065196, distances3857[1].Value, 1.0E-9);
 
                 var nullDistance = db.TestGeometries
                     .Where(g => g.Id == 1)
@@ -189,7 +189,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     0.00150567726382282,
                     db.Select(() => MeasurementFunctions.STDistance(
                         "SRID=4326;POINT(-72.1235 42.3521)",
-                        "SRID=4326;LINESTRING(-72.1260 42.45, -72.123 42.1546)")),
+                        "SRID=4326;LINESTRING(-72.1260 42.45, -72.123 42.1546)")).Value,
                     1.0E-12);
 
                 Assert.IsNull(db.Select(() => MeasurementFunctions.STDistance((NTSG)null, (NTSG)null)));
@@ -205,7 +205,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     1.732,
                     db.Select(() => MeasurementFunctions.ST3DDistance(
                         "POINT(0 0 0)",
-                        "POINT(1 1 1)")),
+                        "POINT(1 1 1)")).Value,
                     1.0E-3);
 
                 Assert.IsNull(db.Select(() => MeasurementFunctions.ST3DDistance((NTSG)null, (NTSG)null)));
@@ -225,16 +225,16 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var dist_degrees = db.Select(() => geom.STCentroid().STDistance(point));
                 var min_dist_line_point_meters = db.Select(() => geom.STTransform(32611).STDistance(point.STTransform(32611)));
 
-                Assert.AreEqual(70424.71, dist_meters, 0.01);
-                Assert.AreEqual(70438.00, dist_utm11_meters, 0.01);
-                Assert.AreEqual(0.72900, dist_degrees, 0.00001);
-                Assert.AreEqual(65871.18, min_dist_line_point_meters, 0.01);
+                Assert.AreEqual(70424.71, dist_meters.Value, 0.01);
+                Assert.AreEqual(70438.00, dist_utm11_meters.Value, 0.01);
+                Assert.AreEqual(0.72900, dist_degrees.Value, 0.00001);
+                Assert.AreEqual(65871.18, min_dist_line_point_meters.Value, 0.01);
 
                 Assert.AreEqual(
                     111195.07973463,
                     db.Select(() => MeasurementFunctions.STDistanceSphere(
                         "SRID=4326;POINT(0 0)",
-                        "SRID=4326;POINT(0 1)")),
+                        "SRID=4326;POINT(0 1)")).Value,
                     1.0E-6);
 
                 Assert.IsNull(db.Select(() => MeasurementFunctions.STDistanceSphere((NTSG)null, (NTSG)null)));
@@ -254,16 +254,16 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var dist_meters_sphere = db.Select(() => geom.STCentroid().STDistanceSphere(point));
                 var dist_utm11_meters = db.Select(() => geom.STCentroid().STTransform(32611).STDistance(point.STTransform(32611)));
 
-                Assert.AreEqual(70454.92, dist_meters_spheroid, 0.01);
-                Assert.AreEqual(70424.71, dist_meters_sphere, 0.01);
-                Assert.AreEqual(70438.00, dist_utm11_meters, 0.01);
+                Assert.AreEqual(70454.92, dist_meters_spheroid.Value, 0.01);
+                Assert.AreEqual(70424.71, dist_meters_sphere.Value, 0.01);
+                Assert.AreEqual(70438.00, dist_utm11_meters.Value, 0.01);
 
                 Assert.AreEqual(
                     4434.73734584354,
                     db.Select(() => MeasurementFunctions.STDistanceSpheroid(
                         "SRID=4326;POINT(120.08 30.96)",
                         "SRID=4326;POINT(120.08 30.92)",
-                        Spheroid)),
+                        Spheroid)).Value,
                     1.0E-8);
 
                 Assert.IsNull(db.Select(() => MeasurementFunctions.STDistanceSpheroid((NTSG)null, (NTSG)null, Spheroid)));
@@ -281,12 +281,12 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var geom2 = db.Select(() => GeometryInput.STGeomFromText(Wkt2));
 
                 var dist1 = db.Select(() => geom1.STFrechetDistance(geom2));
-                Assert.AreEqual(70.7106781186548, dist1, 1.0E-9);
+                Assert.AreEqual(70.7106781186548, dist1.Value, 1.0E-9);
 
                 var dist2 = db.Select(() => geom1.STFrechetDistance(geom2, 0.5));
-                Assert.AreEqual(50.0, dist2, 1.0E-9);
+                Assert.AreEqual(50.0, dist2.Value, 1.0E-9);
 
-                Assert.AreEqual(50.0, db.Select(() => MeasurementFunctions.STFrechetDistance(Wkt1, Wkt2, 0.5)), 1.0E-9);
+                Assert.AreEqual(50.0, db.Select(() => MeasurementFunctions.STFrechetDistance(Wkt1, Wkt2, 0.5)).Value, 1.0E-9);
 
                 Assert.IsNull(db.Select(() => MeasurementFunctions.STFrechetDistance((NTSG)null, (NTSG)null)));
             }
@@ -300,17 +300,17 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var geom1 = db.Select(() => GeometryInput.STGeomFromText("LINESTRING (0 0, 2 0)"));
                 var geom2 = db.Select(() => GeometryInput.STGeomFromText("MULTIPOINT (0 1, 1 0, 2 1)"));
                 var dist12 = db.Select(() => geom1.STHausdorffDistance(geom2));
-                Assert.AreEqual(1, dist12, 1.0E-9);
+                Assert.AreEqual(1, dist12.Value, 1.0E-9);
 
                 const string Wkt3 = "LINESTRING (130 0, 0 0, 0 150)";
                 const string Wkt4 = "LINESTRING (10 10, 10 150, 130 10)";
                 var geom3 = db.Select(() => GeometryInput.STGeomFromText(Wkt3));
                 var geom4 = db.Select(() => GeometryInput.STGeomFromText(Wkt4));
                 var dist34 = db.Select(() => geom3.STHausdorffDistance(geom4, 0.5));
-                Assert.AreEqual(70, dist34, 70.0E-9);
+                Assert.AreEqual(70, dist34.Value, 70.0E-9);
 
                 Assert.AreEqual(70.0,
-                    db.Select(() => MeasurementFunctions.STHausdorffDistance(Wkt3, Wkt4, 0.5)),
+                    db.Select(() => MeasurementFunctions.STHausdorffDistance(Wkt3, Wkt4, 0.5)).Value,
                     1.0E-9);
 
                 Assert.IsNull(db.Select(() => MeasurementFunctions.STHausdorffDistance((NTSG)null, (NTSG)null)));
@@ -323,15 +323,18 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 const string Ewkt1 = "SRID=2249;LINESTRING(743238 2967416,743238 2967450,743265 2967450, 743265.625 2967416,743238 2967416)";
-                db.TestGeometries.Value(g => g.Id, 1)
+                db.TestGeometries
+                    .Value(g => g.Id, 1)
                     .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt1))
                     .Insert();
 
                 const string Ewkt2 = "SRID=2249;POINT(0 0)";
-                db.TestGeometries.Value(g => g.Id, 2)
+                db.TestGeometries
+                    .Value(g => g.Id, 2)
                     .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt2))
                     .Insert();
-                db.TestGeometries.Value(g => g.Id, 3)
+                db.TestGeometries
+                    .Value(g => g.Id, 3)
                     .Value(g => g.Geometry, () => null)
                     .Insert();
 
@@ -339,13 +342,13 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     .Where(g => g.Id == 1)
                     .Select(g => g.Geometry.STLength())
                     .Single();
-                Assert.AreEqual(122.630744000095, length1, 0.000000000001);
+                Assert.AreEqual(122.630744000095, length1.Value, 0.000000000001);
 
                 var length2 = db.TestGeometries
                     .Where(g => g.Id == 1)
                     .Select(g => g.Geometry.STLength2D())
                     .Single();
-                Assert.AreEqual(122.630744000095, length2, 0.000000000001);
+                Assert.AreEqual(122.630744000095, length2.Value, 0.000000000001);
 
                 Assert.AreEqual(0.0,
                     db.TestGeometries
@@ -359,12 +362,12 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 Assert.AreEqual(
                     122.630744000095,
-                    db.Select(() => MeasurementFunctions.STLength(Ewkt1)),
+                    db.Select(() => MeasurementFunctions.STLength(Ewkt1)).Value,
                     0.000000000001);
 
                 Assert.AreEqual(
                     122.630744000095,
-                    db.Select(() => MeasurementFunctions.STLength2D(Ewkt1)),
+                    db.Select(() => MeasurementFunctions.STLength2D(Ewkt1)).Value,
                     0.000000000001);
 
                 Assert.IsNull(db.Select(() => MeasurementFunctions.STLength((NTSG)null)));
@@ -380,11 +383,11 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var geom1 = db.Select(() => GeometryInput.STGeomFromText(Wkt1, 2249));
 
                 var length1 = db.Select(() => MeasurementFunctions.ST3DLength(geom1));
-                Assert.AreEqual(122.704716741457, length1, 1.0E-9);
+                Assert.AreEqual(122.704716741457, length1.Value, 1.0E-9);
 
                 Assert.AreEqual(
                     122.704716741457,
-                    db.Select(() => MeasurementFunctions.ST3DLength("SRID=2249;" + Wkt1)),
+                    db.Select(() => MeasurementFunctions.ST3DLength("SRID=2249;" + Wkt1)).Value,
                     1.0E-9);
 
                 Assert.IsNull(db.Select(() => MeasurementFunctions.ST3DLength((NTSG)null)));
@@ -401,17 +404,17 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var geom1 = db.Select(() => GeometryInput.STGeomFromText(Wkt));
 
                 var length1 = db.Select(() => MeasurementFunctions.STLengthSpheroid(geom1, Spheroid));
-                Assert.AreEqual(85204.5207711811, length1, 1.0E-9);
+                Assert.AreEqual(85204.5207711811, length1.Value, 1.0E-9);
 
                 var length2 = db.Select(() => MeasurementFunctions.STLengthSpheroid(geom1.STGeometryN(1), Spheroid));
-                Assert.AreEqual(13986.8725282447, length2, 1.0E-9);
+                Assert.AreEqual(13986.8725282447, length2.Value, 1.0E-9);
 
                 var length3 = db.Select(() => MeasurementFunctions.STLengthSpheroid(geom1.STGeometryN(2), Spheroid));
-                Assert.AreEqual(71217.6482429363, length3, 1.0E-9);
+                Assert.AreEqual(71217.6482429363, length3.Value, 1.0E-9);
 
                 Assert.AreEqual(
                     85204.5207711811,
-                    db.Select(() => MeasurementFunctions.STLengthSpheroid(Wkt, Spheroid)),
+                    db.Select(() => MeasurementFunctions.STLengthSpheroid(Wkt, Spheroid)).Value,
                     1.0E-9);
 
                 Assert.IsNull(db.Select(() => MeasurementFunctions.STLengthSpheroid((NTSG)null, Spheroid)));
@@ -474,12 +477,12 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 Assert.AreEqual(
                     2.82842712474619,
-                    db.Select(() => MeasurementFunctions.STMaxDistance(point, line)),
+                    db.Select(() => MeasurementFunctions.STMaxDistance(point, line)).Value,
                     1.0E-9);
 
                 Assert.AreEqual(
                     2.82842712474619,
-                    db.Select(() => MeasurementFunctions.STMaxDistance(PointWkt, LineWkt)),
+                    db.Select(() => MeasurementFunctions.STMaxDistance(PointWkt, LineWkt)).Value,
                     1.0E-9);
 
                 Assert.IsNull(db.Select(() => MeasurementFunctions.STMaxDistance((NTSG)null, (NTSG)null)));
@@ -497,13 +500,13 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var line = db.Select(() => GeometryInput.STGeomFromEWKT(LineEwkt).STTransform(2163));
 
                 var maxDistance1 = db.Select(() => MeasurementFunctions.ST3DMaxDistance(point, line));
-                Assert.AreEqual(24383.7467488441, maxDistance1, 1.0E-9);
+                Assert.AreEqual(24383.7467488441, maxDistance1.Value, 1.0E-9);
 
                 Assert.AreEqual(
                     1.732,
                     db.Select(() => MeasurementFunctions.ST3DMaxDistance(
                         "POINT(0 0 0)",
-                        "POINT(1 1 1)")),
+                        "POINT(1 1 1)")).Value,
                     1.0E-3);
 
                 Assert.IsNull(db.Select(() => MeasurementFunctions.ST3DMaxDistance((NTSG)null, (NTSG)null)));
@@ -518,9 +521,9 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 const string Wkt = "POLYGON ((0 0, 1 0, 1 1, 0.5 3.2e-4, 0 0))";
                 var geometry = db.Select(() => GeometryInput.STGeomFromText(Wkt));
                 var minimumClearance = db.Select(() => MeasurementFunctions.STMinimumClearance(geometry));
-                Assert.AreEqual(0.00032, minimumClearance, 1.0E-5);
+                Assert.AreEqual(0.00032, minimumClearance.Value, 1.0E-5);
 
-                Assert.AreEqual(0.00032, db.Select(() => MeasurementFunctions.STMinimumClearance(Wkt)), 1.0E-5);
+                Assert.AreEqual(0.00032, db.Select(() => MeasurementFunctions.STMinimumClearance(Wkt)).Value, 1.0E-5);
 
                 Assert.IsNull(db.Select(() => MeasurementFunctions.STMinimumClearance((NTSG)null)));
             }
@@ -571,22 +574,24 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     .Insert();
 
                 const string Ewkt3 = "SRID=2249;POINT(0 0)";
-                db.TestGeometries.Value(g => g.Id, 3)
+                db.TestGeometries
+                    .Value(g => g.Id, 3)
                     .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt3))
                     .Insert();
-                db.TestGeometries.Value(g => g.Id, 4)
+                db.TestGeometries
+                    .Value(g => g.Id, 4)
                     .Value(g => g.Geometry, () => null)
                     .Insert();
 
-                Assert.AreEqual(122.630744000095, db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STPerimeter()).Single(), 0.000000000001);
-                Assert.AreEqual(122.630744000095, db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STPerimeter2D()).Single(), 0.000000000001);
-                Assert.AreEqual(845.227713366825, db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STPerimeter()).Single(), 0.000000000001);
-                Assert.AreEqual(845.227713366825, db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STPerimeter2D()).Single(), 0.000000000001);
+                Assert.AreEqual(122.630744000095, db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STPerimeter()).Single().Value, 0.000000000001);
+                Assert.AreEqual(122.630744000095, db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STPerimeter2D()).Single().Value, 0.000000000001);
+                Assert.AreEqual(845.227713366825, db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STPerimeter()).Single().Value, 0.000000000001);
+                Assert.AreEqual(845.227713366825, db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STPerimeter2D()).Single().Value, 0.000000000001);
                 Assert.AreEqual(0.0, db.TestGeometries.Where(g => g.Id == 3).Select(g => g.Geometry.STPerimeter()).Single());
                 Assert.IsNull(db.TestGeometries.Where(g => g.Id == 4).Select(g => g.Geometry.STPerimeter()).Single());
                 Assert.IsNull(db.TestGeometries.Where(g => g.Id == 4).Select(g => g.Geometry.STPerimeter2D()).Single());
 
-                Assert.AreEqual(122.630744000095, db.Select(() => MeasurementFunctions.STPerimeter2D(Ewkt1)), 0.000000000001);
+                Assert.AreEqual(122.630744000095, db.Select(() => MeasurementFunctions.STPerimeter2D(Ewkt1)).Value, 0.000000000001);
             }
         }
 
@@ -598,9 +603,9 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 const string Ewkt = "SRID=2249;POLYGON((743238 2967416 2,743238 2967450 1,743265.625 2967416 1, 743238 2967416 2))";
                 var geometry = db.Select(() => GeometryInput.STGeomFromEWKT(Ewkt));
                 var perimeter = db.Select(() => MeasurementFunctions.ST3DPerimeter(geometry));
-                Assert.AreEqual(105.465793597674, perimeter, 1.0E-9);
+                Assert.AreEqual(105.465793597674, perimeter.Value, 1.0E-9);
 
-                Assert.AreEqual(105.465793597674, db.Select(() => MeasurementFunctions.ST3DPerimeter(Ewkt)), 1.0E-9);
+                Assert.AreEqual(105.465793597674, db.Select(() => MeasurementFunctions.ST3DPerimeter(Ewkt)).Value, 1.0E-9);
 
                 Assert.IsNull(db.Select(() => MeasurementFunctions.ST3DPerimeter((NTSG)null)));
             }

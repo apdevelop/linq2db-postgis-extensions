@@ -211,19 +211,19 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     .Insert();
 
                 var point1 = db.TestGeometries.Where(g => g.Id == 1);
-                Assert.AreEqual(-71.1043443253471, point1.Select(g => g.Geometry.STX()).Single(), 0.0000000000001);
-                Assert.AreEqual(42.3150676015829, point1.Select(g => g.Geometry.STY()).Single(), 0.0000000000001);
+                Assert.AreEqual(-71.1043443253471, point1.Select(g => g.Geometry.STX()).Single().Value, 0.0000000000001);
+                Assert.AreEqual(42.3150676015829, point1.Select(g => g.Geometry.STY()).Single().Value, 0.0000000000001);
 
                 var point2 = db.TestGeometries.Where(g => g.Id == 2);
-                Assert.AreEqual(1, point2.Select(g => g.Geometry.STX()).Single(), 0.1);
-                Assert.AreEqual(2, point2.Select(g => g.Geometry.STY()).Single(), 0.1);
-                Assert.AreEqual(1.5, point2.Select(g => g.Geometry.STZ()).Single(), 0.1);
+                Assert.AreEqual(1, point2.Select(g => g.Geometry.STX()).Single().Value, 0.1);
+                Assert.AreEqual(2, point2.Select(g => g.Geometry.STY()).Single().Value, 0.1);
+                Assert.AreEqual(1.5, point2.Select(g => g.Geometry.STZ()).Single().Value, 0.1);
 
                 var point3 = db.TestGeometries.Where(g => g.Id == 3);
-                Assert.AreEqual(10, point3.Select(g => g.Geometry.STX()).Single(), 0.1);
-                Assert.AreEqual(20, point3.Select(g => g.Geometry.STY()).Single(), 0.1);
-                Assert.AreEqual(30, point3.Select(g => g.Geometry.STZ()).Single(), 0.1);
-                Assert.AreEqual(-999, point3.Select(g => g.Geometry.STM()).Single(), 0.1);
+                Assert.AreEqual(10, point3.Select(g => g.Geometry.STX()).Single().Value, 0.1);
+                Assert.AreEqual(20, point3.Select(g => g.Geometry.STY()).Single().Value, 0.1);
+                Assert.AreEqual(30, point3.Select(g => g.Geometry.STZ()).Single().Value, 0.1);
+                Assert.AreEqual(-999, point3.Select(g => g.Geometry.STM()).Single().Value, 0.1);
             }
         }
 
@@ -238,9 +238,9 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     .Insert();
 
                 var point1 = db.TestGeometries.Where(g => g.Id == 1);
-                Assert.AreEqual(10, point1.Select(g => g.Geometry.STX()).Single(), 0.1);
-                Assert.AreEqual(20, point1.Select(g => g.Geometry.STY()).Single(), 0.1);
-                Assert.AreEqual(-999, point1.Select(g => g.Geometry.STM()).Single(), 0.1);
+                Assert.AreEqual(10, point1.Select(g => g.Geometry.STX()).Single().Value, 0.1);
+                Assert.AreEqual(20, point1.Select(g => g.Geometry.STY()).Single().Value, 0.1);
+                Assert.AreEqual(-999, point1.Select(g => g.Geometry.STM()).Single().Value, 0.1);
             }
         }
 
@@ -287,8 +287,8 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     .Insert();
 
                 var point1 = db.TestGeometries.Where(g => g.Id == 1);
-                Assert.AreEqual(-71.104, point1.Select(g => g.Geometry.STX()).Single(), 0.001);
-                Assert.AreEqual(42.315, point1.Select(g => g.Geometry.STY()).Single(), 0.001);
+                Assert.AreEqual(-71.104, point1.Select(g => g.Geometry.STX()).Single().Value, 0.001);
+                Assert.AreEqual(42.315, point1.Select(g => g.Geometry.STY()).Single().Value, 0.001);
             }
         }
 

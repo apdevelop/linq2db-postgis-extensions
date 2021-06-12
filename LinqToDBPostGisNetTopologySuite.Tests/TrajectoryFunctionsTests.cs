@@ -87,7 +87,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                         .Where(g => g.Id == 1)
                         .Select(g => g.Geometry.STClosestPointOfApproach(db.TestGeometries
                                         .Where(g2 => g2.Id == 2).Single().Geometry))
-                        .Single(),
+                        .Single().Value,
                     1.0E-3);
 
                 Assert.IsNull(db.TestGeometries
@@ -97,7 +97,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 Assert.AreEqual(
                     1432626331.03448,
-                    db.Select(() => TrajectoryFunctions.STClosestPointOfApproach(Wkt1, Wkt2)),
+                    db.Select(() => TrajectoryFunctions.STClosestPointOfApproach(Wkt1, Wkt2)).Value,
                     1.0E-3);
 
                 Assert.IsNull(db.Select(() => TrajectoryFunctions.STClosestPointOfApproach((string)null, (string)null)));
@@ -130,7 +130,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     1.96521473776207,
                     db.TestGeometries.Where(g => g.Id == 1)
                         .Select(g => g.Geometry.STDistanceCPA(db.TestGeometries.Where(g2 => g2.Id == 2).Single().Geometry))
-                        .Single(),
+                        .Single().Value,
                         1.0E-8);
 
                 Assert.IsNull(db.TestGeometries
@@ -140,7 +140,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 Assert.AreEqual(
                         1.96521473776207,
-                        db.Select(() => TrajectoryFunctions.STDistanceCPA(Wkt1, Wkt2)),
+                        db.Select(() => TrajectoryFunctions.STDistanceCPA(Wkt1, Wkt2)).Value,
                         1.0E-8);
 
                 Assert.IsNull(db.Select(() => TrajectoryFunctions.STDistanceCPA((string)null, (string)null)));

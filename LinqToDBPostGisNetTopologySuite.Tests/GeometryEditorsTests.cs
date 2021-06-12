@@ -759,7 +759,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     db.Select(() => GeometryEditors
                         .STQuantizeCoordinates(
                             GeometryConstructors.STMakePoint(100.123456, 0), 4)
-                        .STX()),
+                        .STX()).Value,
                     1.0E-12);
 
                 Assert.IsNull(db.Select(() => GeometryEditors.STQuantizeCoordinates((NTSG)null, 0, 0, 0, 0)));
