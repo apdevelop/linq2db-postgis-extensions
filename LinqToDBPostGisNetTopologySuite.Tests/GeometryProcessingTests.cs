@@ -53,7 +53,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     .Select(g => g.Geography.STBuffer(50.0).STArea())
                     .Single();
 
-                Assert.AreEqual(7788.3237, geographyPointBufferArea.Value, 1.0E-4);
+                Assert.AreEqual(7788.324, geographyPointBufferArea.Value, 1.0E-3);
             }
         }
 
