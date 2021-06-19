@@ -21,7 +21,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <remarks>
         /// See https://postgis.net/docs/ST_Buffer.html
         /// </remarks>
-        /// <param name="geometry">Input geometry.</param>
+        /// <param name="geometry">Input geometry (or geography).</param>
         /// <param name="radius">Buffer radius, in SRS units.</param>
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_Buffer", ServerSideOnly = true)]
@@ -62,8 +62,6 @@ namespace LinqToDBPostGisNetTopologySuite
             throw new InvalidOperationException();
         }
 
-        // TODO: ST_Buffer(geography)
-
         /// <summary>
         /// Returns geometry formed by constituent linework of input geometry. 
         /// </summary>
@@ -79,20 +77,33 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
-        /// Returns geometric center (center of mass) of input geometry.
+        /// Returns geometric center (center of mass) of input <paramref name="geometry"/>.
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/ST_Centroid.html
         /// </remarks>
-        /// <param name="geometry">Input geometry.</param>
-        /// <returns>Geometry (POINT).</returns>
+        /// <param name="geometry">Input geometry (or geography).</param>
+        /// <returns>Geometric center (Point).</returns>
         [Sql.Function("ST_Centroid", ServerSideOnly = true)]
         public static NTSG STCentroid(this NTSG geometry)
         {
             throw new InvalidOperationException();
         }
 
-        // TODO: ST_Centroid(geography)
+        /// <summary>
+        /// Returns geometric center (center of mass) of input <paramref name="geography"/>.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_Centroid.html
+        /// </remarks>
+        /// <param name="geography">Input geography.</param>
+        /// <param name="useSpheroid">Use spheroid (true) of simple sphere (false).</param>
+        /// <returns>Geometric center (Point).</returns>
+        [Sql.Function("ST_Centroid", ServerSideOnly = true)]
+        public static NTSG STCentroid(this NTSG geography, bool useSpheroid)
+        {
+            throw new InvalidOperationException();
+        }
 
         /// <summary>
         /// Returns concave hull of input geometry. 

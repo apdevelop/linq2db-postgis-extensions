@@ -16,5 +16,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         public ITable<OwmCityEntity> OwmCities { get { return GetTable<OwmCityEntity>(); } }
 
         public ITable<TestGeometryEntity> TestGeometries { get { return GetTable<TestGeometryEntity>(); } }
+
+        public ITable<TestGeographyEntity> TestGeographies { get { return GetTable<TestGeographyEntity>(); } }
     }
 }

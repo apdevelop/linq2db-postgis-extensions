@@ -6,13 +6,19 @@
 
 CREATE TABLE owm_cities
 (
-  id   integer primary key,
-  city_name  varchar not null,
-  geom       geometry not null
+  id		integer primary key,
+  city_name	varchar not null,
+  geom		geometry not null
 );
 
 CREATE TABLE test_geometry
 (
-  id   integer primary key,
-  geom  geometry
+  id	integer primary key,
+  geom	geometry
+);
+
+CREATE TABLE test_geography
+(
+  id	integer primary key,
+  geog	geography
 );

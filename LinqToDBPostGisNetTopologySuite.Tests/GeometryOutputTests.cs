@@ -4,7 +4,10 @@ using System.Linq;
 using LinqToDB;
 using NUnit.Framework;
 
+using NTSGS = NetTopologySuite.Geometries;
 using NTSG = NetTopologySuite.Geometries.Geometry;
+
+using LinqToDBPostGisNetTopologySuite.Tests.Entities;
 
 namespace LinqToDBPostGisNetTopologySuite.Tests
 {
@@ -20,6 +23,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             {
                 this.CurrentVersion = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
                 db.TestGeometries.Delete();
+                db.TestGeographies.Delete();
             }
         }
 
@@ -37,6 +41,19 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     db.Select(() => GeometryOutput.STAsEWKT("0108000080030000000000000060E30A4100000000785C0241000000000000F03F0000000018E20A4100000000485F024100000000000000400000000018E20A4100000000305C02410000000000000840")));
 
                 Assert.IsNull(db.Select(() => GeometryOutput.STAsEWKT((NTSG)null)));
+
+                // geography
+                db.TestGeographies
+                    .Value(g => g.Id, 1)
+                    .Value(g => g.Geography, () => GeometryInput.STGeographyFromText("POINT(30 60)"))
+                    .Insert();
+
+                Assert.AreEqual(
+                    "SRID=4326;POINT(30 60)",
+                    db.TestGeographies
+                        .Where(g => g.Id == 1)
+                        .Select(g => g.Geography.STAsEWKT())
+                        .Single());
             }
         }
 
@@ -60,6 +77,21 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     db.Select(() => GeometryOutput.STAsText(GeometryInput.STGeomFromEWKT("SRID=4326;POINT(111.1111111 1.1111111)"), 2)));
 
                 Assert.IsNull(db.Select(() => GeometryOutput.STAsText((NTSG)null)));
+
+
+                const string Wkt2 = "LINESTRING(0 30,120 30)";
+
+                db.TestGeographies
+                    .Value(g => g.Id, 1)
+                    .Value(g => g.Geography, () => GeometryInput.STGeogFromText(Wkt2))
+                    .Insert();
+
+                var geographyText = db.TestGeographies
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geography.STAsText())
+                    .Single();
+
+                Assert.AreEqual(Wkt2, geographyText);
             }
         }
 
@@ -74,7 +106,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var wkb = db.TestGeometries.Select(g => g.Geometry.STAsBinary()).Single();
 
                 Assert.AreEqual(21, wkb.Length);
-                Assert.AreEqual(1, wkb[0]); // TODO: depends on server machine endianness
+                Assert.AreEqual(1, wkb[0]); // TODO: depends on environment endianness
                 Assert.AreEqual(1, BitConverter.ToUInt32(wkb, 1));
                 Assert.AreEqual(2, BitConverter.ToDouble(wkb, 5));
                 Assert.AreEqual(4, BitConverter.ToDouble(wkb, 13));
@@ -90,6 +122,23 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 Assert.AreEqual(3, wkbBigEndian[4]);
 
                 Assert.IsNull(db.Select(() => GeometryOutput.STAsBinary(null, EndiannessEncoding.BigEndian)));
+
+                // geography
+                db.TestGeographies
+                    .Value(g => g.Id, 1)
+                    .Value(g => g.Geography, () => GeometryInput.STGeogFromText(Wkt1))
+                    .Insert();
+
+                var wkbGeographyPoint = db.TestGeographies
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geography.STAsBinary())
+                    .Single();
+
+                Assert.AreEqual(21, wkbGeographyPoint.Length);
+                Assert.AreEqual(1, wkbGeographyPoint[0]); // TODO: depends on environment endianness
+                Assert.AreEqual(1, BitConverter.ToUInt32(wkbGeographyPoint, 1));
+                Assert.AreEqual(2, BitConverter.ToDouble(wkbGeographyPoint, 5));
+                Assert.AreEqual(4, BitConverter.ToDouble(wkbGeographyPoint, 13));
             }
         }
 
@@ -143,12 +192,21 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 const string Wkt1 = "POINT(2.48 4.75)";
-                db.TestGeometries.Value(g => g.Id, 1).Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt1)).Insert();
+                db.TestGeometries
+                    .Value(g => g.Id, 1)
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt1))
+                    .Insert();
 
-                var geojson1 = db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STAsGeoJSON()).Single();
+                var geojson1 = db.TestGeometries
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geometry.STAsGeoJSON())
+                    .Single();
                 Assert.AreEqual("{\"type\":\"Point\",\"coordinates\":[2.48,4.75]}", geojson1);
 
-                var geojson1crs = db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STAsGeoJSON(1, 4)).Single();
+                var geojson1crs = db.TestGeometries
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geometry.STAsGeoJSON(1, 4))
+                    .Single();
                 Assert.AreEqual("{\"type\":\"Point\",\"coordinates\":[2.5,4.8]}", geojson1crs);
 
 
@@ -168,7 +226,6 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     .Value(g => g.Geometry, () => GeometryInput.STGeomFromEWKT(Ewkt3))
                     .Insert();
 
-
                 var geojson3 = db.TestGeometries
                     .Where(g => g.Id == 3)
                     .Select(g => g.Geometry.STAsGeoJSON())
@@ -177,8 +234,8 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 if (this.CurrentVersion >= new Version("3.0.0"))
                 {
                     Assert.AreEqual(
-                    "{\"type\":\"Point\",\"crs\":{\"type\":\"name\",\"properties\":{\"name\":\"EPSG:3857\"}},\"coordinates\":[2.48,4.75]}",
-                    geojson3);
+                        "{\"type\":\"Point\",\"crs\":{\"type\":\"name\",\"properties\":{\"name\":\"EPSG:3857\"}},\"coordinates\":[2.48,4.75]}",
+                        geojson3);
                 }
                 else
                 {
@@ -187,10 +244,40 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                         geojson3);
                 }
 
-                var geojson3crs = db.TestGeometries.Where(g => g.Id == 3).Select(g => g.Geometry.STAsGeoJSON(1, 4)).Single();
+                var geojson3crs = db.TestGeometries
+                    .Where(g => g.Id == 3)
+                    .Select(g => g.Geometry.STAsGeoJSON(1, 4))
+                    .Single();
                 Assert.AreEqual("{\"type\":\"Point\",\"crs\":{\"type\":\"name\",\"properties\":{\"name\":\"urn:ogc:def:crs:EPSG::3857\"}},\"coordinates\":[2.5,4.8]}", geojson3crs);
 
                 Assert.IsNull(db.Select(() => GeometryOutput.STAsGeoJSON(null)));
+
+
+                db.TestGeographies
+                    .Value(g => g.Id, 1)
+                    .Value(g => g.Geography, () => GeometryInput.STGeographyFromText("POINT(30 60)"))
+                    .Insert();
+
+                var geojson4 = db.TestGeographies
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geography.STAsGeoJSON())
+                    .Single();
+
+                Assert.AreEqual(
+                    "{\"type\":\"Point\",\"coordinates\":[30,60]}",
+                    geojson4);
+
+                var pointGeography = new NTSGS.Point(-43.23456, 72.4567772) { SRID = SRID4326 };
+                db.Insert(new TestGeographyEntity(2, pointGeography));
+
+                var geojson5 = db.TestGeographies
+                    .Where(g => g.Id == 2)
+                    .Select(g => g.Geography.STAsGeoJSON(3))
+                    .Single();
+
+                Assert.AreEqual(
+                    "{\"type\":\"Point\",\"coordinates\":[-43.235,72.457]}",
+                    geojson5);
             }
         }
 
@@ -209,6 +296,21 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 ////Assert.AreEqual("<gml:Point srsName=\"urn:ogc:def:crs:EPSG::4326\"><gml:pos>6.34535 5.23423</gml:pos></gml:Point>", gml2);
 
                 Assert.IsNull(db.Select(() => GeometryOutput.STAsGML(null)));
+
+                // geography
+                db.TestGeographies
+                    .Value(g => g.Id, 1)
+                    .Value(g => g.Geography, () => GeometryInput.STGeographyFromText("POINT(30 60)"))
+                    .Insert();
+
+                var gml2 = db.TestGeographies
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geography.STAsGML())
+                    .Single();
+
+                Assert.AreEqual(
+                    "<gml:Point srsName=\"EPSG:4326\"><gml:coordinates>30,60</gml:coordinates></gml:Point>",
+                    gml2);
             }
         }
 
@@ -223,6 +325,21 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 Assert.AreEqual("<Polygon><outerBoundaryIs><LinearRing><coordinates>0,0 0,1 1,1 1,0 0,0</coordinates></LinearRing></outerBoundaryIs></Polygon>", kml1);
 
                 Assert.IsNull(db.Select(() => GeometryOutput.STAsKML(null)));
+
+                // geography
+                db.TestGeographies
+                    .Value(g => g.Id, 1)
+                    .Value(g => g.Geography, () => GeometryInput.STGeographyFromText("POINT(30 60)"))
+                    .Insert();
+
+                var kml2 = db.TestGeographies
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geography.STAsKML())
+                    .Single();
+
+                Assert.AreEqual(
+                    "<Point><coordinates>30,60</coordinates></Point>",
+                    kml2);
             }
         }
 
@@ -268,12 +385,27 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                var g1 = db.Select(() => GeometryInput.STGeomFromText("POLYGON((0 0,0 1,1 1,1 0,0 0))"));
+                var geometry1 = db.Select(() => GeometryInput.STGeomFromText("POLYGON((0 0,0 1,1 1,1 0,0 0))"));
 
-                var svg1 = db.Select(() => GeometryOutput.STAsSVG(g1));
+                var svg1 = db.Select(() => GeometryOutput.STAsSVG(geometry1));
                 Assert.AreEqual("M 0 0 L 0 -1 1 -1 1 0 Z", svg1);
 
                 Assert.IsNull(db.Select(() => GeometryOutput.STAsSVG(null)));
+
+                // geography
+                db.TestGeographies
+                    .Value(g => g.Id, 1)
+                    .Value(g => g.Geography, () => GeometryInput.STGeographyFromText("POINT(30 60)"))
+                    .Insert();
+
+                var svg2 = db.TestGeographies
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geography.STAsSVG())
+                    .Single();
+
+                Assert.AreEqual(
+                    "cx=\"30\" cy=\"-60\"",
+                    svg2);
             }
         }
 

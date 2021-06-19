@@ -17,6 +17,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 db.TestGeometries.Delete();
+                db.TestGeographies.Delete();
             }
         }
 
@@ -420,8 +421,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 var result = db.TestGeometries
                     .Where(g => g.Id == 1)
-                    .Select(g => g.Geometry.STTranslate(1, 0))
-                    .Select(g => GeometryOutput.STAsText(g))
+                    .Select(g => g.Geometry.STTranslate(1, 0).STAsText())
                     .Single();
 
                 Assert.AreEqual("POINT(-70.01 42.37)", result);

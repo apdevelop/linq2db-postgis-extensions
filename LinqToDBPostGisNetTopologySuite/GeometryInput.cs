@@ -46,8 +46,33 @@ namespace LinqToDBPostGisNetTopologySuite
             throw new InvalidOperationException();
         }
 
-        // TODO: geography ST_GeogFromText(text EWKT);
-        // TODO: geography ST_GeographyFromText(text EWKT);
+        /// <summary>
+        /// Constructs geography from Extended Well-Known Text representation.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_GeogFromText.html
+        /// </remarks>
+        /// <param name="ewkt">Extended Well-Known Text (EWKT) string.</param>
+        /// <returns>Geography.</returns>
+        [Sql.Function("ST_GeogFromText", ServerSideOnly = true)]
+        public static NTSG STGeogFromText(string ewkt)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Constructs geography from Extended Well-Known Text representation.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_GeographyFromText.html
+        /// </remarks>
+        /// <param name="ewkt">Extended Well-Known Text (EWKT) string.</param>
+        /// <returns>Geography.</returns>
+        [Sql.Function("ST_GeographyFromText", ServerSideOnly = true)]
+        public static NTSG STGeographyFromText(string ewkt)
+        {
+            throw new InvalidOperationException();
+        }
 
         /// <summary>
         /// Constructs geometry (GeometryCollection) from Well-Known Text representation.
@@ -340,7 +365,19 @@ namespace LinqToDBPostGisNetTopologySuite
         #endregion 5.8.1. Well-Known Text (WKT)
 
         #region 5.8.2. Well-Known Binary (WKB)
-        // TODO: geography ST_GeogFromWKB(bytea wkb);
+        /// <summary>
+        /// Constructs geography from the Well-Known Binary (WKB) representation.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_GeogFromWKB.html
+        /// </remarks>
+        /// <param name="wkb">Well-Known Binary (WKB) or Extended WKB (EWKB).</param>
+        /// <returns>Geography.</returns>
+        [Sql.Function("ST_GeogFromWKB", ServerSideOnly = true)]
+        public static NTSG STGeogFromWKB(byte[] wkb)
+        {
+            throw new InvalidOperationException();
+        }
 
         /// <summary>
         /// Constructs geometry from the Extended Well-Known Binary (EWKB) representation.

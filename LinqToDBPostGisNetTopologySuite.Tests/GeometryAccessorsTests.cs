@@ -21,6 +21,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             {
                 this.CurrentVersion = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
                 db.TestGeometries.Delete();
+                db.TestGeographies.Delete();
             }
         }
 
@@ -951,13 +952,26 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     .Value(g => g.Geometry, () => GeometryInput.STGeomFromText("LINESTRING(0 0, 1 1)"))
                     .Insert();
 
+                Assert.AreEqual("LineString[] with 2 points", db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STSummary()).Single());
+
                 db.TestGeometries
                     .Value(g => g.Id, 2)
                     .Value(g => g.Geometry, () => null)
                     .Insert();
 
-                Assert.AreEqual("LineString[] with 2 points", db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STSummary()).Single());
                 Assert.IsNull(db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STSummary()).Single());
+
+                db.TestGeographies
+                    .Value(g => g.Id, 1)
+                    .Value(g => g.Geography, () => GeometryInput.STGeographyFromText("POINT(30 60)"))
+                    .Insert();
+
+                Assert.AreEqual(
+                    "Point[GS]", 
+                    db.TestGeographies
+                        .Where(g => g.Id == 1)
+                        .Select(g => g.Geography.STSummary())
+                        .Single());
             }
         }
 

@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System;
+using System.Linq;
 
 using LinqToDB;
 using NUnit.Framework;
@@ -7,7 +8,6 @@ using NTSGS = NetTopologySuite.Geometries;
 using NTSG = NetTopologySuite.Geometries.Geometry;
 
 using LinqToDBPostGisNetTopologySuite.Tests.Entities;
-using System;
 
 namespace LinqToDBPostGisNetTopologySuite.Tests
 {
@@ -20,6 +20,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 db.TestGeometries.Delete();
+                db.TestGeographies.Delete();
             }
         }
 
@@ -72,6 +73,20 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 Assert.IsNull(db.Select(() => MeasurementFunctions.STAzimuth(p1, null)));
                 Assert.IsNull(db.Select(() => MeasurementFunctions.STAzimuth(null, p1)));
                 ////Assert.IsNull(db.Select(() => MeasurementFunctions.STAzimuth((NTSG)null, (NTSG)null)));
+
+
+                var pointA = new NTSGS.Point(0, 0) { SRID = SRID4326 };
+                db.Insert(new TestGeographyEntity(1, pointA));
+
+                var pointB = new NTSGS.Point(15, 5) { SRID = SRID4326 };
+                db.Insert(new TestGeographyEntity(2, pointB));
+
+                var azimuth = db.TestGeographies
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geography.STAzimuth(db.TestGeographies.Where(g0 => g0.Id == 2).Single().Geography))
+                    .Single();
+
+                Assert.AreEqual(1.24683, azimuth.Value, 1.0E-5);
             }
         }
 
@@ -194,6 +209,27 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     1.0E-12);
 
                 Assert.IsNull(db.Select(() => MeasurementFunctions.STDistance((NTSG)null, (NTSG)null)));
+
+                // geography
+                var pointGeography = new NTSGS.Point(-72.1235, 42.3521) { SRID = SRID4326 };
+                db.Insert(new TestGeographyEntity(1, pointGeography));
+
+                var lineGeography = new NTSGS.LineString(new[] { new NTSGS.Coordinate(-72.1260, 42.45), new NTSGS.Coordinate(-72.123, 42.1546) }) { SRID = SRID4326 };
+                db.Insert(new TestGeographyEntity(2, lineGeography));
+
+                var distance1 = db.TestGeographies
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geography.STDistance(db.TestGeographies.Where(g0 => g0.Id == 2).Single().Geography))
+                    .Single();
+
+                Assert.AreEqual(123.802077, distance1.Value, 1.0E-6);
+
+                var distance2 = db.TestGeographies
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geography.STDistance(db.TestGeographies.Where(g0 => g0.Id == 2).Single().Geography, false))
+                    .Single();
+
+                Assert.AreEqual(123.475737, distance2.Value, 1.0E-6);
             }
         }
 
@@ -372,6 +408,27 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     0.000000000001);
 
                 Assert.IsNull(db.Select(() => MeasurementFunctions.STLength((NTSG)null)));
+
+
+                var PolygonGeographyWkt = "SRID=4326;LINESTRING(-72.1260 42.45, -72.1240 42.45666, -72.123 42.1546)";
+                db.TestGeographies
+                    .Value(g => g.Id, 1)
+                    .Value(g => g.Geography, () => GeometryInput.STGeographyFromText(PolygonGeographyWkt))
+                    .Insert();
+
+                var perimeter1 = db.TestGeographies
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geography.STLength())
+                    .Single();
+
+                Assert.AreEqual(34310.57036, perimeter1.Value, 1.0E-5);
+
+                var perimeter2 = db.TestGeographies
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geography.STLength(false))
+                    .Single();
+
+                Assert.AreEqual(34346.20609, perimeter2.Value, 1.0E-5);
             }
         }
 
@@ -593,6 +650,20 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 Assert.IsNull(db.TestGeometries.Where(g => g.Id == 4).Select(g => g.Geometry.STPerimeter2D()).Single());
 
                 Assert.AreEqual(122.630744000095, db.Select(() => MeasurementFunctions.STPerimeter2D(Ewkt1)).Value, 0.000000000001);
+
+
+                var PolygonGeographyWkt = "POLYGON((-71.1776848522251 42.3902896512902,-71.1776843766326 42.3903829478009, -71.1775844305465 42.3903826677917,-71.1775825927231 42.3902893647987,-71.1776848522251 42.3902896512902))";
+                db.TestGeographies
+                    .Value(g => g.Id, 1)
+                    .Value(g => g.Geography, () => GeometryInput.STGeographyFromText(PolygonGeographyWkt))
+                    .Insert();
+
+                var perimeterGeography = db.TestGeographies
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geography.STPerimeter())
+                    .Single();
+
+                Assert.AreEqual(37.379046, perimeterGeography.Value, 1.0E-6);
             }
         }
 
@@ -618,17 +689,17 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             const string wkt = "POINT(0 0)";
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                var result1 = db.Select(() => MeasurementFunctions.STProject(GeometryInput.STGeomFromText(wkt),100000,(Math.PI/180.0)*45.0)) as NTSGS.Point;
+                var result1 = db.Select(() => MeasurementFunctions.STProject(GeometryInput.STGeomFromText(wkt), 100000, (Math.PI / 180.0) * 45.0)) as NTSGS.Point;
                 var result2 = db.Select(() => MeasurementFunctions.STProject(wkt, 100000, (Math.PI / 180.0) * 45.0)) as NTSGS.Point;
                 var result3 = db.Select(() => MeasurementFunctions.STProject((NTSG)null, 100000, (Math.PI / 180.0) * 45.0)) as NTSGS.Point;
 
                 Assert.IsNotNull(result1);
-                Assert.AreEqual(0.635231029125537,result1.X,1.0E-5);
-                Assert.AreEqual(0.639472334729198,result1.Y,1.0E-5);
+                Assert.AreEqual(0.635231029125537, result1.X, 1.0E-5);
+                Assert.AreEqual(0.639472334729198, result1.Y, 1.0E-5);
 
                 Assert.IsNotNull(result2);
-                Assert.AreEqual(0.635231029125537,result2.X,1.0E-5);
-                Assert.AreEqual(0.639472334729198,result2.Y,1.0E-5);
+                Assert.AreEqual(0.635231029125537, result2.X, 1.0E-5);
+                Assert.AreEqual(0.639472334729198, result2.Y, 1.0E-5);
 
                 Assert.IsNull(result3);
             }

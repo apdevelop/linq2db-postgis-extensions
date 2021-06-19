@@ -27,12 +27,17 @@ jobs:
           
     steps:
     - name: init database table owm_cities
-      run: psql -h localhost -p 5432 -d postgistest -U reader -c "CREATE TABLE IF NOT EXISTS owm_cities(  id   integer primary key,  city_name  varchar not null,  geom       geometry not null)"
+      run: psql -h localhost -p 5432 -d postgistest -U reader -c "CREATE TABLE IF NOT EXISTS owm_cities(id integer primary key, city_name varchar not null, geom geometry not null);"
       env:
         PGPASSWORD: reader
 
     - name: init database table test_geometry
-      run: psql -h localhost -p 5432 -d postgistest -U reader -c "CREATE TABLE test_geometry(  id   integer primary key,  geom  geometry);"
+      run: psql -h localhost -p 5432 -d postgistest -U reader -c "CREATE TABLE test_geometry(id integer primary key, geom geometry);"
+      env:
+        PGPASSWORD: reader
+
+    - name: init database table test_geography
+      run: psql -h localhost -p 5432 -d postgistest -U reader -c "CREATE TABLE test_geography(id integer primary key, geog geography);"
       env:
         PGPASSWORD: reader
 

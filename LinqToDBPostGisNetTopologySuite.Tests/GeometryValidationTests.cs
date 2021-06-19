@@ -15,6 +15,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 db.TestGeometries.Delete();
+                db.TestGeographies.Delete();
             }
         }
 
@@ -57,6 +58,9 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
+                db.Connection.RegisterPostGisCompositeTypes();
+                // or PostGisCompositeTypeMapper.RegisterPostGisCompositeTypesGlobally();
+
                 const string Wkt1 = "LINESTRING(0 0, 1 1)";
                 db.TestGeometries
                     .Value(g => g.Id, 1)
@@ -70,10 +74,6 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     .Insert();
 
                 db.TestGeometries.Value(g => g.Id, 3).Value(g => g.Geometry, () => null).Insert();
-
-                // TODO: ! utility (extension) method to globally register composite types, 
-                // like 'NpgsqlConnection.GlobalTypeMapper.UseNetTopologySuite()' or 'conn.TypeMapper.UseNetTopologySuite()'
-                (db.Connection as Npgsql.NpgsqlConnection).TypeMapper.MapComposite<ValidDetail>(ValidDetail.CompositeTypeName);
 
                 var d1 = db.TestGeometries
                     .Where(g => g.Id == 1)

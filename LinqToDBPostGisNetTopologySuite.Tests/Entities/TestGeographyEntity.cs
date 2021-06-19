@@ -4,8 +4,8 @@ using NTSG = NetTopologySuite.Geometries.Geometry;
 
 namespace LinqToDBPostGisNetTopologySuite.Tests.Entities
 {
-    [Table("test_geometry", Schema = "public")]
-    public class TestGeometryEntity
+    [Table("test_geography", Schema = "public")]
+    public class TestGeographyEntity
     {
         /// <summary>
         /// Identifier (Primary Key).
@@ -14,20 +14,20 @@ namespace LinqToDBPostGisNetTopologySuite.Tests.Entities
         public int Id { get; set; }
 
         /// <summary>
-        /// Geometry data.
+        /// Geography data.
         /// </summary>
-        [Column("geom"), Nullable]
-        public NTSG Geometry { get; set; }
+        [Column("geog"), Nullable]
+        public NTSG Geography { get; set; }
 
-        public TestGeometryEntity()
+        public TestGeographyEntity()
         {
 
         }
 
-        public TestGeometryEntity(int id, NTSG geometry)
+        public TestGeographyEntity(int id, NTSG geography)
         {
             this.Id = id;
-            this.Geometry = geometry;
+            this.Geography = geography;
         }
     }
 }

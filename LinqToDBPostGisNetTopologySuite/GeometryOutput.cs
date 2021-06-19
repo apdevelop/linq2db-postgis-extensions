@@ -44,16 +44,13 @@ namespace LinqToDBPostGisNetTopologySuite
             throw new InvalidOperationException();
         }
 
-        // TODO: ST_AsEWKT(geography)
-        // TODO: ST_AsEWKT(geometry, maxdecimaldigits) PostGIS 3.1
-
         /// <summary>
         /// Returns the Well-Known Text (WKT) representation of input <paramref name="geometry"/>.
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/ST_AsText.html
         /// </remarks>
-        /// <param name="geometry">Input geometry.</param>
+        /// <param name="geometry">Input geometry (or geography).</param>
         /// <returns>Well-Known Text (WKT) representation.</returns>
         [Sql.Function("ST_AsText", ServerSideOnly = true)]
         public static string STAsText(this NTSG geometry)
@@ -75,16 +72,13 @@ namespace LinqToDBPostGisNetTopologySuite
             throw new InvalidOperationException();
         }
 
-        // TODO: ST_AsText(geography)
-        // TODO: ST_AsText(geography, maxdecimaldigits);
-
         /// <summary>
         /// Returns the Well-Known Text (WKT) representation of input <paramref name="geometry"/>.
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/ST_AsText.html
         /// </remarks>
-        /// <param name="geometry">Input geometry.</param>
+        /// <param name="geometry">Input geometry (or geography).</param>
         /// <param name="maxDecimalDigits">Maximum number of decimal digits after floating point used in output.</param>
         /// <returns>Well-Known Text (WKT) representation.</returns>
         [Sql.Function("ST_AsText", ServerSideOnly = true)]
@@ -108,8 +102,6 @@ namespace LinqToDBPostGisNetTopologySuite
         {
             throw new InvalidOperationException();
         }
-
-        // TODO: ST_AsBinary(geography)
 
         /// <summary>
         /// Returns the Well-Known Binary (WKB) representation of input <paramref name="geometry"/>.
@@ -307,8 +299,6 @@ namespace LinqToDBPostGisNetTopologySuite
             throw new InvalidOperationException();
         }
 
-        // TODO: ST_AsGeoJSON(geography)
-
         /// <summary>
         /// Returns the GML representation of input <paramref name="geometry"/>.
         /// </summary>
@@ -340,7 +330,6 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         // TODO: ST_AsGML(version, geometry)
-        // TODO: ST_AsGML(geography)
         // TODO: ST_AsGML(version, geography)
 
         /// <summary>
@@ -388,7 +377,6 @@ namespace LinqToDBPostGisNetTopologySuite
             throw new InvalidOperationException();
         }
 
-        // TODO: ST_AsKML(geography)
         // TODO: ST_AsKML(version)
 
         /// <summary>
@@ -495,8 +483,6 @@ namespace LinqToDBPostGisNetTopologySuite
         {
             throw new InvalidOperationException();
         }
-
-        // TODO: ST_AsSVG(geography)
 
         /// <summary>
         /// Returns the Tiny Well-Known Binary (TWKB) representation of input <paramref name="geometry"/>.

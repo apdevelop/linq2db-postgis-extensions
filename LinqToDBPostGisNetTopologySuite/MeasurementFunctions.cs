@@ -21,7 +21,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <remarks>
         /// See https://postgis.net/docs/ST_Area.html
         /// </remarks>
-        /// <param name="geometry">Input geometry.</param>
+        /// <param name="geometry">Input geometry (or geography).</param>
         /// <returns>Area (in SRS units).</returns>
         [Sql.Function("ST_Area", ServerSideOnly = true)]
         public static double? STArea(this NTSG geometry)
@@ -43,8 +43,6 @@ namespace LinqToDBPostGisNetTopologySuite
             throw new InvalidOperationException();
         }
 
-        // TODO: ST_Area(geography)
-
         /// <summary>
         /// Returns the azimuth of segment defined by input points P1P2.
         /// </summary>
@@ -59,8 +57,6 @@ namespace LinqToDBPostGisNetTopologySuite
         {
             throw new InvalidOperationException();
         }
-
-        // TODO: ST_Azimuth(geography)
 
         /// <summary>
         /// Returns the angle measured clockwise of input points P1P2P3.
@@ -178,9 +174,10 @@ namespace LinqToDBPostGisNetTopologySuite
         /// </remarks>
         /// <param name="geometry">Input geometry 1.</param>
         /// <param name="other">Input geometry 2.</param>
+        /// <param name="useSpheroid">Use spheroid (true) of simple sphere (false).</param>
         /// <returns>Distance (in SRS units).</returns>
         [Sql.Function("ST_Distance", ServerSideOnly = true)]
-        public static double? STDistance(this NTSG geometry, NTSG other)
+        public static double? STDistance(this NTSG geometry, NTSG other, bool useSpheroid)
         {
             throw new InvalidOperationException();
         }
@@ -200,7 +197,20 @@ namespace LinqToDBPostGisNetTopologySuite
             throw new InvalidOperationException();
         }
 
-        // TODO: ST_Distance(geography, geography)
+        /// <summary>
+        /// Returns the minimum 2D Cartesian (planar) distance between two input geometries.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_Distance.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry 1.</param>
+        /// <param name="other">Input geometry 2.</param>
+        /// <returns>Distance (in SRS units).</returns>
+        [Sql.Function("ST_Distance", ServerSideOnly = true)]
+        public static double? STDistance(this NTSG geometry, NTSG other)
+        {
+            throw new InvalidOperationException();
+        }
 
         /// <summary>
         /// Returns minimum 3D Cartesian distance between two input geometries.
@@ -416,7 +426,20 @@ namespace LinqToDBPostGisNetTopologySuite
             throw new InvalidOperationException();
         }
 
-        // TODO: ST_Length(geography)
+        /// <summary>
+        /// Returns the 2D Cartesian length of input <paramref name="geography"/>.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_Length.html
+        /// </remarks>
+        /// <param name="geography">Input geography.</param>
+        /// <param name="useSpheroid">Use spheroid (true) of simple sphere (false).</param>
+        /// <returns>Length (in SRS units).</returns>
+        [Sql.Function("ST_Length", ServerSideOnly = true)]
+        public static double? STLength(this NTSG geography, bool useSpheroid)
+        {
+            throw new InvalidOperationException();
+        }
 
         /// <summary>
         /// Returns the 2D Cartesian length of input <paramref name="geometry"/>.
@@ -686,15 +709,13 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <remarks>
         /// See https://postgis.net/docs/ST_Perimeter.html
         /// </remarks>
-        /// <param name="geometry">Input geometry.</param>
+        /// <param name="geometry">Input geometry (or geography).</param>
         /// <returns>Perimeter (in SRS units).</returns>
         [Sql.Function("ST_Perimeter", ServerSideOnly = true)]
         public static double? STPerimeter(this NTSG geometry)
         {
             throw new InvalidOperationException();
         }
-
-        // TODO: ST_Perimeter(geography)
 
         /// <summary>
         /// Returns 2D perimeter of input <paramref name="geometry"/>.
@@ -753,15 +774,15 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
-        /// Returns a point projected from a start point along a geodesic using a given distance and azimuth (bearing)
+        /// Returns a point projected from a start point along a geodesic using a given distance and azimuth (bearing).
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/ST_Project.html
         /// </remarks>
-        /// <param name="geography">Input geography</param>
-        /// <param name="distance">Distance given in meters.Negative values are supported</param>
-        /// <param name="azimuth">Azimuth (bearing) given in radians, measured clockwise.Negative values and values greater than 2π (360 degrees) are supported</param>
-        /// <returns>Point projected</returns>
+        /// <param name="geography">Input geography.</param>
+        /// <param name="distance">Distance given in meters. Negative values are supported.</param>
+        /// <param name="azimuth">Azimuth (bearing) given in radians, measured clockwise. Negative values and values greater than 2π (360 degrees) are supported.</param>
+        /// <returns>Projected point.</returns>
         [Sql.Function("ST_Project", ServerSideOnly = true)]
         public static NTSG STProject(this NTSG geography, double distance, double azimuth)
         {
@@ -769,15 +790,15 @@ namespace LinqToDBPostGisNetTopologySuite
         }
 
         /// <summary>
-        /// Returns a point projected from a start point along a geodesic using a given distance and azimuth (bearing)
+        /// Returns a point projected from a start point along a geodesic using a given distance and azimuth (bearing).
         /// </summary>
         /// <remarks>
         /// See https://postgis.net/docs/ST_Project.html
         /// </remarks>
-        /// <param name="geography">Input geography</param>
-        /// <param name="distance">Distance given in meters.Negative values are supported</param>
-        /// <param name="azimuth">Azimuth (bearing) given in radians, measured clockwise.Negative values and values greater than 2π (360 degrees) are supported</param>
-        /// <returns>Point projected</returns>
+        /// <param name="geography">Input geography.</param>
+        /// <param name="distance">Distance given in meters. Negative values are supported.</param>
+        /// <param name="azimuth">Azimuth (bearing) given in radians, measured clockwise. Negative values and values greater than 2π (360 degrees) are supported.</param>
+        /// <returns>Projected point.</returns>
         [Sql.Function("ST_Project", ServerSideOnly = true)]
         public static NTSG STProject(string geography, double distance, double azimuth)
         {

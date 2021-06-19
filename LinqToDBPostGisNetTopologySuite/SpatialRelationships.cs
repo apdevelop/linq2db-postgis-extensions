@@ -121,8 +121,6 @@ namespace LinqToDBPostGisNetTopologySuite
             throw new InvalidOperationException();
         }
 
-        // TODO: boolean ST_Covers(geography geogpolyA, geography geogpointB);
-
         /// <summary>
         /// Checks if no point in geometry 1 is outside geometry 2.
         /// </summary>
@@ -279,8 +277,8 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <remarks>
         /// See https://postgis.net/docs/ST_Intersects.html
         /// </remarks>
-        /// <param name="geometry">Input geometry 1.</param>
-        /// <param name="other">Input geometry 2.</param>
+        /// <param name="geometry">Input geometry 1 (or geography).</param>
+        /// <param name="other">Input geometry 2 (or geography).</param>
         /// <returns>True if input geometries shares any portion of space.</returns>
         [Sql.Function("ST_Intersects", ServerSideOnly = true)]
         public static bool? STIntersects(this NTSG geometry, NTSG other)
@@ -302,8 +300,6 @@ namespace LinqToDBPostGisNetTopologySuite
         {
             throw new InvalidOperationException();
         }
-
-        // TODO: boolean ST_Intersects(geography geogA, geography geogB);
 
         /// <summary>
         /// Checks if input geometries are equal and their coordinates are in the same order.

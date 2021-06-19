@@ -973,16 +973,13 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <remarks>
         /// See https://postgis.net/docs/ST_Summary.html
         /// </remarks>
-        /// <param name="geometry">Input geometry.</param>
+        /// <param name="geometry">Input geometry (or geography).</param>
         /// <returns>Text summary.</returns>
         [Sql.Function("ST_Summary", ServerSideOnly = true)]
         public static string STSummary(this NTSG geometry)
         {
             throw new InvalidOperationException();
         }
-
-        // TODO: ? text ST_Summary(text g);
-        // TODO: text ST_Summary(geography g);
 
         /// <summary>
         /// Returns X coordinate of input <paramref name="geometry"/>.

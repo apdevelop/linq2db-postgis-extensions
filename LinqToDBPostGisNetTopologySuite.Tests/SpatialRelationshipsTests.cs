@@ -7,6 +7,8 @@ using NUnit.Framework;
 using NTSGS = NetTopologySuite.Geometries;
 using NTSG = NetTopologySuite.Geometries.Geometry;
 
+using LinqToDBPostGisNetTopologySuite.Tests.Entities;
+
 namespace LinqToDBPostGisNetTopologySuite.Tests
 {
     [TestFixture]
@@ -21,6 +23,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             {
                 this.CurrentVersion = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
                 db.TestGeometries.Delete();
+                db.TestGeographies.Delete();
             }
         }
 
@@ -102,6 +105,35 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 Assert.IsFalse(db.Select(() => SpatialRelationships.STCoveredBy(
                     "LINESTRING(0.2 0.2, 1.2 1.2)",
                     "POLYGON((0 0,1 0,1 1,0 1, 0 0))")));
+
+
+                db.TestGeographies
+                    .Value(g => g.Id, 1)
+                    .Value(g => g.Geography, () => GeometryInput.STGeogFromText("SRID=4326;POINT(-99.327 31.4821)"))
+                    .Insert();
+
+                db.TestGeographies
+                    .Value(g => g.Id, 2)
+                    .Value(g => g.Geography, () => GeometryInput.STGeogFromText("SRID=4326;POINT(-99.33 31.483)"))
+                    .Insert();
+
+                var polyCoversPoint = db.TestGeographies
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geography
+                        .STBuffer(300)
+                        .STCovers(db.TestGeographies.Where(g0 => g0.Id == 2).Single().Geography))
+                    .Single();
+
+                Assert.IsFalse(polyCoversPoint);
+
+                var buffer10mCoversPoint = db.TestGeographies
+                    .Where(g => g.Id == 2)
+                    .Select(g => g.Geography
+                        .STBuffer(10)
+                        .STCovers(db.TestGeographies.Where(g0 => g0.Id == 2).Single().Geography))
+                    .Single();
+
+                Assert.IsTrue(buffer10mCoversPoint);
             }
         }
 
@@ -253,13 +285,38 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 const string PointWkt = "POINT(0 0)";
                 var point = new NTSGS.Point(new NTSGS.Coordinate(0, 0));
 
-                Assert.IsFalse(db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STIntersects(point)).Single());
-                Assert.IsTrue(db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STIntersects(point)).Single());
-                Assert.IsNull(db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STIntersects(null)).Single());
+                Assert.IsFalse(db.TestGeometries
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geometry.STIntersects(point))
+                    .Single());
+
+                Assert.IsTrue(db.TestGeometries
+                    .Where(g => g.Id == 2)
+                    .Select(g => g.Geometry.STIntersects(point))
+                    .Single());
+
+                Assert.IsNull(db.TestGeometries
+                    .Where(g => g.Id == 2)
+                    .Select(g => g.Geometry.STIntersects(null))
+                    .Single());
 
                 Assert.IsFalse(db.Select(() => SpatialRelationships.STIntersects(Wkt1, PointWkt)));
                 Assert.IsTrue(db.Select(() => SpatialRelationships.STIntersects(Wkt2, PointWkt)));
                 Assert.IsNull(db.Select(() => SpatialRelationships.STIntersects((string)null, (string)null)));
+
+                // geography
+                var lineGeography = new NTSGS.LineString(new[] { new NTSGS.Coordinate(-43.23456, 72.4567), new NTSGS.Coordinate(-43.23456, 72.4568) }) { SRID = SRID4326 };
+                db.Insert(new TestGeographyEntity(1, lineGeography));
+
+                var pointGeography = new NTSGS.Point(-43.23456, 72.4567772) { SRID = SRID4326 };
+                db.Insert(new TestGeographyEntity(2, pointGeography));
+
+                var intersects = db.TestGeographies
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geography.STIntersects(db.TestGeographies.Where(g0 => g0.Id == 2).Single().Geography))
+                    .Single();
+
+                Assert.IsTrue(intersects);
             }
         }
 

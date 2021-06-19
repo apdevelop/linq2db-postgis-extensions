@@ -17,6 +17,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 db.TestGeometries.Delete();
+                db.TestGeographies.Delete();
             }
         }
 
@@ -50,6 +51,58 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 Assert.AreEqual(2, result.Geometries.Length);
 
                 Assert.IsNull(db.Select(() => GeometryInput.STBdMPolyFromText(null, 0)));
+            }
+        }
+
+        [Test]
+        public void TestSTGeographyFromText()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                const string Wkt1 = "POINT(177.0092 38.889588)";
+                var geography11 = db.Select(() => GeometryInput.STGeographyFromText(Wkt1));
+
+                Assert.IsNotNull(geography11);
+                Assert.AreEqual(SRID4326, geography11.SRID);
+                Assert.AreEqual("Point", geography11.GeometryType);
+                Assert.AreEqual(177.0092, geography11.Coordinates[0].X, 1.0E-4);
+                Assert.AreEqual(38.889588, geography11.Coordinates[0].Y, 1.0E-6);
+
+                db.TestGeographies
+                    .Value(g => g.Id, 1)
+                    .Value(g => g.Geography, () => GeometryInput.STGeographyFromText(Wkt1))
+                    .Insert();
+
+                var geography12 = db.TestGeographies
+                    .Where(g => g.Id == 1)
+                    .Select(g => g.Geography)
+                    .Single();
+
+                Assert.IsNotNull(geography12);
+                Assert.AreEqual(SRID4326, geography12.SRID);
+                Assert.AreEqual("Point", geography12.GeometryType);
+                Assert.AreEqual(177.0092, geography12.Coordinates[0].X, 1.0E-4);
+                Assert.AreEqual(38.889588, geography12.Coordinates[0].Y, 1.0E-6);
+
+
+                const string Wkt2 = "SRID=4267;POINT(-77.0092 38.889588)";
+                var geography21 = db.Select(() => GeometryInput.STGeographyFromText(Wkt2));
+
+                Assert.IsNotNull(geography21);
+                Assert.AreEqual(4267, geography21.SRID);
+                Assert.AreEqual("Point", geography21.GeometryType);
+                Assert.AreEqual(-77.0092, geography21.Coordinates[0].X, 1.0E-4);
+                Assert.AreEqual(38.889588, geography21.Coordinates[0].Y, 1.0E-6);
+
+
+                // Test for alias ST_GeogFromText = ST_GeographyFromText
+                Assert.AreEqual(
+                    db.Select(() => GeometryInput.STGeographyFromText(Wkt2).STAsEWKT()),
+                    db.Select(() => GeometryInput.STGeogFromText(Wkt2).STAsEWKT()));
+
+
+                Assert.IsNull(db.Select(() => GeometryInput.STGeographyFromText(null)));
+                Assert.IsNull(db.Select(() => GeometryInput.STGeogFromText(null)));
             }
         }
 
@@ -193,6 +246,33 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
+        public void TestSTGeogFromWKB()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                // Binary output of select ST_GeogFromText('POINT(127.0092 38.889588)');
+                var wkbPoint = new byte[]
+                {
+                    0x01,
+                    0x01, 0x00, 0x00, 0x20,
+                    0xE6, 0x10, 0x00, 0x00,
+                    0xE3, 0xC7, 0x98, 0xBB, 0x96, 0xC0, 0x5F, 0x40,
+                    0x00, 0x75, 0x03, 0x05, 0xDE, 0x71, 0x43, 0x40
+                };
+
+                var geographyPoint = db.Select(() => GeometryInput.STGeomFromEWKB(wkbPoint));
+
+                Assert.IsNotNull(geographyPoint);
+                Assert.AreEqual(SRID4326, geographyPoint.SRID);
+                Assert.AreEqual("Point", geographyPoint.GeometryType);
+                Assert.AreEqual(127.0092, geographyPoint.Coordinates[0].X, 1.0E-4);
+                Assert.AreEqual(38.889588, geographyPoint.Coordinates[0].Y, 1.0E-6);
+
+                Assert.IsNull(db.Select(() => GeometryInput.STGeogFromWKB(null)));
+            }
+        }
+
+        [Test]
         public void TestGeometryFromWKB()
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
@@ -217,7 +297,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 Assert.AreEqual(SRID3857, db.Select(() => GeometryInput.STLineFromWKB(wkb2, SRID3857).STSrId()));
                 Assert.AreEqual(SRID3857, db.Select(() => GeometryInput.STLinestringFromWKB(wkb2, SRID3857).STSrId()));
 
-                Assert.IsNull(db.Select(() => GeometryInput.STGeomFromEWKB(null)));
+                Assert.IsNull(db.Select(() => GeometryInput.STGeomFromWKB(null)));
             }
         }
 
