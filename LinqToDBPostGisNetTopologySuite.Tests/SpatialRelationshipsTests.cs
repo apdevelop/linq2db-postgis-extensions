@@ -308,7 +308,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var lineGeography = new NTSGS.LineString(new[] { new NTSGS.Coordinate(-43.23456, 72.4567), new NTSGS.Coordinate(-43.23456, 72.4568) }) { SRID = SRID4326 };
                 db.Insert(new TestGeographyEntity(1, lineGeography));
 
-                var pointGeography = new NTSGS.Point(-43.23456, 72.4567772) { SRID = SRID4326 };
+                var pointGeography = new NTSGS.Point(-43.23456, 72.4567) { SRID = SRID4326 };
                 db.Insert(new TestGeographyEntity(2, pointGeography));
 
                 var intersects = db.TestGeographies
