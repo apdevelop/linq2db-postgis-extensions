@@ -672,35 +672,36 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 Assert.AreEqual(
                     "LINESTRING(-29 -27,-30 -29.7,-36 -31,-45 -33,-46 -32)",
-                    db.Select(() => GeometryEditors.STLineMerge("MULTILINESTRING((-29 -27,-30 -29.7,-36 -31,-45 -33),(-45 -33,-46 -32))").STAsText()));
+                    db.Select(() =>
+                        GeometryEditors
+                            .STLineMerge("MULTILINESTRING((-29 -27,-30 -29.7,-36 -31,-45 -33),(-45 -33,-46 -32))")
+                            .STAsText()));
             }
         }
-
 
         [Test]
         public void TestSTLineToCurve()
         {
+            const string Wkt = "POINT(1 3)";
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                const string Wkt = "POINT(1 3)";
-                db.TestGeometries
-                    .Value(g => g.Id, 1)
-                    .Value(g => g.Geometry, () =>
-                        GeometryInput.STGeomFromText(Wkt).STBuffer(3.0))
-                    .Insert();
+                var itemQuery = db.SelectQuery(() => GeometryInput.STGeomFromText(Wkt).STBuffer(3.0));
 
                 // NTS error: 'Geometry type not recognized. GeometryCode: 10'
-                var curvePolygon = db.TestGeometries
-                    .Where(g => g.Id == 1)
-                    .Select(g => g.Geometry.STLineToCurve().STAsText())
-                    .Single();
+                var actual1 = itemQuery
+                    .Select(item => item.STLineToCurve().STPoints()).Single();
+                var actual2 = db.Select(() => GeometryEditors.STLineToCurve((NTSG)null));
 
-                Assert.AreEqual("CURVEPOLYGON(CIRCULARSTRING(4 3,-2 2.99999999999999,4 3))", curvePolygon);
+                Assert.AreEqual(4, actual1.Coordinates[0].X, 5);
+                Assert.AreEqual(3, actual1.Coordinates[0].Y, 5);
+                Assert.AreEqual(-2, actual1.Coordinates[1].X, 5);
+                Assert.AreEqual(3, actual1.Coordinates[1].Y, 5);
+                Assert.AreEqual(4, actual1.Coordinates[2].X, 5);
+                Assert.AreEqual(3, actual1.Coordinates[2].Y, 5);
 
-                Assert.IsNull(db.Select(() => GeometryEditors.STLineToCurve((NTSG)null)));
+                Assert.IsNull(actual2);
             }
         }
-
 
         [Test]
         public void TestSTMulti()
