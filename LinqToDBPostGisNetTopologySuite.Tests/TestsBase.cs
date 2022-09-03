@@ -25,8 +25,11 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             get
             {
-                var fileMap = new ExeConfigurationFileMap();
-                fileMap.ExeConfigFilename = AssemblyPath + ".config";
+                var fileMap = new ExeConfigurationFileMap
+                {
+                    ExeConfigFilename = AssemblyPath + ".config"
+                };
+
                 var configuration = ConfigurationManager.OpenMappedExeConfiguration(fileMap, ConfigurationUserLevel.None);
                 var connectionString = configuration.ConnectionStrings.ConnectionStrings["postgistest"].ConnectionString;
 

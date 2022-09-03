@@ -15,7 +15,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <summary>
         /// Composite type name.
         /// </summary>
-        public static readonly string CompositeTypeName = "valid_detail";
+        public const string CompositeTypeName = "valid_detail";
 
         /// <summary>
         /// Stating if geometry is valid.

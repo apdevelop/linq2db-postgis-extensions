@@ -6,7 +6,7 @@ using NpgsqlTypes;
 namespace LinqToDBPostGisNpgsqlTypes
 {
     // http://postgis.refractions.net/documentation/manual-1.5/reference.html#Geometry_Editors
-
+#pragma warning disable IDE0060
     public static class GeometryEditors
     {
         /// <summary>
@@ -16,10 +16,7 @@ namespace LinqToDBPostGisNpgsqlTypes
         /// <param name="geom">Input geometry</param>
         /// <returns></returns>
         [Sql.Function("ST_Reverse", ServerSideOnly = true)]
-        public static PostgisGeometry STReverse(this PostgisGeometry geom)
-        {
-            throw new InvalidOperationException();
-        }
+        public static PostgisGeometry STReverse(this PostgisGeometry geom) => throw new InvalidOperationException();
 
         /// <summary>
         /// Sets the SRID on a geometry to a particular integer value.
@@ -29,10 +26,7 @@ namespace LinqToDBPostGisNpgsqlTypes
         /// <param name="srid">Spatial Reference System Identifier</param>
         /// <returns></returns>
         [Sql.Function("ST_SetSRID", ServerSideOnly = true)]
-        public static PostgisGeometry STSetSrid(this PostgisGeometry geom, int srid)
-        {
-            throw new InvalidOperationException();
-        }
+        public static PostgisGeometry STSetSrid(this PostgisGeometry geom, int srid) => throw new InvalidOperationException();
 
         /// <summary>
         /// Return a new geometry with its coordinates transformed to the SRID referenced by the integer parameter.
@@ -42,10 +36,7 @@ namespace LinqToDBPostGisNpgsqlTypes
         /// <param name="srid">Spatial Reference System Identifier</param>
         /// <returns>Transformed geometry</returns>
         [Sql.Function("ST_Transform", ServerSideOnly = true)]
-        public static PostgisGeometry STTransform(this PostgisGeometry geom, int srid)
-        {
-            throw new InvalidOperationException();
-        }
+        public static PostgisGeometry STTransform(this PostgisGeometry geom, int srid) => throw new InvalidOperationException();
 
         /// <summary>
         /// Translates the geometry to a new location using the numeric parameters as offsets.
@@ -56,9 +47,7 @@ namespace LinqToDBPostGisNpgsqlTypes
         /// <param name="deltay"></param>
         /// <returns>New geometry whose coordinates are translated deltax and deltay units.</returns>
         [Sql.Function("ST_Translate", ServerSideOnly = true)]
-        public static PostgisGeometry STTranslate(this PostgisGeometry geom, double deltax, double deltay)
-        {
-            throw new InvalidOperationException();
-        }
+        public static PostgisGeometry STTranslate(this PostgisGeometry geom, double deltax, double deltay) => throw new InvalidOperationException();
     }
+#pragma warning restore IDE0060
 }

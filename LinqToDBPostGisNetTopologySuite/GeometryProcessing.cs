@@ -15,6 +15,7 @@ namespace LinqToDBPostGisNetTopologySuite
     /// </remarks>
     public static class GeometryProcessing
     {
+#pragma warning disable IDE0060
         /// <summary>
         /// Returns geometry that represents all points whose distance from input geometry is less than or equal to distance. 
         /// </summary>
@@ -25,10 +26,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="radius">Buffer radius, in SRS units.</param>
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_Buffer", ServerSideOnly = true)]
-        public static NTSG STBuffer(this NTSG geometry, double radius)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STBuffer(this NTSG geometry, double radius) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns geometry that represents all points whose distance from input geometry is less than or equal to distance. 
@@ -41,10 +39,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="style">Buffer style parameters.</param> 
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_Buffer", ServerSideOnly = true)]
-        public static NTSG STBuffer(this NTSG geometry, double radius, string style)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STBuffer(this NTSG geometry, double radius, string style) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns geometry that represents all points whose distance from input geometry is less than or equal to distance. 
@@ -57,10 +52,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="segments">Number of segments.</param> 
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_Buffer", ServerSideOnly = true)]
-        public static NTSG STBuffer(this NTSG geometry, double radius, int segments)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STBuffer(this NTSG geometry, double radius, int segments) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns geometry formed by constituent linework of input geometry. 
@@ -70,11 +62,8 @@ namespace LinqToDBPostGisNetTopologySuite
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Geometry.</returns>
-        [Sql.Function("ST_BuildArea", ServerSideOnly = true)]
-        public static NTSG STBuildArea(this NTSG geometry) // TODO: tests
-        {
-            throw new InvalidOperationException();
-        }
+        [Sql.Function("ST_BuildArea", ServerSideOnly = true)] // TODO: tests
+        public static NTSG STBuildArea(this NTSG geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns geometric center (center of mass) of input <paramref name="geometry"/>.
@@ -85,10 +74,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry (or geography).</param>
         /// <returns>Geometric center (Point).</returns>
         [Sql.Function("ST_Centroid", ServerSideOnly = true)]
-        public static NTSG STCentroid(this NTSG geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STCentroid(this NTSG geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns geometric center (center of mass) of input <paramref name="geography"/>.
@@ -100,10 +86,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="useSpheroid">Use spheroid (true) of simple sphere (false).</param>
         /// <returns>Geometric center (Point).</returns>
         [Sql.Function("ST_Centroid", ServerSideOnly = true)]
-        public static NTSG STCentroid(this NTSG geography, bool useSpheroid)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STCentroid(this NTSG geography, bool useSpheroid) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns concave hull of input geometry. 
@@ -114,11 +97,8 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry.</param>
         /// <param name="targetPercent">Target percent of area of convex hull (0...1).</param>
         /// <returns>Geometry.</returns>
-        [Sql.Function("ST_ConcaveHull", ServerSideOnly = true)]
-        public static NTSG STConcaveHull(this NTSG geometry, double targetPercent) // TODO: test
-        {
-            throw new InvalidOperationException();
-        }
+        [Sql.Function("ST_ConcaveHull", ServerSideOnly = true)] // TODO: test
+        public static NTSG STConcaveHull(this NTSG geometry, double targetPercent) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns concave hull of input geometry. 
@@ -130,11 +110,8 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="targetPercent">Target percent of area of convex hull (0...1).</param>
         /// <param name="allowHoles">Allow holes.</param>
         /// <returns>Geometry.</returns>
-        [Sql.Function("ST_ConcaveHull", ServerSideOnly = true)]
-        public static NTSG STConcaveHull(this NTSG geometry, double targetPercent, bool allowHoles) // TODO: test
-        {
-            throw new InvalidOperationException();
-        }
+        [Sql.Function("ST_ConcaveHull", ServerSideOnly = true)] // TODO: test
+        public static NTSG STConcaveHull(this NTSG geometry, double targetPercent, bool allowHoles) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns convex hull of input geometry.
@@ -145,10 +122,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Convex hull geometry.</returns>
         [Sql.Function("ST_ConvexHull", ServerSideOnly = true)]
-        public static NTSG STConvexHull(this NTSG geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STConvexHull(this NTSG geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Return a Delaunay triangulation around the vertices of the input geometry.
@@ -161,10 +135,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="flags">Output options.</param>
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_DelaunayTriangles", ServerSideOnly = true)]
-        public static NTSG STDelaunayTriangles(this NTSG geometry, double tolerance, int flags) // TODO: enums for arguments
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STDelaunayTriangles(this NTSG geometry, double tolerance, int flags) => throw new InvalidOperationException(); // TODO: enums for arguments
 
         /// <summary>
         /// Returns MULTIPOINT set of pseudo-random points within input geometry
@@ -176,10 +147,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="numberOfPoints">Number of points to generate.</param>
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_GeneratePoints", ServerSideOnly = true)]
-        public static NTSG STGeneratePoints(this NTSG geometry, int numberOfPoints)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STGeneratePoints(this NTSG geometry, int numberOfPoints) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns MULTIPOINT set of pseudo-random points within input geometry
@@ -192,10 +160,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="seed">Random seed (should be greater than zero).</param>
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_GeneratePoints", ServerSideOnly = true)]
-        public static NTSG STGeneratePoints(this NTSG geometry, int numberOfPoints, int seed)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STGeneratePoints(this NTSG geometry, int numberOfPoints, int seed) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns approximate geometric median of input MultiPoint geometry using the Weiszfeld algorithm.
@@ -209,10 +174,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="failIfNotConverged">Fail if not converged after maxIterations.</param>
         /// <returns>Geometric median.</returns>
         [Sql.Function("ST_GeometricMedian", ServerSideOnly = true)]
-        public static NTSG STGeometricMedian(this NTSG geometry, double tolerance, int maxIterations, bool failIfNotConverged)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STGeometricMedian(this NTSG geometry, double tolerance, int maxIterations, bool failIfNotConverged) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns approximate geometric median of input MultiPoint geometry using the Weiszfeld algorithm.
@@ -223,10 +185,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry (MultiPoint).</param>
         /// <returns>Geometric median.</returns>
         [Sql.Function("ST_GeometricMedian", ServerSideOnly = true)]
-        public static NTSG STGeometricMedian(this NTSG geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STGeometricMedian(this NTSG geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns smallest circle polygon that can fully contain input geometry.
@@ -238,10 +197,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="segmentsPerQuarterCircle">Number of segments per quarter circle.</param>
         /// <returns>Circle polygon.</returns>
         [Sql.Function("ST_MinimumBoundingCircle", ServerSideOnly = true)]
-        public static NTSG STMinimumBoundingCircle(this NTSG geometry, int segmentsPerQuarterCircle)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STMinimumBoundingCircle(this NTSG geometry, int segmentsPerQuarterCircle) => throw new InvalidOperationException();
 
         // TODO: (geometry, double precision) ST_MinimumBoundingRadius(geometry geom) try map record to object[]
 
@@ -254,10 +210,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Rotated rectangle.</returns>
         [Sql.Function("ST_OrientedEnvelope", ServerSideOnly = true)]
-        public static NTSG STOrientedEnvelope(this NTSG geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STOrientedEnvelope(this NTSG geometry) => throw new InvalidOperationException();
 
         // TODO: ? ST_Polygonize
 
@@ -272,10 +225,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="style">Style parameters.</param>
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_OffsetCurve", ServerSideOnly = true)]
-        public static NTSG STOffsetCurve(this NTSG geometry, double distance, string style)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STOffsetCurve(this NTSG geometry, double distance, string style) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns POINT guaranteed to intersect a surface.
@@ -286,10 +236,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Point on surface.</returns>
         [Sql.Function("ST_PointOnSurface", ServerSideOnly = true)]
-        public static NTSG STPointOnSurface(this NTSG geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STPointOnSurface(this NTSG geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns a valid geometry with all coordinates rounded to provided grid tolerance.
@@ -302,10 +249,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="size">Grid cell size.</param>
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_ReducePrecision", ServerSideOnly = true)]
-        public static NTSG STReducePrecision(this NTSG geometry, double size)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STReducePrecision(this NTSG geometry, double size) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns a collection containing paths shared by the two input geometries.
@@ -317,10 +261,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="lineal2">Input geometry 2.</param>
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_SharedPaths", ServerSideOnly = true)]
-        public static NTSG STSharedPaths(this NTSG lineal1, NTSG lineal2)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STSharedPaths(this NTSG lineal1, NTSG lineal2) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns simplified version of input geometry using the Douglas-Peucker algorithm.
@@ -333,10 +274,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="preserveCollapsed">Preserve collapsed.</param>
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_Simplify", ServerSideOnly = true)]
-        public static NTSG STSimplify(this NTSG geometry, double tolerance, bool preserveCollapsed)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STSimplify(this NTSG geometry, double tolerance, bool preserveCollapsed) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns simplified version of input geometry using the Douglas-Peucker algorithm.
@@ -348,10 +286,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="tolerance">Tolerance value.</param>
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_Simplify", ServerSideOnly = true)]
-        public static NTSG STSimplify(this NTSG geometry, double tolerance)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STSimplify(this NTSG geometry, double tolerance) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns simplified version of input geometry using the Douglas-Peucker algorithm.
@@ -363,10 +298,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="tolerance">Tolerance value.</param>
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_SimplifyPreserveTopology", ServerSideOnly = true)]
-        public static NTSG STSimplifyPreserveTopology(this NTSG geometry, double tolerance)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STSimplifyPreserveTopology(this NTSG geometry, double tolerance) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns simplified version of the given geometry using the Visvalingam-Whyatt algorithm.
@@ -378,10 +310,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="tolerance">Tolerance value.</param>
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_SimplifyVW", ServerSideOnly = true)]
-        public static NTSG STSimplifyVW(this NTSG geometry, double tolerance)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STSimplifyVW(this NTSG geometry, double tolerance) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns smoothed version of input geometry using the Chaikin algorithm.
@@ -394,10 +323,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="preserveEndPoints">Preserve end points </param>
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_ChaikinSmoothing", ServerSideOnly = true)]
-        public static NTSG STChaikinSmoothing(this NTSG geometry, int iterations, bool preserveEndPoints)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STChaikinSmoothing(this NTSG geometry, int iterations, bool preserveEndPoints) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns smoothed version of input geometry using the Chaikin algorithm.
@@ -408,10 +334,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_ChaikinSmoothing", ServerSideOnly = true)]
-        public static NTSG STChaikinSmoothing(this NTSG geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STChaikinSmoothing(this NTSG geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns a geometry with only vertex points that have a m-value larger or equal to the min value and smaller or equal to the max value.
@@ -425,10 +348,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="returnM">Retun M value in resulting geometry.</param>
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_FilterByM", ServerSideOnly = true)]
-        public static NTSG STFilterByM(this NTSG geometry, double min, double max, bool returnM)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STFilterByM(this NTSG geometry, double min, double max, bool returnM) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns a geometry with only vertex points that have a m-value larger or equal to the min value and smaller or equal to the max value.
@@ -440,10 +360,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="min">Minimum value for M.</param>
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_FilterByM", ServerSideOnly = true)]
-        public static NTSG STFilterByM(this NTSG geometry, double min)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STFilterByM(this NTSG geometry, double min) => throw new InvalidOperationException();
 
         /// <summary>
         /// Sets the effective area for each vertex, using the Visvalingam-Whyatt algorithm.
@@ -456,10 +373,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="setArea">Set area.</param>
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_SetEffectiveArea", ServerSideOnly = true)]
-        public static NTSG STSetEffectiveArea(this NTSG geometry, double threshold, int setArea)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STSetEffectiveArea(this NTSG geometry, double threshold, int setArea) => throw new InvalidOperationException();
 
         /// <summary>
         /// Sets the effective area for each vertex, using the Visvalingam-Whyatt algorithm.
@@ -470,10 +384,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_SetEffectiveArea", ServerSideOnly = true)]
-        public static NTSG STSetEffectiveArea(this NTSG geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STSetEffectiveArea(this NTSG geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Sets the effective area for each vertex, using the Visvalingam-Whyatt algorithm.
@@ -485,10 +396,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="threshold">Threshold value.</param>
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_SetEffectiveArea", ServerSideOnly = true)]
-        public static NTSG STSetEffectiveArea(this NTSG geometry, double threshold)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STSetEffectiveArea(this NTSG geometry, double threshold) => throw new InvalidOperationException();
 
         /// <summary>
         /// Computes a two-dimensional Voronoi diagram from the vertices of inpu geometry and returns the boundaries between cells in that diagram as a MultiLineString.
@@ -501,10 +409,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="extendTo">Extend to geometry.</param>
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_VoronoiLines", ServerSideOnly = true)]
-        public static NTSG STVoronoiLines(this NTSG geometry, double tolerance, NTSG extendTo)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STVoronoiLines(this NTSG geometry, double tolerance, NTSG extendTo) => throw new InvalidOperationException();
 
         /// <summary>
         /// Computes a two-dimensional Voronoi diagram from the vertices of inpu geometry and returns the boundaries between cells in that diagram as a MultiLineString.
@@ -516,10 +421,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="tolerance">Threshold value.</param>
         /// <returns>Geometry (MultiLineString).</returns>
         [Sql.Function("ST_VoronoiLines", ServerSideOnly = true)]
-        public static NTSG STVoronoiLines(this NTSG geometry, double tolerance)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STVoronoiLines(this NTSG geometry, double tolerance) => throw new InvalidOperationException();
 
         /// <summary>
         /// Computes a two-dimensional Voronoi diagram from the vertices of input geometry.
@@ -532,10 +434,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="extendTo">Diagram will be extended to cover the envelope of the "extend_to" geometry.</param>
         /// <returns>Geometry (GeometryCollection of Polygons).</returns>
         [Sql.Function("ST_VoronoiPolygons", ServerSideOnly = true)]
-        public static NTSG STVoronoiPolygons(this NTSG geometry, double tolerance, NTSG extendTo)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STVoronoiPolygons(this NTSG geometry, double tolerance, NTSG extendTo) => throw new InvalidOperationException();
 
         /// <summary>
         /// Computes a two-dimensional Voronoi diagram from the vertices of input geometry.
@@ -546,10 +445,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Geometry (GeometryCollection of Polygons).</returns>
         [Sql.Function("ST_VoronoiPolygons", ServerSideOnly = true)]
-        public static NTSG STVoronoiPolygons(this NTSG geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STVoronoiPolygons(this NTSG geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Computes a two-dimensional Voronoi diagram from the vertices of input geometry.
@@ -561,9 +457,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="tolerance">The distance within which vertices will be considered equivalent.</param>
         /// <returns>Geometry (GeometryCollection of Polygons).</returns>
         [Sql.Function("ST_VoronoiPolygons", ServerSideOnly = true)]
-        public static NTSG STVoronoiPolygons(this NTSG geometry, double tolerance)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STVoronoiPolygons(this NTSG geometry, double tolerance) => throw new InvalidOperationException();
+#pragma warning restore IDE0060
     }
 }

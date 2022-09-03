@@ -15,6 +15,7 @@ namespace LinqToDBPostGisNetTopologySuite
     /// </remarks>
     public static class GeometryConstructors
     {
+#pragma warning disable IDE0060
         /// <summary>
         /// Creates a GeometryCollection or Multi* geometry from a set of input geometries.
         /// <para>The result is either a Multi* or a GeometryCollection, depending on whether the input geometries have the same or different types (homogeneous or heterogeneous).</para>
@@ -26,10 +27,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2.</param>
         /// <returns>Geometry collection (Multi* or GeometryCollection).</returns>
         [Sql.Function("ST_Collect", ServerSideOnly = true)]
-        public static NTSG STCollect(this NTSG geometry, NTSG other)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STCollect(this NTSG geometry, NTSG other) => throw new InvalidOperationException();
 
         /// <summary>
         /// Creates a GeometryCollection or Multi* geometry from a set of input geometries in text representation.
@@ -42,10 +40,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry2">Input geometry 2.</param>
         /// <returns>Geometry collection (Multi* or GeometryCollection).</returns>
         [Sql.Function("ST_Collect", ServerSideOnly = true)]
-        public static NTSG STCollect(string geometry1, string geometry2)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STCollect(string geometry1, string geometry2) => throw new InvalidOperationException();
 
         // TODO: ? geometry ST_Collect(geometry[] g1_array);
         // TODO: ? geometry ST_Collect(geometry set g1field);
@@ -59,10 +54,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry (MultiPoint).</param>
         /// <returns>Constructed geometry (LineString).</returns>
         [Sql.Function("ST_LineFromMultiPoint", ServerSideOnly = true)]
-        public static NTSG STLineFromMultiPoint(this NTSG geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STLineFromMultiPoint(this NTSG geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Creates a LineString geometry from a MultiPoint input geometry in text representation.
@@ -73,10 +65,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry (MultiPoint).</param>
         /// <returns>Constructed geometry (LineString).</returns>
         [Sql.Function("ST_LineFromMultiPoint", ServerSideOnly = true)]
-        public static NTSG STLineFromMultiPoint(string geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STLineFromMultiPoint(string geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Creates a rectangular Polygon geometry from minimum and maximum values for X and Y.
@@ -90,10 +79,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="ymax">Maximum Y coordinate in unknown SRS (SRID 0) units.</param>
         /// <returns>Constructed geometry (Polygon).</returns>
         [Sql.Function("ST_MakeEnvelope", ServerSideOnly = true)]
-        public static NTSG STMakeEnvelope(double xmin, double ymin, double xmax, double ymax)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STMakeEnvelope(double xmin, double ymin, double xmax, double ymax) => throw new InvalidOperationException();
 
         /// <summary>
         /// Creates a rectangular Polygon geometry from minimum and maximum values for X and Y.
@@ -108,10 +94,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="srid">Spatial Reference System Identifier (SRID).</param>
         /// <returns>Constructed geometry (Polygon).</returns>
         [Sql.Function("ST_MakeEnvelope", ServerSideOnly = true)]
-        public static NTSG STMakeEnvelope(double xmin, double ymin, double xmax, double ymax, int srid)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STMakeEnvelope(double xmin, double ymin, double xmax, double ymax, int srid) => throw new InvalidOperationException();
 
         /// <summary>
         /// Creates a LineString geometry containing the points of input geometries (Point, MultiPoint, or LineString).
@@ -123,10 +106,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2.</param>
         /// <returns>Constructed geometry (LineString).</returns>
         [Sql.Function("ST_MakeLine", ServerSideOnly = true)]
-        public static NTSG STMakeLine(this NTSG geometry, NTSG other)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STMakeLine(this NTSG geometry, NTSG other) => throw new InvalidOperationException();
 
         /// <summary>
         /// Creates a LineString geometry containing the points of input geometries (Point, MultiPoint, or LineString).
@@ -138,10 +118,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry2">Input geometry 2.</param>
         /// <returns>Constructed geometry (LineString).</returns>
         [Sql.Function("ST_MakeLine", ServerSideOnly = true)]
-        public static NTSG STMakeLine(string geometry1, string geometry2)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STMakeLine(string geometry1, string geometry2) => throw new InvalidOperationException();
 
         // TODO: ? geometry ST_MakeLine(geometry[] geoms_array);
         // TODO: ? geometry ST_MakeLine(geometry set geoms);
@@ -157,10 +134,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="y">Y coordinate.</param>
         /// <returns>Geometry (2D Point).</returns>
         [Sql.Function("ST_MakePoint", ServerSideOnly = true)]
-        public static NTSG STMakePoint(double x, double y)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STMakePoint(double x, double y) => throw new InvalidOperationException();
 
         /// <summary>
         /// Creates a Point (3D Z) geometry from given X, Y and Z coordinates.
@@ -173,10 +147,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="z">Z coordinate.</param>
         /// <returns>Geometry (3D Z Point).</returns>
         [Sql.Function("ST_MakePoint", ServerSideOnly = true)]
-        public static NTSG STMakePoint(double x, double y, double z)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STMakePoint(double x, double y, double z) => throw new InvalidOperationException();
 
         /// <summary>
         /// Creates a Point (4D ZM) geometry from given X, Y, Z and M coordinates.
@@ -190,10 +161,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="m">M coordinate (measure).</param>
         /// <returns>Geometry (4D ZM Point).</returns>
         [Sql.Function("ST_MakePoint", ServerSideOnly = true)]
-        public static NTSG STMakePoint(double x, double y, double z, double m)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STMakePoint(double x, double y, double z, double m) => throw new InvalidOperationException();
 
         /// <summary>
         /// Creates a Point (2D M) geometry from given X, Y and M coordinates.
@@ -206,10 +174,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="m">M coordinate (measure).</param>
         /// <returns>Geometry (2D M Point).</returns>
         [Sql.Function("ST_MakePointM", ServerSideOnly = true)]
-        public static NTSG STMakePointM(double x, double y, double m)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STMakePointM(double x, double y, double m) => throw new InvalidOperationException();
 
         /// <summary>
         /// Creates a Polygon geometry formed by the given shell geometry.
@@ -220,10 +185,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input shell geometry (closed LineString).</param>
         /// <returns>Geometry (Polygon).</returns>
         [Sql.Function("ST_MakePolygon", ServerSideOnly = true)]
-        public static NTSG STMakePolygon(this NTSG geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STMakePolygon(this NTSG geometry) => throw new InvalidOperationException();
 
         // TODO: ? geometry ST_MakePolygon(geometry outerlinestring, geometry[] interiorlinestrings);
 
@@ -238,10 +200,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="y">Y coordinate.</param>
         /// <returns>Geometry (2D Point).</returns>
         [Sql.Function("ST_Point", ServerSideOnly = true)]
-        public static NTSG STPoint(double x, double y)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STPoint(double x, double y) => throw new InvalidOperationException();
 
         /// <summary>
         /// Creates a Polygon geometry from input LineString geometry.
@@ -253,10 +212,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="srid">Spatial Reference System Identifier (SRID).</param>
         /// <returns>Geometry (Polygon).</returns>
         [Sql.Function("ST_Polygon", ServerSideOnly = true)]
-        public static NTSG STPolygon(this NTSG geometry, int srid)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STPolygon(this NTSG geometry, int srid) => throw new InvalidOperationException();
 
         /// <summary>
         /// Creates a Polygon geometry from input LineString geometry in text representation.
@@ -268,10 +224,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="srid">Spatial Reference System Identifier (SRID).</param>
         /// <returns>Geometry (Polygon).</returns>
         [Sql.Function("ST_Polygon", ServerSideOnly = true)]
-        public static NTSG STPolygon(string geometry, int srid)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STPolygon(string geometry, int srid) => throw new InvalidOperationException();
 
         /// <summary>
         /// Creates a rectangular Polygon geometry of tile in Web Mercator (SRID:3857) using the XYZ tile system with default bounds.
@@ -284,10 +237,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="tileY">Tile Y coordinate.</param>
         /// <returns>Geometry (Polygon).</returns>
         [Sql.Function("ST_TileEnvelope", ServerSideOnly = true)]
-        public static NTSG STTileEnvelope(int tileZoom, int tileX, int tileY)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STTileEnvelope(int tileZoom, int tileX, int tileY) => throw new InvalidOperationException();
 
         /// <summary>
         /// Creates a rectangular Polygon geometry of tile in Web Mercator (SRID:3857) using the XYZ tile system with given <paramref name="bounds"/>.
@@ -301,10 +251,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="bounds">Bounds.</param>
         /// <returns>Geometry (Polygon).</returns>
         [Sql.Function("ST_TileEnvelope", ServerSideOnly = true)]
-        public static NTSG STTileEnvelope(int tileZoom, int tileX, int tileY, NTSG bounds)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STTileEnvelope(int tileZoom, int tileX, int tileY, NTSG bounds) => throw new InvalidOperationException();
 
         /// <summary>
         /// Creates a rectangular Polygon geometry of tile in Web Mercator (SRID:3857) using the XYZ tile system with given <paramref name="bounds"/> in text representation.
@@ -318,10 +265,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="bounds">Bounds.</param>
         /// <returns>Geometry (Polygon).</returns>
         [Sql.Function("ST_TileEnvelope", ServerSideOnly = true)]
-        public static NTSG STTileEnvelope(int tileZoom, int tileX, int tileY, string bounds)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STTileEnvelope(int tileZoom, int tileX, int tileY, string bounds) => throw new InvalidOperationException();
 
         /// <summary>
         /// Creates hexagon geometry at given cell coordinates and origin.
@@ -335,10 +279,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="origin">Origin (Point).</param>
         /// <returns>Hexagon geometry (Polygon).</returns>
         [Sql.Function("ST_Hexagon", ServerSideOnly = true)]
-        public static NTSG STHexagon(double size, int cellI, int cellJ, NTSG origin)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STHexagon(double size, int cellI, int cellJ, NTSG origin) => throw new InvalidOperationException();
 
         /// <summary>
         /// Creates hexagon geometry at given cell coordinates.
@@ -351,10 +292,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="cellJ">Cell index by Y axis.</param>
         /// <returns>Hexagon geometry (Polygon).</returns>
         [Sql.Function("ST_Hexagon", ServerSideOnly = true)]
-        public static NTSG STHexagon(double size, int cellI, int cellJ)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STHexagon(double size, int cellI, int cellJ) => throw new InvalidOperationException();
 
         /// <summary>
         /// Creates square geometry at given cell coordinates and origin.
@@ -368,10 +306,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="origin">Origin (Point).</param>
         /// <returns>Square geometry (Polygon).</returns>
         [Sql.Function("ST_Square", ServerSideOnly = true)]
-        public static NTSG STSquare(double size, int cellI, int cellJ, NTSG origin)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STSquare(double size, int cellI, int cellJ, NTSG origin) => throw new InvalidOperationException();
 
         /// <summary>
         /// Creates square geometry at given cell coordinates.
@@ -384,9 +319,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="cellJ">Cell index by Y axis.</param>
         /// <returns>Square geometry (Polygon).</returns>
         [Sql.Function("ST_Square", ServerSideOnly = true)]
-        public static NTSG STSquare(double size, int cellI, int cellJ)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STSquare(double size, int cellI, int cellJ) => throw new InvalidOperationException();
+#pragma warning restore IDE0060
     }
 }

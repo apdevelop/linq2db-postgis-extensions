@@ -81,7 +81,7 @@ class PostGisTestDataConnection : LinqToDB.Data.DataConnection
 ```
 
 ### Technologies
-Developed using MS Visual Studio 2017.
+Developed using MS Visual Studio 2019.
 Tested on PostgreSQL version 9.6/11, PostGIS version 2.5/3.0/3.1.
 Depends on [linq2db](https://github.com/linq2db/linq2db), [Npgsql](https://github.com/npgsql/npgsql).
 

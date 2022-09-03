@@ -15,6 +15,7 @@ namespace LinqToDBPostGisNetTopologySuite
     /// </remarks>
     public static class MeasurementFunctions
     {
+#pragma warning disable IDE0060
         /// <summary>
         /// Returns the area of input <paramref name="geometry"/>.
         /// </summary>
@@ -24,10 +25,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry (or geography).</param>
         /// <returns>Area (in SRS units).</returns>
         [Sql.Function("ST_Area", ServerSideOnly = true)]
-        public static double? STArea(this NTSG geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STArea(this NTSG geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the area of input <paramref name="geometry"/> in text representation.
@@ -38,10 +36,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Area (in SRS units).</returns>
         [Sql.Function("ST_Area", ServerSideOnly = true)]
-        public static double? STArea(string geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STArea(string geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the azimuth of segment defined by input points P1P2.
@@ -53,10 +48,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="point2">Input point 2.</param>
         /// <returns>Azimuth (in radians).</returns>
         [Sql.Function("ST_Azimuth", ServerSideOnly = true)]
-        public static double? STAzimuth(this NTSG point1, NTSG point2)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STAzimuth(this NTSG point1, NTSG point2) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the angle measured clockwise of input points P1P2P3.
@@ -69,10 +61,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="point3">Input point 3.</param>
         /// <returns>Angle (in radians).</returns>
         [Sql.Function("ST_Angle", ServerSideOnly = true)]
-        public static double? STAngle(this NTSG point1, NTSG point2, NTSG point3)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STAngle(this NTSG point1, NTSG point2, NTSG point3) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the angle measured clockwise of input points P1P2,P3P4.
@@ -86,10 +75,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="point4">Input point 4.</param>  
         /// <returns>Angle (in radians).</returns>
         [Sql.Function("ST_Angle", ServerSideOnly = true)]
-        public static double? STAngle(this NTSG point1, NTSG point2, NTSG point3, NTSG point4)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STAngle(this NTSG point1, NTSG point2, NTSG point3, NTSG point4) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the angle measured clockwise of input lines.
@@ -101,10 +87,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="line2">Input line 2.</param>
         /// <returns>Angle (in radians).</returns>
         [Sql.Function("ST_Angle", ServerSideOnly = true)]
-        public static double? STAngle(this NTSG line1, NTSG line2)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STAngle(this NTSG line1, NTSG line2) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns point on input <paramref name="geometry1"/> that is closest to <paramref name="geometry2"/>.
@@ -116,10 +99,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry2">Input geometry 2.</param>
         /// <returns>Geometry (Point).</returns>
         [Sql.Function("ST_ClosestPoint", ServerSideOnly = true)]
-        public static NTSG STClosestPoint(this NTSG geometry1, NTSG geometry2)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STClosestPoint(this NTSG geometry1, NTSG geometry2) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the 2D point on input <paramref name="geometry1"/> that is closest to <paramref name="geometry2"/>.
@@ -131,10 +111,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry2">Input geometry 2 in text representation.</param>
         /// <returns>Geometry (Point).</returns>
         [Sql.Function("ST_ClosestPoint", ServerSideOnly = true)]
-        public static NTSG STClosestPoint(string geometry1, string geometry2)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STClosestPoint(string geometry1, string geometry2) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the 3D point on input <paramref name="geometry1"/> that is closest to <paramref name="geometry2"/>.
@@ -146,10 +123,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry2">Input geometry 2.</param>
         /// <returns>Geometry (3D Point).</returns>
         [Sql.Function("ST_3DClosestPoint", ServerSideOnly = true)]
-        public static NTSG ST3DClosestPoint(this NTSG geometry1, NTSG geometry2)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG ST3DClosestPoint(this NTSG geometry1, NTSG geometry2) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the 3D point on input <paramref name="geometry1"/> that is closest to <paramref name="geometry2"/>.
@@ -161,10 +135,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry2">Input geometry 2 in text representation.</param>
         /// <returns>Geometry (3D Point).</returns>
         [Sql.Function("ST_3DClosestPoint", ServerSideOnly = true)]
-        public static NTSG ST3DClosestPoint(string geometry1, string geometry2)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG ST3DClosestPoint(string geometry1, string geometry2) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the minimum 2D Cartesian (planar) distance between two input geometries.
@@ -177,10 +148,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="useSpheroid">Use spheroid (true) of simple sphere (false).</param>
         /// <returns>Distance (in SRS units).</returns>
         [Sql.Function("ST_Distance", ServerSideOnly = true)]
-        public static double? STDistance(this NTSG geometry, NTSG other, bool useSpheroid)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STDistance(this NTSG geometry, NTSG other, bool useSpheroid) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the minimum 2D Cartesian (planar) distance between two input geometries.
@@ -192,10 +160,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2 in text representation.</param>
         /// <returns>Distance (in SRS units).</returns>
         [Sql.Function("ST_Distance", ServerSideOnly = true)]
-        public static double? STDistance(string geometry, string other)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STDistance(string geometry, string other) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the minimum 2D Cartesian (planar) distance between two input geometries.
@@ -207,10 +172,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2.</param>
         /// <returns>Distance (in SRS units).</returns>
         [Sql.Function("ST_Distance", ServerSideOnly = true)]
-        public static double? STDistance(this NTSG geometry, NTSG other)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STDistance(this NTSG geometry, NTSG other) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns minimum 3D Cartesian distance between two input geometries.
@@ -222,10 +184,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2.</param>
         /// <returns>Distance (in SRS units).</returns>
         [Sql.Function("ST_3DDistance", ServerSideOnly = true)]
-        public static double? ST3DDistance(this NTSG geometry, NTSG other)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? ST3DDistance(this NTSG geometry, NTSG other) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns minimum 3D Cartesian distance between two input geometries.
@@ -237,10 +196,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2 in text representation.</param>
         /// <returns>Distance (in SRS units).</returns>
         [Sql.Function("ST_3DDistance", ServerSideOnly = true)]
-        public static double? ST3DDistance(string geometry, string other)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? ST3DDistance(string geometry, string other) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the minimum distance between two input geometries on sphere.
@@ -252,10 +208,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2.</param>
         /// <returns>Distance (in meters).</returns>
         [Sql.Function("ST_DistanceSphere", ServerSideOnly = true)]
-        public static double? STDistanceSphere(this NTSG geometry, NTSG other)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STDistanceSphere(this NTSG geometry, NTSG other) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the minimum distance between two input geometries on sphere.
@@ -267,10 +220,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2 in text representation.</param>
         /// <returns>Distance (in meters).</returns>
         [Sql.Function("ST_DistanceSphere", ServerSideOnly = true)]
-        public static double? STDistanceSphere(string geometry, string other)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STDistanceSphere(string geometry, string other) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the minimum distance between two input geometries on particular spheroid.
@@ -283,10 +233,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="spheroid">Measurement spheroid.</param>
         /// <returns>Distance (in meters).</returns>
         [Sql.Function("ST_DistanceSpheroid", ServerSideOnly = true)]
-        public static double? STDistanceSpheroid(this NTSG geometry, NTSG other, string spheroid) // TODO: ? spheroid type cast
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STDistanceSpheroid(this NTSG geometry, NTSG other, string spheroid) => throw new InvalidOperationException(); // TODO: ? spheroid type cast
 
         /// <summary>
         /// Returns the minimum distance between two input geometries on particular spheroid.
@@ -299,10 +246,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="spheroid">Measurement spheroid.</param>
         /// <returns>Distance (in meters).</returns>
         [Sql.Function("ST_DistanceSpheroid", ServerSideOnly = true)]
-        public static double? STDistanceSpheroid(string geometry, string other, string spheroid) // TODO: ? spheroid type cast
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STDistanceSpheroid(string geometry, string other, string spheroid) => throw new InvalidOperationException(); // TODO: ? spheroid type cast
 
         /// <summary>
         /// Returns the Fréchet distance restricted to discrete points for input geometries.
@@ -314,10 +258,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2.</param>
         /// <returns>Fréchet distance (in SRS units).</returns>
         [Sql.Function("ST_FrechetDistance", ServerSideOnly = true)]
-        public static double? STFrechetDistance(this NTSG geometry, NTSG other)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STFrechetDistance(this NTSG geometry, NTSG other) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the Fréchet distance restricted to discrete points for input geometries.
@@ -330,10 +271,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="densifyFrac">Fraction by which to densify each segment.</param>
         /// <returns>Fréchet distance (in SRS units).</returns>
         [Sql.Function("ST_FrechetDistance", ServerSideOnly = true)]
-        public static double? STFrechetDistance(this NTSG geometry, NTSG other, double densifyFrac)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STFrechetDistance(this NTSG geometry, NTSG other, double densifyFrac) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the Fréchet distance restricted to discrete points for input geometries.
@@ -346,10 +284,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="densifyFrac">Fraction by which to densify each segment.</param>
         /// <returns>Fréchet distance (in SRS units).</returns>
         [Sql.Function("ST_FrechetDistance", ServerSideOnly = true)]
-        public static double? STFrechetDistance(string geometry, string other, double densifyFrac)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STFrechetDistance(string geometry, string other, double densifyFrac) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the Hausdorff distance between input geometries.
@@ -361,10 +296,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2.</param>
         /// <returns>Hausdorff distance (in SRS units).</returns>
         [Sql.Function("ST_HausdorffDistance", ServerSideOnly = true)]
-        public static double? STHausdorffDistance(this NTSG geometry, NTSG other)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STHausdorffDistance(this NTSG geometry, NTSG other) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the Hausdorff distance between input geometries.
@@ -377,10 +309,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="densifyFrac">Fraction by which to densify each segment.</param>
         /// <returns>Hausdorff distance (in SRS units).</returns>
         [Sql.Function("ST_HausdorffDistance", ServerSideOnly = true)]
-        public static double? STHausdorffDistance(this NTSG geometry, NTSG other, double densifyFrac)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STHausdorffDistance(this NTSG geometry, NTSG other, double densifyFrac) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the Hausdorff distance between input geometries.
@@ -393,10 +322,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="densifyFrac">Fraction by which to densify each segment.</param>
         /// <returns>Hausdorff distance (in SRS units).</returns>
         [Sql.Function("ST_HausdorffDistance", ServerSideOnly = true)]
-        public static double? STHausdorffDistance(string geometry, string other, double densifyFrac)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STHausdorffDistance(string geometry, string other, double densifyFrac) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the 2D Cartesian length of input <paramref name="geometry"/>.
@@ -407,10 +333,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Length (in SRS units).</returns>
         [Sql.Function("ST_Length", ServerSideOnly = true)]
-        public static double? STLength(this NTSG geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STLength(this NTSG geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the 2D Cartesian length of input <paramref name="geometry"/>.
@@ -421,10 +344,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry in text representation.</param>
         /// <returns>Length (in SRS units).</returns>
         [Sql.Function("ST_Length", ServerSideOnly = true)]
-        public static double? STLength(string geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STLength(string geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the 2D Cartesian length of input <paramref name="geography"/>.
@@ -436,10 +356,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="useSpheroid">Use spheroid (true) of simple sphere (false).</param>
         /// <returns>Length (in SRS units).</returns>
         [Sql.Function("ST_Length", ServerSideOnly = true)]
-        public static double? STLength(this NTSG geography, bool useSpheroid)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STLength(this NTSG geography, bool useSpheroid) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the 2D Cartesian length of input <paramref name="geometry"/>.
@@ -450,10 +367,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Length (in SRS units).</returns>
         [Sql.Function("ST_Length2D", ServerSideOnly = true)]
-        public static double? STLength2D(this NTSG geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STLength2D(this NTSG geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the 2D Cartesian length of input <paramref name="geometry"/>.
@@ -464,10 +378,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry in text representation.</param>
         /// <returns>Length (in SRS units).</returns>
         [Sql.Function("ST_Length2D", ServerSideOnly = true)]
-        public static double? STLength2D(string geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STLength2D(string geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the 3D or 2D length of input <paramref name="geometry"/>.
@@ -478,10 +389,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Length (in SRS units).</returns>
         [Sql.Function("ST_3DLength", ServerSideOnly = true)]
-        public static double? ST3DLength(this NTSG geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? ST3DLength(this NTSG geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the 3D or 2D length of input <paramref name="geometry"/>.
@@ -492,10 +400,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry in text representation.</param>
         /// <returns>Length (in SRS units).</returns>
         [Sql.Function("ST_3DLength", ServerSideOnly = true)]
-        public static double? ST3DLength(string geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? ST3DLength(string geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the length or perimeter of input <paramref name="geometry"/> on given spheroid.
@@ -507,10 +412,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="spheroid">Measurement spheroid.</param>
         /// <returns>Length.</returns>
         [Sql.Function("ST_LengthSpheroid", ServerSideOnly = true)]
-        public static double? STLengthSpheroid(this NTSG geometry, string spheroid) // TODO: ? spheroid type cast
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STLengthSpheroid(this NTSG geometry, string spheroid) => throw new InvalidOperationException(); // TODO: ? spheroid type cast
 
         /// <summary>
         /// Returns the length or perimeter of input <paramref name="geometry"/> on given spheroid.
@@ -522,10 +424,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="spheroid">Measurement spheroid.</param>
         /// <returns>Length.</returns>
         [Sql.Function("ST_LengthSpheroid", ServerSideOnly = true)]
-        public static double? STLengthSpheroid(string geometry, string spheroid) // TODO: ? spheroid type cast
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STLengthSpheroid(string geometry, string spheroid) => throw new InvalidOperationException(); // TODO: ? spheroid type cast
 
         /// <summary>
         /// Returns the 2D longest line between points of two input geometries.
@@ -537,10 +436,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2.</param>
         /// <returns>Geometry (LineString).</returns>
         [Sql.Function("ST_LongestLine", ServerSideOnly = true)]
-        public static NTSG STLongestLine(this NTSG geometry, NTSG other)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STLongestLine(this NTSG geometry, NTSG other) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the 2D longest line between points of two input geometries.
@@ -552,10 +448,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2 in text representation.</param>
         /// <returns>Geometry (LineString).</returns>
         [Sql.Function("ST_LongestLine", ServerSideOnly = true)]
-        public static NTSG STLongestLine(string geometry, string other)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STLongestLine(string geometry, string other) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the 3D longest line between points of two input geometries.
@@ -567,10 +460,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2.</param>
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_3DLongestLine", ServerSideOnly = true)]
-        public static NTSG ST3DLongestLine(this NTSG geometry, NTSG other)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG ST3DLongestLine(this NTSG geometry, NTSG other) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the 3D longest line between points of two input geometries.
@@ -582,10 +472,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2 in text representation.</param>
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_3DLongestLine", ServerSideOnly = true)]
-        public static NTSG ST3DLongestLine(string geometry, string other)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG ST3DLongestLine(string geometry, string other) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the 2D maximum distance between two input geometries.
@@ -597,10 +484,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2.</param>
         /// <returns>Distance (in SRS units).</returns>
         [Sql.Function("ST_MaxDistance", ServerSideOnly = true)]
-        public static double? STMaxDistance(this NTSG geometry, NTSG other)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STMaxDistance(this NTSG geometry, NTSG other) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the 2D maximum distance between two input geometries.
@@ -612,10 +496,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2 in text representation.</param>
         /// <returns>Distance (in SRS units).</returns>
         [Sql.Function("ST_MaxDistance", ServerSideOnly = true)]
-        public static double? STMaxDistance(string geometry, string other)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STMaxDistance(string geometry, string other) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the 3D maximum distance between two input geometries.
@@ -627,10 +508,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2.</param>
         /// <returns>Distance (in SRS units).</returns>
         [Sql.Function("ST_3DMaxDistance", ServerSideOnly = true)]
-        public static double? ST3DMaxDistance(this NTSG geometry, NTSG other)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? ST3DMaxDistance(this NTSG geometry, NTSG other) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the 3D maximum distance between two input geometries.
@@ -642,10 +520,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2 in text representation.</param>
         /// <returns>Distance (in SRS units).</returns>
         [Sql.Function("ST_3DMaxDistance", ServerSideOnly = true)]
-        public static double? ST3DMaxDistance(string geometry, string other)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? ST3DMaxDistance(string geometry, string other) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the minimum clearance of input <paramref name="geometry"/>.
@@ -656,10 +531,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Minimum clearance.</returns>
         [Sql.Function("ST_MinimumClearance", ServerSideOnly = true)]
-        public static double? STMinimumClearance(this NTSG geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STMinimumClearance(this NTSG geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the minimum clearance of input <paramref name="geometry"/> in text representation.
@@ -670,10 +542,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Minimum clearance.</returns>
         [Sql.Function("ST_MinimumClearance", ServerSideOnly = true)]
-        public static double? STMinimumClearance(string geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STMinimumClearance(string geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the line spanning minimum clearance of input <paramref name="geometry"/>.
@@ -684,10 +553,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Geometry (LineString).</returns>
         [Sql.Function("ST_MinimumClearanceLine", ServerSideOnly = true)]
-        public static NTSG STMinimumClearanceLine(this NTSG geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STMinimumClearanceLine(this NTSG geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the line spanning minimum clearance of input <paramref name="geometry"/> in text representation.
@@ -698,10 +564,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Geometry (LineString).</returns>
         [Sql.Function("ST_MinimumClearanceLine", ServerSideOnly = true)]
-        public static NTSG STMinimumClearanceLine(string geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STMinimumClearanceLine(string geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the 2D perimeter of input <paramref name="geometry"/>.
@@ -712,10 +575,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry (or geography).</param>
         /// <returns>Perimeter (in SRS units).</returns>
         [Sql.Function("ST_Perimeter", ServerSideOnly = true)]
-        public static double? STPerimeter(this NTSG geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STPerimeter(this NTSG geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns 2D perimeter of input <paramref name="geometry"/>.
@@ -726,10 +586,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Perimeter (in SRS units).</returns>
         [Sql.Function("ST_Perimeter2D", ServerSideOnly = true)]
-        public static double? STPerimeter2D(this NTSG geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STPerimeter2D(this NTSG geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the 2D perimeter of input <paramref name="geometry"/> in text representation.
@@ -740,10 +597,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Perimeter (in SRS units).</returns>
         [Sql.Function("ST_Perimeter2D", ServerSideOnly = true)]
-        public static double? STPerimeter2D(string geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? STPerimeter2D(string geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the 3D perimeter of input <paramref name="geometry"/>.
@@ -754,10 +608,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Perimeter (in SRS units).</returns>
         [Sql.Function("ST_3DPerimeter", ServerSideOnly = true)]
-        public static double? ST3DPerimeter(this NTSG geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? ST3DPerimeter(this NTSG geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the 3D perimeter of input <paramref name="geometry"/> in text representation.
@@ -768,10 +619,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Perimeter (in SRS units).</returns>
         [Sql.Function("ST_3DPerimeter", ServerSideOnly = true)]
-        public static double? ST3DPerimeter(string geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? ST3DPerimeter(string geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns a point projected from a start point along a geodesic using a given distance and azimuth (bearing).
@@ -784,10 +632,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="azimuth">Azimuth (bearing) given in radians, measured clockwise. Negative values and values greater than 2π (360 degrees) are supported.</param>
         /// <returns>Projected point.</returns>
         [Sql.Function("ST_Project", ServerSideOnly = true)]
-        public static NTSG STProject(this NTSG geography, double distance, double azimuth)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STProject(this NTSG geography, double distance, double azimuth) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns a point projected from a start point along a geodesic using a given distance and azimuth (bearing).
@@ -800,10 +645,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="azimuth">Azimuth (bearing) given in radians, measured clockwise. Negative values and values greater than 2π (360 degrees) are supported.</param>
         /// <returns>Projected point.</returns>
         [Sql.Function("ST_Project", ServerSideOnly = true)]
-        public static NTSG STProject(string geography, double distance, double azimuth)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STProject(string geography, double distance, double azimuth) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the 2D shortest line between two input geometries.
@@ -815,10 +657,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2.</param>
         /// <returns>Geometry (LineString).</returns>
         [Sql.Function("ST_ShortestLine", ServerSideOnly = true)]
-        public static NTSG STShortestLine(this NTSG geometry, NTSG other)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STShortestLine(this NTSG geometry, NTSG other) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the 2D shortest line between two input geometries.
@@ -830,10 +669,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2 in text representation.</param>
         /// <returns>Geometry (LineString).</returns>
         [Sql.Function("ST_ShortestLine", ServerSideOnly = true)]
-        public static NTSG STShortestLine(string geometry, string other)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STShortestLine(string geometry, string other) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the 3D shortest line between two input geometries.
@@ -845,10 +681,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2.</param>
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_3DShortestLine", ServerSideOnly = true)]
-        public static NTSG ST3DShortestLine(this NTSG geometry, NTSG other)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG ST3DShortestLine(this NTSG geometry, NTSG other) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the 3D shortest line between two input geometries.
@@ -860,9 +693,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2 in text representation.</param>
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_3DShortestLine", ServerSideOnly = true)]
-        public static NTSG ST3DShortestLine(string geometry, string other)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG ST3DShortestLine(string geometry, string other) => throw new InvalidOperationException();
+#pragma warning restore IDE0060
     }
 }

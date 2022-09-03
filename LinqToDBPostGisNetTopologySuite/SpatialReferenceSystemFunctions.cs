@@ -15,6 +15,7 @@ namespace LinqToDBPostGisNetTopologySuite
     /// </remarks>
     public static class SpatialReferenceSystemFunctions
     {
+#pragma warning disable IDE0060
         /// <summary>
         /// Sets the SRID on the input <paramref name="geometry"/> to particular <paramref name="srid" />.
         /// </summary>
@@ -25,10 +26,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="srid">Spatial Reference System Identifier.</param>
         /// <returns>Geometry with new SRID value.</returns>
         [Sql.Function("ST_SetSRID", ServerSideOnly = true)]
-        public static NTSG STSetSrId(this NTSG geometry, int srid)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STSetSrId(this NTSG geometry, int srid) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the SRID for the input <paramref name="geometry"/> as defined in spatial_ref_sys table.
@@ -39,10 +37,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Spatial Reference System Identifier.</returns>
         [Sql.Function("ST_SRID", ServerSideOnly = true)]
-        public static int? STSrId(this NTSG geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static int? STSrId(this NTSG geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns new geometry with coordinates transformed to a different spatial reference system.
@@ -54,10 +49,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="srid">Destination Spatial Reference System Identifier.</param>
         /// <returns>Transformed geometry.</returns>
         [Sql.Function("ST_Transform", ServerSideOnly = true)]
-        public static NTSG STTransform(this NTSG geometry, int srid)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STTransform(this NTSG geometry, int srid) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns new geometry with coordinates transformed to a different spatial reference system.
@@ -69,10 +61,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="toProj">Destination spatial reference system defined as PROJ.4 string.</param>
         /// <returns>Transformed geometry.</returns>
         [Sql.Function("ST_Transform", ServerSideOnly = true)]
-        public static NTSG STTransform(this NTSG geometry, string toProj)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STTransform(this NTSG geometry, string toProj) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns new geometry with coordinates transformed to a different spatial reference system.
@@ -85,10 +74,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="toProj">Destination spatial reference system defined as PROJ.4 string.</param>
         /// <returns>Transformed geometry.</returns>
         [Sql.Function("ST_Transform", ServerSideOnly = true)]
-        public static NTSG STTransform(this NTSG geometry, string fromProj, string toProj)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STTransform(this NTSG geometry, string fromProj, string toProj) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns new geometry with coordinates transformed to a different spatial reference system.
@@ -101,9 +87,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="toSrid">Destination Spatial Reference System Identifier.</param>
         /// <returns>Transformed geometry.</returns>
         [Sql.Function("ST_Transform", ServerSideOnly = true)]
-        public static NTSG STTransform(this NTSG geometry, string fromProj, int toSrid)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STTransform(this NTSG geometry, string fromProj, int toSrid) => throw new InvalidOperationException();
+#pragma warning restore IDE0060
     }
 }

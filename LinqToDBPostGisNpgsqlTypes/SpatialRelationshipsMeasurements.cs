@@ -6,9 +6,9 @@ using NpgsqlTypes;
 namespace LinqToDBPostGisNpgsqlTypes
 {
     // http://postgis.refractions.net/documentation/manual-1.5/reference.html#Spatial_Relationships_Measurements
-
     public static class SpatialRelationshipsMeasurements
     {
+#pragma warning disable IDE0060
         /// <summary>
         /// Return the area of the surface if it is a polygon or multi-polygon. For "geometry" type area is in SRID units.
         /// http://postgis.refractions.net/documentation/manual-1.5/ST_Area.html
@@ -16,10 +16,7 @@ namespace LinqToDBPostGisNpgsqlTypes
         /// <param name="geom">Input geometry</param>
         /// <returns>Area</returns>
         [Sql.Function("ST_Area", ServerSideOnly = true)]
-        public static double STArea(this PostgisGeometry geom)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double STArea(this PostgisGeometry geom) => throw new InvalidOperationException();
 
         /// <summary>
         /// Return the geometric center of a geometry.
@@ -28,10 +25,7 @@ namespace LinqToDBPostGisNpgsqlTypes
         /// <param name="geom">Input geometry</param>
         /// <returns>Geometric center</returns>
         [Sql.Function("ST_Centroid", ServerSideOnly = true)]
-        public static PostgisGeometry STCentroid(this PostgisGeometry geom)
-        {
-            throw new InvalidOperationException();
-        }
+        public static PostgisGeometry STCentroid(this PostgisGeometry geom) => throw new InvalidOperationException();
 
         /// <summary>
         /// Return true if and only if no points of B lie in the exterior of A, and at least one point of the interior of B lies in the interior of A.
@@ -41,10 +35,7 @@ namespace LinqToDBPostGisNpgsqlTypes
         /// <param name="geomB">Input geometry B</param>
         /// <returns>Returns true if geometry B is completely inside geometry A.</returns>
         [Sql.Function("ST_Contains", ServerSideOnly = true)]
-        public static bool STContains(this PostgisGeometry geomA, PostgisGeometry geomB)
-        {
-            throw new InvalidOperationException();
-        }
+        public static bool STContains(this PostgisGeometry geomA, PostgisGeometry geomB) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns TRUE if the Geometries do not spatially intersect.
@@ -54,10 +45,7 @@ namespace LinqToDBPostGisNpgsqlTypes
         /// <param name="geomB">Input geometry B</param>
         /// <returns>True if the geometries do not spatially intersect</returns>
         [Sql.Function("ST_Disjoint", ServerSideOnly = true)]
-        public static bool STDisjoint(this PostgisGeometry geomA, PostgisGeometry geomB)
-        {
-            throw new InvalidOperationException();
-        }
+        public static bool STDisjoint(this PostgisGeometry geomA, PostgisGeometry geomB) => throw new InvalidOperationException();
 
         /// <summary>
         /// Return the 2-dimensional cartesian minimum distance (based on spatial ref) between two geometries in projected units.
@@ -67,10 +55,7 @@ namespace LinqToDBPostGisNpgsqlTypes
         /// <param name="geom2">Input geometry 2</param>
         /// <returns>Distance between two geometries</returns>
         [Sql.Function("ST_Distance", ServerSideOnly = true)]
-        public static double STDistance(this PostgisGeometry geom1, PostgisGeometry geom2)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double STDistance(this PostgisGeometry geom1, PostgisGeometry geom2) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns true if the geometries are within the specified distance of one another.
@@ -81,10 +66,7 @@ namespace LinqToDBPostGisNpgsqlTypes
         /// <param name="distance">Distance in SRID units</param>
         /// <returns></returns>
         [Sql.Function("ST_DWithin", ServerSideOnly = true)]
-        public static bool STDWithin(this PostgisGeometry geom1, PostgisGeometry geom2, double distance)
-        {
-            throw new InvalidOperationException();
-        }
+        public static bool STDWithin(this PostgisGeometry geom1, PostgisGeometry geom2, double distance) => throw new InvalidOperationException();
 
         /// <summary>
         /// Return true if the given geometries represent the same geometry. Directionality is ignored.
@@ -94,10 +76,7 @@ namespace LinqToDBPostGisNpgsqlTypes
         /// <param name="geomB">Input geometry B</param>
         /// <returns>True if the given geometries represent the same geometry.</returns>
         [Sql.Function("ST_Equals", ServerSideOnly = true)]
-        public static bool STEquals(this PostgisGeometry geomA, PostgisGeometry geomB)
-        {
-            throw new InvalidOperationException();
-        }
+        public static bool STEquals(this PostgisGeometry geomA, PostgisGeometry geomB) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns TRUE if the Geometries "spatially intersect" - (share any portion of space) and false if they don't (they are Disjoint).
@@ -107,10 +86,7 @@ namespace LinqToDBPostGisNpgsqlTypes
         /// <param name="geomB">Input geometry B</param>
         /// <returns></returns>
         [Sql.Function("ST_Intersects", ServerSideOnly = true)]
-        public static bool STIntersects(this PostgisGeometry geomA, PostgisGeometry geomB)
-        {
-            throw new InvalidOperationException();
-        }
+        public static bool STIntersects(this PostgisGeometry geomA, PostgisGeometry geomB) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the 2d length of the geometry if it is a linestring or multilinestring. 
@@ -119,10 +95,7 @@ namespace LinqToDBPostGisNpgsqlTypes
         /// <param name="geom">Input geometry</param>
         /// <returns>Cartesian 2D length of the geometry if it is a linestring, multilinestring, ST_Curve, ST_MultiCurve</returns>
         [Sql.Function("ST_Length", ServerSideOnly = true)]
-        public static double STLength(this PostgisGeometry geom)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double STLength(this PostgisGeometry geom) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns true if the Geometries share space, are of the same dimension, but are not completely contained by each other.
@@ -132,10 +105,7 @@ namespace LinqToDBPostGisNpgsqlTypes
         /// <param name="geomB">Input geometry B</param>
         /// <returns></returns>
         [Sql.Function("ST_Overlaps", ServerSideOnly = true)]
-        public static bool STOverlaps(this PostgisGeometry geomA, PostgisGeometry geomB)
-        {
-            throw new InvalidOperationException();
-        }
+        public static bool STOverlaps(this PostgisGeometry geomA, PostgisGeometry geomB) => throw new InvalidOperationException();
 
         /// <summary>
         /// Return the length measurement of the boundary of an ST_Surface or ST_MultiSurface value. (Polygon, Multipolygon)
@@ -144,10 +114,7 @@ namespace LinqToDBPostGisNpgsqlTypes
         /// <param name="geom">Input geometry</param>
         /// <returns>Perimeter</returns>
         [Sql.Function("ST_Perimeter", ServerSideOnly = true)]
-        public static double STPerimeter(this PostgisGeometry geom)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double STPerimeter(this PostgisGeometry geom) => throw new InvalidOperationException();
 
         /// <summary>
         /// Return the 2-dimensional shortest line between two geometries
@@ -157,10 +124,7 @@ namespace LinqToDBPostGisNpgsqlTypes
         /// <param name="geom2">Input geometry 2</param>
         /// <returns>2-dimensional shortest line between two geometries.</returns>
         [Sql.Function("ST_ShortestLine", ServerSideOnly = true)]
-        public static PostgisGeometry STShortestLine(this PostgisGeometry geom1, PostgisGeometry geom2)
-        {
-            throw new InvalidOperationException();
-        }
+        public static PostgisGeometry STShortestLine(this PostgisGeometry geom1, PostgisGeometry geom2) => throw new InvalidOperationException();
 
         /// <summary>
         /// Return true if the geometries have at least one point in common, but their interiors do not intersect.
@@ -169,10 +133,7 @@ namespace LinqToDBPostGisNpgsqlTypes
         /// <param name="geom2">Input geometry 2</param>
         /// <returns></returns>
         [Sql.Function("ST_Touches", ServerSideOnly = true)]
-        public static bool STTouches(this PostgisGeometry geom1, PostgisGeometry geom2)
-        {
-            throw new InvalidOperationException();
-        }
+        public static bool STTouches(this PostgisGeometry geom1, PostgisGeometry geom2) => throw new InvalidOperationException();
 
         /// <summary>
         /// Return true if the geometry A is completely inside geometry B
@@ -182,9 +143,7 @@ namespace LinqToDBPostGisNpgsqlTypes
         /// <param name="geomB">Input geometry B</param>
         /// <returns></returns>
         [Sql.Function("ST_Within", ServerSideOnly = true)]
-        public static bool STWithin(this PostgisGeometry geomA, PostgisGeometry geomB)
-        {
-            throw new InvalidOperationException();
-        }
+        public static bool STWithin(this PostgisGeometry geomA, PostgisGeometry geomB) => throw new InvalidOperationException();
+#pragma warning restore IDE0060
     }
 }

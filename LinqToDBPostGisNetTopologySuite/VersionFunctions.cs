@@ -22,10 +22,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Full PostGIS version and build configuration information.
         /// </returns>
         [Sql.Function("PostGIS_Full_Version", ServerSideOnly = true)]
-        public static string PostGISFullVersion()
-        {
-            throw new InvalidOperationException();
-        }
+        public static string PostGISFullVersion() => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the version number of the GEOS library, or null if GEOS support is not enabled.
@@ -37,10 +34,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Version number of the GEOS library.
         /// </returns>
         [Sql.Function("PostGIS_GEOS_Version", ServerSideOnly = true)]
-        public static string PostGISGEOSVersion()
-        {
-            throw new InvalidOperationException();
-        }
+        public static string PostGISGEOSVersion() => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the version number of the liblwgeom library.
@@ -52,10 +46,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Version number of the liblwgeom library.
         /// </returns>
         [Sql.Function("PostGIS_Liblwgeom_Version", ServerSideOnly = true)]
-        public static string PostGISLiblwgeomVersion()
-        {
-            throw new InvalidOperationException();
-        }
+        public static string PostGISLiblwgeomVersion() => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the version number of the libxml library.
@@ -67,10 +58,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Version number of the libxml library.
         /// </returns>
         [Sql.Function("PostGIS_LibXML_Version", ServerSideOnly = true)]
-        public static string PostGISLibXMLVersion()
-        {
-            throw new InvalidOperationException();
-        }
+        public static string PostGISLibXMLVersion() => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the build date of the PostGIS library.
@@ -82,10 +70,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Build date of the PostGIS library.
         /// </returns>
         [Sql.Function("PostGIS_Lib_Build_Date", ServerSideOnly = true)]
-        public static string PostGISLibBuildDate()
-        {
-            throw new InvalidOperationException();
-        }
+        public static string PostGISLibBuildDate() => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the version number of the PostGIS library.
@@ -97,10 +82,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Version number of the PostGIS library.
         /// </returns>
         [Sql.Function("PostGIS_Lib_Version", ServerSideOnly = true)]
-        public static string PostGISLibVersion()
-        {
-            throw new InvalidOperationException();
-        }
+        public static string PostGISLibVersion() => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the version number of the PROJ4 library, or null if PROJ4 support is not enabled.
@@ -112,10 +94,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Version number of the PROJ4 library.
         /// </returns>
         [Sql.Function("PostGIS_PROJ_Version", ServerSideOnly = true)]
-        public static string PostGISPROJVersion()
-        {
-            throw new InvalidOperationException();
-        }
+        public static string PostGISPROJVersion() => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the version number of the internal Wagyu library, or null if Wagyu support is not enabled.
@@ -127,10 +106,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Version number of the Wagyu library.
         /// </returns>
         [Sql.Function("PostGIS_Wagyu_Version", ServerSideOnly = true)]
-        public static string PostGISWagyuVersion()
-        {
-            throw new InvalidOperationException();
-        }
+        public static string PostGISWagyuVersion() => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns the build date of the PostGIS scripts.
@@ -142,10 +118,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Build date of the PostGIS scripts.
         /// </returns>
         [Sql.Function("PostGIS_Scripts_Build_Date", ServerSideOnly = true)]
-        public static string PostGISScriptsBuildDate()
-        {
-            throw new InvalidOperationException();
-        }
+        public static string PostGISScriptsBuildDate() => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns version of the PostGIS scripts installed in this database.
@@ -157,10 +130,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// Version of the PostGIS scripts.
         /// </returns>
         [Sql.Function("PostGIS_Scripts_Installed", ServerSideOnly = true)]
-        public static string PostGISScriptsInstalled()
-        {
-            throw new InvalidOperationException();
-        }
+        public static string PostGISScriptsInstalled() => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns PostGIS version number and compile-time options.
@@ -172,9 +142,6 @@ namespace LinqToDBPostGisNetTopologySuite
         /// PostGIS version number and compile-time options.
         /// </returns>
         [Sql.Function("PostGIS_Version", ServerSideOnly = true)]
-        public static string PostGISVersion()
-        {
-            throw new InvalidOperationException();
-        }
+        public static string PostGISVersion() => throw new InvalidOperationException();
     }
 }

@@ -15,6 +15,7 @@ namespace LinqToDBPostGisNetTopologySuite
     /// </remarks>
     public static class OverlayFunctions
     {
+#pragma warning disable IDE0060
         /// <summary>
         /// Returns geometry clipped by 2D box. 
         /// </summary>
@@ -25,10 +26,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="box">Clipping box.</param>
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_ClipByBox2D", ServerSideOnly = true)]
-        public static NTSG STClipByBox2D(this NTSG geometry, NTSG box)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STClipByBox2D(this NTSG geometry, NTSG box) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns geometry that represents that part of geometry 1 that does not intersect with geometry 2.
@@ -40,10 +38,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2.</param>
         /// <returns>Difference geometry.</returns>
         [Sql.Function("ST_Difference", ServerSideOnly = true)]
-        public static NTSG STDifference(this NTSG geometry, NTSG other)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STDifference(this NTSG geometry, NTSG other) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns geometry that represents the point set intersection of given geometries.
@@ -55,10 +50,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2.</param>
         /// <returns>Difference geometry.</returns>
         [Sql.Function("ST_Intersection", ServerSideOnly = true)]
-        public static NTSG STIntersection(this NTSG geometry, NTSG other)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STIntersection(this NTSG geometry, NTSG other) => throw new InvalidOperationException();
 
         // TODO: ST_Intersection(geography, geography)
 
@@ -73,10 +65,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_Node", ServerSideOnly = true)]
-        public static NTSG STNode(this NTSG geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STNode(this NTSG geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Splitting input line by (multi)point, (multi)line or (multi)polygon boundary, a (multi)polygon by line.
@@ -88,10 +77,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="blade">Boundary geometry.</param>
         /// <returns>Geometry.</returns>
         [Sql.Function("ST_Split", ServerSideOnly = true)]
-        public static NTSG STSplit(this NTSG geometry, NTSG blade)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STSplit(this NTSG geometry, NTSG blade) => throw new InvalidOperationException();
 
         // TODO: ? setof geometry ST_Subdivide
 
@@ -105,10 +91,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2.</param>
         /// <returns>Difference geometry.</returns>
         [Sql.Function("ST_SymDifference", ServerSideOnly = true)]
-        public static NTSG STSymDifference(this NTSG geometry, NTSG other)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STSymDifference(this NTSG geometry, NTSG other) => throw new InvalidOperationException();
 
         // TODO: STSymDifference(gridSize)
 
@@ -122,10 +105,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="other">Input geometry 2.</param>
         /// <returns>Union geometry.</returns>
         [Sql.Function("ST_Union", ServerSideOnly = true)]
-        public static NTSG STUnion(this NTSG geometry, NTSG other)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STUnion(this NTSG geometry, NTSG other) => throw new InvalidOperationException();
 
         // TODO: STUnion(gridSize)
 
@@ -138,10 +118,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Union geometry.</returns>
         [Sql.Function("ST_UnaryUnion", ServerSideOnly = true)]
-        public static NTSG STUnaryUnion(this NTSG geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STUnaryUnion(this NTSG geometry) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns union of input geometry.
@@ -152,11 +129,9 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Union geometry.</returns>
         [Sql.Function("ST_UnaryUnion", ServerSideOnly = true)]
-        public static NTSG STUnaryUnion(string geometry)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STUnaryUnion(string geometry) => throw new InvalidOperationException();
 
         // TODO: STUnaryUnion(gridSize)
+#pragma warning restore IDE0060
     }
 }

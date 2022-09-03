@@ -7,9 +7,9 @@ using NpgsqlTypes;
 namespace LinqToDBPostGisNpgsqlTypes
 {
     // http://postgis.refractions.net/documentation/manual-1.5/reference.html#Geometry_Constructors
-
     public static class GeometryConstructors
     {
+#pragma warning disable IDE0060
         /// <summary>
         /// Return a specified geometry value from Extended Well-Known Text representation (EWKT).
         /// http://postgis.refractions.net/documentation/manual-1.5/ST_GeomFromEWKT.html
@@ -17,10 +17,7 @@ namespace LinqToDBPostGisNpgsqlTypes
         /// <param name="ewkt">Extended Well-Known Text representation (EWKT)</param>
         /// <returns>Geometry object</returns>
         [Sql.Function("ST_GeomFromEWKT", ServerSideOnly = true)]
-        public static PostgisGeometry STGeomFromEWKT(string ewkt)
-        {
-            throw new InvalidOperationException();
-        }
+        public static PostgisGeometry STGeomFromEWKT(string ewkt) => throw new InvalidOperationException();
 
         /// <summary>
         /// Return a specified geometry value from Extended Well-Known Text representation (EWKT).
@@ -53,10 +50,7 @@ namespace LinqToDBPostGisNpgsqlTypes
         /// <param name="wkt">Well-Known Text representation (WKT)</param>
         /// <returns>Geometry object</returns>
         [Sql.Function("ST_GeomFromText", ServerSideOnly = true)]
-        public static PostgisGeometry STGeomFromText(string wkt)
-        {
-            throw new InvalidOperationException();
-        }
+        public static PostgisGeometry STGeomFromText(string wkt) => throw new InvalidOperationException();
 
         /// <summary>
         /// Return a specified geometry value from Well-Known Text representation (WKT).
@@ -89,10 +83,7 @@ namespace LinqToDBPostGisNpgsqlTypes
         /// <param name="wkt">Well-Known Text representation (WKT)</param>
         /// <returns>Geometry object</returns>
         [Sql.Function("ST_GeomFromText", ServerSideOnly = true)]
-        public static PostgisGeometry STGeomFromText(string wkt, int srid)
-        {
-            throw new InvalidOperationException();
-        }
+        public static PostgisGeometry STGeomFromText(string wkt, int srid) => throw new InvalidOperationException();
 
         /// <summary>
         /// Return a specified geometry value from Well-Known Text representation (WKT).
@@ -132,10 +123,7 @@ namespace LinqToDBPostGisNpgsqlTypes
         /// <param name="srid"></param>
         /// <returns></returns>
         [Sql.Function("ST_MakeEnvelope", ServerSideOnly = true)]
-        public static PostgisGeometry STMakeEnvelope(double xmin, double ymin, double xmax, double ymax, int srid)
-        {
-            throw new InvalidOperationException();
-        }
+        public static PostgisGeometry STMakeEnvelope(double xmin, double ymin, double xmax, double ymax, int srid) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns an ST_Point with the given coordinate values. OGC alias for ST_MakePoint.
@@ -144,9 +132,7 @@ namespace LinqToDBPostGisNpgsqlTypes
         /// <param name="y"></param>
         /// <returns></returns>
         [Sql.Function("ST_Point", ServerSideOnly = true)]
-        public static PostgisGeometry STPoint(double x, double y)
-        {
-            throw new InvalidOperationException();
-        }
+        public static PostgisGeometry STPoint(double x, double y) => throw new InvalidOperationException();
+#pragma warning restore IDE0060
     }
 }

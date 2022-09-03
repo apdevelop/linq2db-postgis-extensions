@@ -13,16 +13,14 @@ namespace LinqToDBPostGisNetTopologySuite
     /// </remarks>
     public static class MathematicalFunctions
     {
+#pragma warning disable IDE0060
         /// <summary>
         /// Convert radians to degrees.
         /// </summary>
         /// <param name="radians">Radians.</param>
         /// <returns>Degrees.</returns>
         [Sql.Function("degrees", ServerSideOnly = true)]
-        public static double? Degrees(double? radians)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? Degrees(double? radians) => throw new InvalidOperationException();
 
         /// <summary>
         /// Convert degrees to radians.
@@ -30,9 +28,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="degrees">Degrees.</param>
         /// <returns>Radians.</returns>
         [Sql.Function("radians", ServerSideOnly = true)]
-        public static double? Radians(double? degrees)
-        {
-            throw new InvalidOperationException();
-        }
+        public static double? Radians(double? degrees) => throw new InvalidOperationException();
+#pragma warning restore IDE0060
     }
 }
