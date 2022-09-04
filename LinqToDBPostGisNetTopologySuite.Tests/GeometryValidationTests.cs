@@ -1,14 +1,15 @@
-﻿using System.Linq;
-
+﻿using System;
+using System.Linq;
 using LinqToDB;
-
 using NUnit.Framework;
+using NTSG = NetTopologySuite.Geometries.Geometry;
 
 namespace LinqToDBPostGisNetTopologySuite.Tests
 {
     [TestFixture]
     class GeometryValidationTests : TestsBase
     {
+        private Version CurrentVersion;
         [SetUp]
         public void Setup()
         {
@@ -16,8 +17,10 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             {
                 db.TestGeometries.Delete();
                 db.TestGeographies.Delete();
+                this.CurrentVersion = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
             }
         }
+
 
         [Test]
         public void TestSTIsValid()
@@ -56,105 +59,71 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         [Test]
         public void TestSTIsValidDetail()
         {
+            const string Wkt1 = "LINESTRING(0 0, 1 1)";
+            const string Wkt2 = "POLYGON((0 0, 1 1, 1 2, 1 1, 0 0))";
+
+            const string ExpectedGeomType = "Point";
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 db.Connection.RegisterPostGisCompositeTypes();
                 // or PostGisCompositeTypeMapper.RegisterPostGisCompositeTypesGlobally();
+                
+                var expectedReason = CurrentVersion >= new Version("3.2.0")
+                    ? "Ring Self-intersection"
+                    : "Self-intersection";
 
-                const string Wkt1 = "LINESTRING(0 0, 1 1)";
-                db.TestGeometries
-                    .Value(g => g.Id, 1)
-                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt1))
-                    .Insert();
+                var actual1 =
+                    db.Select(() => GeometryValidation.STIsValidDetail(GeometryInput.STGeometryFromText(Wkt1)));
+                var actual2 =
+                    db.Select(() => GeometryValidation.STIsValidDetail(GeometryInput.STGeometryFromText(Wkt2)));
+                var actual3 = db.Select(() => GeometryValidation.STIsValidDetail((NTSG)null));
 
-                const string Wkt2 = "POLYGON((0 0, 1 1, 1 2, 1 1, 0 0))";
-                db.TestGeometries
-                    .Value(g => g.Id, 2)
-                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt2))
-                    .Insert();
+                Assert.IsTrue(actual1.IsValid);
+                Assert.IsNull(actual1.Reason);
+                Assert.IsNull(actual1.Location);
 
-                db.TestGeometries.Value(g => g.Id, 3).Value(g => g.Geometry, () => null).Insert();
+                Assert.IsFalse(actual2.IsValid);
+                Assert.AreEqual(expectedReason, actual2.Reason);
+                Assert.AreEqual(ExpectedGeomType, actual2.Location.GeometryType);
 
-                var d1 = db.TestGeometries
-                    .Where(g => g.Id == 1)
-                    .Select(g => g.Geometry.STIsValidDetail())
-                    .Single();
-
-                Assert.IsTrue(d1.IsValid);
-                Assert.IsNull(d1.Reason);
-                Assert.IsNull(d1.Location);
-
-                var d2 = db.TestGeometries
-                        .Where(g => g.Id == 2)
-                        .Select(g => g.Geometry.STIsValidDetail())
-                        .Single();
-
-                Assert.IsFalse(d2.IsValid);
-                Assert.AreEqual("Self-intersection", d2.Reason);
-                Assert.AreEqual("Point", d2.Location.GeometryType);
-
-                Assert.IsNull(
-                    db.TestGeometries
-                        .Where(g => g.Id == 3)
-                        .Select(g => g.Geometry.STIsValidDetail())
-                        .Single());
-
-                var d1s = db.Select(() => GeometryValidation.STIsValidDetail(Wkt1));
-                Assert.IsTrue(d1s.IsValid);
-                Assert.IsNull(d1s.Reason);
-                Assert.IsNull(d1s.Location);
-
-                var d2s = db.Select(() => GeometryValidation.STIsValidDetail(Wkt2));
-                Assert.IsFalse(d2s.IsValid);
-                Assert.AreEqual("Self-intersection", d2s.Reason);
-                Assert.AreEqual("Point", d2s.Location.GeometryType);
+                Assert.IsNull(actual3);
             }
         }
 
         [Test]
         public void TestSTIsValidReason()
         {
+            const string Wkt1 = "LINESTRING(0 0, 1 1)";
+            const string Wkt2 = "POLYGON((0 0, 1 1, 1 2, 1 1, 0 0))";
+
+            const string ExpectedValidGeom = "Valid Geometry";
+            const string ExpectedWithFlag = "Self-intersection";
+            
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                const string Wkt1 = "LINESTRING(0 0, 1 1)";
-                db.TestGeometries
-                    .Value(g => g.Id, 1)
-                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt1))
-                    .Insert();
+                var expectedDefault = CurrentVersion >= new Version("3.2.0")
+                    ? "Ring Self-intersection[1 1]"
+                    : "Self-intersection[0 0]";
 
-                const string Wkt2 = "POLYGON((0 0, 1 1, 1 2, 1 1, 0 0))";
-                db.TestGeometries
-                    .Value(g => g.Id, 2)
-                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt2))
-                    .Insert();
+                var actual1V1 = db.Select(() => GeometryInput.STGeomFromText(Wkt1).STIsValidReason());
+                var actual1V2 = db.Select(() => GeometryValidation.STIsValidReason(Wkt1));
+                var actual1V3 = db.Select(() => GeometryValidation.STIsValidReason(Wkt1, 1));
 
-                db.TestGeometries.Value(g => g.Id, 3).Value(g => g.Geometry, () => null).Insert();
+                var actual2V1 = db.Select(() => GeometryInput.STGeomFromText(Wkt2).STIsValidReason());
+                var actual2V2 = db.Select(() => GeometryValidation.STIsValidReason(Wkt2));
+                var actual2V3 = db.Select(() => GeometryValidation.STIsValidReason(Wkt2, 1));
 
-                Assert.AreEqual(
-                    "Valid Geometry",
-                    db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STIsValidReason()).Single());
+                var actual3 = db.Select(() => ((NTSG)null).STIsValidReason());
 
-                Assert.AreEqual(
-                    "Self-intersection[0 0]",
-                    db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STIsValidReason()).Single());
+                Assert.AreEqual(ExpectedValidGeom, actual1V1);
+                Assert.AreEqual(ExpectedValidGeom, actual1V2);
+                Assert.AreEqual(ExpectedValidGeom, actual1V3);
 
-                Assert.IsNull(db.TestGeometries.Where(g => g.Id == 3).Select(g => g.Geometry.STIsValidReason()).Single());
+                Assert.AreEqual(expectedDefault, actual2V1);
+                Assert.AreEqual(expectedDefault, actual2V2);
+                Assert.AreEqual(ExpectedWithFlag, actual2V3);
 
-                Assert.AreEqual(
-                    "Valid Geometry",
-                    db.Select(() => GeometryValidation.STIsValidReason(Wkt1)));
-
-                Assert.AreEqual(
-                    "Self-intersection[0 0]",
-                    db.Select(() => GeometryValidation.STIsValidReason(Wkt2)));
-
-                Assert.AreEqual(
-                    "Valid Geometry",
-                    db.Select(() => GeometryValidation.STIsValidReason(Wkt1, 1)));
-
-                Assert.AreEqual(
-                    "Self-intersection",
-                    db.Select(() => GeometryValidation.STIsValidReason(Wkt2, 1)));
+                Assert.IsNull(actual3);
             }
         }
 

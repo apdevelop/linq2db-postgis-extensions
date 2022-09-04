@@ -2,6 +2,7 @@
 using System.Linq;
 
 using LinqToDB;
+using LinqToDB.Data;
 using NUnit.Framework;
 
 using NTSGS = NetTopologySuite.Geometries;
@@ -72,47 +73,35 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                const string wkt1 = "LINESTRING(100 150,50 60, 70 80, 160 170)";
-                db.TestGeometries
-                    .Value(g => g.Id, 1)
-                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(wkt1))
-                    .Insert();
+                const string Wkt1 = "LINESTRING(100 150,50 60, 70 80, 160 170)";
+                const string Wkt2 =
+                    "POLYGON ((10 130, 50 190, 110 190, 140 150, 150 80, 100 10, 20 40, 10 130), (70 40, 100 50, 120 80, 80 110, 50 90, 70 40))";
+                const string Wkt3 = "MULTILINESTRING((1 1 1,0 0 0.5, -1 1 1),(1 1 0.5,0 0 0.5, -1 1 0.5, 1 1 0.5) )";
 
-                const string wkt2 = "POLYGON ((10 130, 50 190, 110 190, 140 150, 150 80, 100 10, 20 40, 10 130), (70 40, 100 50, 120 80, 80 110, 50 90, 70 40))";
-                db.TestGeometries
-                    .Value(g => g.Id, 2)
-                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(wkt2))
-                    .Insert();
+                const string Expected1 = "MULTIPOINT(100 150,160 170)";
+                const string Expected2 =
+                    "MULTILINESTRING((10 130,50 190,110 190,140 150,150 80,100 10,20 40,10 130),(70 40,100 50,120 80,80 110,50 90,70 40))";
+                const string Expected3V1 = "MULTIPOINT Z (-1 1 1,1 1 0.75)";
+                const string Expected3V2 = "MULTIPOINT Z (1 1 1,-1 1 1)";
 
-                const string wkt3 = "MULTILINESTRING((1 1 1,0 0 0.5, -1 1 1),(1 1 0.5,0 0 0.5, -1 1 0.5, 1 1 0.5) )";
-                db.TestGeometries
-                    .Value(g => g.Id, 3)
-                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(wkt3))
-                    .Insert();
+                var result1 = db.Select(() => GeometryInput.STGeomFromEWKT(Wkt1).STBoundary().STAsText());
+                var result2 = db.Select(() => GeometryInput.STGeomFromEWKT(Wkt2).STBoundary().STAsText());
+                var result3 = db.Select(() => GeometryInput.STGeomFromEWKT(Wkt3).STBoundary().STAsText());
 
-                Assert.AreEqual(
-                    "MULTIPOINT(100 150,160 170)",
-                    db.TestGeometries
-                        .Where(g => g.Id == 1)
-                        .Select(g => g.Geometry.STBoundary().STAsText())
-                        .Single());
-
-                Assert.AreEqual(
-                    "MULTILINESTRING((10 130,50 190,110 190,140 150,150 80,100 10,20 40,10 130),(70 40,100 50,120 80,80 110,50 90,70 40))",
-                    db.TestGeometries
-                        .Where(g => g.Id == 2)
-                        .Select(g => g.Geometry.STBoundary().STAsText())
-                        .Single());
-
-                Assert.AreEqual(
-                    "MULTIPOINT Z (-1 1 1,1 1 0.75)",
-                    db.TestGeometries
-                        .Where(g => g.Id == 3)
-                        .Select(g => g.Geometry.STBoundary().STAsText())
-                        .Single());
+                Assert.AreEqual(Expected1, result1);
+                Assert.AreEqual(Expected2, result2);
+                if (CurrentVersion <
+                    new Version(
+                        "3.2.0")) //See https://postgis.net/docs/ST_Boundary.html. Result is different based on postgis version
+                {
+                    Assert.AreEqual(Expected3V1, result3);
+                }
+                else
+                {
+                    Assert.AreEqual(Expected3V2, result3);
+                }
 
                 Assert.IsNull(db.Select(() => GeometryAccessors.STBoundary((NTSG)null)));
-                Assert.AreEqual("MULTIPOINT(100 150,160 170)", db.Select(() => GeometryAccessors.STBoundary(wkt1).STAsText()));
             }
         }
 
@@ -355,16 +344,9 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     db.Select(() => GeometryInput.STGeomFromText(Wkt)
                         .STGeometryType()));
 
-                // TODO: Need some research for reason of error: 
-                // function st_geometrytype(unknown) is not unique. Could not choose a best candidate function. You might need to add explicit type casts.
-                if (this.CurrentVersion >= new Version("3.0.0"))
-                {
-                    Assert.AreEqual(
-                        "ST_LineString",
-                        db.Select(() => GeometryAccessors.STGeometryType(Wkt)));
-
-                    Assert.IsNull(db.Select(() => GeometryAccessors.STGeometryType((NTSG)null)));
-                }
+                Assert.AreEqual(
+                    "ST_LineString",
+                    db.Select(() => GeometryAccessors.STGeometryType(Wkt)));
             }
         }
 
@@ -923,26 +905,40 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 const string Wkt1 = "LINESTRING(0 1, 0 2)";
-                db.TestGeometries.Value(g => g.Id, 1).Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt1)).Insert();
-
                 const string Wkt2 = "POINT(0 1)";
-                db.TestGeometries.Value(g => g.Id, 2).Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt2)).Insert();
 
-                Assert.AreEqual(
-                                "POINT(0 1)",
-                                db.TestGeometries
-                                    .Where(g => g.Id == 1)
-                                    .Select(g => g.Geometry.STStartPoint().STAsText())
-                                    .Single());
+                const double ExpectedX = 0;
+                const double ExpectedY = 1;
 
-                Assert.IsNull(db.TestGeometries
-                                    .Where(g => g.Id == 2)
-                                    .Select(g => g.Geometry.STStartPoint())
-                                    .Single());
+                var actual11 = db.Select(() => GeometryInput.STGeomFromText(Wkt1).STStartPoint());
+                var actual12 = db.Select(() => GeometryAccessors.STStartPoint(Wkt1));
 
-                Assert.AreEqual("POINT(0 1)", db.Select(() => GeometryAccessors.STStartPoint(Wkt1).STAsText()));
-                Assert.IsNull(db.Select(() => GeometryAccessors.STStartPoint(Wkt2)));
-                Assert.IsNull(db.Select(() => GeometryAccessors.STStartPoint((NTSG)null)));
+                var actual2 = db.Select(() => GeometryAccessors.STStartPoint((NTSG)null));
+
+                var actual31 = db.Select(() => GeometryInput.STGeomFromText(Wkt2).STStartPoint());
+                var actual32 = db.Select(() => GeometryAccessors.STStartPoint(Wkt2));
+
+
+                Assert.AreEqual(ExpectedX, actual11.Coordinates[0].X);
+                Assert.AreEqual(ExpectedY, actual11.Coordinates[0].Y);
+
+                Assert.AreEqual(ExpectedX, actual12.Coordinates[0].X);
+                Assert.AreEqual(ExpectedY, actual12.Coordinates[0].Y);
+
+                Assert.IsNull(actual2);
+
+                if (CurrentVersion < new Version("3.2.0"))
+                {
+                    Assert.IsNull(actual31);
+                    Assert.IsNull(actual32);
+                }
+                else
+                {
+                    Assert.AreEqual(ExpectedX, actual31.Coordinates[0].X);
+                    Assert.AreEqual(ExpectedY, actual31.Coordinates[0].Y);
+                    Assert.AreEqual(ExpectedX, actual32.Coordinates[0].X);
+                    Assert.AreEqual(ExpectedY, actual32.Coordinates[0].Y);
+                }
             }
         }
 

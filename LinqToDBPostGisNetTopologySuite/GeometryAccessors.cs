@@ -1,7 +1,5 @@
 ﻿using System;
-
 using LinqToDB;
-
 using NTSG = NetTopologySuite.Geometries.Geometry;
 
 namespace LinqToDBPostGisNetTopologySuite
@@ -252,8 +250,11 @@ namespace LinqToDBPostGisNetTopologySuite
         /// </remarks>
         /// <param name="geometry">Input geometry.</param>
         /// <returns>Geometry type string (with 'ST_' prefix).</returns>
-        [Sql.Function("ST_GeometryType", ServerSideOnly = true)]
-        public static string STGeometryType(string geometry) => throw new InvalidOperationException();
+        [Sql.Expression("ST_GeometryType({0}::geometry)", ServerSideOnly = true)]
+        public static string STGeometryType(string geometry)
+        {
+            throw new InvalidOperationException();
+        }
 
         /// <summary>
         /// Returns true if input <paramref name="geometry"/> contains a circular string.
