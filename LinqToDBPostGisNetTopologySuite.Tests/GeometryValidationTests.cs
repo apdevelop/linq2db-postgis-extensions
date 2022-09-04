@@ -1,7 +1,9 @@
 ﻿using System;
 using System.Linq;
+
 using LinqToDB;
 using NUnit.Framework;
+
 using NTSG = NetTopologySuite.Geometries.Geometry;
 
 namespace LinqToDBPostGisNetTopologySuite.Tests
@@ -10,6 +12,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
     class GeometryValidationTests : TestsBase
     {
         private Version CurrentVersion;
+
         [SetUp]
         public void Setup()
         {
@@ -20,7 +23,6 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 this.CurrentVersion = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
             }
         }
-
 
         [Test]
         public void TestSTIsValid()
@@ -67,8 +69,8 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             {
                 db.Connection.RegisterPostGisCompositeTypes();
                 // or PostGisCompositeTypeMapper.RegisterPostGisCompositeTypesGlobally();
-                
-                var expectedReason = CurrentVersion >= new Version("3.2.0")
+
+                var expectedReason = this.CurrentVersion >= new Version("3.2.0")
                     ? "Ring Self-intersection"
                     : "Self-intersection";
 
@@ -98,10 +100,10 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
             const string ExpectedValidGeom = "Valid Geometry";
             const string ExpectedWithFlag = "Self-intersection";
-            
+
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                var expectedDefault = CurrentVersion >= new Version("3.2.0")
+                var expectedDefault = this.CurrentVersion >= new Version("3.2.0")
                     ? "Ring Self-intersection[1 1]"
                     : "Self-intersection[0 0]";
 

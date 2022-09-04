@@ -2,6 +2,7 @@
 ![PostGIS 2.5](https://github.com/apdevelop/linq2db-postgis-extensions/actions/workflows/test_on_postgis-2.5.yml/badge.svg)
 ![PostGIS 3.0](https://github.com/apdevelop/linq2db-postgis-extensions/actions/workflows/test_on_postgis-3.0.yml/badge.svg)
 ![PostGIS 3.1](https://github.com/apdevelop/linq2db-postgis-extensions/actions/workflows/test_on_postgis-3.1.yml/badge.svg)
+![PostGIS 3.2](https://github.com/apdevelop/linq2db-postgis-extensions/actions/workflows/test_on_postgis-3.2.yml/badge.svg)
 
 .NET Standard 2.0 library with OGC extensions methods on geometry (`NpgsqlTypes.PostgisGeometry` or `NetTopologySuite.Geometries.Geometry`) instances, providing strongly typed access to [PostGIS](http://postgis.net/) functions on server side while using [linq2db](https://github.com/linq2db/linq2db) LINQ to database provider.
 
@@ -11,7 +12,7 @@
 | -------------- |:---------------------------:|:------------------------------------:|
 | Extending type | `NpgsqlTypes.PostgisGeometry` | `NetTopologySuite.Geometries.Geometry` |
 | Npgsql version | 3.x                         | 4.x                                  |
-| PostGIS reference version     | 1.5                      | 3.0/3.1                  |
+| PostGIS reference version     | 1.5                      | 3.0/3.1/3.2              |
 | Status         | Legacy                      | Recommended way                      |
 | NuGet          |   &mdash;       |  [![NuGet](https://img.shields.io/nuget/v/LinqToDBPostGisNTS.svg)](https://www.nuget.org/packages/LinqToDBPostGisNTS/) |
 | Dependencies   | linq2db, Npgsql           | linq2db, Npgsql, NetTopologySuite, Npgsql.NetTopologySuite, NetTopologySuite.IO.PostGis |
@@ -82,7 +83,7 @@ class PostGisTestDataConnection : LinqToDB.Data.DataConnection
 
 ### Technologies
 Developed using MS Visual Studio 2019.
-Tested on PostgreSQL version 9.6/11, PostGIS version 2.5/3.0/3.1.
+Tested on PostgreSQL version 9.6/11, PostGIS version 2.5/3.0/3.1/3.2.
 Depends on [linq2db](https://github.com/linq2db/linq2db), [Npgsql](https://github.com/npgsql/npgsql).
 
 ### Getting started with demo application
@@ -100,7 +101,7 @@ Depends on [linq2db](https://github.com/linq2db/linq2db), [Npgsql](https://githu
  * More tests for corner cases.
  
 ### References
-* [PostGIS Reference](https://postgis.net/docs/manual-3.0/reference.html)
+* [PostGIS Reference](https://postgis.net/docs/reference.html)
 * [PostGIS/NetTopologySuite Type Plugin](https://www.npgsql.org/doc/types/nts.html)
 * [Spatial Mapping with NetTopologySuite in Entity Framework Core](https://www.npgsql.org/efcore/mapping/nts.html)
 * [How to teach LINQ to DB convert custom .NET methods and objects to SQL - Sql.Function attribute](http://blog.linq2db.com/2016/06/how-to-teach-linq-to-db-convert-custom.html)

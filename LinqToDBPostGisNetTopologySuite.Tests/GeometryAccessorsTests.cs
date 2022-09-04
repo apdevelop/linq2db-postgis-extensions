@@ -74,13 +74,11 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 const string Wkt1 = "LINESTRING(100 150,50 60, 70 80, 160 170)";
-                const string Wkt2 =
-                    "POLYGON ((10 130, 50 190, 110 190, 140 150, 150 80, 100 10, 20 40, 10 130), (70 40, 100 50, 120 80, 80 110, 50 90, 70 40))";
+                const string Wkt2 = "POLYGON ((10 130, 50 190, 110 190, 140 150, 150 80, 100 10, 20 40, 10 130), (70 40, 100 50, 120 80, 80 110, 50 90, 70 40))";
                 const string Wkt3 = "MULTILINESTRING((1 1 1,0 0 0.5, -1 1 1),(1 1 0.5,0 0 0.5, -1 1 0.5, 1 1 0.5) )";
 
                 const string Expected1 = "MULTIPOINT(100 150,160 170)";
-                const string Expected2 =
-                    "MULTILINESTRING((10 130,50 190,110 190,140 150,150 80,100 10,20 40,10 130),(70 40,100 50,120 80,80 110,50 90,70 40))";
+                const string Expected2 = "MULTILINESTRING((10 130,50 190,110 190,140 150,150 80,100 10,20 40,10 130),(70 40,100 50,120 80,80 110,50 90,70 40))";
                 const string Expected3V1 = "MULTIPOINT Z (-1 1 1,1 1 0.75)";
                 const string Expected3V2 = "MULTIPOINT Z (1 1 1,-1 1 1)";
 
@@ -90,9 +88,9 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 Assert.AreEqual(Expected1, result1);
                 Assert.AreEqual(Expected2, result2);
-                if (CurrentVersion <
-                    new Version(
-                        "3.2.0")) //See https://postgis.net/docs/ST_Boundary.html. Result is different based on postgis version
+                
+                //See https://postgis.net/docs/ST_Boundary.html. Result is different based on postgis version
+                if (this.CurrentVersion < new Version("3.2.0"))
                 {
                     Assert.AreEqual(Expected3V1, result3);
                 }
@@ -918,7 +916,6 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var actual31 = db.Select(() => GeometryInput.STGeomFromText(Wkt2).STStartPoint());
                 var actual32 = db.Select(() => GeometryAccessors.STStartPoint(Wkt2));
 
-
                 Assert.AreEqual(ExpectedX, actual11.Coordinates[0].X);
                 Assert.AreEqual(ExpectedY, actual11.Coordinates[0].Y);
 
@@ -927,7 +924,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 Assert.IsNull(actual2);
 
-                if (CurrentVersion < new Version("3.2.0"))
+                if (this.CurrentVersion < new Version("3.2.0"))
                 {
                     Assert.IsNull(actual31);
                     Assert.IsNull(actual32);
@@ -967,7 +964,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     .Insert();
 
                 Assert.AreEqual(
-                    "Point[GS]", 
+                    "Point[GS]",
                     db.TestGeographies
                         .Where(g => g.Id == 1)
                         .Select(g => g.Geography.STSummary())
