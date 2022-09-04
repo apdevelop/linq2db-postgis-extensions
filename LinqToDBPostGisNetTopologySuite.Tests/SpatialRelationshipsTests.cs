@@ -48,8 +48,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 Assert.IsTrue(result1);
                 Assert.IsFalse(result2);
 
-                var version = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
-                if (version >= new Version("3.0.0"))
+                if (this.CurrentVersion >= base.Version300)
                 {
                     Assert.IsTrue(
                         db.Select(() => SpatialRelationships.ST3DIntersects(
@@ -159,7 +158,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 Assert.IsNull(result2);
 
                 // TODO: need explicit cast text to geometry
-                if (this.CurrentVersion >= new Version("3.0.0"))
+                if (this.CurrentVersion >= base.Version300)
                 {
                     Assert.IsTrue(
                         db.Select(() => SpatialRelationships.STContainsProperly(
@@ -242,7 +241,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
 
                 // TODO: need explicit cast text to geometry
-                if (this.CurrentVersion >= new Version("3.0.0"))
+                if (this.CurrentVersion >= base.Version300)
                 {
                     Assert.IsTrue(db.Select(() => SpatialRelationships.STDisjoint(Wkt1, PointWkt)));
                     Assert.IsFalse(db.Select(() => SpatialRelationships.STDisjoint(Wkt2, PointWkt)));
@@ -372,7 +371,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 Assert.IsTrue(db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STOverlaps(geometry2)).Single());
 
                 // TODO: need explicit cast text to geometry
-                if (this.CurrentVersion >= new Version("3.0.0"))
+                if (this.CurrentVersion >= base.Version300)
                 {
                     Assert.IsFalse(db.Select(() => SpatialRelationships.STOverlaps(Wkt3, Wkt4)));
                 }
@@ -513,7 +512,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     GeometryInput.STGeomFromText(Wkt3))));
 
                 // TODO: need explicit cast text to geometry
-                if (this.CurrentVersion >= new Version("3.0.0"))
+                if (this.CurrentVersion >= base.Version300)
                 {
                     Assert.IsFalse(db.Select(() => SpatialRelationships.STTouches(Wkt1, Wkt2)));
                     Assert.IsTrue(db.Select(() => SpatialRelationships.STTouches(Wkt1, Wkt3)));
@@ -576,7 +575,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                                     10)));
 
                 // TODO: need explicit cast text to geometry
-                if (this.CurrentVersion >= new Version("3.0.0"))
+                if (this.CurrentVersion >= base.Version300)
                 {
                     Assert.IsFalse(db.Select(() => SpatialRelationships.STDFullyWithin(Wkt1, Wkt2, 10)));
                     Assert.IsTrue(db.Select(() => SpatialRelationships.STDFullyWithin(Wkt1, Wkt2, 20)));

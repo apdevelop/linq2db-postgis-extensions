@@ -15,11 +15,33 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         public void OneTimeSetUp()
         {
             NpgsqlConnection.GlobalTypeMapper.UseNetTopologySuite();
+            this.Version300 = new Version("3.0.0");
+            this.Version310 = new Version("3.1.0");
+            this.Version320 = new Version("3.2.0");
         }
 
         protected const int SRID4326 = 4326;
 
         protected const int SRID3857 = 3857;
+
+        #region PostGIS versions
+
+        /// <summary>
+        /// PostGIS version 3.0.0
+        /// </summary>
+        public Version Version300 { get; private set; }
+
+        /// <summary>
+        /// PostGIS version 3.1.0
+        /// </summary>
+        public Version Version310 { get; private set; }
+
+        /// <summary>
+        /// PostGIS version 3.2.0
+        /// </summary>
+        public Version Version320 { get; private set; }
+
+        #endregion
 
         protected static string TestDatabaseConnectionString
         {

@@ -231,7 +231,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     .Select(g => g.Geometry.STAsGeoJSON())
                     .Single();
 
-                if (this.CurrentVersion >= new Version("3.0.0"))
+                if (this.CurrentVersion >= base.Version300)
                 {
                     Assert.AreEqual(
                         "{\"type\":\"Point\",\"crs\":{\"type\":\"name\",\"properties\":{\"name\":\"EPSG:3857\"}},\"coordinates\":[2.48,4.75]}",

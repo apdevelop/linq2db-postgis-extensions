@@ -113,7 +113,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     .Single();
 
                 // TODO: need explicit cast text to geometry
-                if (this.CurrentVersion >= new Version("3.0.0"))
+                if (this.CurrentVersion >= base.Version300)
                 {
                     Assert.AreEqual("POLYGON((50 5,10 8,10 10,100 190,150 30,150 10,50 5))", convexHull1);
                     Assert.IsNull(db.Select(() => GeometryProcessing.STConvexHull((NTSG)null)));
@@ -158,8 +158,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                var version = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
-                if (version >= new Version("3.0.0"))
+                if (this.CurrentVersion >= base.Version300)
                 {
                     // TODO: Test for 2.3.0
 
@@ -373,12 +372,13 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                // TODO: ? Some helper version classes / attributes for methods?
-                var version = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
                 var geos = db.Select(() => VersionFunctions.PostGISGEOSVersion());
-                var geosVersion = geos != null ? new Version(geos.Substring(0, geos.IndexOf('-'))) : null;
+                var geosVersion = geos != null
+                    ? new Version(geos.Substring(0, geos.IndexOf('-')))
+                    : null;
 
-                if ((version >= new Version("3.1.0")) && (geosVersion != null) && (geosVersion >= new Version("3.9"))) // TODO: ? const
+                if ((this.CurrentVersion >= base.Version310) &&
+                    (geosVersion != null) && (geosVersion >= new Version("3.9"))) // TODO: ? const
                 {
                     const string Wkt = "POINT(1.412 19.323)";
 

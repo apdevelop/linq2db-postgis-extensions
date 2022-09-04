@@ -12,11 +12,14 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
     [TestFixture]
     class LinearReferencingTests : TestsBase
     {
+        private Version CurrentVersion;
+
         [SetUp]
         public void Setup()
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
+                this.CurrentVersion = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
                 db.TestGeometries.Delete();
                 db.TestGeographies.Delete();
             }
@@ -56,8 +59,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             const string Wkt = "LINESTRING(25 50 70, 100 125 90, 150 190 200)";
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                var version = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
-                if (version >= new Version("3.0.0"))
+                if (this.CurrentVersion >= base.Version300)
                 {
                     db.TestGeometries
                     .Value(g => g.Id, 1)

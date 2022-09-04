@@ -12,11 +12,14 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
     [TestFixture]
     class GeometryConstructorsTests : TestsBase
     {
+        private Version CurrentVersion;
+
         [SetUp]
         public void Setup()
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
+                this.CurrentVersion = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
                 db.TestGeometries.Delete();
                 db.TestGeographies.Delete();
             }
@@ -326,8 +329,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                         .Single());
 
                 // TODO: ? reason of error?  ST_Polygon(text) not works in 2.5 ?
-                var version = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
-                if (version >= new Version("3.0.0"))
+                if (this.CurrentVersion >= base.Version300)
                 {
                     db.TestGeometries
                         .Value(g => g.Id, 3)
@@ -348,8 +350,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                var version = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
-                if (version >= new Version("3.0.0"))
+                if (this.CurrentVersion >= base.Version300)
                 {
                     db.TestGeometries
                         .Value(g => g.Id, 1)
@@ -408,8 +409,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                var version = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
-                if (version >= new Version("3.1.0"))
+                if (this.CurrentVersion >= base.Version310)
                 {
                     var origin = db.Select(() => GeometryConstructors.STMakePoint(0, 0));
 
@@ -429,8 +429,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                var version = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
-                if (version >= new Version("3.1.0"))
+                if (this.CurrentVersion >= Version310)
                 {
                     var origin = db.Select(() => GeometryConstructors.STMakePoint(0, 0));
 

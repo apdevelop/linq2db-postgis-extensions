@@ -40,8 +40,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 var projVersion = db.Select(() => VersionFunctions.PostGISPROJVersion());
                 Console.WriteLine($"PROJ4={projVersion}");
 
-                var currentVersion = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
-                if (currentVersion >= new Version("3.0"))
+                if (new Version(libVersion) >= base.Version300)
                 {
                     var wagyuVersion = db.Select(() => VersionFunctions.PostGISWagyuVersion());
                     Console.WriteLine($"Wagyu={wagyuVersion}");
