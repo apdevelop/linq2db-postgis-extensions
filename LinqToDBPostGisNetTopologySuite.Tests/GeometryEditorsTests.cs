@@ -12,6 +12,8 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
     [TestFixture]
     class GeometryEditorsTests : TestsBase
     {
+        private Version CurrentVersion { get; set; }
+
         [SetUp]
         public void Setup()
         {
@@ -19,6 +21,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             {
                 db.TestGeometries.Delete();
                 db.TestGeographies.Delete();
+                CurrentVersion = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
             }
         }
 
@@ -188,6 +191,54 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 Assert.AreEqual(0, result1.Coordinates[3].Y, 1.0E-9);
 
                 Assert.IsNull(db.Select(() => GeometryEditors.STCurveToLine(null, 20, 1, 1)));
+            }
+        }
+
+        [Test]
+        public void TestSTScroll()
+        {
+            if (CurrentVersion < Version320) return;
+
+            const string RingText = "SRID=4326;LINESTRING(0 1,2 3,4 5,6 7,0 1)";
+            const string PointText = "SRID=4326;POINT(6 7)";
+
+            const double X = 6;
+            const double Y = 7;
+
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                var result1 = db.Select(() => GeometryEditors.STScroll(GeometryInput.STGeomFromEWKT(RingText),
+                    GeometryInput.STGeomFromEWKT(PointText)));
+                var result2 = db.Select(() =>
+                    GeometryEditors.STScroll(GeometryInput.STGeomFromEWKT(RingText), PointText));
+                var result3 = db.Select(() =>
+                    GeometryEditors.STScroll(RingText, GeometryInput.STGeomFromEWKT(PointText)));
+                var result4 = db.Select(() => GeometryEditors.STScroll(RingText, PointText));
+
+                Assert.IsNotNull(result1);
+                Assert.IsNotNull(result2);
+                Assert.IsNotNull(result3);
+                Assert.IsNotNull(result4);
+
+                var startPoint1 = result1.Coordinates[0];
+                var startPoint2 = result2.Coordinates[0];
+                var startPoint3 = result3.Coordinates[0];
+                var startPoint4 = result4.Coordinates[0];
+
+                var endPoint1 = result1.Coordinates.Last();
+                var endPoint2 = result2.Coordinates.Last();
+                var endPoint3 = result3.Coordinates.Last();
+                var endPoint4 = result4.Coordinates.Last();
+
+                Assert.AreEqual(X, startPoint1.X);
+                Assert.AreEqual(X, startPoint2.X);
+                Assert.AreEqual(X, startPoint3.X);
+                Assert.AreEqual(X, startPoint4.X);
+
+                Assert.AreEqual(Y, endPoint1.Y);
+                Assert.AreEqual(Y, endPoint2.Y);
+                Assert.AreEqual(Y, endPoint3.Y);
+                Assert.AreEqual(Y, endPoint4.Y);
             }
         }
 
