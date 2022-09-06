@@ -297,6 +297,105 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
+        public void TestSTPointZ()
+        {
+            if (CurrentVersion < new Version("3.2.0")) return;
+
+            const double X = 1;
+            const double Y = 2;
+            const double Z = 3;
+            const int Srid = 4326;
+
+            NTSG res1;
+            NTSG res2;
+
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                res1 = db.Select(() => GeometryConstructors.STPointZ(X, Y, Z, Srid));
+                res2 = db.Select(() => GeometryConstructors.STPointZ(X, Y, Z));
+            }
+
+            Assert.IsNotNull(res1);
+            Assert.AreEqual(X, res1.Coordinates[0].X);
+            Assert.AreEqual(Y, res1.Coordinates[0].Y);
+            Assert.AreEqual(Z, res1.Coordinates[0].Z);
+            Assert.AreEqual(Srid, res1.SRID);
+
+            Assert.IsNotNull(res2);
+            Assert.AreEqual(X, res2.Coordinates[0].X);
+            Assert.AreEqual(Y, res2.Coordinates[0].Y);
+            Assert.AreEqual(Z, res2.Coordinates[0].Z);
+            Assert.AreEqual(-1, res2.SRID);
+        }
+
+        [Test]
+        public void TestSTPointM()
+        {
+            if (CurrentVersion < Version320) return;
+
+            const double X = 4;
+            const double Y = 5;
+            const double M = 6;
+            const int Srid = 4326;
+
+            NTSG res1;
+            NTSG res2;
+
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                res1 = db.Select(() => GeometryConstructors.STPointM(X, Y, M, Srid));
+                res2 = db.Select(() => GeometryConstructors.STPointM(X, Y, M));
+            }
+
+            Assert.IsNotNull(res1);
+            Assert.AreEqual(X, res1.Coordinates[0].X);
+            Assert.AreEqual(Y, res1.Coordinates[0].Y);
+            Assert.AreEqual(M, res1.Coordinates[0].M);
+            Assert.AreEqual(Srid, res1.SRID);
+
+            Assert.IsNotNull(res2);
+            Assert.AreEqual(X, res2.Coordinates[0].X);
+            Assert.AreEqual(Y, res2.Coordinates[0].Y);
+            Assert.AreEqual(M, res2.Coordinates[0].M);
+            Assert.AreEqual(-1, res2.SRID);
+        }
+
+        [Test]
+        public void TestSTPointZM()
+        {
+            if (CurrentVersion < Version320) return;
+
+            const double X = 23.0;
+            const double Y = 41.1;
+            const double Z = 2.1;
+            const double M = 1;
+            const int Srid = 4326;
+
+            NTSG res1;
+            NTSG res2;
+
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                res1 = db.Select(() => GeometryConstructors.STPointZM(X, Y, Z, M, Srid));
+                res2 = db.Select(() => GeometryConstructors.STPointZM(X, Y, Z, M));
+            }
+
+            Assert.IsNotNull(res1);
+            Assert.AreEqual(X, res1.Coordinates[0].X);
+            Assert.AreEqual(Y, res1.Coordinates[0].Y);
+            Assert.AreEqual(Z, res1.Coordinates[0].Z);
+            Assert.AreEqual(M, res1.Coordinates[0].M);
+            Assert.AreEqual(Srid, res1.SRID);
+
+            Assert.IsNotNull(res2);
+            Assert.AreEqual(X, res2.Coordinates[0].X);
+            Assert.AreEqual(Y, res2.Coordinates[0].Y);
+            Assert.AreEqual(Z, res2.Coordinates[0].Z);
+            Assert.AreEqual(M, res2.Coordinates[0].M);
+            Assert.AreEqual(-1, res2.SRID);
+        }
+
+        [Test]
         public void TestSTPolygon()
         {
             const string Wkt1 = "LINESTRING(75 29, 77 29, 77 29, 75 29)";

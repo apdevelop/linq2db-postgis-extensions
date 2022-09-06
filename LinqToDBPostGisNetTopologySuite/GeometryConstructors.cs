@@ -203,6 +203,113 @@ namespace LinqToDBPostGisNetTopologySuite
         public static NTSG STPoint(double x, double y) => throw new InvalidOperationException();
 
         /// <summary>
+        /// Returns an Point with the given X, Y and Z coordinate values
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_PointZ.html
+        /// </remarks>
+        /// <seealso cref="STMakePoint(double, double, double)" />
+        /// <param name="x">X</param>
+        /// <param name="y">Y</param>
+        /// <param name="z">Z</param>
+        /// <returns>Geometry (3D Point with z).</returns>
+        [Sql.Function("ST_PointZ", ServerSideOnly = true)]
+        public static NTSG STPointZ(double x, double y, double z)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns an Point with the given X, Y and Z coordinate values, and an SRID number.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_PointZ.html
+        /// </remarks>
+        /// <seealso cref="STMakePoint(double, double, double)" />
+        /// <param name="x">X</param>
+        /// <param name="y">Y</param>
+        /// <param name="z">Z</param>
+        /// <param name="srid">SRID</param>
+        /// <returns>Geometry (3D Point with z).</returns>
+        [Sql.Function("ST_PointZ", ServerSideOnly = true)]
+        public static NTSG STPointZ(double x, double y, double z, int srid)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns an Point with the given X, Y and M coordinate values
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_PointM.html
+        /// </remarks>
+        /// <seealso cref="STMakePointM(double, double, double)" />
+        /// <param name="x">X</param>
+        /// <param name="y">Y</param>
+        /// <param name="m">M</param>
+        /// <returns>Geometry (3D Point with m).</returns>
+        [Sql.Function("ST_PointM", ServerSideOnly = true)]
+        public static NTSG STPointM(double x, double y, double m)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns an Point with the given X, Y and M coordinate values, and an SRID number.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_PointM.html
+        /// </remarks>
+        /// <seealso cref="STMakePointM(double, double, double)" />
+        /// <param name="x">X</param>
+        /// <param name="y">Y</param>
+        /// <param name="m">M</param>
+        /// <param name="srid">SRID</param>
+        /// <returns>Geometry (3D Point with m).</returns>
+        [Sql.Function("ST_PointM", ServerSideOnly = true)]
+        public static NTSG STPointM(double x, double y, double m, int srid)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns an Point with the given X, Y, Z and M coordinate values.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_PointZM.html
+        /// </remarks>
+        /// <see cref="STMakePoint(double, double, double, double)"/>
+        /// <param name="x">X</param>
+        /// <param name="y">Y</param>
+        /// <param name="z">Z</param>
+        /// <param name="m">M</param>
+        /// <returns>Geometry (4D Point with z and m).</returns>
+        [Sql.Function("ST_PointZM", ServerSideOnly = true)]
+        public static NTSG STPointZM(double x, double y, double z, double m)
+        {
+            throw new InvalidOperationException();
+        }
+
+        /// <summary>
+        /// Returns an Point with the given X, Y, Z and M coordinate values, and optionally an SRID number.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_PointZM.html
+        /// </remarks>
+        /// <see cref="STMakePoint(double, double, double, double)"/>
+        /// <param name="x">X</param>
+        /// <param name="y">Y</param>
+        /// <param name="z">Z</param>
+        /// <param name="m">M</param>
+        /// <param name="srid">SRID</param>
+        /// <returns>Geometry (4D Point with z and m).</returns>
+        [Sql.Function("ST_PointZM", ServerSideOnly = true)]
+        public static NTSG STPointZM(double x, double y, double z, double m, int srid)
+        {
+            throw new InvalidOperationException();
+        }
+        
+        /// <summary>
         /// Creates a Polygon geometry from input LineString geometry.
         /// </summary>
         /// <remarks>
