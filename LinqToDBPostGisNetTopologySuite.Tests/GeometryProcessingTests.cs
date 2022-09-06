@@ -12,14 +12,11 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
     [TestFixture]
     class GeometryProcessingTests : TestsBase
     {
-        private Version CurrentVersion;
-
         [SetUp]
         public void Setup()
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                this.CurrentVersion = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
                 db.TestGeometries.Delete();
                 db.TestGeographies.Delete();
             }
@@ -113,7 +110,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     .Single();
 
                 // TODO: need explicit cast text to geometry
-                if (this.CurrentVersion >= base.Version300)
+                if (base.CurrentVersion >= base.Version300)
                 {
                     Assert.AreEqual("POLYGON((50 5,10 8,10 10,100 190,150 30,150 10,50 5))", convexHull1);
                     Assert.IsNull(db.Select(() => GeometryProcessing.STConvexHull((NTSG)null)));
@@ -158,7 +155,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                if (this.CurrentVersion >= base.Version300)
+                if (base.CurrentVersion >= base.Version300)
                 {
                     // TODO: Test for 2.3.0
 
@@ -377,7 +374,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     ? new Version(geos.Substring(0, geos.IndexOf('-')))
                     : null;
 
-                if ((this.CurrentVersion >= base.Version310) &&
+                if ((base.CurrentVersion >= base.Version310) &&
                     (geosVersion != null) && (geosVersion >= new Version("3.9"))) // TODO: ? const
                 {
                     const string Wkt = "POINT(1.412 19.323)";

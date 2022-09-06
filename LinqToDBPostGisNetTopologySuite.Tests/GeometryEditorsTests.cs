@@ -12,8 +12,6 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
     [TestFixture]
     class GeometryEditorsTests : TestsBase
     {
-        private Version CurrentVersion { get; set; }
-
         [SetUp]
         public void Setup()
         {
@@ -21,7 +19,6 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             {
                 db.TestGeometries.Delete();
                 db.TestGeographies.Delete();
-                CurrentVersion = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
             }
         }
 

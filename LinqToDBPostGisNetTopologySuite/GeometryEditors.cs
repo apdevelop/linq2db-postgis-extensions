@@ -99,10 +99,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="point">Input given vertex point.</param>
         /// <returns>Geometry</returns>
         [Sql.Function("ST_Scroll", ServerSideOnly = true)]
-        public static NTSG STScroll(this NTSG geometry, NTSG point)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STScroll(this NTSG geometry, NTSG point) => throw new InvalidOperationException();
 
         /// <summary>
         /// Changes the start/end point of a closed LineString to the given vertex point.
@@ -114,10 +111,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="point">Input given vertex point.</param>
         /// <returns>Geometry</returns>
         [Sql.Function("ST_Scroll", ServerSideOnly = true)]
-        public static NTSG STScroll(this NTSG geometry, string point)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STScroll(this NTSG geometry, string point) => throw new InvalidOperationException();
 
         /// <summary>
         /// Changes the start/end point of a closed LineString to the given vertex point.
@@ -129,10 +123,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="point">Input given vertex point.</param>
         /// <returns>Geometry</returns>
         [Sql.Function("ST_Scroll", ServerSideOnly = true)]
-        public static NTSG STScroll(string geometry, NTSG point)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STScroll(string geometry, NTSG point) => throw new InvalidOperationException();
 
         /// <summary>
         /// Changes the start/end point of a closed LineString to the given vertex point.
@@ -144,11 +135,8 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="point">Input given vertex point.</param>
         /// <returns>Geometry</returns>
         [Sql.Function("ST_Scroll", ServerSideOnly = true)]
-        public static NTSG STScroll(string geometry, string point)
-        {
-            throw new InvalidOperationException();
-        }
-        
+        public static NTSG STScroll(string geometry, string point) => throw new InvalidOperationException();
+
         /// <summary>
         /// Returns geometry with with flipped X and Y axis of input <paramref name="geometry"/>.
         /// </summary>

@@ -14,14 +14,11 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
     [TestFixture]
     class GeometryOutputTests : TestsBase
     {
-        private Version CurrentVersion;
-
         [SetUp]
         public void Setup()
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                this.CurrentVersion = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
                 db.TestGeometries.Delete();
                 db.TestGeographies.Delete();
             }
@@ -231,7 +228,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     .Select(g => g.Geometry.STAsGeoJSON())
                     .Single();
 
-                if (this.CurrentVersion >= base.Version300)
+                if (base.CurrentVersion >= base.Version300)
                 {
                     Assert.AreEqual(
                         "{\"type\":\"Point\",\"crs\":{\"type\":\"name\",\"properties\":{\"name\":\"EPSG:3857\"}},\"coordinates\":[2.48,4.75]}",

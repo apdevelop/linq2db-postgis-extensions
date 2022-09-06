@@ -214,10 +214,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="z">Z</param>
         /// <returns>Geometry (3D Point with z).</returns>
         [Sql.Function("ST_PointZ", ServerSideOnly = true)]
-        public static NTSG STPointZ(double x, double y, double z)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STPointZ(double x, double y, double z) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns an Point with the given X, Y and Z coordinate values, and an SRID number.
@@ -232,10 +229,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="srid">SRID</param>
         /// <returns>Geometry (3D Point with z).</returns>
         [Sql.Function("ST_PointZ", ServerSideOnly = true)]
-        public static NTSG STPointZ(double x, double y, double z, int srid)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STPointZ(double x, double y, double z, int srid) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns an Point with the given X, Y and M coordinate values
@@ -249,10 +243,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="m">M</param>
         /// <returns>Geometry (3D Point with m).</returns>
         [Sql.Function("ST_PointM", ServerSideOnly = true)]
-        public static NTSG STPointM(double x, double y, double m)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STPointM(double x, double y, double m) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns an Point with the given X, Y and M coordinate values, and an SRID number.
@@ -267,10 +258,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="srid">SRID</param>
         /// <returns>Geometry (3D Point with m).</returns>
         [Sql.Function("ST_PointM", ServerSideOnly = true)]
-        public static NTSG STPointM(double x, double y, double m, int srid)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STPointM(double x, double y, double m, int srid) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns an Point with the given X, Y, Z and M coordinate values.
@@ -285,10 +273,7 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="m">M</param>
         /// <returns>Geometry (4D Point with z and m).</returns>
         [Sql.Function("ST_PointZM", ServerSideOnly = true)]
-        public static NTSG STPointZM(double x, double y, double z, double m)
-        {
-            throw new InvalidOperationException();
-        }
+        public static NTSG STPointZM(double x, double y, double z, double m) => throw new InvalidOperationException();
 
         /// <summary>
         /// Returns an Point with the given X, Y, Z and M coordinate values, and optionally an SRID number.
@@ -304,11 +289,8 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <param name="srid">SRID</param>
         /// <returns>Geometry (4D Point with z and m).</returns>
         [Sql.Function("ST_PointZM", ServerSideOnly = true)]
-        public static NTSG STPointZM(double x, double y, double z, double m, int srid)
-        {
-            throw new InvalidOperationException();
-        }
-        
+        public static NTSG STPointZM(double x, double y, double z, double m, int srid) => throw new InvalidOperationException();
+
         /// <summary>
         /// Creates a Polygon geometry from input LineString geometry.
         /// </summary>

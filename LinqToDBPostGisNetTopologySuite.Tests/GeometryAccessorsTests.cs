@@ -13,14 +13,11 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
     [TestFixture]
     class GeometryAccessorsTests : TestsBase
     {
-        private Version CurrentVersion;
-
         [SetUp]
         public void Setup()
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                this.CurrentVersion = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
                 db.TestGeometries.Delete();
                 db.TestGeographies.Delete();
             }
@@ -90,7 +87,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 Assert.AreEqual(Expected2, result2);
                 
                 //See https://postgis.net/docs/ST_Boundary.html. Result is different based on postgis version
-                if (this.CurrentVersion < base.Version320)
+                if (base.CurrentVersion < base.Version320)
                 {
                     Assert.AreEqual(Expected3V1, result3);
                 }
@@ -217,7 +214,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 Assert.AreEqual("POLYGON((0 0,0 3,1 3,1 0,0 0))", envelope);
 
                 // TODO: need explicit cast text to geometry
-                if (this.CurrentVersion >= base.Version300)
+                if (base.CurrentVersion >= base.Version300)
                 {
                     Assert.AreEqual(
                         "POLYGON((0 0,0 3,1 3,1 0,0 0))",
@@ -567,7 +564,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 // TODO: Need some research for reason of error: 
                 // function st_isempty(unknown) is not unique. Could not choose a best candidate function. You might need to add explicit type casts.
-                if (this.CurrentVersion >= base.Version300)
+                if (base.CurrentVersion >= base.Version300)
                 {
                     Assert.IsNull(db.Select(() => GeometryAccessors.STIsEmpty((NTSG)null)));
                     Assert.IsTrue(db.Select(() => GeometryAccessors.STIsEmpty("CIRCULARSTRING EMPTY")));
@@ -644,7 +641,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     .Single());
 
                 // TODO: need explicit cast text to geometry
-                if (this.CurrentVersion >= base.Version300)
+                if (base.CurrentVersion >= base.Version300)
                 {
                     Assert.AreEqual(32, db.Select(() => GeometryAccessors.STMemSize("POINT(0 0)")));
                     Assert.IsNull(db.Select(() => GeometryAccessors.STMemSize((NTSG)null)));
@@ -924,7 +921,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 Assert.IsNull(actual2);
 
-                if (this.CurrentVersion < base.Version320)
+                if (base.CurrentVersion < base.Version320)
                 {
                     Assert.IsNull(actual31);
                     Assert.IsNull(actual32);

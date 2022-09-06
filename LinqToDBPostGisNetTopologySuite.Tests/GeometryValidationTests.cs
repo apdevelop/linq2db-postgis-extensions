@@ -11,14 +11,11 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
     [TestFixture]
     class GeometryValidationTests : TestsBase
     {
-        private Version CurrentVersion;
-
         [SetUp]
         public void Setup()
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                this.CurrentVersion = new Version(db.Select(() => VersionFunctions.PostGISLibVersion()));
                 db.TestGeometries.Delete();
                 db.TestGeographies.Delete();
             }
@@ -70,7 +67,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 db.Connection.RegisterPostGisCompositeTypes();
                 // or PostGisCompositeTypeMapper.RegisterPostGisCompositeTypesGlobally();
 
-                var expectedReason = this.CurrentVersion >= base.Version320
+                var expectedReason = base.CurrentVersion >= base.Version320
                     ? "Ring Self-intersection"
                     : "Self-intersection";
 
@@ -103,7 +100,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                var expectedDefault = this.CurrentVersion >= base.Version320
+                var expectedDefault = base.CurrentVersion >= base.Version320
                     ? "Ring Self-intersection[1 1]"
                     : "Self-intersection[0 0]";
 
