@@ -55,14 +55,18 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                         "CIRCULARSTRING(220227 150406,2220227 150407,220227 150406)"))
                     .Insert();
 
+                // WKT output for MULTIPOINT was changed in 3.3
                 var collected1 = db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STAsText()).Single();
-                Assert.AreEqual("MULTIPOINT(1 2,-2 3)", collected1);
+                Assert.AreEqual(
+                    base.CurrentVersion < base.Version330 ? "MULTIPOINT(1 2,-2 3)" : "MULTIPOINT((1 2),(-2 3))",
+                    collected1);
 
                 var collected2 = db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STAsText()).Single();
                 Assert.AreEqual("GEOMETRYCOLLECTION(POINT(1 2),LINESTRING(0 0,0 1,1 0,1 1,0 0))", collected2);
 
+                // WKT output for MULTIPOINT was changed in 3.3
                 Assert.AreEqual(
-                    "MULTIPOINT(1 2,-2 3)",
+                    base.CurrentVersion < base.Version330 ? "MULTIPOINT(1 2,-2 3)" : "MULTIPOINT((1 2),(-2 3))",
                     db.TestGeometries
                         .Where(g => g.Id == 3)
                         .Select(g => g.Geometry.STAsText())

@@ -97,7 +97,7 @@ Depends on [linq2db](https://github.com/linq2db/linq2db), [Npgsql](https://githu
 ### TODOs
  * Implement full set of PostGIS methods.
  * Add support for PostGIS `geography` data type.
- * Test on various versions of PostgreSQL/PostGIS and platforms (including .NET 5).
+ * Test on various versions of PostgreSQL/PostGIS and platforms (including .NET 5 and later).
  * More tests for corner cases.
  
 ### References

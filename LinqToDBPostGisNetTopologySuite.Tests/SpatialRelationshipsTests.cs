@@ -199,22 +199,24 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                const string Line1 = "LINESTRING(25 169,89 114,40 70,86 43)";
-                const string Line2 = "LINESTRING(171 154,20 140,71 74,161 53)";
+                const string InputLine1 = "LINESTRING(25 169,89 114,40 70,86 43)";
+                const string InputLine2 = "LINESTRING(171 154,20 140,71 74,161 53)";
 
                 Assert.AreEqual(
-                        -3,
-                        db.Select(() => GeometryInput.STGeomFromText(Line1)
-                            .STLineCrossingDirection(GeometryInput.STGeomFromText(Line2))));
+                    base.CurrentVersion < base.Version330 ? -3 : 3,
+                    db.Select(() =>
+                        GeometryInput.STGeomFromText(InputLine1)
+                        .STLineCrossingDirection(GeometryInput.STGeomFromText(InputLine2))));
 
                 Assert.AreEqual(
-                    -3,
-                    db.Select(() => SpatialRelationships.STLineCrossingDirection(Line1, Line2)));
+                    base.CurrentVersion < base.Version330 ? -3 : 3,
+                    db.Select(() =>
+                        SpatialRelationships.STLineCrossingDirection(InputLine1, InputLine2)));
 
                 Assert.IsNull(db.TestGeometries
                                  .Where(g => g.Id == 1)
                                  .Select(g => g.Geometry)
-                                 .Select(g => g.STLineCrossingDirection(GeometryInput.STGeomFromText(Line2)))
+                                 .Select(g => g.STLineCrossingDirection(GeometryInput.STGeomFromText(InputLine2)))
                                  .FirstOrDefault());
             }
         }
@@ -235,7 +237,6 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                 Assert.IsTrue(db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STDisjoint(point)).Single());
                 Assert.IsFalse(db.TestGeometries.Where(g => g.Id == 2).Select(g => g.Geometry.STDisjoint(point)).Single());
                 Assert.IsNull(db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STDisjoint(null)).Single());
-
 
                 // TODO: need explicit cast text to geometry
                 if (base.CurrentVersion >= base.Version300)

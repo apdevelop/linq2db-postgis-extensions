@@ -2,7 +2,6 @@
 using System.Linq;
 
 using LinqToDB;
-using LinqToDB.Data;
 using NUnit.Framework;
 
 using NTSGS = NetTopologySuite.Geometries;
@@ -70,30 +69,39 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                const string Wkt1 = "LINESTRING(100 150,50 60, 70 80, 160 170)";
-                const string Wkt2 = "POLYGON ((10 130, 50 190, 110 190, 140 150, 150 80, 100 10, 20 40, 10 130), (70 40, 100 50, 120 80, 80 110, 50 90, 70 40))";
-                const string Wkt3 = "MULTILINESTRING((1 1 1,0 0 0.5, -1 1 1),(1 1 0.5,0 0 0.5, -1 1 0.5, 1 1 0.5) )";
+                const string InputWkt1 = "LINESTRING(100 150,50 60, 70 80, 160 170)";
+                const string InputWkt2 = "POLYGON ((10 130, 50 190, 110 190, 140 150, 150 80, 100 10, 20 40, 10 130), (70 40, 100 50, 120 80, 80 110, 50 90, 70 40))";
+                const string InputWkt3 = "MULTILINESTRING((1 1 1,0 0 0.5, -1 1 1),(1 1 0.5,0 0 0.5, -1 1 0.5, 1 1 0.5) )";
 
                 const string Expected1 = "MULTIPOINT(100 150,160 170)";
+                const string Expected1V33 = "MULTIPOINT((100 150),(160 170))";
                 const string Expected2 = "MULTILINESTRING((10 130,50 190,110 190,140 150,150 80,100 10,20 40,10 130),(70 40,100 50,120 80,80 110,50 90,70 40))";
-                const string Expected3V1 = "MULTIPOINT Z (-1 1 1,1 1 0.75)";
-                const string Expected3V2 = "MULTIPOINT Z (1 1 1,-1 1 1)";
+                const string Expected3 = "MULTIPOINT Z (-1 1 1,1 1 0.75)";
+                const string Expected3V32 = "MULTIPOINT Z (1 1 1,-1 1 1)";
+                const string Expected3V33 = "MULTIPOINT Z ((1 1 1),(-1 1 1))";
 
-                var result1 = db.Select(() => GeometryInput.STGeomFromEWKT(Wkt1).STBoundary().STAsText());
-                var result2 = db.Select(() => GeometryInput.STGeomFromEWKT(Wkt2).STBoundary().STAsText());
-                var result3 = db.Select(() => GeometryInput.STGeomFromEWKT(Wkt3).STBoundary().STAsText());
+                var result1 = db.Select(() => GeometryInput.STGeomFromEWKT(InputWkt1).STBoundary().STAsText());
+                var result2 = db.Select(() => GeometryInput.STGeomFromEWKT(InputWkt2).STBoundary().STAsText());
+                var result3 = db.Select(() => GeometryInput.STGeomFromEWKT(InputWkt3).STBoundary().STAsText());
 
-                Assert.AreEqual(Expected1, result1);
+                // WKT output for MULTIPOINT was changed in 3.3
+                Assert.AreEqual(base.CurrentVersion < base.Version330 ? Expected1 : Expected1V33, result1);
+
                 Assert.AreEqual(Expected2, result2);
-                
+
                 //See https://postgis.net/docs/ST_Boundary.html. Result is different based on postgis version
                 if (base.CurrentVersion < base.Version320)
                 {
-                    Assert.AreEqual(Expected3V1, result3);
+                    Assert.AreEqual(Expected3, result3);
+                }
+                else if (base.CurrentVersion < base.Version330)
+                {
+                    Assert.AreEqual(Expected3V32, result3);
                 }
                 else
                 {
-                    Assert.AreEqual(Expected3V2, result3);
+                    // WKT output for MULTIPOINT was changed in 3.3
+                    Assert.AreEqual(Expected3V33, result3);
                 }
 
                 Assert.IsNull(db.Select(() => GeometryAccessors.STBoundary((NTSG)null)));
@@ -881,15 +889,24 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                const string Wkt = "POLYGON Z ((30 10 4,10 30 5,40 40 6, 30 10 4))";
+                const string InputWkt = "POLYGON Z ((30 10 4,10 30 5,40 40 6, 30 10 4))";
                 db.TestGeometries
                     .Value(g => g.Id, 1)
-                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt))
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(InputWkt))
                     .Insert();
 
+                // WKT output for MULTIPOINT was changed in 3.3
                 const string ExpectedMultiPoint = "MULTIPOINT Z (30 10 4,10 30 5,40 40 6,30 10 4)";
-                Assert.AreEqual(ExpectedMultiPoint, db.TestGeometries.Select(g => g.Geometry.STPoints().STAsText()).Single());
-                Assert.AreEqual(ExpectedMultiPoint, db.Select(() => GeometryAccessors.STPoints(Wkt).STAsText()));
+                const string ExpectedMultiPointV33 = "MULTIPOINT Z ((30 10 4),(10 30 5),(40 40 6),(30 10 4))";
+
+                Assert.AreEqual(
+                    base.CurrentVersion < base.Version330 ? ExpectedMultiPoint : ExpectedMultiPointV33,
+                    db.TestGeometries.Select(g => g.Geometry.STPoints().STAsText()).Single());
+
+                Assert.AreEqual(
+                    base.CurrentVersion < base.Version330 ? ExpectedMultiPoint : ExpectedMultiPointV33,
+                    db.Select(() => GeometryAccessors.STPoints(InputWkt).STAsText()));
+
                 Assert.IsNull(db.Select(() => GeometryAccessors.STPoints((NTSG)null)));
             }
         }

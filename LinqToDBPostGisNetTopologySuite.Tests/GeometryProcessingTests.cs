@@ -123,10 +123,15 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                const string wkt1 = "POLYGON((175 150, 20 40, 50 60, 125 100, 175 150))";
-                db.TestGeometries.Value(g => g.Id, 1).Value(g => g.Geometry, () => GeometryInput.STGeomFromText(wkt1)).Insert();
+                const string InputPolygonWkt = "POLYGON((175 150, 20 40, 50 60, 125 100, 175 150))";
+                db.TestGeometries.Value(g => g.Id, 1).Value(g => g.Geometry, () => GeometryInput.STGeomFromText(InputPolygonWkt)).Insert();
                 var result1 = db.TestGeometries.Where(g => g.Id == 1).Select(g => g.Geometry.STDelaunayTriangles(0, 0).STAsText()).Single();
-                Assert.AreEqual("GEOMETRYCOLLECTION(POLYGON((20 40,125 100,50 60,20 40)),POLYGON((50 60,125 100,175 150,50 60)))", result1);
+
+                Assert.AreEqual(
+                    base.CurrentVersion < base.Version330
+                        ? "GEOMETRYCOLLECTION(POLYGON((20 40,125 100,50 60,20 40)),POLYGON((50 60,125 100,175 150,50 60)))"
+                        : "GEOMETRYCOLLECTION(POLYGON((20 40,125 100,50 60,20 40)),POLYGON((20 40,50 60,175 150,20 40)),POLYGON((175 150,50 60,125 100,175 150)))",
+                    result1);
 
                 Assert.IsNull(db.Select(() => GeometryProcessing.STDelaunayTriangles(null, 0, 0)));
             }

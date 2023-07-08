@@ -147,16 +147,16 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                const string Wkt1 = "POINT(1 2)";
+                const string InputWkt1 = "POINT(1 2)";
                 db.TestGeometries
                     .Value(g => g.Id, 1)
-                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt1))
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(InputWkt1))
                     .Insert();
 
-                const string Wkt2 = "POINT(-2 3)";
+                const string InputWkt2 = "POINT(-2 3)";
                 db.TestGeometries
                     .Value(g => g.Id, 2)
-                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(Wkt2))
+                    .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(InputWkt2))
                     .Insert();
 
                 var geometry2 = db.TestGeometries.Single(g => g.Id == 2).Geometry;
@@ -165,7 +165,10 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
                     .Select(g => g.Geometry.STUnion(geometry2).STAsText())
                     .Single();
 
-                Assert.AreEqual("MULTIPOINT(1 2,-2 3)", union);
+                // WKT output for MULTIPOINT was changed in 3.3
+                Assert.AreEqual(
+                    base.CurrentVersion < base.Version330 ? "MULTIPOINT(1 2,-2 3)" : "MULTIPOINT((1 2),(-2 3))",
+                    union);
             }
         }
 
