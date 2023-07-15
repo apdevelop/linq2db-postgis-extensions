@@ -358,6 +358,36 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
+        public void TestSTAsMARC21()
+        {
+            if (this.CurrentVersion >= base.Version330)
+            {
+                using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+                {
+                    const string InputEwkt = "SRID=4326;POINT(-4.504289 54.253312)";
+                    var g1 = db.Select(() => GeometryInput.STGeomFromEWKT(InputEwkt));
+
+                    const string Marc21XmlResult =
+                        "<record xmlns=\"http://www.loc.gov/MARC21/slim\">" +
+                        "<datafield tag=\"034\" ind1=\"1\" ind2=\" \">" +
+                            "<subfield code=\"a\">a</subfield>" +
+                            "<subfield code=\"d\">W0043015</subfield>" +
+                            "<subfield code=\"e\">W0043015</subfield>" +
+                            "<subfield code=\"f\">N0541512</subfield>" +
+                            "<subfield code=\"g\">N0541512</subfield>" +
+                        "</datafield>" +
+                    "</record>";
+
+                    Assert.AreEqual(Marc21XmlResult, db.Select(() => GeometryOutput.STAsMARC21(g1)));
+                    Assert.AreEqual(Marc21XmlResult, db.Select(() => GeometryOutput.STAsMARC21(g1, "hdddmmss")));
+
+                    Assert.AreEqual(Marc21XmlResult, db.Select(() => GeometryOutput.STAsMARC21(InputEwkt)));
+                    Assert.AreEqual(Marc21XmlResult, db.Select(() => GeometryOutput.STAsMARC21(InputEwkt, "hdddmmss")));
+                }
+            }
+        }
+
+        [Test]
         public void TestSTAsMVTGeom()
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))

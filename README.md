@@ -12,7 +12,7 @@
 | -------------- |:---------------------------:|:------------------------------------:|
 | Extending type | `NpgsqlTypes.PostgisGeometry` | `NetTopologySuite.Geometries.Geometry` |
 | Npgsql version | 3.x                         | 4.x                                  |
-| PostGIS reference version     | 1.5                      | 3.0/3.1/3.2              |
+| PostGIS reference version     | 1.5                      | 3.0/3.1/3.2/3.3          |
 | Status         | Legacy                      | Active                               |
 | NuGet          |   &mdash;       |  [![NuGet](https://img.shields.io/nuget/v/LinqToDBPostGisNTS.svg)](https://www.nuget.org/packages/LinqToDBPostGisNTS/) |
 | Dependencies   | linq2db, Npgsql           | linq2db (>= 3.0.0),<br />NetTopologySuite (>= 2.0.0),<br />NetTopologySuite.IO.PostGis (>= 2.0.0),<br />Npgsql (>= 4.1.0),<br />Npgsql.NetTopologySuite (>= 4.1.0) |

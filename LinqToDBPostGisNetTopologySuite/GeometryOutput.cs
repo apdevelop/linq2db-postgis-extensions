@@ -331,6 +331,52 @@ namespace LinqToDBPostGisNetTopologySuite
         [Sql.Function("ST_AsLatLonText", ServerSideOnly = true)]
         public static string STAsLatLonText(this NTSG geometry, string format) => throw new InvalidOperationException();
 
+        /// <summary>
+        /// Returns MARC21/XML record with Coded Cartographic Mathematical Data representing the bounding box of input <paramref name="geometry"/>.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_AsMARC21.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry.</param>
+        /// <param name="format">Custom format to encode the coordinates.</param>
+        /// <returns>MARC21/XML record.</returns>
+        [Sql.Function("ST_AsMARC21", ServerSideOnly = true)]
+        public static string STAsMARC21(this NTSG geometry, string format) => throw new InvalidOperationException();
+
+        /// <summary>
+        /// Returns MARC21/XML record with Coded Cartographic Mathematical Data representing the bounding box of input <paramref name="geometry"/>.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_AsMARC21.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry.</param>
+        /// <returns>MARC21/XML record.</returns>
+        [Sql.Function("ST_AsMARC21", ServerSideOnly = true)]
+        public static string STAsMARC21(this NTSG geometry) => throw new InvalidOperationException();
+
+        /// <summary>
+        /// Returns MARC21/XML record with Coded Cartographic Mathematical Data representing the bounding box of input <paramref name="geometry"/>.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_AsMARC21.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry.</param>
+        /// <returns>MARC21/XML record.</returns>
+        [Sql.Function("ST_AsMARC21", ServerSideOnly = true)]
+        public static string STAsMARC21(string geometry) => throw new InvalidOperationException();
+
+        /// <summary>
+        /// Returns MARC21/XML record with Coded Cartographic Mathematical Data representing the bounding box of input <paramref name="geometry"/>.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_AsMARC21.html
+        /// </remarks>
+        /// <param name="geometry">Input geometry.</param>
+        /// <param name="format">Custom format to encode the coordinates.</param>
+        /// <returns>MARC21/XML record.</returns>
+        [Sql.Function("ST_AsMARC21", ServerSideOnly = true)]
+        public static string STAsMARC21(string geometry, string format) => throw new InvalidOperationException();
+
         // TODO: box2d NTS mapping implicit cast from geometry ?
 
         /// <summary>

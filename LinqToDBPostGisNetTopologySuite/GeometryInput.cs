@@ -98,6 +98,17 @@ namespace LinqToDBPostGisNetTopologySuite
         public static NTSG STGeomFromEWKT(string ewkt) => throw new InvalidOperationException();
 
         /// <summary>
+        /// Constructs geometry from MARC21/XML representation.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_GeomFromMARC21.html
+        /// </remarks>
+        /// <param name="marc21xml">MARC21/XML record.</param>
+        /// <returns>Geometry.</returns>
+        [Sql.Function("ST_GeomFromMARC21", ServerSideOnly = true)]
+        public static NTSG STGeomFromMARC21(string marc21xml) => throw new InvalidOperationException();
+     
+        /// <summary>
         /// Constructs geometry from the OGC Well-Known Text (WKT) representation.
         /// </summary>
         /// <remarks>

@@ -126,6 +126,32 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         }
 
         [Test]
+        public void TestGeomFromMARC21()
+        {
+            if (this.CurrentVersion >= base.Version330)
+            {
+                using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+                {
+                    const string ResultWkt = "POINT(-4.5 54.25)";
+                    const string XmlInput = @"
+                        <record xmlns=""http://www.loc.gov/MARC21/slim"">
+                            <leader>00000nz a2200000nc 4500</leader>
+                            <controlfield tag=""001"">040277569</controlfield>
+                            <datafield tag=""034"" ind1="" "" ind2="" "">
+                                <subfield code=""d"">W004.500000</subfield>
+                                <subfield code=""e"">W004.500000</subfield>
+                                <subfield code=""f"">N054.250000</subfield>
+                                <subfield code=""g"">N054.250000</subfield>
+                            </datafield>
+                        </record>";
+
+                    var wkt = db.Select(() => GeometryInput.STGeomFromMARC21(XmlInput).STAsText());
+                    Assert.AreEqual(ResultWkt, wkt);
+                }
+            }
+        }
+
+        [Test]
         public void TestSTGeomFromText()
         {
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
@@ -316,7 +342,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 Assert.IsNull(db.Select(() => GeometryInput.STGeomFromEWKB(null)));
             }
-        }
+        }   
 
         [Test]
         public void TestSTGeomFromGeoHash()
