@@ -15,6 +15,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         [SetUp]
         public void Setup()
         {
+            ////PostGisTypesMapper.RegisterPostGisMappingsGlobally();
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 db.TestGeometries.Delete();
@@ -203,6 +204,45 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
 
                 Assert.AreEqual(1.9761550281255, median.X, 1.0E-8);
                 Assert.AreEqual(1.9761550281255, median.Y, 1.0E-8);
+            }
+        }
+
+        [Test]
+        public void TestSTMaximumInscribedCircle()
+        {
+            using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
+            {
+                if (base.CurrentVersion >= base.Version310)
+                {
+                    db.RegisterPostGisMappings();
+
+                    const int InputId = 1;
+                    const string InputWkt = "POLYGON ((40 180, 110 160, 180 180, 180 120, 140 90, 160 40, 80 10, 70 40, 20 50, 40 180), (60 140, 50 90, 90 140, 60 140))";
+                    
+                    db.TestGeometries
+                        .Value(g => g.Id, InputId)
+                        .Value(g => g.Geometry, () => GeometryInput.STGeomFromText(InputWkt))
+                        .Insert();
+
+                    var maxInscribedCircle = db.TestGeometries
+                        .Where(g => g.Id == InputId)
+                        .Select(g => g.Geometry.STMaximumInscribedCircle())
+                        .Single();
+
+                    Assert.AreEqual("Point", maxInscribedCircle.Center.GeometryType);
+                    Assert.AreEqual(96.953125, maxInscribedCircle.Center.Coordinate.X, 1.0E-6);
+                    Assert.AreEqual(76.328125, maxInscribedCircle.Center.Coordinate.Y, 1.0E-6);
+
+                    Assert.AreEqual("Point", maxInscribedCircle.Nearest.GeometryType);
+                    Assert.AreEqual(140, maxInscribedCircle.Nearest.Coordinate.X, 1.0E-6);
+                    Assert.AreEqual(90, maxInscribedCircle.Nearest.Coordinate.Y, 1.0E-6);
+
+                    Assert.AreEqual(45.16584565, maxInscribedCircle.Radius, 1.0E-8);
+
+                    Assert.AreEqual(
+                        "POINT (140 90)",
+                        db.Select(() => GeometryProcessing.STMaximumInscribedCircle(InputWkt)).Nearest.AsText());
+                }
             }
         }
 

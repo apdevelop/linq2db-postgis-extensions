@@ -1,7 +1,7 @@
 ﻿using System;
 
 using LinqToDB;
-
+using NpgsqlTypes;
 using NTSG = NetTopologySuite.Geometries.Geometry;
 
 namespace LinqToDBPostGisNetTopologySuite
@@ -186,6 +186,51 @@ namespace LinqToDBPostGisNetTopologySuite
         /// <returns>Geometric median.</returns>
         [Sql.Function("ST_GeometricMedian", ServerSideOnly = true)]
         public static NTSG STGeometricMedian(this NTSG geometry) => throw new InvalidOperationException();
+
+        // TODO: geometry ST_LineMerge(geometry amultilinestring);
+
+        /// <summary>
+        /// Finds the largest circle that is contained within input (multi)polygon <paramref name="geometry"/>, or which does not overlap any lines and points.
+        /// </summary>
+        /// <param name="geometry">Input geometry.</param>
+        /// <returns>Record with center, nearest and radius fields.</returns>
+        [Sql.Function("ST_MaximumInscribedCircle", ServerSideOnly = true)]
+        public static MaximumInscribedCircleResult STMaximumInscribedCircle(this NTSG geometry) => throw new InvalidOperationException();
+
+        /// <summary>
+        /// Finds the largest circle that is contained within input (multi)polygon <paramref name="geometry"/>, or which does not overlap any lines and points.
+        /// </summary>
+        /// <param name="geometry">Input geometry.</param>
+        /// <returns>Record with center, nearest and radius fields.</returns>
+        [Sql.Function("ST_MaximumInscribedCircle", ServerSideOnly = true)]
+        public static MaximumInscribedCircleResult STMaximumInscribedCircle(string geometry) => throw new InvalidOperationException();
+
+        /// <summary>
+        /// Mapping for ST_MaximumInscribedCircle result.
+        /// </summary>
+        /// <remarks>
+        /// See https://postgis.net/docs/ST_MaximumInscribedCircle.html
+        /// </remarks>
+        public class MaximumInscribedCircleResult
+        {
+            /// <summary>
+            /// Center point of the circle.
+            /// </summary>
+            [PgName("center")]
+            public NTSG Center { get; set; }
+
+            /// <summary>
+            /// Point on the geometry nearest to the center.
+            /// </summary>
+            [PgName("nearest")]
+            public NTSG Nearest { get; set; }
+
+            /// <summary>
+            /// Radius of the circle.
+            /// </summary>
+            [PgName("radius")]
+            public double Radius { get; set; }
+        }
 
         /// <summary>
         /// Returns smallest circle polygon that can fully contain input geometry.

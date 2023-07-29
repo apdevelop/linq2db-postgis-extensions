@@ -1,5 +1,4 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 
 using LinqToDB;
 using NUnit.Framework;
@@ -14,6 +13,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
         [SetUp]
         public void Setup()
         {
+            ////PostGisTypesMapper.RegisterPostGisMappingsGlobally();
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
                 db.TestGeometries.Delete();
@@ -64,8 +64,7 @@ namespace LinqToDBPostGisNetTopologySuite.Tests
             const string ExpectedGeomType = "Point";
             using (var db = new PostGisTestDataConnection(TestDatabaseConnectionString))
             {
-                db.Connection.RegisterPostGisCompositeTypes();
-                // or PostGisCompositeTypeMapper.RegisterPostGisCompositeTypesGlobally();
+                db.RegisterPostGisMappings();
 
                 var expectedReason = base.CurrentVersion >= base.Version320
                     ? "Ring Self-intersection"
